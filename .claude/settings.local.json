@@ -14,7 +14,13 @@
       "Bash(pnpm --filter @repo/database exec tsc --noEmit)",
       "Bash(pnpm --filter @repo/database add -D vitest)",
       "Bash(docker exec *)",
-      "Bash(pnpm --filter @repo/database test)"
+      "Bash(pnpm --filter @repo/database test)",
+      "Bash(git stash *)",
+      "Bash(pnpm --filter @repo/database build)",
+      "Bash(pnpm --filter @repo/types type-check)",
+      "Bash(pnpm --filter @repo/utils type-check)",
+      "Bash(pnpm --filter @repo/types build)",
+      "Bash(pnpm --filter @repo/utils build)"
     ]
   }
 }

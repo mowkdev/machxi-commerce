@@ -14,6 +14,7 @@ import {
   decimal,
   integer,
   text,
+  jsonb,
   uniqueIndex,
   index,
   check,
@@ -315,7 +316,7 @@ export const media = pgTable('media', {
   id: uuid('id').primaryKey().defaultRandom(),
   url: text('url').notNull(),
   fileType: varchar('file_type'),
-  metadata: text('metadata', { mode: 'json' }), // JSONB for alt text, dimensions
+  metadata: jsonb('metadata'), // alt text, dimensions
   createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
 });

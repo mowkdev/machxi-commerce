@@ -62,34 +62,6 @@ export function truncate(text: string, maxLength: number): string {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// VALIDATION UTILITIES
-// ────────────────────────────────────────────────────────────────────────────
-
-/**
- * Validate email format
- */
-export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
- * Validate E.164 phone format
- */
-export function isValidPhone(phone: string): boolean {
-  const phoneRegex = /^\+[1-9][0-9]{1,14}$/;
-  return phoneRegex.test(phone);
-}
-
-/**
- * Validate UUID format
- */
-export function isValidUUID(uuid: string): boolean {
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  return uuidRegex.test(uuid);
-}
-
-// ────────────────────────────────────────────────────────────────────────────
 // ARRAY UTILITIES
 // ────────────────────────────────────────────────────────────────────────────
 
