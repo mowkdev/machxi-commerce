@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { ApiRequestError } from '@/lib/api';
 import { adminLogin, adminLogout, fetchAdminMe, type AdminPrincipal } from './api';
 
@@ -28,11 +29,13 @@ export function useLogin() {
 
 export function useLogout() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: adminLogout,
     onSettled: () => {
       queryClient.removeQueries({ queryKey: authKeys.me });
+      navigate('/login', { replace: true });
     },
   });
 }

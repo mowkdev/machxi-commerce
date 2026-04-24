@@ -1,31 +1,40 @@
 import { type Icon } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 import {
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-export function NavMain({
-  items,
-}: {
+export type NavGroupProps = {
   items: {
     title: string
     url: string
     icon?: Icon
-  }[]
-}) {
+  }[];
+  groupLabel?: string;
+}
+
+export function NavGroup({
+  items,
+  groupLabel,
+}: NavGroupProps) {
   return (
     <SidebarGroup>
+      {groupLabel && <SidebarGroupLabel>{groupLabel}</SidebarGroupLabel>}
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
+              <SidebarMenuButton asChild tooltip={item.title}>
+                <Link to={item.url}>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

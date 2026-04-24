@@ -1,17 +1,28 @@
 import * as React from "react"
 import {
+  IconArrowBackUp,
+  IconBuildingWarehouse,
+  IconCategory,
+  IconCurrencyDollar,
   IconDashboard,
-  IconDatabase,
-  IconFileWord,
+  IconDiscount,
   IconHelp,
   IconInnerShadowTop,
-  IconReport,
-  IconSearch,
+  IconLanguage,
+  IconMap,
+  IconPackage,
+  IconReceiptTax,
   IconSettings,
+  IconShieldLock,
+  IconShoppingCart,
+  IconStack2,
+  IconTruck,
+  IconTruckDelivery,
+  IconUserShield,
+  IconUsers,
 } from "@tabler/icons-react"
 
-import { NavDocuments } from "@/layouts/DashboardLayout/components/nav-documents"
-import { NavMain } from "@/layouts/DashboardLayout/components/nav-main"
+import { NavGroup } from "@/layouts/DashboardLayout/components/nav-group"
 import { NavSecondary } from "@/layouts/DashboardLayout/components/nav-secondary"
 import { NavUser } from "@/layouts/DashboardLayout/components/nav-user"
 import {
@@ -33,7 +44,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/",
       icon: IconDashboard,
     },
   ],
@@ -48,28 +59,40 @@ const data = {
       url: "#",
       icon: IconHelp,
     },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
   ],
-  documents: [
+  catalog: [
+    { title: "Products", url: "/products", icon: IconPackage },
+    { title: "Categories", url: "/categories", icon: IconCategory },
+  ],
+  sales: [
+    { title: "Orders", url: "/orders", icon: IconShoppingCart },
+    { title: "Customers", url: "/customers", icon: IconUsers },
+  ],
+  inventory: [
     {
-      name: "Products",
-      url: "#",
-      icon: IconDatabase,
+      title: "Stock locations",
+      url: "/stock-locations",
+      icon: IconBuildingWarehouse,
     },
-    {
-      name: "Orders",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
+    { title: "Inventory", url: "/inventory", icon: IconStack2 },
+  ],
+  marketing: [
+    { title: "Promotions", url: "/promotions", icon: IconDiscount },
+    { title: "Price lists", url: "/price-lists", icon: IconCurrencyDollar },
+  ],
+  fulfillment: [
+    { title: "Shipments", url: "/shipments", icon: IconTruckDelivery },
+    { title: "Returns", url: "/returns", icon: IconArrowBackUp },
+  ],
+  shipping: [
+    { title: "Shipping zones", url: "/shipping-zones", icon: IconMap },
+    { title: "Shipping options", url: "/shipping-options", icon: IconTruck },
+  ],
+  configuration: [
+    { title: "Languages", url: "/languages", icon: IconLanguage },
+    { title: "Tax classes", url: "/tax-classes", icon: IconReceiptTax },
+    { title: "Users", url: "/users", icon: IconUserShield },
+    { title: "Roles", url: "/roles", icon: IconShieldLock },
   ],
 }
 
@@ -92,8 +115,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
+        <NavGroup items={data.navMain} />
+        <NavGroup items={data.catalog} groupLabel="Catalog" />
+        <NavGroup items={data.sales} groupLabel="Sales" />
+        <NavGroup items={data.inventory} groupLabel="Inventory" />
+        <NavGroup items={data.marketing} groupLabel="Marketing" />
+        <NavGroup items={data.fulfillment} groupLabel="Fulfillment" />
+        <NavGroup items={data.shipping} groupLabel="Shipping" />
+        <NavGroup items={data.configuration} groupLabel="Configuration" />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
