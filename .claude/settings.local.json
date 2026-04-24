@@ -20,7 +20,10 @@
       "Bash(pnpm --filter @repo/types type-check)",
       "Bash(pnpm --filter @repo/utils type-check)",
       "Bash(pnpm --filter @repo/types build)",
-      "Bash(pnpm --filter @repo/utils build)"
+      "Bash(pnpm --filter @repo/utils build)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr *)"
     ]
   }
 }
