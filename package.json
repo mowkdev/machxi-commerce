@@ -1,0 +1,33 @@
+{
+  "name": "ecommerce-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "E-commerce platform monorepo with Turborepo + pnpm",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
+    "type-check": "turbo run type-check",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "db:generate": "turbo run db:generate",
+    "db:push": "pnpm --filter @repo/database db:push",
+    "db:migrate": "turbo run db:migrate",
+    "db:studio": "pnpm --filter @repo/database db:studio",
+    "docker:dev": "docker compose up -d && docker compose logs -f db",
+    "db:setup": "node scripts/db-setup.mjs"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "prettier": "^3.2.5",
+    "turbo": "^1.12.4",
+    "typescript": "^5.3.3"
+  }
+}

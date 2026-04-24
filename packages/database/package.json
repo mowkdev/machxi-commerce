@@ -1,0 +1,59 @@
+{
+  "name": "@repo/database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Drizzle ORM schema and database client",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./client": {
+      "import": "./dist/client.mjs",
+      "require": "./dist/client.js",
+      "types": "./dist/client.d.ts"
+    },
+    "./schema": {
+      "import": "./dist/schema/index.mjs",
+      "require": "./dist/schema/index.js",
+      "types": "./dist/schema/index.d.ts"
+    },
+    "./validators": {
+      "import": "./dist/validators.mjs",
+      "require": "./dist/validators.js",
+      "types": "./dist/validators.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.36.0",
+    "drizzle-zod": "^0.8.3",
+    "pg": "^8.11.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "@types/pg": "^8.10.0",
+    "dotenv": "^16.0.0",
+    "drizzle-kit": "^0.27.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  }
+}

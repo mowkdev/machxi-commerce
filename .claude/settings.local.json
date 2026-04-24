@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install *)",
+      "Bash(docker compose *)",
+      "Bash(npx drizzle-kit *)",
+      "Bash(pnpm --filter @repo/database exec drizzle-kit --version)",
+      "Bash(pnpm why *)",
+      "Bash(pnpm --filter @repo/database why drizzle-kit)",
+      "Bash(pnpm --filter @repo/database type-check)",
+      "Bash(pnpm store *)",
+      "Bash(pnpm db:generate)",
+      "Bash(pnpm --filter @repo/database add drizzle-zod zod)",
+      "Bash(pnpm --filter @repo/database exec tsc --noEmit)",
+      "Bash(pnpm --filter @repo/database add -D vitest)",
+      "Bash(docker exec *)",
+      "Bash(pnpm --filter @repo/database test)"
+    ]
+  }
+}
