@@ -1,20 +1,13 @@
 import * as React from "react"
 import {
-  IconCamera,
-  IconChartBar,
   IconDashboard,
   IconDatabase,
-  IconFileAi,
-  IconFileDescription,
   IconFileWord,
-  IconFolder,
   IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
 } from "@tabler/icons-react"
 
 import { NavDocuments } from "@/layouts/DashboardLayout/components/nav-documents"
@@ -44,7 +37,6 @@ const data = {
       icon: IconDashboard,
     },
   ],
-  
   navSecondary: [
     {
       title: "Settings",
