@@ -404,8 +404,3 @@ export const verificationTokensInsert = createInsertSchema(s.verificationTokens)
 export const verificationTokensSelect = createSelectSchema(s.verificationTokens);
 export type VerificationTokensInsert = z.infer<typeof verificationTokensInsert>;
 export type VerificationTokensSelect = z.infer<typeof verificationTokensSelect>;
-
-export const customerSessionsInsert = createInsertSchema(s.customerSessions);
-export const customerSessionsSelect = createSelectSchema(s.customerSessions);
-export type CustomerSessionsInsert = z.infer<typeof customerSessionsInsert>;
-export type CustomerSessionsSelect = z.infer<typeof customerSessionsSelect>;

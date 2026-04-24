@@ -13,6 +13,9 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
+    "@auth/core": "^0.41.2",
+    "@auth/drizzle-adapter": "^1.11.2",
+    "@hono/auth-js": "^1.1.1",
     "@hono/node-server": "^1.13.7",
     "@repo/database": "workspace:*",
     "@repo/types": "workspace:*",

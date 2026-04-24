@@ -68,7 +68,6 @@ import {
   rolePermissions,
   sessions,
   accounts,
-  customerSessions,
 } from './07-auth';
 
 // ─── Catalog ────────────────────────────────────────────────────────────────
@@ -282,8 +281,6 @@ export const customersRelations = relations(customers, ({ many }) => ({
   addresses: many(addresses),
   carts: many(carts),
   orders: many(orders),
-  sessions: many(sessions),
-  customerSessions: many(customerSessions),
   promotionUsage: many(promotionUsage),
 }));
 
@@ -588,16 +585,8 @@ export const rolePermissionsRelations = relations(rolePermissions, ({ one }) => 
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
-  customer: one(customers, { fields: [sessions.customerId], references: [customers.id] }),
 }));
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] }),
-}));
-
-export const customerSessionsRelations = relations(customerSessions, ({ one }) => ({
-  customer: one(customers, {
-    fields: [customerSessions.customerId],
-    references: [customers.id],
-  }),
 }));

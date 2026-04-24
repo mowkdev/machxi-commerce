@@ -118,7 +118,6 @@ export {
   sessions,
   accounts,
   verificationTokens,
-  customerSessions,
 } from './07-auth';
 
 // ────────────────────────────────────────────────────────────────────────────

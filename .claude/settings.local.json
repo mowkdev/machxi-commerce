@@ -40,7 +40,32 @@
       "Bash(pnpm --filter @app/admin add axios react-hook-form @hookform/resolvers)",
       "Bash(pnpm --filter @app/admin add @repo/types@workspace:*)",
       "Bash(pnpm type-check *)",
-      "Bash(pnpm lint *)"
+      "Bash(pnpm lint *)",
+      "WebFetch(domain:authjs.dev)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(pnpm view *)",
+      "Bash(pnpm --filter @app/api add @hono/auth-js @auth/core @auth/drizzle-adapter)",
+      "Bash(pnpm --filter @app/api add @auth/core@latest)",
+      "Bash(pnpm --filter @app/api add @auth/core@0.41.2)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('base64'\\)\\)\")",
+      "Bash(pnpm --filter @app/admin type-check)",
+      "Bash(pnpm db:push)",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm db:seed)",
+      "Bash(curl -s -o /tmp/csrf.json -w \"%{http_code}\\\\n\" -c /tmp/cookies.txt http://localhost:8000/api/auth/csrf)",
+      "Read(//tmp/**)",
+      "Bash(grep -v \"^$\")",
+      "Bash(curl -s -i http://localhost:8000/api/auth/csrf)",
+      "Bash(curl -s -c /tmp/cookies.txt -b /tmp/cookies.txt http://localhost:8000/api/auth/csrf -o /tmp/csrf.json)",
+      "Bash(python -c \"import json; print\\(json.load\\(open\\('/tmp/csrf.json'\\)\\)['csrfToken']\\)\")",
+      "Bash(curl -s -i -X POST -b /tmp/cookies.txt -c /tmp/cookies.txt -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: application/json' --data-urlencode csrfToken=__TRACKED_VAR__ --data-urlencode email=admin@example.com --data-urlencode password=changeme --data-urlencode callbackUrl=/ --data-urlencode json=true http://localhost:8000/api/auth/callback/credentials)",
+      "Bash(curl -s -c /tmp/cookies.txt http://localhost:8000/api/auth/csrf)",
+      "Bash(python -c \"import json; print\\('TOKEN:', json.load\\(open\\('/tmp/csrf.json'\\)\\)['csrfToken']\\)\")",
+      "Bash(curl -s -b /tmp/cookies.txt http://localhost:8000/api/auth/session)",
+      "Bash(curl -s -b /tmp/cookies.txt -c /tmp/cookies.txt http://localhost:8000/api/auth/csrf)",
+      "Bash(pkill -f \"tsx watch src/index.ts\")",
+      "Bash(pnpm -r type-check)"
     ]
   }
 }

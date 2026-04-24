@@ -8,9 +8,13 @@ const schema = z.object({
     .enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'])
     .default('info'),
   DATABASE_URL: z.string().url(),
-  SESSION_COOKIE_NAME: z.string().min(1).default('mxi_session'),
-  SESSION_TTL_DAYS: z.coerce.number().int().positive().default(30),
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
+  AUTH_SECRET: z.string().min(32, 'AUTH_SECRET must be at least 32 characters'),
+  AUTH_URL: z.string().url().optional(),
+  AUTH_TRUST_HOST: z
+    .enum(['true', 'false'])
+    .default('true')
+    .transform((v) => v === 'true'),
 });
 
 const parsed = schema.safeParse(process.env);

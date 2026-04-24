@@ -1,11 +1,12 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
+import { authHandler, initAuthConfig } from '@hono/auth-js';
 import { ERROR_CODES } from '@repo/types';
 import type { AppEnv } from './context';
 import { env } from './env';
+import { AUTH_BASE_PATH, buildAuthConfig } from './auth/config';
 import { attachPrincipal } from './auth/middleware';
-import { authRoutes } from './auth/routes';
 import { healthRoutes } from './health/routes';
 import { logger } from './lib/logger';
 import { requestLogger } from './lib/requestLogger';
@@ -25,6 +26,9 @@ export function createApp() {
       credentials: true,
     })
   );
+
+  app.use('*', initAuthConfig(() => buildAuthConfig()));
+  app.use(`${AUTH_BASE_PATH}/*`, authHandler());
   app.use('*', attachPrincipal);
 
   app.onError((e, c) => {
@@ -38,7 +42,6 @@ export function createApp() {
   );
 
   app.route('/health', healthRoutes);
-  app.route('/auth', authRoutes);
 
   return app;
 }
