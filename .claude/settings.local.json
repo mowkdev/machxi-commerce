@@ -35,7 +35,8 @@
       "Bash(curl -sf http://localhost:3001/health/live)",
       "Bash(curl -si http://localhost:3001/health)",
       "Bash(curl -si http://localhost:3001/health/live)",
-      "Bash(curl -si http://localhost:3001/unknown)"
+      "Bash(curl -si http://localhost:3001/unknown)",
+      "Bash(git fetch *)"
     ]
   }
 }
