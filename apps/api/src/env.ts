@@ -4,6 +4,9 @@ import { z } from 'zod';
 const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(3001),
+  LOG_LEVEL: z
+    .enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'])
+    .default('info'),
   DATABASE_URL: z.string().url(),
   SESSION_COOKIE_NAME: z.string().min(1).default('mxi_session'),
   SESSION_TTL_DAYS: z.coerce.number().int().positive().default(30),
