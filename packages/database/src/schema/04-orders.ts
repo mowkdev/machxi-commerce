@@ -14,6 +14,7 @@ import {
   integer,
   boolean,
   text,
+  jsonb,
   decimal,
   uniqueIndex,
   index,
@@ -46,8 +47,8 @@ export const orders = pgTable(
     originatingCartId: uuid('originating_cart_id').references(() => carts.id, { onDelete: 'set null' }),
     shippingAddressId: uuid('shipping_address_id').references(() => addresses.id, { onDelete: 'set null' }),
     billingAddressId: uuid('billing_address_id').references(() => addresses.id, { onDelete: 'set null' }),
-    shippingAddressSnapshot: text('shipping_address_snapshot', { mode: 'json' }),
-    billingAddressSnapshot: text('billing_address_snapshot', { mode: 'json' }),
+    shippingAddressSnapshot: jsonb('shipping_address_snapshot'),
+    billingAddressSnapshot: jsonb('billing_address_snapshot'),
     status: orderStatusEnum('status').notNull().default('pending'),
     currencyCode: char('currency_code', { length: 3 }).notNull(),
     subtotal: bigint('subtotal', { mode: 'number' }).notNull(),
@@ -399,7 +400,7 @@ export const orderLogs = pgTable(
       .notNull()
       .references(() => orders.id, { onDelete: 'cascade' }),
     eventType: varchar('event_type').notNull(),
-    metadata: text('metadata', { mode: 'json' }),
+    metadata: jsonb('metadata'),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({

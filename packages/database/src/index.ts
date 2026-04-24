@@ -1,14 +1,13 @@
-/**
- * @repo/database
- * Main entry point for database package
- */
+// @repo/database root barrel.
+//
+// Exports pure-data surface only: schema tables, relations, enum pgEnum()
+// objects, Drizzle query helpers, and type inference utilities.
+//
+// The DB client lives at `@repo/database/client` and is NOT re-exported here,
+// to keep `pg` out of frontend bundles that only need types/schema.
+// Validators live at `@repo/database/validators`.
 
-// Export database client and connection
-export { db, pool, closeDatabase } from './client';
-
-// Export all schema tables and types
 export * from './schema';
 
-// Re-export Drizzle utilities for convenience
 export { eq, and, or, not, sql, inArray, isNull, isNotNull, desc, asc } from 'drizzle-orm';
 export type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
