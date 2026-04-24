@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-import 'dotenv/config';
-import { serve } from '@hono/node-server';
-import { closeDatabase } from '@repo/database/client';
-import { createApp } from './app';
-=======
 // `./env` MUST be imported first: it loads .env via dotenv side effects before
 // any module touches `process.env` (notably @repo/database/client, which
 // validates DATABASE_URL at import time).
->>>>>>> 559087e76757406dfee4cdea7682af7af5fad91b
 import { env } from './env';
 
 import { serve, type ServerType } from '@hono/node-server';
