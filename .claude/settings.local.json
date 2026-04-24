@@ -25,7 +25,17 @@
       "Bash(git push *)",
       "Bash(gh pr *)",
       "Bash(pnpm --filter @app/api type-check)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(pnpm --filter @app/api dev)",
+      "Bash(echo \"started, pid=$!\")",
+      "Bash(curl -sf http://localhost:3001/health)",
+      "Bash(kill %1)",
+      "Bash(npm view *)",
+      "Bash(rm -f /tmp/api.log)",
+      "Bash(curl -sf http://localhost:3001/health/live)",
+      "Bash(curl -si http://localhost:3001/health)",
+      "Bash(curl -si http://localhost:3001/health/live)",
+      "Bash(curl -si http://localhost:3001/unknown)"
     ]
   }
 }
