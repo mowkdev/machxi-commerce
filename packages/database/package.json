@@ -5,27 +5,27 @@
   "description": "Drizzle ORM schema and database client",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
+      "types": "./src/index.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./client": {
+      "types": "./src/client.ts",
       "import": "./dist/client.mjs",
-      "require": "./dist/client.js",
-      "types": "./dist/client.d.ts"
+      "require": "./dist/client.js"
     },
     "./schema": {
+      "types": "./src/schema/index.ts",
       "import": "./dist/schema/index.mjs",
-      "require": "./dist/schema/index.js",
-      "types": "./dist/schema/index.d.ts"
+      "require": "./dist/schema/index.js"
     },
     "./validators": {
+      "types": "./src/validators.ts",
       "import": "./dist/validators.mjs",
-      "require": "./dist/validators.js",
-      "types": "./dist/validators.d.ts"
+      "require": "./dist/validators.js"
     }
   },
   "scripts": {

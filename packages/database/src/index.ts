@@ -11,4 +11,4 @@ export * from './schema';
 
 // Re-export Drizzle utilities for convenience
 export { eq, and, or, not, sql, inArray, isNull, isNotNull, desc, asc } from 'drizzle-orm';
-export type { InferModel } from 'drizzle-orm';
+export type { InferSelectModel, InferInsertModel } from 'drizzle-orm';

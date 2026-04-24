@@ -2,24 +2,24 @@
  * Common API types and DTOs
  */
 
-import type { InferModel } from '@repo/database';
+import type { InferSelectModel, InferInsertModel } from '@repo/database';
 import type { products, productVariants, orders, customers } from '@repo/database';
 
 // ────────────────────────────────────────────────────────────────────────────
 // DATABASE MODEL TYPES
 // ────────────────────────────────────────────────────────────────────────────
 
-export type Product = InferModel<typeof products>;
-export type NewProduct = InferModel<typeof products, 'insert'>;
+export type Product = InferSelectModel<typeof products>;
+export type NewProduct = InferInsertModel<typeof products>;
 
-export type ProductVariant = InferModel<typeof productVariants>;
-export type NewProductVariant = InferModel<typeof productVariants, 'insert'>;
+export type ProductVariant = InferSelectModel<typeof productVariants>;
+export type NewProductVariant = InferInsertModel<typeof productVariants>;
 
-export type Order = InferModel<typeof orders>;
-export type NewOrder = InferModel<typeof orders, 'insert'>;
+export type Order = InferSelectModel<typeof orders>;
+export type NewOrder = InferInsertModel<typeof orders>;
 
-export type Customer = InferModel<typeof customers>;
-export type NewCustomer = InferModel<typeof customers, 'insert'>;
+export type Customer = InferSelectModel<typeof customers>;
+export type NewCustomer = InferInsertModel<typeof customers>;
 
 // ────────────────────────────────────────────────────────────────────────────
 // API RESPONSE TYPES
