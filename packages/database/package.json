@@ -41,7 +41,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "drizzle-orm": "^0.36.0",
+    "drizzle-orm": "^0.38.4",
     "drizzle-zod": "^0.8.3",
     "pg": "^8.11.0",
     "zod": "^4.3.6"
@@ -51,7 +51,7 @@
     "@repo/tsconfig": "workspace:*",
     "@types/pg": "^8.10.0",
     "dotenv": "^16.0.0",
-    "drizzle-kit": "^0.27.0",
+    "drizzle-kit": "^0.30.6",
     "tsup": "^8.0.0",
     "typescript": "^5.3.3",
     "vitest": "^1.2.0"
