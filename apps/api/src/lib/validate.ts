@@ -5,7 +5,6 @@ import { validationFailed } from './errors';
 export async function parseBody<T>(c: Context, schema: ZodType<T>): Promise<T> {
   let raw: unknown;
   try {
-    console.log('c.req.json()', c.req.json());
     raw = await c.req.json();
   } catch {
     throw validationFailed('Request body must be valid JSON');
