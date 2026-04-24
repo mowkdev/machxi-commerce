@@ -15,6 +15,7 @@ import {
   uniqueIndex,
   index,
   check,
+  primaryKey,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { customers } from './03-customers-carts';
@@ -94,10 +95,7 @@ export const userRoles = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    pk: {
-      name: 'user_roles_pkey',
-      columns: [table.userId, table.roleId],
-    },
+    pk: primaryKey({ name: 'user_roles_pkey', columns: [table.userId, table.roleId] }),
     roleIdx: index('idx_user_roles_role').on(table.roleId),
   })
 );
@@ -118,10 +116,10 @@ export const rolePermissions = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    pk: {
+    pk: primaryKey({
       name: 'role_permissions_pkey',
       columns: [table.roleId, table.permissionId],
-    },
+    }),
     permissionIdx: index('idx_role_permissions_permission').on(table.permissionId),
   })
 );
@@ -196,10 +194,10 @@ export const verificationTokens = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    pk: {
+    pk: primaryKey({
       name: 'verification_tokens_pkey',
       columns: [table.identifier, table.token],
-    },
+    }),
     tokenUnique: uniqueIndex('uk_verification_tokens_token').on(table.token),
     identifierIdx: index('idx_verification_tokens_identifier').on(table.identifier),
   })

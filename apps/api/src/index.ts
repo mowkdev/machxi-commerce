@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { serve } from '@hono/node-server';
 import { closeDatabase } from '@repo/database/client';
 import { createApp } from './app';
