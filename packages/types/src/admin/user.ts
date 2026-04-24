@@ -26,3 +26,9 @@ export const assignRoleBody = z.object({
   roleId: z.string().uuid(),
 });
 export type AssignRoleBody = z.infer<typeof assignRoleBody>;
+
+export const loginAdminBody = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+export type LoginAdminBody = z.infer<typeof loginAdminBody>;
