@@ -118,18 +118,28 @@ pnpm clean            # Remove all build artifacts
 ### In your apps (once created):
 
 ```typescript
-// Use database
-import { db, products, eq } from '@repo/database';
+// Schema + query helpers (safe in any bundle — no pg runtime)
+import { products, eq } from '@repo/database';
 
-const allProducts = await db.select().from(products);
+// DB client (server-only — pulls in pg)
+import { db } from '@repo/database/client';
 
-// Use types
-import type { ApiResponse, Product } from '@repo/types';
+const allProducts = await db.select().from(products).where(eq(products.status, 'published'));
 
-// Use utils
+// Zod validators + inferred types (raw row shape)
+import { productsInsert, type ProductsSelect } from '@repo/database/validators';
+
+// Transport-level contracts (envelope, sessions, re-exported row types)
+import type { ApiResponse, AdminSession, Product } from '@repo/types';
+
+// Surface-specific DTOs — import from the matching subpath
+import { addToCartBody, checkoutBody } from '@repo/types/storefront';
+import { createProductBody, updateOrderStatusBody } from '@repo/types/admin';
+
+// Pure helpers
 import { formatFromMinorUnits, slugify } from '@repo/utils';
 
-// Use UI components
+// UI components
 import { Button } from '@repo/ui';
 ```
 
