@@ -9,5 +9,23 @@
 
 export * from './schema';
 
-export { eq, and, or, not, sql, inArray, isNull, isNotNull, desc, asc } from 'drizzle-orm';
+export {
+  eq,
+  ne,
+  and,
+  or,
+  not,
+  sql,
+  inArray,
+  isNull,
+  isNotNull,
+  desc,
+  asc,
+  like,
+  ilike,
+  gt,
+  gte,
+  lt,
+  lte,
+} from 'drizzle-orm';
 export type { InferSelectModel, InferInsertModel } from 'drizzle-orm';

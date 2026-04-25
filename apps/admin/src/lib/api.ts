@@ -9,15 +9,18 @@ export const api = axios.create({
   headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 });
 
-// Unwrap the { success, data } envelope on success and normalize errors so
-// TanStack Query callers always get the inner `data` shape or a thrown
-// ApiError.
+// Unwrap the { success, data, meta? } envelope on success and normalize errors
+// so TanStack Query callers always get a predictable shape:
+//   • when meta is present (paginated lists): response.data = { data, meta }
+//   • otherwise:                              response.data = data
 api.interceptors.response.use(
   (response) => {
     const body = response.data as ApiResponse<unknown>;
     if (body && typeof body === 'object' && 'success' in body) {
       if (body.success) {
-        response.data = body.data;
+        response.data = body.meta
+          ? { data: body.data, meta: body.meta }
+          : body.data;
         return response;
       }
       return Promise.reject(

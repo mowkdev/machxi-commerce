@@ -65,7 +65,9 @@
       "Bash(curl -s -b /tmp/cookies.txt http://localhost:8000/api/auth/session)",
       "Bash(curl -s -b /tmp/cookies.txt -c /tmp/cookies.txt http://localhost:8000/api/auth/csrf)",
       "Bash(pkill -f \"tsx watch src/index.ts\")",
-      "Bash(pnpm -r type-check)"
+      "Bash(pnpm -r type-check)",
+      "Bash(awk '{print substr\\($0, 1, length\\($0\\) - length\\($NF\\) + length\\($NF\\)\\) \" \" NF}')",
+      "Bash(pnpm build *)"
     ]
   }
 }

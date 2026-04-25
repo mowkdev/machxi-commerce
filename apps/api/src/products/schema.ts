@@ -1,0 +1,24 @@
+import { z } from 'zod';
+
+export const productStatusValues = ['draft', 'published', 'archived'] as const;
+
+export const listProductsQuery = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  pageSize: z.coerce.number().int().positive().max(200).default(20),
+  search: z.string().trim().min(1).optional(),
+  status: z.enum(productStatusValues).optional(),
+  sortBy: z.enum(['createdAt', 'updatedAt', 'baseSku', 'status']).default('createdAt'),
+  sortOrder: z.enum(['asc', 'desc']).default('desc'),
+});
+
+export type ListProductsQuery = z.infer<typeof listProductsQuery>;
+
+export interface ProductListRow {
+  id: string;
+  baseSku: string | null;
+  status: 'draft' | 'published' | 'archived' | 'deleted';
+  name: string | null;
+  handle: string | null;
+  createdAt: string;
+  updatedAt: string;
+}

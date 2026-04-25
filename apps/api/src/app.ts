@@ -8,6 +8,7 @@ import { env } from './env';
 import { AUTH_BASE_PATH, buildAuthConfig } from './auth/config';
 import { attachPrincipal } from './auth/middleware';
 import { healthRoutes } from './health/routes';
+import { productsRoutes } from './products/routes';
 import { logger } from './lib/logger';
 import { requestLogger } from './lib/requestLogger';
 import { err, errFromException } from './lib/response';
@@ -42,6 +43,7 @@ export function createApp() {
   );
 
   app.route('/health', healthRoutes);
+  app.route('/api/products', productsRoutes);
 
   return app;
 }
