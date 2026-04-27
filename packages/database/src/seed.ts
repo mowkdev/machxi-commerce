@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 import { and, eq } from 'drizzle-orm';
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { permissions, rolePermissions, roles, userRoles, users } from './schema';
+import { languages, permissions, rolePermissions, roles, userRoles, users } from './schema';
 
 /** Set after `./client` loads — `./client` reads DATABASE_URL at module init, so load .env first in main(). */
 let closeDatabase: () => Promise<void> = async () => {};
@@ -44,6 +44,12 @@ async function main(): Promise<void> {
 
   const passwordHash = await bcrypt.hash(password, WORK_FACTOR);
   const now = new Date().toISOString();
+
+  // Seed default language (required by product_translations FK)
+  await db
+    .insert(languages)
+    .values({ code: 'en', name: 'English', isDefault: true })
+    .onConflictDoNothing();
 
   const [adminRole] = await db
     .insert(roles)

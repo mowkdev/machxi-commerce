@@ -1,5 +1,6 @@
 import { IconPlus } from "@tabler/icons-react"
 import type { ColumnDef } from "@tanstack/react-table"
+import { Link, useNavigate } from "react-router-dom"
 
 import {
   AppDataGrid,
@@ -41,7 +42,7 @@ const columns: ColumnDef<ProductListItem>[] = [
       <DataGridColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => (
-      <div className="flex flex-col">
+      <Link to={`/products/${row.original.id}`} className="flex flex-col hover:underline">
         <span className="font-medium text-foreground">
           {row.original.name ?? "—"}
         </span>
@@ -50,7 +51,7 @@ const columns: ColumnDef<ProductListItem>[] = [
             /{row.original.handle}
           </span>
         )}
-      </div>
+      </Link>
     ),
     enableSorting: false,
   },
@@ -114,9 +115,11 @@ export default function ProductsPage() {
       initialSort={[{ id: "createdAt", desc: true }]}
       getRowId={(row) => row.id}
       toolbarActions={
-        <Button size="sm">
-          <IconPlus />
-          <span className="hidden lg:inline">New product</span>
+        <Button size="sm" asChild>
+          <Link to="/products/new">
+            <IconPlus />
+            <span className="hidden lg:inline">New product</span>
+          </Link>
         </Button>
       }
     />

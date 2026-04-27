@@ -28,6 +28,11 @@ export const productStatusEnum = pgEnum('product_status', [
   'deleted',
 ]);
 
+export const productTypeEnum = pgEnum('product_type', [
+  'simple',
+  'variable',
+]);
+
 // ────────────────────────────────────────────────────────────────────────────
 // PRICING & INVENTORY ENUMS
 // ────────────────────────────────────────────────────────────────────────────

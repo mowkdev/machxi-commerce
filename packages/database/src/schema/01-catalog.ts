@@ -20,7 +20,7 @@ import {
   check,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
-import { productStatusEnum } from './00-enums';
+import { productStatusEnum, productTypeEnum } from './00-enums';
 
 // ────────────────────────────────────────────────────────────────────────────
 // LANGUAGES
@@ -106,6 +106,7 @@ export const products = pgTable(
     id: uuid('id').primaryKey().defaultRandom(),
     baseSku: varchar('base_sku'),
     status: productStatusEnum('status').notNull().default('draft'),
+    type: productTypeEnum('type').notNull().default('simple'),
     taxClassId: uuid('tax_class_id')
       .notNull()
       .references(() => taxClasses.id, { onDelete: 'restrict' }),
@@ -117,6 +118,7 @@ export const products = pgTable(
     statusIdx: index('idx_products_status')
       .on(table.status)
       .where(sql`${table.status} != 'deleted'`),
+    typeIdx: index('idx_products_type').on(table.type),
     baseSkuUnique: uniqueIndex('uk_products_base_sku')
       .on(table.baseSku)
       .where(sql`${table.baseSku} IS NOT NULL AND ${table.status} != 'deleted'`),
