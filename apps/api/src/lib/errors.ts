@@ -28,5 +28,7 @@ export const unauthorized = (message = 'Authentication required') =>
 export const forbidden = (message = 'Forbidden') =>
   new HttpError(ERROR_CODES.FORBIDDEN, message);
 export const conflict = (message: string) => new HttpError(ERROR_CODES.CONFLICT, message);
+export const notFound = (message = 'Not found') =>
+  new HttpError(ERROR_CODES.NOT_FOUND, message);
 export const validationFailed = (message: string, details?: ApiError['details']) =>
   new HttpError(ERROR_CODES.VALIDATION_FAILED, message, details);
