@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { IconPlus, IconTrash, IconX } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -48,12 +48,34 @@ function getDefaultLangOptions(product: ProductDetailResponse): LocalOption[] {
   }));
 }
 
+function normalizeOptions(options: LocalOption[]) {
+  return options.map((option) => ({
+    name: option.name.trim(),
+    values: option.values.map((value) => value.label.trim()),
+  }));
+}
+
+function getSubmittedOptions(options: LocalOption[]) {
+  return normalizeOptions(options).map((option) => ({
+    translations: [{ languageCode: 'en', name: option.name }],
+    values: option.values.map((label) => ({
+      translations: [{ languageCode: 'en', label }],
+    })),
+  }));
+}
+
 export function OptionsCard({ product }: OptionsCardProps) {
   const [options, setOptions] = useState<LocalOption[]>(() =>
     getDefaultLangOptions(product)
   );
   const [newValueInputs, setNewValueInputs] = useState<Record<string, string>>({});
+  const [confirmRegenerateOpen, setConfirmRegenerateOpen] = useState(false);
   const generateMutation = useGenerateVariants(product.id);
+
+  useEffect(() => {
+    setOptions(getDefaultLangOptions(product));
+    setNewValueInputs({});
+  }, [product]);
 
   const handleAddOption = useCallback(() => {
     const id = `new-${Date.now()}`;
@@ -64,7 +86,9 @@ export function OptionsCard({ product }: OptionsCardProps) {
   }, []);
 
   const handleRemoveOption = useCallback((optionId: string) => {
-    setOptions((prev) => prev.filter((o) => o.id !== optionId));
+    setOptions((prev) =>
+      prev.length <= 1 ? prev : prev.filter((o) => o.id !== optionId)
+    );
   }, []);
 
   const handleOptionNameChange = useCallback(
@@ -124,15 +148,40 @@ export function OptionsCard({ product }: OptionsCardProps) {
   const variantCount = options.length > 0
     ? cartesianProduct(options.map((o) => o.values)).length
     : 0;
+  const normalizedOptions = useMemo(() => normalizeOptions(options), [options]);
+  const persistedOptions = useMemo(
+    () => normalizeOptions(getDefaultLangOptions(product)),
+    [product]
+  );
+  const optionNameCounts = normalizedOptions.reduce<Record<string, number>>(
+    (counts, option) => {
+      const key = option.name.toLowerCase();
+      if (key) counts[key] = (counts[key] ?? 0) + 1;
+      return counts;
+    },
+    {}
+  );
+  const hasDuplicateOptionNames = normalizedOptions.some(
+    (option) => option.name && optionNameCounts[option.name.toLowerCase()] > 1
+  );
+  const hasOptionChanges =
+    JSON.stringify(normalizedOptions) !== JSON.stringify(persistedOptions);
+  const canGenerateVariants =
+    variantCount > 0 &&
+    normalizedOptions.every((option) => option.name && option.values.length > 0) &&
+    !hasDuplicateOptionNames;
 
   const existingVariantCount = product.variants.length;
+  const shouldRegenerate = existingVariantCount > 0 && hasOptionChanges;
 
-  const handleGenerate = () => {
+  const handleGenerate = (regenerate = false) => {
     generateMutation.mutate({
       defaultPrices: [
         { currencyCode: 'EUR', amount: 0, minQuantity: 1, taxInclusive: true },
       ],
       skuPrefix: product.baseSku || 'VAR',
+      options: getSubmittedOptions(options),
+      regenerate,
     });
   };
 
@@ -169,6 +218,8 @@ export function OptionsCard({ product }: OptionsCardProps) {
                     variant="ghost"
                     size="icon"
                     className="mt-5 shrink-0 text-muted-foreground hover:text-destructive"
+                    disabled={options.length <= 1}
+                    aria-label={`Remove option ${idx + 1}`}
                   >
                     <IconTrash className="size-4" />
                   </Button>
@@ -240,20 +291,65 @@ export function OptionsCard({ product }: OptionsCardProps) {
             Add option
           </Button>
 
-          {options.length > 0 && variantCount > 0 && (
+          {hasDuplicateOptionNames && (
+            <p className="text-sm text-destructive">
+              Option names must be unique.
+            </p>
+          )}
+
+          {options.length > 0 && variantCount > 0 && (!existingVariantCount || shouldRegenerate) && (
             <div className="flex items-center gap-3">
               <span className="text-xs text-muted-foreground">
                 {variantCount} variant{variantCount === 1 ? '' : 's'}
                 {existingVariantCount > 0 && ` (${existingVariantCount} existing)`}
               </span>
-              <Button
-                type="button"
-                size="sm"
-                onClick={handleGenerate}
-                disabled={generateMutation.isPending}
-              >
-                {generateMutation.isPending ? 'Generating...' : 'Generate variants'}
-              </Button>
+              {shouldRegenerate ? (
+                <AlertDialog
+                  open={confirmRegenerateOpen}
+                  onOpenChange={setConfirmRegenerateOpen}
+                >
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      type="button"
+                      size="sm"
+                      disabled={generateMutation.isPending || !canGenerateVariants}
+                    >
+                      {generateMutation.isPending
+                        ? 'Regenerating...'
+                        : 'Regenerate variants'}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Regenerate variants?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Existing variants for this product will be deleted and recreated
+                        from the current options.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => {
+                          handleGenerate(true);
+                          setConfirmRegenerateOpen(false);
+                        }}
+                      >
+                        Regenerate variants
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              ) : (
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => handleGenerate(false)}
+                  disabled={generateMutation.isPending || !canGenerateVariants}
+                >
+                  {generateMutation.isPending ? 'Generating...' : 'Generate variants'}
+                </Button>
+              )}
             </div>
           )}
         </div>

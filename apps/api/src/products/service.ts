@@ -5,6 +5,7 @@ import {
   desc,
   eq,
   ilike,
+  inArray,
   ne,
   or,
   sql,
@@ -23,6 +24,7 @@ import {
   priceSets,
   prices,
   inventoryItems,
+  inventoryTransactions,
   productMedia,
 } from '@repo/database/schema';
 import type { PaginationMeta } from '@repo/types';
@@ -587,16 +589,131 @@ export async function generateVariants(
   body: GenerateVariantsBody
 ): Promise<{ created: number }> {
   return db.transaction(async (tx) => {
-    // Load product options with values
-    const opts = await tx.query.productOptions.findMany({
-      where: eq(productOptions.productId, productId),
-      with: {
-        values: {
-          with: { translations: true },
+    const submittedOptions = body.options ?? [];
+
+    if (submittedOptions.length > 0) {
+      const optionNames = submittedOptions.map((option) =>
+        option.translations[0]?.name.trim().toLowerCase()
+      );
+      if (optionNames.some((name) => !name)) {
+        throw new Error('Option names are required');
+      }
+      if (new Set(optionNames).size !== optionNames.length) {
+        throw new Error('Option names must be unique');
+      }
+      if (submittedOptions.some((option) => option.values.length === 0)) {
+        throw new Error('Each option must have at least one value');
+      }
+    }
+
+    const loadOptions = () =>
+      tx.query.productOptions.findMany({
+        where: eq(productOptions.productId, productId),
+        with: {
+          values: {
+            with: { translations: true },
+          },
+          translations: true,
         },
-        translations: true,
-      },
-    });
+      });
+
+    const insertSubmittedOptions = async () => {
+      for (const opt of submittedOptions) {
+        const [option] = await tx
+          .insert(productOptions)
+          .values({ productId })
+          .returning({ id: productOptions.id });
+
+        await tx.insert(productOptionTranslations).values(
+          opt.translations.map((t) => ({
+            optionId: option.id,
+            languageCode: t.languageCode,
+            name: t.name,
+          }))
+        );
+
+        for (const val of opt.values) {
+          const [value] = await tx
+            .insert(productOptionValues)
+            .values({ optionId: option.id })
+            .returning({ id: productOptionValues.id });
+
+          await tx.insert(productOptionValueTranslations).values(
+            val.translations.map((t) => ({
+              valueId: value.id,
+              languageCode: t.languageCode,
+              label: t.label,
+            }))
+          );
+        }
+      }
+    };
+
+    // Load product options with values
+    let opts = await loadOptions();
+
+    if (body.regenerate) {
+      if (submittedOptions.length === 0) {
+        throw new Error('Options are required to regenerate variants');
+      }
+
+      const oldVariants = await tx
+        .select({
+          id: productVariants.id,
+          priceSetId: productVariants.priceSetId,
+          inventoryItemId: productVariants.inventoryItemId,
+        })
+        .from(productVariants)
+        .where(eq(productVariants.productId, productId));
+
+      const oldVariantIds = oldVariants.map((variant) => variant.id);
+      if (oldVariantIds.length > 0) {
+        await tx
+          .delete(variantOptionValues)
+          .where(inArray(variantOptionValues.variantId, oldVariantIds));
+      }
+
+      await tx.delete(productVariants).where(eq(productVariants.productId, productId));
+      await tx.delete(productOptions).where(eq(productOptions.productId, productId));
+
+      const oldPriceSetIds = [
+        ...new Set(oldVariants.map((variant) => variant.priceSetId)),
+      ];
+      if (oldPriceSetIds.length > 0) {
+        await tx.delete(priceSets).where(inArray(priceSets.id, oldPriceSetIds));
+      }
+
+      const oldInventoryItemIds = [
+        ...new Set(
+          oldVariants
+            .map((variant) => variant.inventoryItemId)
+            .filter((id): id is string => Boolean(id))
+        ),
+      ];
+      if (oldInventoryItemIds.length > 0) {
+        const protectedInventoryRows = await tx
+          .select({ inventoryItemId: inventoryTransactions.inventoryItemId })
+          .from(inventoryTransactions)
+          .where(inArray(inventoryTransactions.inventoryItemId, oldInventoryItemIds));
+        const protectedInventoryIds = new Set(
+          protectedInventoryRows.map((row) => row.inventoryItemId)
+        );
+        const deletableInventoryItemIds = oldInventoryItemIds.filter(
+          (id) => !protectedInventoryIds.has(id)
+        );
+        if (deletableInventoryItemIds.length > 0) {
+          await tx
+            .delete(inventoryItems)
+            .where(inArray(inventoryItems.id, deletableInventoryItemIds));
+        }
+      }
+
+      await insertSubmittedOptions();
+      opts = await loadOptions();
+    } else if (opts.length === 0 && submittedOptions.length > 0) {
+      await insertSubmittedOptions();
+      opts = await loadOptions();
+    }
 
     if (opts.length === 0) {
       return { created: 0 };
