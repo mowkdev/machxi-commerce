@@ -1,18 +1,15 @@
-import { useEffect, useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
+import { FormProvider } from 'react-hook-form';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import type { ProductDetailResponse } from '@repo/types/admin';
-import { useCreateProduct, useUpdateProduct } from '../hooks';
-import { productFormSchema, type ProductFormValues } from '../schema';
 import { GeneralInfoCard } from './GeneralInfoCard';
 import { StatusCard } from './StatusCard';
 import { OrganizationCard } from './OrganizationCard';
 import { OptionsCard } from './OptionsCard';
 import { VariantsTable } from './VariantsTable';
 import { ProductTypeCard } from './ProductTypeCard';
+import { DefaultVariantCard } from './DefaultVariantCard';
+import { useProductForm } from './useProductForm';
 
 interface ProductFormProps {
   mode: 'create' | 'edit';
@@ -20,85 +17,23 @@ interface ProductFormProps {
 }
 
 export function ProductForm({ mode, initialData }: ProductFormProps) {
-  const navigate = useNavigate();
-  const createMutation = useCreateProduct();
-  const updateMutation = useUpdateProduct(initialData?.id ?? '');
-
-  const defaultTranslation = initialData?.translations[0];
-
-  const defaultValues = useMemo<ProductFormValues>(
-    () => ({
-      name: defaultTranslation?.name ?? '',
-      handle: defaultTranslation?.handle ?? '',
-      description: defaultTranslation?.description ?? '',
-      baseSku: initialData?.baseSku ?? '',
-      status: (initialData?.status as ProductFormValues['status']) ?? 'draft',
-      type: (initialData?.type as ProductFormValues['type']) ?? 'simple',
-      taxClassId: initialData?.taxClassId ?? '',
-      categoryIds: initialData?.categories.map((c) => c.categoryId) ?? [],
-    }),
-    [initialData, defaultTranslation]
-  );
-
-  const form = useForm<ProductFormValues>({
-    resolver: zodResolver(productFormSchema),
-    defaultValues,
-  });
-
-  useEffect(() => {
-    if (mode === 'edit' && initialData) {
-      form.reset(defaultValues);
-    }
-  }, [initialData, mode, form, defaultValues]);
-
-  const onSubmit = form.handleSubmit((values) => {
-    const languageCode = defaultTranslation?.languageCode ?? 'en';
-
-    if (mode === 'create') {
-      // The server auto-creates a default variant for `simple` products and
-      // creates none for `variable` products. We only send product-level
-      // fields here — options & variants are managed on the edit page.
-      createMutation.mutate({
-        type: values.type,
-        baseSku: values.baseSku || undefined,
-        status: values.status,
-        taxClassId: values.taxClassId,
-        translations: [
-          {
-            languageCode,
-            name: values.name,
-            description: values.description,
-            handle: values.handle,
-          },
-        ],
-        categoryIds: values.categoryIds,
-        options: [],
-        variants: [],
-      });
-    } else {
-      // `type` is intentionally excluded — immutable post-create.
-      updateMutation.mutate({
-        baseSku: values.baseSku || undefined,
-        status: values.status,
-        taxClassId: values.taxClassId,
-        translations: [
-          {
-            languageCode,
-            name: values.name,
-            description: values.description,
-            handle: values.handle,
-          },
-        ],
-        categoryIds: values.categoryIds,
-      });
-    }
-  });
-
-  const isPending = createMutation.isPending || updateMutation.isPending;
-  const title = mode === 'create' ? 'New product' : (form.watch('name') || 'Untitled product');
-  const hasOptions = (initialData?.options.length ?? 0) > 0;
-  const productType = form.watch('type');
-  const isVariable = productType === 'variable';
+  const {
+    appendDefaultVariantPrice,
+    canSave,
+    defaultVariant,
+    defaultVariantForm,
+    defaultVariantPriceFields,
+    form,
+    hasOptions,
+    isCreateMode,
+    isEditMode,
+    isPending,
+    isVariable,
+    navigateToProducts,
+    onSubmit,
+    removeDefaultVariantPrice,
+    title,
+  } = useProductForm({ mode, initialData });
 
   return (
     <FormProvider {...form}>
@@ -110,7 +45,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
               type="button"
               variant="ghost"
               size="icon"
-              onClick={() => navigate('/products')}
+              onClick={navigateToProducts}
             >
               <IconArrowLeft className="size-4" />
             </Button>
@@ -120,12 +55,12 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
             <Button
               type="button"
               variant="outline"
-              onClick={() => navigate('/products')}
+              onClick={navigateToProducts}
             >
               Discard
             </Button>
-            <Button type="submit" disabled={isPending}>
-              {isPending ? 'Saving...' : mode === 'create' ? 'Create product' : 'Save'}
+            <Button type="submit" disabled={!canSave || isPending}>
+              {isPending ? 'Saving...' : isCreateMode ? 'Create product' : 'Save'}
             </Button>
           </div>
         </div>
@@ -134,19 +69,25 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
         <div className="grid gap-6 p-4 lg:grid-cols-3 lg:p-6">
           <div className="flex flex-col gap-6 lg:col-span-2">
             <GeneralInfoCard />
-            {mode === 'edit' && initialData && isVariable && (
+            {isEditMode && initialData && isVariable && (
               <>
                 <OptionsCard product={initialData} />
                 {hasOptions && <VariantsTable product={initialData} />}
               </>
             )}
-            {mode === 'edit' && initialData && !isVariable && (
-              <VariantsTable product={initialData} />
+            {isEditMode && initialData && !isVariable && (
+              <DefaultVariantCard
+                productDetails={defaultVariant}
+                form={defaultVariantForm}
+                priceFields={defaultVariantPriceFields}
+                appendPrice={appendDefaultVariantPrice}
+                removePrice={removeDefaultVariantPrice}
+              />
             )}
           </div>
           <div className="flex flex-col gap-6">
-            <ProductTypeCard locked={mode === 'edit'} />
-            <StatusCard />
+            <StatusCard locked={isCreateMode} />
+            <ProductTypeCard locked={isEditMode} />
             <OrganizationCard />
           </div>
         </div>

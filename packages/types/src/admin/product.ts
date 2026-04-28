@@ -101,6 +101,8 @@ export const generateVariantsBody = z.object({
   defaultPrices: z.array(priceSchema).default([]),
   defaultWeight: z.number().int().nonnegative().optional(),
   skuPrefix: z.string().optional(),
+  options: z.array(optionSchema).optional(),
+  regenerate: z.boolean().optional(),
 });
 export type GenerateVariantsBody = z.infer<typeof generateVariantsBody>;
 

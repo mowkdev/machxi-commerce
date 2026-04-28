@@ -10,7 +10,7 @@ export const productFormSchema = z.object({
   // would orphan variants/options — handled by omitting it from the update DTO).
   type: z.enum(['simple', 'variable']),
   taxClassId: z.string().uuid('Select a tax class'),
-  categoryIds: z.array(z.string().uuid()).default([]),
+  categoryIds: z.array(z.string().uuid()),
 });
 export type ProductFormValues = z.infer<typeof productFormSchema>;
 

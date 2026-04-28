@@ -67,7 +67,12 @@
       "Bash(pkill -f \"tsx watch src/index.ts\")",
       "Bash(pnpm -r type-check)",
       "Bash(awk '{print substr\\($0, 1, length\\($0\\) - length\\($NF\\) + length\\($NF\\)\\) \" \" NF}')",
-      "Bash(pnpm build *)"
+      "Bash(pnpm build *)",
+      "Bash(pnpm --filter @repo/api type-check)",
+      "Bash(pnpm --filter @app/admin test)",
+      "Bash(git checkout *)",
+      "Bash(pnpm --filter @repo/database exec drizzle-kit push --force)",
+      "Bash(node -e ' *)"
     ]
   }
 }

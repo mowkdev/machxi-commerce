@@ -15,7 +15,11 @@ const STATUS_OPTIONS = [
   { value: 'archived', label: 'Archived', description: 'Hidden from storefront' },
 ] as const;
 
-export function StatusCard() {
+interface StatusCardProps {
+  locked?: boolean;
+}
+
+export function StatusCard({ locked = false }: StatusCardProps) {
   const { control } = useFormContext<ProductFormValues>();
 
   return (
@@ -32,6 +36,7 @@ export function StatusCard() {
               value={field.value}
               onValueChange={field.onChange}
               className="flex flex-col gap-3"
+              disabled={locked}
             >
               {STATUS_OPTIONS.map((opt) => (
                 <div key={opt.value} className="flex items-start gap-3">

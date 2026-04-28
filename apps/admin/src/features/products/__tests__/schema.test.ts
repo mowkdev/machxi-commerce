@@ -16,6 +16,22 @@ describe('productFormSchema', () => {
     expect(result.success).toBe(true);
   });
 
+  it('accepts an HTML string as description', () => {
+    const result = productFormSchema.safeParse({
+      name: 'Rich Product',
+      handle: 'rich-product',
+      description: '<p>A <strong>rich</strong> description with <em>formatting</em></p>',
+      status: 'draft',
+      type: 'simple',
+      taxClassId: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+      categoryIds: [],
+    });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.description).toContain('<strong>');
+    }
+  });
+
   it('accepts variable type', () => {
     const result = productFormSchema.safeParse({
       name: 'Variable Product',

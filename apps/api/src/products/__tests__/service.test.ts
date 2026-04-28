@@ -1,7 +1,13 @@
 import { describe, expect, it, beforeAll } from 'vitest';
 import { db } from '@repo/database/client';
-import { eq } from '@repo/database';
-import { languages, taxClasses, products } from '@repo/database/schema';
+import { eq, inArray } from '@repo/database';
+import {
+  languages,
+  products,
+  productVariants,
+  taxClasses,
+  variantOptionValues,
+} from '@repo/database/schema';
 import type { CreateProductBody, GenerateVariantsBody } from '@repo/types/admin';
 import {
   createProduct,
@@ -75,6 +81,18 @@ function makeCreateBody(overrides?: Partial<CreateProductBody>): CreateProductBo
       },
     ],
     ...overrides,
+  };
+}
+
+function makeOption(
+  name: string,
+  values: string[]
+): NonNullable<GenerateVariantsBody['options']>[number] {
+  return {
+    translations: [{ languageCode: 'en', name }],
+    values: values.map((label) => ({
+      translations: [{ languageCode: 'en', label }],
+    })),
   };
 }
 
@@ -311,7 +329,7 @@ describe('generateVariants', () => {
       defaultPrices: [
         { currencyCode: 'EUR', amount: 2500, minQuantity: 1, taxInclusive: true },
       ],
-      skuPrefix: 'GEN',
+      skuPrefix: `GEN-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
     };
     const result = await generateVariants(id, genBody);
     expect(result.created).toBe(6); // 2 colors x 3 sizes
@@ -348,12 +366,138 @@ describe('generateVariants', () => {
 
     const genBody: GenerateVariantsBody = {
       defaultPrices: [],
-      skuPrefix: 'IDEM',
+      skuPrefix: `IDEM-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
     };
     const first = await generateVariants(id, genBody);
     expect(first.created).toBe(2);
 
     const second = await generateVariants(id, genBody);
     expect(second.created).toBe(0);
+  });
+
+  it('persists submitted options before first variant generation', async () => {
+    const { id } = await createProduct(
+      makeCreateBody({ type: 'variable', options: [], variants: [] })
+    );
+
+    const result = await generateVariants(id, {
+      defaultPrices: [
+        { currencyCode: 'EUR', amount: 2500, minQuantity: 1, taxInclusive: true },
+      ],
+      skuPrefix: `FIRST-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      options: [
+        makeOption('Color', ['Red', 'Blue']),
+        makeOption('Size', ['S', 'M']),
+      ],
+    });
+
+    expect(result.created).toBe(4);
+
+    const product = await getProduct(id);
+    expect(product!.options).toHaveLength(2);
+    expect(product!.variants).toHaveLength(4);
+    expect(product!.variants.every((variant) => variant.optionValues.length === 2)).toBe(
+      true
+    );
+  });
+
+  it('regenerates variants after adding an option and removes old links', async () => {
+    const { id } = await createProduct(
+      makeCreateBody({ type: 'variable', options: [], variants: [] })
+    );
+
+    const prefix = `ADD-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    await generateVariants(id, {
+      defaultPrices: [],
+      skuPrefix: prefix,
+      options: [makeOption('Color', ['Red', 'Blue'])],
+    });
+
+    const before = await getProduct(id);
+    const oldVariantIds = before!.variants.map((variant) => variant.id);
+
+    const result = await generateVariants(id, {
+      defaultPrices: [],
+      skuPrefix: prefix,
+      regenerate: true,
+      options: [
+        makeOption('Color', ['Red', 'Blue']),
+        makeOption('Size', ['S', 'M']),
+      ],
+    });
+
+    expect(result.created).toBe(4);
+
+    const product = await getProduct(id);
+    expect(product!.options).toHaveLength(2);
+    expect(product!.variants).toHaveLength(4);
+    expect(product!.variants.every((variant) => variant.optionValues.length === 2)).toBe(
+      true
+    );
+    expect(product!.variants.some((variant) => oldVariantIds.includes(variant.id))).toBe(
+      false
+    );
+
+    const oldVariantRows = await db
+      .select({ id: productVariants.id })
+      .from(productVariants)
+      .where(inArray(productVariants.id, oldVariantIds));
+    const oldLinkRows = await db
+      .select()
+      .from(variantOptionValues)
+      .where(inArray(variantOptionValues.variantId, oldVariantIds));
+
+    expect(oldVariantRows).toHaveLength(0);
+    expect(oldLinkRows).toHaveLength(0);
+  });
+
+  it('regenerates variants after deleting an option', async () => {
+    const { id } = await createProduct(
+      makeCreateBody({ type: 'variable', options: [], variants: [] })
+    );
+
+    const prefix = `DEL-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+    await generateVariants(id, {
+      defaultPrices: [],
+      skuPrefix: prefix,
+      options: [
+        makeOption('Color', ['Red', 'Blue']),
+        makeOption('Size', ['S', 'M']),
+      ],
+    });
+
+    const result = await generateVariants(id, {
+      defaultPrices: [],
+      skuPrefix: prefix,
+      regenerate: true,
+      options: [makeOption('Color', ['Red', 'Blue'])],
+    });
+
+    expect(result.created).toBe(2);
+
+    const product = await getProduct(id);
+    expect(product!.options).toHaveLength(1);
+    expect(product!.options[0].translations[0].name).toBe('Color');
+    expect(product!.variants).toHaveLength(2);
+    expect(product!.variants.every((variant) => variant.optionValues.length === 1)).toBe(
+      true
+    );
+  });
+
+  it('rejects duplicate submitted option names', async () => {
+    const { id } = await createProduct(
+      makeCreateBody({ type: 'variable', options: [], variants: [] })
+    );
+
+    await expect(
+      generateVariants(id, {
+        defaultPrices: [],
+        skuPrefix: `DUP-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        options: [
+          makeOption('Color', ['Red']),
+          makeOption('color', ['Blue']),
+        ],
+      })
+    ).rejects.toThrow('Option names must be unique');
   });
 });
