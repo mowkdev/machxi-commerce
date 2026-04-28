@@ -1,19 +1,19 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import type { ProductDetailResponse } from '@repo/types/admin';
+import { cleanup, render, screen } from '@testing-library/react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import type {
+  ProductDetailResponse,
+  ProductDetailVariant,
+} from '@repo/types/admin';
 import { DefaultVariantCard } from '../components/DefaultVariantCard';
-
-const updateMutation = vi.hoisted(() => ({
-  mutate: vi.fn(),
-  isPending: false,
-}));
-
-vi.mock('../hooks', () => ({
-  useUpdateVariant: () => updateMutation,
-}));
+import { variantFormSchema, type VariantFormValues } from '../schema';
+import {
+  DEFAULT_VARIANT_FORM_VALUES,
+  getVariantFormValues,
+} from '../utils/variant-form';
 
 function makeProduct(
   overrides: Partial<ProductDetailResponse> = {}
@@ -68,10 +68,34 @@ function makeProduct(
   };
 }
 
+function TestDefaultVariantCard({
+  productDetails,
+}: {
+  productDetails?: ProductDetailVariant | null;
+}) {
+  const form = useForm<VariantFormValues, unknown, VariantFormValues>({
+    resolver: zodResolver(variantFormSchema),
+    defaultValues: productDetails
+      ? getVariantFormValues(productDetails)
+      : DEFAULT_VARIANT_FORM_VALUES,
+  });
+  const { fields: priceFields, append: appendPrice, remove: removePrice } =
+    useFieldArray({ control: form.control, name: 'prices' });
+
+  return (
+    <DefaultVariantCard
+      productDetails={productDetails}
+      form={form}
+      priceFields={priceFields}
+      appendPrice={appendPrice}
+      removePrice={removePrice}
+    />
+  );
+}
+
 describe('DefaultVariantCard', () => {
   beforeEach(() => {
-    updateMutation.mutate.mockReset();
-    updateMutation.isPending = false;
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
@@ -79,7 +103,10 @@ describe('DefaultVariantCard', () => {
   });
 
   it('renders neutral product detail fields from the simple product record', () => {
-    const { container } = render(<DefaultVariantCard product={makeProduct()} />);
+    const product = makeProduct();
+    const { container } = render(
+      <TestDefaultVariantCard productDetails={product.variants[0]} />
+    );
 
     expect(screen.getByText('Product details')).toBeInTheDocument();
     expect(screen.getByLabelText('SKU')).toHaveValue('SIMPLE-001');
@@ -90,40 +117,17 @@ describe('DefaultVariantCard', () => {
     expect(container.textContent).not.toMatch(/variant/i);
   });
 
-  it('saves edited product detail values through the update mutation', async () => {
-    const user = userEvent.setup();
-    render(<DefaultVariantCard product={makeProduct()} />);
+  it('does not render a separate details save button', () => {
+    const product = makeProduct();
+    render(<TestDefaultVariantCard productDetails={product.variants[0]} />);
 
-    await user.clear(screen.getByLabelText('SKU'));
-    await user.type(screen.getByLabelText('SKU'), 'SIMPLE-002');
-    await user.clear(screen.getByLabelText('Weight (g)'));
-    await user.type(screen.getByLabelText('Weight (g)'), '300');
-    await user.click(screen.getByRole('button', { name: 'Save details' }));
-
-    await waitFor(() => {
-      expect(updateMutation.mutate).toHaveBeenCalledWith({
-        variantId: 'details-1',
-        body: {
-          sku: 'SIMPLE-002',
-          barcode: '123456789',
-          weight: 300,
-          status: 'draft',
-          prices: [
-            {
-              currencyCode: 'EUR',
-              amount: 1999,
-              compareAtAmount: undefined,
-              minQuantity: 1,
-              taxInclusive: true,
-            },
-          ],
-        },
-      });
-    });
+    expect(
+      screen.queryByRole('button', { name: 'Save details' })
+    ).not.toBeInTheDocument();
   });
 
   it('shows an unavailable state when no product details exist yet', () => {
-    render(<DefaultVariantCard product={makeProduct({ variants: [] })} />);
+    render(<TestDefaultVariantCard productDetails={null} />);
 
     expect(screen.getByText('Product details')).toBeInTheDocument();
     expect(

@@ -43,7 +43,7 @@ export function VariantEditDrawer({
 }: VariantEditDrawerProps) {
   const updateMutation = useUpdateVariant(productId);
 
-  const form = useForm<VariantFormValues>({
+  const form = useForm<VariantFormValues, unknown, VariantFormValues>({
     resolver: zodResolver(variantFormSchema),
     defaultValues: DEFAULT_VARIANT_FORM_VALUES,
   });

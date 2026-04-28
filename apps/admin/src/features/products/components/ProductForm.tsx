@@ -18,6 +18,11 @@ interface ProductFormProps {
 
 export function ProductForm({ mode, initialData }: ProductFormProps) {
   const {
+    appendDefaultVariantPrice,
+    canSave,
+    defaultVariant,
+    defaultVariantForm,
+    defaultVariantPriceFields,
     form,
     hasOptions,
     isCreateMode,
@@ -26,6 +31,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
     isVariable,
     navigateToProducts,
     onSubmit,
+    removeDefaultVariantPrice,
     title,
   } = useProductForm({ mode, initialData });
 
@@ -53,7 +59,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
             >
               Discard
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={!canSave || isPending}>
               {isPending ? 'Saving...' : isCreateMode ? 'Create product' : 'Save'}
             </Button>
           </div>
@@ -70,7 +76,13 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
               </>
             )}
             {isEditMode && initialData && !isVariable && (
-              <DefaultVariantCard product={initialData} />
+              <DefaultVariantCard
+                productDetails={defaultVariant}
+                form={defaultVariantForm}
+                priceFields={defaultVariantPriceFields}
+                appendPrice={appendDefaultVariantPrice}
+                removePrice={removeDefaultVariantPrice}
+              />
             )}
           </div>
           <div className="flex flex-col gap-6">

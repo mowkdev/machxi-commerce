@@ -1,24 +1,48 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useFormContext } from 'react-hook-form';
 import { MemoryRouter } from 'react-router-dom';
 import type { ComponentProps } from 'react';
 import type { ProductDetailResponse } from '@repo/types/admin';
 import { ProductForm } from '../components/ProductForm';
+import type { ProductFormValues } from '../schema';
+
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+vi.stubGlobal('ResizeObserver', ResizeObserverMock);
 
 const mutations = vi.hoisted(() => ({
   create: { mutate: vi.fn(), isPending: false },
   update: { mutate: vi.fn(), isPending: false },
+  updateVariant: { mutate: vi.fn(), isPending: false },
 }));
 
 vi.mock('../hooks', () => ({
   useCreateProduct: () => mutations.create,
   useUpdateProduct: () => mutations.update,
+  useUpdateVariant: () => mutations.updateVariant,
 }));
 
 vi.mock('../components/GeneralInfoCard', () => ({
-  GeneralInfoCard: () => <section data-testid="general-info-card" />,
+  GeneralInfoCard: () => {
+    const { register } = useFormContext<ProductFormValues>();
+
+    return (
+      <section data-testid="general-info-card">
+        <label htmlFor="name">Name</label>
+        <input id="name" {...register('name')} />
+        <label htmlFor="handle">Handle</label>
+        <input id="handle" {...register('handle')} />
+      </section>
+    );
+  },
 }));
 
 vi.mock('../components/StatusCard', () => ({
@@ -30,7 +54,18 @@ vi.mock('../components/ProductTypeCard', () => ({
 }));
 
 vi.mock('../components/OrganizationCard', () => ({
-  OrganizationCard: () => <section data-testid="organization-card" />,
+  OrganizationCard: () => {
+    const { register } = useFormContext<ProductFormValues>();
+
+    return (
+      <section data-testid="organization-card">
+        <label htmlFor="taxClassId">Tax class</label>
+        <input id="taxClassId" {...register('taxClassId')} />
+        <label htmlFor="baseSku">Base SKU</label>
+        <input id="baseSku" {...register('baseSku')} />
+      </section>
+    );
+  },
 }));
 
 vi.mock('../components/OptionsCard', () => ({
@@ -39,10 +74,6 @@ vi.mock('../components/OptionsCard', () => ({
 
 vi.mock('../components/VariantsTable', () => ({
   VariantsTable: () => <section data-testid="variants-table" />,
-}));
-
-vi.mock('../components/DefaultVariantCard', () => ({
-  DefaultVariantCard: () => <section data-testid="default-details-card" />,
 }));
 
 function makeProduct(
@@ -66,7 +97,32 @@ function makeProduct(
       },
     ],
     options: [],
-    variants: [],
+    variants: [
+      {
+        id: 'details-1',
+        sku: 'SIMPLE-001',
+        status: 'draft',
+        weight: 250,
+        barcode: '123456789',
+        priceSetId: 'price-set-1',
+        inventoryItemId: 'inventory-1',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-01-01T00:00:00.000Z',
+        optionValues: [],
+        prices: [
+          {
+            id: 'price-1',
+            currencyCode: 'EUR',
+            amount: 1999,
+            compareAtAmount: null,
+            minQuantity: 1,
+            taxInclusive: true,
+          },
+        ],
+        inventoryLevels: [],
+        media: [],
+      },
+    ],
     media: [],
     categories: [],
     ...overrides,
@@ -87,8 +143,10 @@ describe('ProductForm', () => {
   beforeEach(() => {
     mutations.create.mutate.mockReset();
     mutations.update.mutate.mockReset();
+    mutations.updateVariant.mutate.mockReset();
     mutations.create.isPending = false;
     mutations.update.isPending = false;
+    mutations.updateVariant.isPending = false;
   });
 
   afterEach(() => {
@@ -98,7 +156,7 @@ describe('ProductForm', () => {
   it('renders product details for simple products in edit mode', () => {
     renderProductForm({ mode: 'edit', initialData: makeProduct() });
 
-    expect(screen.getByTestId('default-details-card')).toBeInTheDocument();
+    expect(screen.getByText('Product details')).toBeInTheDocument();
     expect(screen.queryByTestId('options-card')).not.toBeInTheDocument();
     expect(screen.queryByTestId('variants-table')).not.toBeInTheDocument();
   });
@@ -136,5 +194,157 @@ describe('ProductForm', () => {
     expect(screen.queryByTestId('default-details-card')).not.toBeInTheDocument();
     expect(screen.queryByTestId('options-card')).not.toBeInTheDocument();
     expect(screen.queryByTestId('variants-table')).not.toBeInTheDocument();
+  });
+
+  it('disables Save until create or edit fields are dirty', () => {
+    const { rerender } = renderProductForm({ mode: 'create' });
+
+    expect(
+      screen.getByRole('button', { name: 'Create product' })
+    ).toBeDisabled();
+
+    rerender(
+      <MemoryRouter>
+        <ProductForm mode="edit" initialData={makeProduct()} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+  });
+
+  it('creates a product through the main Save button after fields are dirty', async () => {
+    const user = userEvent.setup();
+    renderProductForm({ mode: 'create' });
+
+    await user.type(screen.getByLabelText('Name'), 'New product');
+    await user.type(screen.getByLabelText('Handle'), 'new-product');
+    await user.type(
+      screen.getByLabelText('Tax class'),
+      'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
+    );
+    await user.click(screen.getByRole('button', { name: 'Create product' }));
+
+    await waitFor(() => {
+      expect(mutations.create.mutate).toHaveBeenCalledWith({
+        type: 'simple',
+        baseSku: undefined,
+        status: 'draft',
+        taxClassId: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+        translations: [
+          {
+            languageCode: 'en',
+            name: 'New product',
+            description: '',
+            handle: 'new-product',
+          },
+        ],
+        categoryIds: [],
+        options: [],
+        variants: [],
+      });
+    });
+  });
+
+  it('updates product fields through the main Save button', async () => {
+    const user = userEvent.setup();
+    renderProductForm({ mode: 'edit', initialData: makeProduct() });
+
+    await user.clear(screen.getByLabelText('Name'));
+    await user.type(screen.getByLabelText('Name'), 'Updated product');
+    expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled();
+
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => {
+      expect(mutations.update.mutate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          translations: [
+            {
+              languageCode: 'en',
+              name: 'Updated product',
+              description: '',
+              handle: 'test-product',
+            },
+          ],
+        }),
+        expect.any(Object)
+      );
+    });
+    expect(mutations.updateVariant.mutate).not.toHaveBeenCalled();
+  });
+
+  it('updates simple product details through the main Save button', async () => {
+    const user = userEvent.setup();
+    renderProductForm({ mode: 'edit', initialData: makeProduct() });
+
+    await user.clear(screen.getByLabelText('SKU'));
+    await user.type(screen.getByLabelText('SKU'), 'SIMPLE-002');
+    expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled();
+
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => {
+      expect(mutations.updateVariant.mutate).toHaveBeenCalledWith(
+        {
+          variantId: 'details-1',
+          body: {
+            sku: 'SIMPLE-002',
+            barcode: '123456789',
+            weight: 250,
+            status: 'draft',
+            prices: [
+              {
+                currencyCode: 'EUR',
+                amount: 1999,
+                compareAtAmount: undefined,
+                minQuantity: 1,
+                taxInclusive: true,
+              },
+            ],
+          },
+        },
+        expect.any(Object)
+      );
+    });
+    expect(mutations.update.mutate).not.toHaveBeenCalled();
+  });
+
+  it('disables Save after a successful simple product details save', async () => {
+    const user = userEvent.setup();
+    mutations.updateVariant.mutate.mockImplementationOnce(
+      (
+        _payload,
+        options?: {
+          onSuccess?: () => void;
+        }
+      ) => {
+        options?.onSuccess?.();
+      }
+    );
+    renderProductForm({ mode: 'edit', initialData: makeProduct() });
+
+    await user.clear(screen.getByLabelText('SKU'));
+    await user.type(screen.getByLabelText('SKU'), 'SIMPLE-002');
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+    });
+  });
+
+  it('updates product fields and simple product details in one main Save', async () => {
+    const user = userEvent.setup();
+    renderProductForm({ mode: 'edit', initialData: makeProduct() });
+
+    await user.clear(screen.getByLabelText('Name'));
+    await user.type(screen.getByLabelText('Name'), 'Updated product');
+    await user.clear(screen.getByLabelText('SKU'));
+    await user.type(screen.getByLabelText('SKU'), 'SIMPLE-002');
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => {
+      expect(mutations.update.mutate).toHaveBeenCalledTimes(1);
+      expect(mutations.updateVariant.mutate).toHaveBeenCalledTimes(1);
+    });
   });
 });

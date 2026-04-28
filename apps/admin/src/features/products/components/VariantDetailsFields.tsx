@@ -25,7 +25,7 @@ import {
 import type { VariantFormValues } from '../schema';
 
 interface VariantDetailsFieldsProps {
-  form: UseFormReturn<VariantFormValues>;
+  form: UseFormReturn<VariantFormValues, unknown, VariantFormValues>;
   priceFields: { id: string }[];
   appendPrice: UseFieldArrayAppend<VariantFormValues, 'prices'>;
   removePrice: UseFieldArrayRemove;
@@ -65,7 +65,10 @@ export function VariantDetailsFields({
           <Select
             value={form.watch('status')}
             onValueChange={(value) =>
-              form.setValue('status', value as VariantFormValues['status'])
+              form.setValue('status', value as VariantFormValues['status'], {
+                shouldDirty: true,
+                shouldValidate: true,
+              })
             }
           >
             <SelectTrigger id="v-status">
@@ -155,7 +158,10 @@ export function VariantDetailsFields({
                 <Switch
                   checked={form.watch(`prices.${index}.taxInclusive`)}
                   onCheckedChange={(value) =>
-                    form.setValue(`prices.${index}.taxInclusive`, value)
+                    form.setValue(`prices.${index}.taxInclusive`, value, {
+                      shouldDirty: true,
+                      shouldValidate: true,
+                    })
                   }
                 />
                 <Label className="text-xs">Tax inclusive</Label>
