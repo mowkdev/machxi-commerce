@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useController } from 'react-hook-form';
 import {
   Card,
   CardContent,
@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import {
   Field,
   FieldError,
@@ -30,8 +30,14 @@ export function GeneralInfoCard() {
     register,
     watch,
     setValue,
+    control,
     formState: { errors, dirtyFields },
   } = useFormContext<ProductFormValues>();
+
+  const { field: descriptionField } = useController({
+    name: 'description',
+    control,
+  });
 
   const name = watch('name');
   const handleManuallyEdited = useRef(false);
@@ -73,11 +79,10 @@ export function GeneralInfoCard() {
           </Field>
           <Field>
             <FieldLabel htmlFor="description">Description</FieldLabel>
-            <Textarea
-              id="description"
+            <RichTextEditor
+              value={descriptionField.value}
+              onChange={descriptionField.onChange}
               placeholder="Product description..."
-              rows={4}
-              {...register('description')}
             />
             <FieldError errors={[errors.description]} />
           </Field>

@@ -24,6 +24,9 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
   const createMutation = useCreateProduct();
   const updateMutation = useUpdateProduct(initialData?.id ?? '');
 
+  const isEditMode = mode === 'edit';
+  const isCreateMode = mode === 'create';
+
   const defaultTranslation = initialData?.translations[0];
 
   const defaultValues = useMemo<ProductFormValues>(
@@ -46,7 +49,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
   });
 
   useEffect(() => {
-    if (mode === 'edit' && initialData) {
+    if (isEditMode && initialData) {
       form.reset(defaultValues);
     }
   }, [initialData, mode, form, defaultValues]);
@@ -54,7 +57,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
   const onSubmit = form.handleSubmit((values) => {
     const languageCode = defaultTranslation?.languageCode ?? 'en';
 
-    if (mode === 'create') {
+    if (isCreateMode) {
       // The server auto-creates a default variant for `simple` products and
       // creates none for `variable` products. We only send product-level
       // fields here — options & variants are managed on the edit page.
@@ -95,7 +98,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
   });
 
   const isPending = createMutation.isPending || updateMutation.isPending;
-  const title = mode === 'create' ? 'New product' : (form.watch('name') || 'Untitled product');
+  const title = isCreateMode ? 'New product' : (form.watch('name') || 'Untitled product');
   const hasOptions = (initialData?.options.length ?? 0) > 0;
   const productType = form.watch('type');
   const isVariable = productType === 'variable';
@@ -125,7 +128,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
               Discard
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? 'Saving...' : mode === 'create' ? 'Create product' : 'Save'}
+              {isPending ? 'Saving...' : isCreateMode ? 'Create product' : 'Save'}
             </Button>
           </div>
         </div>
@@ -134,19 +137,20 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
         <div className="grid gap-6 p-4 lg:grid-cols-3 lg:p-6">
           <div className="flex flex-col gap-6 lg:col-span-2">
             <GeneralInfoCard />
-            {mode === 'edit' && initialData && isVariable && (
+            {isEditMode && initialData && isVariable && (
               <>
                 <OptionsCard product={initialData} />
                 {hasOptions && <VariantsTable product={initialData} />}
               </>
             )}
-            {mode === 'edit' && initialData && !isVariable && (
+            {isEditMode && initialData && isVariable && (
               <VariantsTable product={initialData} />
             )}
+            
           </div>
           <div className="flex flex-col gap-6">
-            <ProductTypeCard locked={mode === 'edit'} />
-            <StatusCard />
+            <StatusCard locked={isCreateMode} />
+            <ProductTypeCard locked={isEditMode} />
             <OrganizationCard />
           </div>
         </div>
