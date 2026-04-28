@@ -247,8 +247,8 @@ export async function getProduct(id: string): Promise<ProductDetailResponse | nu
         media: {
           id: m.media.id,
           url: m.media.url,
-          fileType: m.media.fileType,
-          metadata: m.media.metadata,
+          mimeType: m.media.mimeType,
+          altText: m.media.altText,
         },
       })),
     })),
@@ -258,8 +258,8 @@ export async function getProduct(id: string): Promise<ProductDetailResponse | nu
       media: {
         id: m.media.id,
         url: m.media.url,
-        fileType: m.media.fileType,
-        metadata: m.media.metadata,
+        mimeType: m.media.mimeType,
+        altText: m.media.altText,
       },
     })),
     categories: result.categories.map((c) => ({

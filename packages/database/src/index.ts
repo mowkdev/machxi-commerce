@@ -27,5 +27,8 @@ export {
   gte,
   lt,
   lte,
+  count,
+  countDistinct,
+  sum,
 } from 'drizzle-orm';
 export type { InferSelectModel, InferInsertModel } from 'drizzle-orm';

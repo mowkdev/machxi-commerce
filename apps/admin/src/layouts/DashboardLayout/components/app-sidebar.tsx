@@ -11,6 +11,7 @@ import {
   IconLanguage,
   IconMap,
   IconPackage,
+  IconPhoto,
   IconReceiptTax,
   IconSettings,
   IconShieldLock,
@@ -63,6 +64,9 @@ const data = {
   catalog: [
     { title: "Products", url: "/products", icon: IconPackage },
     { title: "Categories", url: "/categories", icon: IconCategory },
+  ],
+  content: [
+    { title: "Media", url: "/media", icon: IconPhoto },
   ],
   sales: [
     { title: "Orders", url: "/orders", icon: IconShoppingCart },
@@ -117,6 +121,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavGroup items={data.navMain} />
         <NavGroup items={data.catalog} groupLabel="Catalog" />
+        <NavGroup items={data.content} groupLabel="Content" />
         <NavGroup items={data.sales} groupLabel="Sales" />
         <NavGroup items={data.inventory} groupLabel="Inventory" />
         <NavGroup items={data.marketing} groupLabel="Marketing" />

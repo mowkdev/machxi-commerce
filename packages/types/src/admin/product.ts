@@ -160,8 +160,8 @@ export interface ProductDetailMedia {
   media: {
     id: string;
     url: string;
-    fileType: string | null;
-    metadata: unknown;
+    mimeType: string;
+    altText: string | null;
   };
 }
 

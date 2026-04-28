@@ -15,6 +15,17 @@ const schema = z.object({
     .enum(['true', 'false'])
     .default('true')
     .transform((v) => v === 'true'),
+  S3_ENDPOINT: z.string().url(),
+  S3_REGION: z.string().default('us-east-1'),
+  S3_BUCKET: z.string().min(1),
+  S3_ACCESS_KEY: z.string().min(1),
+  S3_SECRET_KEY: z.string().min(1),
+  S3_FORCE_PATH_STYLE: z
+    .enum(['true', 'false'])
+    .default('true')
+    .transform((v) => v === 'true'),
+  S3_PUBLIC_URL: z.string().url(),
+  MEDIA_MAX_BYTES: z.coerce.number().int().positive().default(26214400),
 });
 
 const parsed = schema.safeParse(process.env);

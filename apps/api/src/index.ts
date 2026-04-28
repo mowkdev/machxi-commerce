@@ -8,6 +8,7 @@ import { closeDatabase } from '@repo/database/client';
 import { createApp } from './app';
 import { pingDatabase } from './lib/db';
 import { logger } from './lib/logger';
+import { storage } from './lib/storage';
 
 const FORCE_EXIT_MS = 10_000;
 
@@ -36,6 +37,25 @@ async function bootstrap() {
     );
   } catch (e) {
     logger.fatal({ err: e }, 'database connection failed; aborting startup');
+    process.exit(1);
+  }
+
+  try {
+    const ping = await storage.ping();
+    logger.info(
+      {
+        durationMs: ping.durationMs,
+        endpoint: env.S3_ENDPOINT,
+        bucket: env.S3_BUCKET,
+        publicUrl: env.S3_PUBLIC_URL,
+      },
+      'object storage connected'
+    );
+  } catch (e) {
+    logger.fatal(
+      { err: e, endpoint: env.S3_ENDPOINT, bucket: env.S3_BUCKET },
+      'object storage connection failed; aborting startup'
+    );
     process.exit(1);
   }
 

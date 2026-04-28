@@ -13,6 +13,7 @@ import {
   char,
   decimal,
   integer,
+  bigint,
   text,
   jsonb,
   uniqueIndex,
@@ -314,15 +315,46 @@ export const variantOptionValues = pgTable(
 // MEDIA
 // ────────────────────────────────────────────────────────────────────────────
 
-export const media = pgTable('media', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  url: text('url').notNull(),
-  fileType: varchar('file_type'),
-  metadata: jsonb('metadata'), // alt text, dimensions
-  createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-});
-// Note: Requires updated_at trigger (see migrations/triggers.sql)
+export const media = pgTable(
+  'media',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+
+    // Storage layout
+    storageKey: text('storage_key').notNull(),
+    thumbnailKey: text('thumbnail_key'),
+    url: text('url').notNull(),
+    thumbnailUrl: text('thumbnail_url'),
+
+    // File facts
+    fileName: text('file_name').notNull(),
+    mimeType: varchar('mime_type', { length: 127 }).notNull(),
+    sizeBytes: bigint('size_bytes', { mode: 'number' }).notNull(),
+    width: integer('width'),
+    height: integer('height'),
+    checksumSha256: varchar('checksum_sha256', { length: 64 }).notNull(),
+
+    // Editorial metadata (SEO + accessibility)
+    title: text('title'),
+    altText: text('alt_text'),
+    caption: text('caption'),
+    description: text('description'),
+
+    // Bookkeeping
+    metadata: jsonb('metadata'),
+    deletedAt: timestamp('deleted_at', { withTimezone: true, mode: 'string' }),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (t) => ({
+    storageKeyUnique: uniqueIndex('uk_media_storage_key').on(t.storageKey),
+    checksumIdx: index('idx_media_checksum').on(t.checksumSha256),
+    createdAtIdx: index('idx_media_created_at').on(t.createdAt),
+    mimeIdx: index('idx_media_mime_type').on(t.mimeType),
+    deletedAtIdx: index('idx_media_deleted_at').on(t.deletedAt),
+  })
+);
+// Note: Requires updated_at trigger (see migrations/custom.sql)
 
 // ────────────────────────────────────────────────────────────────────────────
 // PRODUCT MEDIA (Junction Table)
