@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom';
 import {
   AppDataGrid,
   DataGridColumnHeader,
+  type DataGridQueryParams,
 } from '@/components/app-data-grid';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { categoriesQueryPrefix } from '@/features/categories/hooks';
 import {
-  categoriesKeys,
-  listCategories,
-} from '@/features/categories/api';
+  adminListCategories,
+  type AdminListCategoriesQueryParamsSortByEnumKey,
+} from '@repo/admin-sdk';
 import type { CategoryListItem } from '@repo/types/admin';
 
 const columns: ColumnDef<CategoryListItem>[] = [
@@ -74,12 +76,25 @@ const columns: ColumnDef<CategoryListItem>[] = [
   },
 ];
 
+async function fetchCategories(params: DataGridQueryParams) {
+  const res = await adminListCategories({
+    page: params.page,
+    pageSize: params.pageSize,
+    search: params.search,
+    sortBy: params.sortBy as
+      | AdminListCategoriesQueryParamsSortByEnumKey
+      | undefined,
+    sortOrder: params.sortOrder,
+  });
+  return { data: res.data, meta: res.meta };
+}
+
 export default function CategoriesPage() {
   return (
     <AppDataGrid<CategoryListItem>
-      queryKey={categoriesKeys.list()}
+      queryKey={categoriesQueryPrefix}
       columns={columns}
-      fetcher={listCategories}
+      fetcher={fetchCategories}
       searchPlaceholder="Search categories..."
       initialSort={[{ id: 'createdAt', desc: true }]}
       getRowId={(row) => row.id}

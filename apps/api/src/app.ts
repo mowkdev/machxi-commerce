@@ -15,6 +15,7 @@ import { taxClassesRoutes } from './tax-classes/routes';
 import { logger } from './lib/logger';
 import { requestLogger } from './lib/requestLogger';
 import { err, errFromException } from './lib/response';
+import { mountOpenAPI } from './openapi/routes';
 
 export function createApp() {
   const app = new Hono<AppEnv>();
@@ -50,6 +51,9 @@ export function createApp() {
   app.route('/api/categories', categoriesRoutes);
   app.route('/api/tax-classes', taxClassesRoutes);
   app.route('/api/media', mediaRoutes);
+
+  // Mounted last so it can introspect every registered route.
+  mountOpenAPI(app);
 
   return app;
 }

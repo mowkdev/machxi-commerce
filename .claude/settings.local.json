@@ -82,7 +82,14 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8000/api/media)",
       "Bash(curl -s http://localhost:8000/api/media)",
       "Bash(tasklist)",
-      "PowerShell(Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess | ForEach-Object { Stop-Process -Id $_ -Force })"
+      "PowerShell(Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess | ForEach-Object { Stop-Process -Id $_ -Force })",
+      "Bash(pnpm --filter @app/api openapi:emit)",
+      "Bash(pnpm --filter @repo/admin-sdk type-check)",
+      "Bash(pnpm --filter @app/api test)",
+      "Bash(pnpm --filter @repo/admin-sdk generate)",
+      "Bash(grep -rn \"from '\\\\\\\\.\\\\\\\\./hooks\\\\\\\\|from '\\\\\\\\.\\\\\\\\./api\\\\\\\\|from '\\\\\\\\./hooks\\\\\\\\|from '\\\\\\\\./api\" apps/admin/src/features/products --include='*.ts*')",
+      "Bash(pnpm --filter @app/admin test src/features/media/__tests__/MediaGallery.test.tsx)",
+      "Bash(pnpm sdk:generate)"
     ]
   }
 }

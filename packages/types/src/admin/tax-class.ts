@@ -10,16 +10,18 @@ export const updateTaxClassBody = z.object({
 });
 export type UpdateTaxClassBody = z.infer<typeof updateTaxClassBody>;
 
-export interface TaxClassListItem {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export const taxClassListItem = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type TaxClassListItem = z.infer<typeof taxClassListItem>;
 
-export interface TaxClassDetail {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export const taxClassDetail = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type TaxClassDetail = z.infer<typeof taxClassDetail>;

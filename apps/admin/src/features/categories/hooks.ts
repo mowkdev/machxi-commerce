@@ -1,38 +1,55 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { ApiRequestError } from '@/lib/api';
+import {
+  SdkRequestError,
+  adminCreateCategory,
+  adminDeleteCategory,
+  adminUpdateCategory,
+  useAdminGetCategory,
+  useAdminListCategories,
+} from '@repo/admin-sdk';
 import type {
   CategoryDetail,
   CategoryListItem,
   CreateCategoryBody,
   UpdateCategoryBody,
 } from '@repo/types/admin';
-import {
-  getCategory,
-  createCategory,
-  updateCategory,
-  deleteCategory,
-  listAllCategories,
-  categoriesKeys,
-} from './api';
+
+export const categoriesQueryPrefix = [{ url: '/api/categories' }] as const;
 
 export function useCategory(id: string) {
-  return useQuery<CategoryDetail, ApiRequestError>({
-    queryKey: categoriesKeys.detail(id),
-    queryFn: () => getCategory(id),
+  return useAdminGetCategory<CategoryDetail>(id, {
+    query: {
+      enabled: !!id,
+      select: (response) => response.data,
+    },
   });
+}
+
+export function useCategoryOptions() {
+  return useAdminListCategories<CategoryListItem[]>(
+    { pageSize: 200, sortBy: 'name', sortOrder: 'asc' },
+    {
+      query: {
+        staleTime: 5 * 60 * 1000,
+        select: (response) => response.data,
+      },
+    }
+  );
 }
 
 export function useCreateCategory() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation<{ id: string }, ApiRequestError, CreateCategoryBody>({
-    mutationFn: createCategory,
+  return useMutation<{ id: string }, SdkRequestError, CreateCategoryBody>({
+    mutationFn: async (body) => {
+      const res = await adminCreateCategory(body);
+      return res.data;
+    },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: categoriesKeys.list() });
-      queryClient.invalidateQueries({ queryKey: categoriesKeys.options() });
+      queryClient.invalidateQueries({ queryKey: categoriesQueryPrefix });
       toast.success('Category created');
       navigate(`/categories/${data.id}`);
     },
@@ -45,12 +62,13 @@ export function useCreateCategory() {
 export function useUpdateCategory(id: string) {
   const queryClient = useQueryClient();
 
-  return useMutation<CategoryDetail, ApiRequestError, UpdateCategoryBody>({
-    mutationFn: (body) => updateCategory(id, body),
-    onSuccess: (data) => {
-      queryClient.setQueryData(categoriesKeys.detail(id), data);
-      queryClient.invalidateQueries({ queryKey: categoriesKeys.list() });
-      queryClient.invalidateQueries({ queryKey: categoriesKeys.options() });
+  return useMutation<CategoryDetail, SdkRequestError, UpdateCategoryBody>({
+    mutationFn: async (body) => {
+      const res = await adminUpdateCategory(id, body);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: categoriesQueryPrefix });
       toast.success('Category saved');
     },
     onError: (error) => {
@@ -63,24 +81,17 @@ export function useDeleteCategory() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation<void, ApiRequestError, string>({
-    mutationFn: deleteCategory,
+  return useMutation<void, SdkRequestError, string>({
+    mutationFn: async (id) => {
+      await adminDeleteCategory(id);
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: categoriesKeys.list() });
-      queryClient.invalidateQueries({ queryKey: categoriesKeys.options() });
+      queryClient.invalidateQueries({ queryKey: categoriesQueryPrefix });
       toast.success('Category deleted');
       navigate('/categories');
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to delete category');
     },
-  });
-}
-
-export function useCategoryOptions() {
-  return useQuery<CategoryListItem[], ApiRequestError>({
-    queryKey: categoriesKeys.options(),
-    queryFn: listAllCategories,
-    staleTime: 5 * 60 * 1000,
   });
 }

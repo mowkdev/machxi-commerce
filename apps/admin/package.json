@@ -20,6 +20,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-slot": "^1.1.1",
+    "@repo/admin-sdk": "workspace:^",
     "@repo/types": "workspace:^",
     "@tabler/icons-react": "^3.41.1",
     "@tanstack/react-query": "^5.62.8",

@@ -23,35 +23,38 @@ export const updateCategoryBody = z.object({
 });
 export type UpdateCategoryBody = z.infer<typeof updateCategoryBody>;
 
-export interface CategoryTranslation {
-  id: string;
-  languageCode: string;
-  name: string;
-  description: string | null;
-  handle: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export const categoryTranslation = z.object({
+  id: z.string().uuid(),
+  languageCode: z.string(),
+  name: z.string(),
+  description: z.string().nullable(),
+  handle: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type CategoryTranslation = z.infer<typeof categoryTranslation>;
 
-export interface CategoryListItem {
-  id: string;
-  parentId: string | null;
-  parentName: string | null;
-  name: string;
-  handle: string;
-  isActive: boolean;
-  rank: number;
-  createdAt: string;
-  updatedAt: string;
-}
+export const categoryListItem = z.object({
+  id: z.string().uuid(),
+  parentId: z.string().uuid().nullable(),
+  parentName: z.string().nullable(),
+  name: z.string(),
+  handle: z.string(),
+  isActive: z.boolean(),
+  rank: z.number().int().nonnegative(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type CategoryListItem = z.infer<typeof categoryListItem>;
 
-export interface CategoryDetail {
-  id: string;
-  parentId: string | null;
-  parentName: string | null;
-  isActive: boolean;
-  rank: number;
-  createdAt: string;
-  updatedAt: string;
-  translations: CategoryTranslation[];
-}
+export const categoryDetail = z.object({
+  id: z.string().uuid(),
+  parentId: z.string().uuid().nullable(),
+  parentName: z.string().nullable(),
+  isActive: z.boolean(),
+  rank: z.number().int().nonnegative(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  translations: z.array(categoryTranslation),
+});
+export type CategoryDetail = z.infer<typeof categoryDetail>;

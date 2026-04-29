@@ -39,26 +39,30 @@ const seedItems: MediaListItem[] = [
   },
 ];
 
-vi.mock('@/features/media/api', async () => {
-  return {
-    mediaKeys: {
-      all: ['media'] as const,
-      list: (params?: unknown) =>
-        params ? (['media', 'list', params] as const) : (['media', 'list'] as const),
-      detail: (id: string) => ['media', 'detail', id] as const,
-    },
-    listMedia: vi.fn(async () => ({
+// Mock the feature hooks layer directly. Component-level tests don't need
+// to exercise React Query or the generated SDK — they just need the same
+// values our hooks resolve to in the running app.
+vi.mock('@/features/media/hooks', () => ({
+  mediaQueryPrefix: [{ url: '/api/media' }] as const,
+  useMediaList: () => ({
+    data: {
       data: seedItems,
       meta: { page: 1, pageSize: 24, totalPages: 1, totalItems: 2 },
-    })),
-    getMedia: vi.fn(),
-    uploadMedia: vi.fn(),
-    updateMedia: vi.fn(),
-    replaceMedia: vi.fn(),
-    deleteMedia: vi.fn(),
-    bulkDeleteMedia: vi.fn(async () => ({ deleted: 1 })),
-  };
-});
+    },
+    isLoading: false,
+    isError: false,
+  }),
+  useMediaDetail: () => ({ data: undefined, isLoading: false }),
+  useUploadMedia: () => ({ mutate: vi.fn(), mutateAsync: vi.fn() }),
+  useUpdateMedia: () => ({ mutate: vi.fn(), mutateAsync: vi.fn() }),
+  useReplaceMedia: () => ({ mutate: vi.fn(), mutateAsync: vi.fn() }),
+  useDeleteMedia: () => ({ mutate: vi.fn(), mutateAsync: vi.fn() }),
+  useBulkDeleteMedia: () => ({
+    mutate: vi.fn(),
+    mutateAsync: vi.fn(async () => ({ deleted: 1 })),
+    isPending: false,
+  }),
+}));
 
 vi.mock('sonner', () => ({
   toast: {
@@ -118,9 +122,12 @@ describe('MediaGallery', () => {
       </Wrapper>
     );
 
-    await waitFor(() => screen.getByText('hero.jpg'));
-
-    const checkboxes = screen.getAllByRole('checkbox', { name: /^select /i });
+    // Mock resolves synchronously, so don't `getByText` (the gallery renders
+    // the filename in both the tile body and the tooltip). Just wait for
+    // the first interactive control to appear.
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: /^select /i,
+    });
     await user.click(checkboxes[0]);
 
     expect(screen.getByText(/1 selected/i)).toBeInTheDocument();

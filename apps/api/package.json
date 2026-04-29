@@ -11,6 +11,7 @@
     "lint": "eslint src/",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
+    "openapi:emit": "tsx src/openapi/emit.ts",
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
@@ -20,20 +21,26 @@
     "@aws-sdk/s3-request-presigner": "^3.700.0",
     "@hono/auth-js": "^1.1.1",
     "@hono/node-server": "^1.13.7",
+    "@hono/standard-validator": "^0.2.0",
     "@repo/database": "workspace:*",
     "@repo/types": "workspace:*",
     "@repo/utils": "workspace:*",
+    "@standard-community/standard-json": "^0.3.5",
+    "@standard-community/standard-openapi": "^0.2.9",
     "bcryptjs": "^2.4.3",
     "dompurify": "^3.2.3",
     "dotenv": "^16.4.5",
     "file-type": "^19.6.0",
     "hono": "^4.6.14",
+    "hono-openapi": "^1.3.0",
     "jsdom": "^25.0.1",
     "nanoid": "^5.0.9",
+    "openapi-types": "^12.1.3",
     "pino": "^9.5.0",
     "pino-pretty": "^11.3.0",
     "sharp": "^0.33.5",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "zod-openapi": "^5.4.6"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

@@ -1,48 +1,58 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { ApiRequestError } from '@/lib/api';
+import {
+  SdkRequestError,
+  adminCreateProduct,
+  adminDeleteProduct,
+  adminGenerateVariants,
+  adminUpdateProduct,
+  adminUpdateVariant,
+  useAdminGetProduct,
+  useAdminListProductOptions,
+} from '@repo/admin-sdk';
 import type {
   CreateProductBody,
-  UpdateProductBody,
-  UpdateVariantBody,
   GenerateVariantsBody,
   OptionCatalogOption,
   ProductDetailResponse,
+  UpdateProductBody,
+  UpdateVariantBody,
 } from '@repo/types/admin';
-import {
-  getProduct,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  updateVariant,
-  generateVariants,
-  listProductOptionsCatalog,
-  productsKeys,
-} from './api';
+
+export const productsQueryPrefix = [{ url: '/api/products' }] as const;
 
 export function useProduct(id: string) {
-  return useQuery<ProductDetailResponse, ApiRequestError>({
-    queryKey: productsKeys.detail(id),
-    queryFn: () => getProduct(id),
+  return useAdminGetProduct<ProductDetailResponse>(id, {
+    query: {
+      enabled: !!id,
+      select: (response) => response.data,
+    },
   });
 }
 
 export function useProductOptionsCatalog() {
-  return useQuery<OptionCatalogOption[], ApiRequestError>({
-    queryKey: productsKeys.optionsCatalog(),
-    queryFn: () => listProductOptionsCatalog({ languageCode: 'en' }),
-  });
+  return useAdminListProductOptions<OptionCatalogOption[]>(
+    { languageCode: 'en' },
+    {
+      query: {
+        select: (response) => response.data,
+      },
+    }
+  );
 }
 
 export function useCreateProduct() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation<{ id: string }, ApiRequestError, CreateProductBody>({
-    mutationFn: createProduct,
+  return useMutation<{ id: string }, SdkRequestError, CreateProductBody>({
+    mutationFn: async (body) => {
+      const res = await adminCreateProduct(body);
+      return res.data;
+    },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: productsKeys.list() });
+      queryClient.invalidateQueries({ queryKey: productsQueryPrefix });
       toast.success('Product created');
       navigate(`/products/${data.id}`);
     },
@@ -55,11 +65,17 @@ export function useCreateProduct() {
 export function useUpdateProduct(id: string) {
   const queryClient = useQueryClient();
 
-  return useMutation<ProductDetailResponse, ApiRequestError, UpdateProductBody>({
-    mutationFn: (body) => updateProduct(id, body),
-    onSuccess: (data) => {
-      queryClient.setQueryData(productsKeys.detail(id), data);
-      queryClient.invalidateQueries({ queryKey: productsKeys.list() });
+  return useMutation<
+    ProductDetailResponse,
+    SdkRequestError,
+    UpdateProductBody
+  >({
+    mutationFn: async (body) => {
+      const res = await adminUpdateProduct(id, body);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: productsQueryPrefix });
       toast.success('Product saved');
     },
     onError: (error) => {
@@ -72,10 +88,12 @@ export function useDeleteProduct() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation<void, ApiRequestError, string>({
-    mutationFn: deleteProduct,
+  return useMutation<void, SdkRequestError, string>({
+    mutationFn: async (id) => {
+      await adminDeleteProduct(id);
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: productsKeys.list() });
+      queryClient.invalidateQueries({ queryKey: productsQueryPrefix });
       toast.success('Product deleted');
       navigate('/products');
     },
@@ -90,13 +108,14 @@ export function useUpdateVariant(productId: string) {
 
   return useMutation<
     void,
-    ApiRequestError,
+    SdkRequestError,
     { variantId: string; body: UpdateVariantBody }
   >({
-    mutationFn: ({ variantId, body }) =>
-      updateVariant(productId, variantId, body),
+    mutationFn: async ({ variantId, body }) => {
+      await adminUpdateVariant(productId, variantId, body);
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: productsKeys.detail(productId) });
+      queryClient.invalidateQueries({ queryKey: productsQueryPrefix });
       toast.success('Variant saved');
     },
     onError: (error) => {
@@ -108,11 +127,20 @@ export function useUpdateVariant(productId: string) {
 export function useGenerateVariants(productId: string) {
   const queryClient = useQueryClient();
 
-  return useMutation<{ created: number }, ApiRequestError, GenerateVariantsBody>({
-    mutationFn: (body) => generateVariants(productId, body),
+  return useMutation<
+    { created: number },
+    SdkRequestError,
+    GenerateVariantsBody
+  >({
+    mutationFn: async (body) => {
+      const res = await adminGenerateVariants(productId, body);
+      return res.data;
+    },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: productsKeys.detail(productId) });
-      toast.success(`${data.created} variant${data.created === 1 ? '' : 's'} generated`);
+      queryClient.invalidateQueries({ queryKey: productsQueryPrefix });
+      toast.success(
+        `${data.created} variant${data.created === 1 ? '' : 's'} generated`
+      );
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to generate variants');

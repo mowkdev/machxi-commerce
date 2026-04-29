@@ -23,36 +23,56 @@ export const bulkDeleteBody = z.object({
 });
 export type BulkDeleteBody = z.infer<typeof bulkDeleteBody>;
 
-export interface MediaListItem {
-  id: string;
-  fileName: string;
-  mimeType: string;
-  sizeBytes: number;
-  width: number | null;
-  height: number | null;
-  url: string;
-  thumbnailUrl: string | null;
-  title: string | null;
-  altText: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+export const mediaListItem = z.object({
+  id: z.string().uuid(),
+  fileName: z.string(),
+  mimeType: z.string(),
+  sizeBytes: z.number().int().nonnegative(),
+  width: z.number().int().nullable(),
+  height: z.number().int().nullable(),
+  url: z.string(),
+  thumbnailUrl: z.string().nullable(),
+  title: z.string().nullable(),
+  altText: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type MediaListItem = z.infer<typeof mediaListItem>;
 
-export interface MediaUsage {
-  products: { id: string; title: string | null }[];
-  variants: { id: string; sku: string | null; productId: string }[];
-}
+export const mediaUsage = z.object({
+  products: z.array(
+    z.object({
+      id: z.string().uuid(),
+      title: z.string().nullable(),
+    })
+  ),
+  variants: z.array(
+    z.object({
+      id: z.string().uuid(),
+      sku: z.string().nullable(),
+      productId: z.string().uuid(),
+    })
+  ),
+});
+export type MediaUsage = z.infer<typeof mediaUsage>;
 
-export interface MediaDetail extends MediaListItem {
-  storageKey: string;
-  thumbnailKey: string | null;
-  caption: string | null;
-  description: string | null;
-  checksumSha256: string;
-  usage: MediaUsage;
-}
+export const mediaDetail = mediaListItem.extend({
+  storageKey: z.string(),
+  thumbnailKey: z.string().nullable(),
+  caption: z.string().nullable(),
+  description: z.string().nullable(),
+  checksumSha256: z.string(),
+  usage: mediaUsage,
+});
+export type MediaDetail = z.infer<typeof mediaDetail>;
 
-export interface MediaUploadResult {
-  uploaded: MediaListItem[];
-  failed: { fileName: string; error: string }[];
-}
+export const mediaUploadResult = z.object({
+  uploaded: z.array(mediaListItem),
+  failed: z.array(
+    z.object({
+      fileName: z.string(),
+      error: z.string(),
+    })
+  ),
+});
+export type MediaUploadResult = z.infer<typeof mediaUploadResult>;

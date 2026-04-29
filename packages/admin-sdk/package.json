@@ -1,0 +1,47 @@
+{
+  "name": "@repo/admin-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Generated TypeScript client for the admin API. Source of truth: apps/api/openapi.json",
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./runtime": {
+      "types": "./src/runtime.ts",
+      "import": "./src/runtime.ts"
+    }
+  },
+  "scripts": {
+    "generate": "kubb generate --config kubb.config.ts",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf src/gen"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.62.8",
+    "axios": "^1.15.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@kubb/cli": "^4.37.4",
+    "@kubb/core": "^4.37.4",
+    "@kubb/plugin-client": "^4.37.4",
+    "@kubb/plugin-oas": "^4.37.4",
+    "@kubb/plugin-react-query": "^4.37.4",
+    "@kubb/plugin-ts": "^4.37.4",
+    "@kubb/plugin-zod": "^4.37.4",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/tsconfig": "workspace:*",
+    "react": "^18.3.1",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  }
+}

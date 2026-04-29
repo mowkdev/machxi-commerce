@@ -125,130 +125,158 @@ export const listOptionDefinitionsQuery = z.object({
 });
 export type ListOptionDefinitionsQuery = z.infer<typeof listOptionDefinitionsQuery>;
 
-// ── Response types ──────────────────────────────────────────────────────────
+// ── Response schemas ────────────────────────────────────────────────────────
 
-export interface ProductDetailPrice {
-  id: string;
-  currencyCode: string;
-  amount: number;
-  compareAtAmount: number | null;
-  minQuantity: number;
-  taxInclusive: boolean;
-}
+export const productDetailPrice = z.object({
+  id: z.string().uuid(),
+  currencyCode: z.string().length(3),
+  amount: z.number().int().nonnegative(),
+  compareAtAmount: z.number().int().nullable(),
+  minQuantity: z.number().int().positive(),
+  taxInclusive: z.boolean(),
+});
+export type ProductDetailPrice = z.infer<typeof productDetailPrice>;
 
-export interface ProductDetailOptionValueTranslation {
-  id: string;
-  languageCode: string;
-  label: string;
-}
+export const productDetailOptionValueTranslation = z.object({
+  id: z.string().uuid(),
+  languageCode: z.string(),
+  label: z.string(),
+});
+export type ProductDetailOptionValueTranslation = z.infer<
+  typeof productDetailOptionValueTranslation
+>;
 
-export interface ProductDetailOptionValue {
+export const productDetailOptionValue = z.object({
   // Product-scoped assignment id used by variant_option_values.
-  id: string;
-  valueId: string;
-  code: string;
-  translations: ProductDetailOptionValueTranslation[];
-}
+  id: z.string().uuid(),
+  valueId: z.string().uuid(),
+  code: z.string(),
+  translations: z.array(productDetailOptionValueTranslation),
+});
+export type ProductDetailOptionValue = z.infer<typeof productDetailOptionValue>;
 
-export interface ProductDetailOptionTranslation {
-  id: string;
-  languageCode: string;
-  name: string;
-}
+export const productDetailOptionTranslation = z.object({
+  id: z.string().uuid(),
+  languageCode: z.string(),
+  name: z.string(),
+});
+export type ProductDetailOptionTranslation = z.infer<
+  typeof productDetailOptionTranslation
+>;
 
-export interface ProductDetailOption {
+export const productDetailOption = z.object({
   // Product-scoped assignment id.
-  id: string;
-  optionId: string;
-  code: string;
-  rank: number;
-  translations: ProductDetailOptionTranslation[];
-  values: ProductDetailOptionValue[];
-}
+  id: z.string().uuid(),
+  optionId: z.string().uuid(),
+  code: z.string(),
+  rank: z.number().int().nonnegative(),
+  translations: z.array(productDetailOptionTranslation),
+  values: z.array(productDetailOptionValue),
+});
+export type ProductDetailOption = z.infer<typeof productDetailOption>;
 
-export interface ProductDetailVariantOptionValue {
-  valueId: string;
-  value: {
-    id: string;
-    valueId: string;
-    code: string;
-    productOptionId: string;
-    translations: ProductDetailOptionValueTranslation[];
-  };
-}
+export const productDetailVariantOptionValue = z.object({
+  valueId: z.string().uuid(),
+  value: z.object({
+    id: z.string().uuid(),
+    valueId: z.string().uuid(),
+    code: z.string(),
+    productOptionId: z.string().uuid(),
+    translations: z.array(productDetailOptionValueTranslation),
+  }),
+});
+export type ProductDetailVariantOptionValue = z.infer<
+  typeof productDetailVariantOptionValue
+>;
 
-export interface ProductDetailInventoryLevel {
-  locationId: string;
-  stockedQuantity: number;
-}
+export const productDetailInventoryLevel = z.object({
+  locationId: z.string().uuid(),
+  stockedQuantity: z.number().int(),
+});
+export type ProductDetailInventoryLevel = z.infer<
+  typeof productDetailInventoryLevel
+>;
 
-export interface ProductDetailMedia {
-  mediaId: string;
-  rank: number;
-  media: {
-    id: string;
-    url: string;
-    mimeType: string;
-    altText: string | null;
-  };
-}
+export const productDetailMedia = z.object({
+  mediaId: z.string().uuid(),
+  rank: z.number().int().nonnegative(),
+  media: z.object({
+    id: z.string().uuid(),
+    url: z.string(),
+    mimeType: z.string(),
+    altText: z.string().nullable(),
+  }),
+});
+export type ProductDetailMedia = z.infer<typeof productDetailMedia>;
 
-export interface ProductDetailVariant {
-  id: string;
-  sku: string;
-  status: string;
-  weight: number | null;
-  barcode: string | null;
-  priceSetId: string;
-  inventoryItemId: string | null;
-  createdAt: string;
-  updatedAt: string;
-  optionValues: ProductDetailVariantOptionValue[];
-  prices: ProductDetailPrice[];
-  inventoryLevels: ProductDetailInventoryLevel[];
-  media: ProductDetailMedia[];
-}
+export const productDetailVariant = z.object({
+  id: z.string().uuid(),
+  sku: z.string(),
+  status: z.string(),
+  weight: z.number().int().nullable(),
+  barcode: z.string().nullable(),
+  priceSetId: z.string().uuid(),
+  inventoryItemId: z.string().uuid().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  optionValues: z.array(productDetailVariantOptionValue),
+  prices: z.array(productDetailPrice),
+  inventoryLevels: z.array(productDetailInventoryLevel),
+  media: z.array(productDetailMedia),
+});
+export type ProductDetailVariant = z.infer<typeof productDetailVariant>;
 
-export interface ProductDetailTranslation {
-  id: string;
-  languageCode: string;
-  name: string;
-  description: string | null;
-  handle: string;
-}
+export const productDetailTranslation = z.object({
+  id: z.string().uuid(),
+  languageCode: z.string(),
+  name: z.string(),
+  description: z.string().nullable(),
+  handle: z.string(),
+});
+export type ProductDetailTranslation = z.infer<typeof productDetailTranslation>;
 
-export interface ProductDetailCategory {
-  categoryId: string;
-  category: {
-    id: string;
-    translations: { languageCode: string; name: string; handle: string }[];
-  };
-}
+export const productDetailCategory = z.object({
+  categoryId: z.string().uuid(),
+  category: z.object({
+    id: z.string().uuid(),
+    translations: z.array(
+      z.object({
+        languageCode: z.string(),
+        name: z.string(),
+        handle: z.string(),
+      })
+    ),
+  }),
+});
+export type ProductDetailCategory = z.infer<typeof productDetailCategory>;
 
-export interface ProductDetailResponse {
-  id: string;
-  baseSku: string | null;
-  status: string;
-  type: ProductType;
-  taxClassId: string;
-  createdAt: string;
-  updatedAt: string;
-  translations: ProductDetailTranslation[];
-  options: ProductDetailOption[];
-  variants: ProductDetailVariant[];
-  media: ProductDetailMedia[];
-  categories: ProductDetailCategory[];
-}
+export const productDetailResponse = z.object({
+  id: z.string().uuid(),
+  baseSku: z.string().nullable(),
+  status: z.string(),
+  type: productTypeSchema,
+  taxClassId: z.string().uuid(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  translations: z.array(productDetailTranslation),
+  options: z.array(productDetailOption),
+  variants: z.array(productDetailVariant),
+  media: z.array(productDetailMedia),
+  categories: z.array(productDetailCategory),
+});
+export type ProductDetailResponse = z.infer<typeof productDetailResponse>;
 
-export interface OptionCatalogValue {
-  id: string;
-  code: string;
-  translations: ProductDetailOptionValueTranslation[];
-}
+export const optionCatalogValue = z.object({
+  id: z.string().uuid(),
+  code: z.string(),
+  translations: z.array(productDetailOptionValueTranslation),
+});
+export type OptionCatalogValue = z.infer<typeof optionCatalogValue>;
 
-export interface OptionCatalogOption {
-  id: string;
-  code: string;
-  translations: ProductDetailOptionTranslation[];
-  values: OptionCatalogValue[];
-}
+export const optionCatalogOption = z.object({
+  id: z.string().uuid(),
+  code: z.string(),
+  translations: z.array(productDetailOptionTranslation),
+  values: z.array(optionCatalogValue),
+});
+export type OptionCatalogOption = z.infer<typeof optionCatalogOption>;

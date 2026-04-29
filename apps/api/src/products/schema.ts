@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { ProductType } from '@repo/types/admin';
+import { productTypeSchema } from '@repo/types/admin';
 
 export {
   createProductBody,
@@ -12,7 +12,9 @@ export {
   type GenerateVariantsBody,
   listOptionDefinitionsQuery,
   type ListOptionDefinitionsQuery,
+  productDetailResponse,
   type ProductDetailResponse,
+  optionCatalogOption,
   type OptionCatalogOption,
   productTypeValues,
   type ProductType,
@@ -41,13 +43,14 @@ export const variantIdParams = z.object({
   variantId: z.string().uuid(),
 });
 
-export interface ProductListRow {
-  id: string;
-  baseSku: string | null;
-  status: 'draft' | 'published' | 'archived' | 'deleted';
-  type: ProductType;
-  name: string | null;
-  handle: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+export const productListRow = z.object({
+  id: z.string().uuid(),
+  baseSku: z.string().nullable(),
+  status: z.enum(['draft', 'published', 'archived', 'deleted']),
+  type: productTypeSchema,
+  name: z.string().nullable(),
+  handle: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type ProductListRow = z.infer<typeof productListRow>;

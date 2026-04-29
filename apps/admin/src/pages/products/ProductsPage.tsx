@@ -1,19 +1,24 @@
 import { IconPlus } from "@tabler/icons-react"
 import type { ColumnDef } from "@tanstack/react-table"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import {
   AppDataGrid,
   DataGridColumnHeader,
   type DataGridFilterDef,
+  type DataGridQueryParams,
 } from "@/components/app-data-grid"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { productsQueryPrefix } from "@/features/products/hooks"
 import {
-  listProducts,
-  productsKeys,
-  type ProductListItem,
-} from "@/features/products/api"
+  adminListProducts,
+  type AdminListProducts200,
+  type AdminListProductsQueryParamsSortByEnumKey,
+  type AdminListProductsQueryParamsStatusEnumKey,
+} from "@repo/admin-sdk"
+
+type ProductListItem = AdminListProducts200["data"][number]
 
 const STATUS_VARIANTS: Record<
   ProductListItem["status"],
@@ -104,12 +109,28 @@ const columns: ColumnDef<ProductListItem>[] = [
   },
 ]
 
+async function fetchProducts(params: DataGridQueryParams) {
+  const res = await adminListProducts({
+    page: params.page,
+    pageSize: params.pageSize,
+    search: params.search,
+    sortBy: params.sortBy as
+      | AdminListProductsQueryParamsSortByEnumKey
+      | undefined,
+    sortOrder: params.sortOrder,
+    status: params.filters.status as
+      | AdminListProductsQueryParamsStatusEnumKey
+      | undefined,
+  })
+  return { data: res.data, meta: res.meta }
+}
+
 export default function ProductsPage() {
   return (
     <AppDataGrid<ProductListItem>
-      queryKey={productsKeys.list()}
+      queryKey={productsQueryPrefix}
       columns={columns}
-      fetcher={listProducts}
+      fetcher={fetchProducts}
       searchPlaceholder="Search products by name or SKU…"
       filters={[statusFilter]}
       initialSort={[{ id: "createdAt", desc: true }]}

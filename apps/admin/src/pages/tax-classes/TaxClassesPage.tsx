@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom';
 import {
   AppDataGrid,
   DataGridColumnHeader,
+  type DataGridQueryParams,
 } from '@/components/app-data-grid';
 import { Button } from '@/components/ui/button';
+import { taxClassesQueryPrefix } from '@/features/tax-classes/hooks';
 import {
-  listTaxClasses,
-  taxClassesKeys,
-  type TaxClassListItem,
-} from '@/features/tax-classes/api';
+  adminListTaxClasses,
+  type AdminListTaxClassesQueryParamsSortByEnumKey,
+} from '@repo/admin-sdk';
+import type { TaxClassListItem } from '@repo/types/admin';
 
 const columns: ColumnDef<TaxClassListItem>[] = [
   {
@@ -53,12 +55,25 @@ const columns: ColumnDef<TaxClassListItem>[] = [
   },
 ];
 
+async function fetchTaxClasses(params: DataGridQueryParams) {
+  const res = await adminListTaxClasses({
+    page: params.page,
+    pageSize: params.pageSize,
+    search: params.search,
+    sortBy: params.sortBy as
+      | AdminListTaxClassesQueryParamsSortByEnumKey
+      | undefined,
+    sortOrder: params.sortOrder,
+  });
+  return { data: res.data, meta: res.meta };
+}
+
 export default function TaxClassesPage() {
   return (
     <AppDataGrid<TaxClassListItem>
-      queryKey={taxClassesKeys.list()}
+      queryKey={taxClassesQueryPrefix}
       columns={columns}
-      fetcher={listTaxClasses}
+      fetcher={fetchTaxClasses}
       searchPlaceholder="Search tax classes…"
       initialSort={[{ id: 'createdAt', desc: true }]}
       getRowId={(row) => row.id}

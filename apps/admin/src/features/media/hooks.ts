@@ -1,6 +1,21 @@
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { ApiRequestError } from '@/lib/api';
+import {
+  SdkRequestError,
+  adminBulkDeleteMedia,
+  adminDeleteMedia,
+  adminReplaceMedia,
+  adminUpdateMedia,
+  adminUploadMedia,
+  useAdminGetMedia,
+  useAdminListMedia,
+  type AdminListMediaQueryParamsSortByEnumKey,
+  type AdminListMediaQueryParamsSortOrderEnumKey,
+} from '@repo/admin-sdk';
 import type {
   MediaDetail,
   MediaListItem,
@@ -8,40 +23,48 @@ import type {
   UpdateMediaBody,
 } from '@repo/types/admin';
 import type { PaginationMeta } from '@repo/types';
-import {
-  bulkDeleteMedia,
-  deleteMedia,
-  getMedia,
-  listMedia,
-  mediaKeys,
-  replaceMedia,
-  updateMedia,
-  uploadMedia,
-  type ListMediaParams,
-} from './api';
+
+export const mediaQueryPrefix = [{ url: '/api/media' }] as const;
+
+export interface ListMediaParams {
+  page: number;
+  pageSize: number;
+  search?: string;
+  mimeType?: string;
+  sortBy?: AdminListMediaQueryParamsSortByEnumKey;
+  sortOrder?: AdminListMediaQueryParamsSortOrderEnumKey;
+}
 
 export function useMediaList(params: ListMediaParams) {
-  return useQuery<{ data: MediaListItem[]; meta: PaginationMeta }, ApiRequestError>({
-    queryKey: mediaKeys.list(params),
-    queryFn: () => listMedia(params),
-    placeholderData: keepPreviousData,
-  });
+  return useAdminListMedia<{ data: MediaListItem[]; meta: PaginationMeta }>(
+    params,
+    {
+      query: {
+        placeholderData: keepPreviousData,
+        select: (response) => ({ data: response.data, meta: response.meta }),
+      },
+    }
+  );
 }
 
 export function useMediaDetail(id: string | null) {
-  return useQuery<MediaDetail, ApiRequestError>({
-    queryKey: id ? mediaKeys.detail(id) : ['media', 'detail', 'none'],
-    queryFn: () => getMedia(id as string),
-    enabled: Boolean(id),
+  return useAdminGetMedia<MediaDetail>(id ?? '', {
+    query: {
+      enabled: Boolean(id),
+      select: (response) => response.data,
+    },
   });
 }
 
 export function useUploadMedia() {
   const qc = useQueryClient();
-  return useMutation<MediaUploadResult, ApiRequestError, File[]>({
-    mutationFn: uploadMedia,
+  return useMutation<MediaUploadResult, SdkRequestError, File[]>({
+    mutationFn: async (files) => {
+      const res = await adminUploadMedia({ files });
+      return res.data;
+    },
     onSuccess: (result) => {
-      qc.invalidateQueries({ queryKey: mediaKeys.all });
+      qc.invalidateQueries({ queryKey: mediaQueryPrefix });
       const ok = result.uploaded.length;
       const bad = result.failed.length;
       if (ok > 0 && bad === 0) {
@@ -62,10 +85,13 @@ export function useUploadMedia() {
 
 export function useUpdateMedia(id: string) {
   const qc = useQueryClient();
-  return useMutation<MediaListItem, ApiRequestError, UpdateMediaBody>({
-    mutationFn: (body) => updateMedia(id, body),
+  return useMutation<MediaListItem, SdkRequestError, UpdateMediaBody>({
+    mutationFn: async (body) => {
+      const res = await adminUpdateMedia(id, body);
+      return res.data;
+    },
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: mediaKeys.all });
+      qc.invalidateQueries({ queryKey: mediaQueryPrefix });
       toast.success('Media saved');
     },
     onError: (err) => toast.error(err.message || 'Save failed'),
@@ -74,10 +100,13 @@ export function useUpdateMedia(id: string) {
 
 export function useReplaceMedia(id: string) {
   const qc = useQueryClient();
-  return useMutation<MediaListItem, ApiRequestError, File>({
-    mutationFn: (file) => replaceMedia(id, file),
+  return useMutation<MediaListItem, SdkRequestError, File>({
+    mutationFn: async (file) => {
+      const res = await adminReplaceMedia(id, { files: [file] });
+      return res.data;
+    },
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: mediaKeys.all });
+      qc.invalidateQueries({ queryKey: mediaQueryPrefix });
       toast.success('File replaced');
     },
     onError: (err) => toast.error(err.message || 'Replace failed'),
@@ -86,10 +115,12 @@ export function useReplaceMedia(id: string) {
 
 export function useDeleteMedia() {
   const qc = useQueryClient();
-  return useMutation<void, ApiRequestError, string>({
-    mutationFn: deleteMedia,
+  return useMutation<void, SdkRequestError, string>({
+    mutationFn: async (id) => {
+      await adminDeleteMedia(id);
+    },
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: mediaKeys.all });
+      qc.invalidateQueries({ queryKey: mediaQueryPrefix });
       toast.success('Media deleted');
     },
     onError: (err) => toast.error(err.message || 'Delete failed'),
@@ -98,10 +129,13 @@ export function useDeleteMedia() {
 
 export function useBulkDeleteMedia() {
   const qc = useQueryClient();
-  return useMutation<{ deleted: number }, ApiRequestError, string[]>({
-    mutationFn: bulkDeleteMedia,
+  return useMutation<{ deleted: number }, SdkRequestError, string[]>({
+    mutationFn: async (ids) => {
+      const res = await adminBulkDeleteMedia({ ids });
+      return res.data;
+    },
     onSuccess: (r) => {
-      qc.invalidateQueries({ queryKey: mediaKeys.all });
+      qc.invalidateQueries({ queryKey: mediaQueryPrefix });
       toast.success(`Deleted ${r.deleted} item${r.deleted === 1 ? '' : 's'}`);
     },
     onError: (err) => toast.error(err.message || 'Bulk delete failed'),
