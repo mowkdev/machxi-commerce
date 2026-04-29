@@ -15,8 +15,22 @@ const generateMutation = vi.hoisted(() => ({
   isPending: false,
 }));
 
+const catalogQuery = vi.hoisted(() => ({
+  data: [] as {
+    id: string;
+    code: string;
+    translations: { id: string; languageCode: string; name: string }[];
+    values: {
+      id: string;
+      code: string;
+      translations: { id: string; languageCode: string; label: string }[];
+    }[];
+  }[],
+}));
+
 vi.mock('../hooks', () => ({
   useGenerateVariants: () => generateMutation,
+  useProductOptionsCatalog: () => catalogQuery,
 }));
 
 function makeOption(
@@ -26,9 +40,14 @@ function makeOption(
 ): ProductDetailOption {
   return {
     id,
+    optionId: `${id}-definition`,
+    code: name.toLowerCase(),
+    rank: 0,
     translations: [{ id: `${id}-translation`, languageCode: 'en', name }],
     values: values.map((label, index) => ({
       id: `${id}-value-${index}`,
+      valueId: `${id}-catalog-value-${index}`,
+      code: label.toLowerCase(),
       translations: [
         {
           id: `${id}-value-${index}-translation`,
@@ -96,7 +115,7 @@ async function addOptionWithValues(
 ) {
   await user.click(screen.getByRole('button', { name: 'Add option' }));
 
-  const nameInputs = screen.getAllByPlaceholderText('e.g. Color, Size');
+  const nameInputs = screen.getAllByPlaceholderText('Search or create option, e.g. Color');
   await user.type(nameInputs[nameInputs.length - 1], name);
 
   const valueInputs = screen.getAllByPlaceholderText('Add value, press Enter');
@@ -118,6 +137,7 @@ describe('OptionsCard', () => {
   beforeEach(() => {
     generateMutation.mutate.mockReset();
     generateMutation.isPending = false;
+    catalogQuery.data = [];
   });
 
   afterEach(() => {
@@ -147,6 +167,61 @@ describe('OptionsCard', () => {
         },
       ],
     });
+  });
+
+  it('does not select catalog option values by default', async () => {
+    catalogQuery.data = [
+      {
+        id: 'catalog-color',
+        code: 'color',
+        translations: [{ id: 'catalog-color-en', languageCode: 'en', name: 'Color' }],
+        values: [
+          {
+            id: 'catalog-red',
+            code: 'red',
+            translations: [{ id: 'catalog-red-en', languageCode: 'en', label: 'Red' }],
+          },
+          {
+            id: 'catalog-blue',
+            code: 'blue',
+            translations: [{ id: 'catalog-blue-en', languageCode: 'en', label: 'Blue' }],
+          },
+        ],
+      },
+    ];
+
+    const user = userEvent.setup();
+    render(<OptionsCard product={makeProduct()} />);
+
+    await user.click(screen.getByRole('button', { name: 'Add option' }));
+    await user.click(screen.getByRole('combobox'));
+    await user.click(screen.getByRole('button', { name: /Color.*2 reusable values/ }));
+
+    expect(screen.queryByRole('button', { name: 'Generate variants' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Add Red' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Add Blue' })).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Add Red' }));
+    await user.click(screen.getByRole('button', { name: 'Generate variants' }));
+
+    expect(generateMutation.mutate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: [
+          {
+            optionId: 'catalog-color',
+            code: 'color',
+            translations: [{ languageCode: 'en', name: 'Color' }],
+            values: [
+              {
+                valueId: 'catalog-red',
+                code: 'red',
+                translations: [{ languageCode: 'en', label: 'Red' }],
+              },
+            ],
+          },
+        ],
+      })
+    );
   });
 
   it('cancels regeneration without calling the mutation', async () => {
@@ -194,10 +269,20 @@ describe('OptionsCard', () => {
       regenerate: true,
       options: [
         {
+          optionId: 'option-1-definition',
+          code: 'color',
           translations: [{ languageCode: 'en', name: 'Color' }],
           values: [
-            { translations: [{ languageCode: 'en', label: 'Red' }] },
-            { translations: [{ languageCode: 'en', label: 'Blue' }] },
+            {
+              valueId: 'option-1-catalog-value-0',
+              code: 'red',
+              translations: [{ languageCode: 'en', label: 'Red' }],
+            },
+            {
+              valueId: 'option-1-catalog-value-1',
+              code: 'blue',
+              translations: [{ languageCode: 'en', label: 'Blue' }],
+            },
           ],
         },
         {

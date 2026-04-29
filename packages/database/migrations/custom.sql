@@ -6,7 +6,7 @@
 --
 -- Run this file AFTER running drizzle-kit push/migrate to add:
 -- 1. Extensions and functions
--- 2. updated_at triggers (34 tables)
+-- 2. updated_at triggers (36 tables)
 -- 3. Immutability triggers (6 tables)
 -- 4. Cross-module foreign keys
 -- 5. Tax rates exclusion constraint
@@ -51,7 +51,7 @@ $$ LANGUAGE plpgsql;
 -- The citext extension above must be installed BEFORE running drizzle-kit push.
 
 -- ────────────────────────────────────────────────────────────────────────────
--- UPDATED_AT TRIGGERS (34 tables) — Conventions §3
+-- UPDATED_AT TRIGGERS (36 tables) — Conventions §3
 -- ────────────────────────────────────────────────────────────────────────────
 
 -- Catalog
@@ -70,17 +70,23 @@ CREATE TRIGGER trg_products_set_updated_at
 CREATE TRIGGER trg_product_translations_set_updated_at
   BEFORE UPDATE ON product_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
+CREATE TRIGGER trg_option_definitions_set_updated_at
+  BEFORE UPDATE ON option_definitions FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_option_definition_translations_set_updated_at
+  BEFORE UPDATE ON option_definition_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_option_values_set_updated_at
+  BEFORE UPDATE ON option_values FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_option_value_translations_set_updated_at
+  BEFORE UPDATE ON option_value_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
 CREATE TRIGGER trg_product_options_set_updated_at
   BEFORE UPDATE ON product_options FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
-CREATE TRIGGER trg_product_option_translations_set_updated_at
-  BEFORE UPDATE ON product_option_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
-
 CREATE TRIGGER trg_product_option_values_set_updated_at
   BEFORE UPDATE ON product_option_values FOR EACH ROW EXECUTE FUNCTION set_updated_at();
-
-CREATE TRIGGER trg_product_option_value_translations_set_updated_at
-  BEFORE UPDATE ON product_option_value_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 CREATE TRIGGER trg_product_variants_set_updated_at
   BEFORE UPDATE ON product_variants FOR EACH ROW EXECUTE FUNCTION set_updated_at();

@@ -11,6 +11,11 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Popover,
+  PopoverAnchor,
+  PopoverContent,
+} from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import {
   AlertDialog,
@@ -24,7 +29,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import type { ProductDetailResponse } from '@repo/types/admin';
-import { useGenerateVariants } from '../hooks';
+import { useGenerateVariants, useProductOptionsCatalog } from '../hooks';
 import { cartesianProduct } from '../utils/variant-generator';
 
 interface OptionsCardProps {
@@ -33,16 +38,22 @@ interface OptionsCardProps {
 
 interface LocalOption {
   id: string;
+  optionId?: string;
+  code?: string;
   name: string;
-  values: { id: string; label: string }[];
+  values: { id: string; valueId?: string; code?: string; label: string }[];
 }
 
 function getDefaultLangOptions(product: ProductDetailResponse): LocalOption[] {
   return product.options.map((o) => ({
     id: o.id,
+    optionId: o.optionId,
+    code: o.code,
     name: o.translations[0]?.name ?? '',
     values: o.values.map((v) => ({
       id: v.id,
+      valueId: v.valueId,
+      code: v.code,
       label: v.translations[0]?.label ?? '',
     })),
   }));
@@ -56,10 +67,14 @@ function normalizeOptions(options: LocalOption[]) {
 }
 
 function getSubmittedOptions(options: LocalOption[]) {
-  return normalizeOptions(options).map((option) => ({
-    translations: [{ languageCode: 'en', name: option.name }],
-    values: option.values.map((label) => ({
-      translations: [{ languageCode: 'en', label }],
+  return options.map((option) => ({
+    ...(option.optionId ? { optionId: option.optionId } : {}),
+    ...(option.code ? { code: option.code } : {}),
+    translations: [{ languageCode: 'en', name: option.name.trim() }],
+    values: option.values.map((value) => ({
+      ...(value.valueId ? { valueId: value.valueId } : {}),
+      ...(value.code ? { code: value.code } : {}),
+      translations: [{ languageCode: 'en', label: value.label.trim() }],
     })),
   }));
 }
@@ -69,8 +84,11 @@ export function OptionsCard({ product }: OptionsCardProps) {
     getDefaultLangOptions(product)
   );
   const [newValueInputs, setNewValueInputs] = useState<Record<string, string>>({});
+  const [openOptionComboboxId, setOpenOptionComboboxId] = useState<string | null>(null);
   const [confirmRegenerateOpen, setConfirmRegenerateOpen] = useState(false);
   const generateMutation = useGenerateVariants(product.id);
+  const catalogQuery = useProductOptionsCatalog();
+  const catalogOptions = catalogQuery.data ?? [];
 
   useEffect(() => {
     setOptions(getDefaultLangOptions(product));
@@ -85,6 +103,28 @@ export function OptionsCard({ product }: OptionsCardProps) {
     ]);
   }, []);
 
+  const handleSelectCatalogOption = useCallback(
+    (optionId: string, catalogOptionId: string) => {
+      const catalogOption = catalogOptions.find((option) => option.id === catalogOptionId);
+      if (!catalogOption) return;
+      setOptions((prev) =>
+        prev.map((option) =>
+          option.id === optionId
+            ? {
+                ...option,
+                optionId: catalogOption.id,
+                code: catalogOption.code,
+                name: catalogOption.translations[0]?.name ?? catalogOption.code,
+                values: [],
+              }
+            : option
+        )
+      );
+      setOpenOptionComboboxId(null);
+    },
+    [catalogOptions]
+  );
+
   const handleRemoveOption = useCallback((optionId: string) => {
     setOptions((prev) =>
       prev.length <= 1 ? prev : prev.filter((o) => o.id !== optionId)
@@ -94,8 +134,22 @@ export function OptionsCard({ product }: OptionsCardProps) {
   const handleOptionNameChange = useCallback(
     (optionId: string, name: string) => {
       setOptions((prev) =>
-        prev.map((o) => (o.id === optionId ? { ...o, name } : o))
+        prev.map((o) =>
+          o.id === optionId
+            ? {
+                ...o,
+                optionId: undefined,
+                code: undefined,
+                name,
+                values: o.values.map((value) => ({
+                  id: value.id,
+                  label: value.label,
+                })),
+              }
+            : o
+        )
       );
+      setOpenOptionComboboxId(optionId);
     },
     []
   );
@@ -119,6 +173,34 @@ export function OptionsCard({ product }: OptionsCardProps) {
       setNewValueInputs((prev) => ({ ...prev, [optionId]: '' }));
     },
     []
+  );
+
+  const handleReuseValue = useCallback(
+    (optionId: string, valueId: string) => {
+      setOptions((prev) =>
+        prev.map((option) => {
+          if (option.id !== optionId || !option.optionId) return option;
+          const catalogOption = catalogOptions.find((item) => item.id === option.optionId);
+          const catalogValue = catalogOption?.values.find((value) => value.id === valueId);
+          if (!catalogValue || option.values.some((value) => value.valueId === catalogValue.id)) {
+            return option;
+          }
+          return {
+            ...option,
+            values: [
+              ...option.values,
+              {
+                id: `new-${catalogValue.id}`,
+                valueId: catalogValue.id,
+                code: catalogValue.code,
+                label: catalogValue.translations[0]?.label ?? catalogValue.code,
+              },
+            ],
+          };
+        })
+      );
+    },
+    [catalogOptions]
   );
 
   const handleRemoveValue = useCallback(
@@ -202,14 +284,81 @@ export function OptionsCard({ product }: OptionsCardProps) {
                 <Label className="text-xs text-muted-foreground">
                   Option {idx + 1}
                 </Label>
-                <Input
-                  value={option.name}
-                  onChange={(e) =>
-                    handleOptionNameChange(option.id, e.target.value)
+                <Popover
+                  open={openOptionComboboxId === option.id}
+                  onOpenChange={(open) =>
+                    setOpenOptionComboboxId(open ? option.id : null)
                   }
-                  placeholder="e.g. Color, Size"
-                  className="mt-1"
-                />
+                >
+                  <PopoverAnchor asChild>
+                    <Input
+                      value={option.name}
+                      onFocus={() => setOpenOptionComboboxId(option.id)}
+                      onChange={(e) =>
+                        handleOptionNameChange(option.id, e.target.value)
+                      }
+                      placeholder="Search or create option, e.g. Color"
+                      className="mt-1"
+                      role="combobox"
+                      aria-expanded={openOptionComboboxId === option.id}
+                    />
+                  </PopoverAnchor>
+                  <PopoverContent
+                    align="start"
+                    onOpenAutoFocus={(e) => e.preventDefault()}
+                    className="w-[var(--radix-popover-trigger-width)] p-1"
+                  >
+                    <div className="max-h-56 overflow-y-auto">
+                      {catalogOptions
+                        .filter((catalogOption) => {
+                          const label =
+                            catalogOption.translations[0]?.name ?? catalogOption.code;
+                          return label
+                            .toLowerCase()
+                            .includes(option.name.trim().toLowerCase());
+                        })
+                        .map((catalogOption) => {
+                          const label =
+                            catalogOption.translations[0]?.name ?? catalogOption.code;
+                          const alreadySelected = options.some(
+                            (candidate) =>
+                              candidate.id !== option.id &&
+                              candidate.optionId === catalogOption.id
+                          );
+                          return (
+                            <button
+                              key={catalogOption.id}
+                              type="button"
+                              disabled={alreadySelected}
+                              onMouseDown={(e) => e.preventDefault()}
+                              onClick={() =>
+                                handleSelectCatalogOption(option.id, catalogOption.id)
+                              }
+                              className="flex w-full flex-col rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                              <span>{label}</span>
+                              <span className="text-xs text-muted-foreground">
+                                {alreadySelected
+                                  ? 'Already used on this product'
+                                  : `${catalogOption.values.length} reusable value${catalogOption.values.length === 1 ? '' : 's'}`}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      {catalogOptions.filter((catalogOption) => {
+                        const label =
+                          catalogOption.translations[0]?.name ?? catalogOption.code;
+                        return label
+                          .toLowerCase()
+                          .includes(option.name.trim().toLowerCase());
+                      }).length === 0 && (
+                        <div className="px-2 py-3 text-sm text-muted-foreground">
+                          No existing options. Continue typing to create one.
+                        </div>
+                      )}
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -275,6 +424,28 @@ export function OptionsCard({ product }: OptionsCardProps) {
                   className="h-7 w-36 text-xs"
                 />
               </div>
+              {option.optionId && (
+                <div className="flex flex-wrap gap-1.5">
+                  {catalogOptions
+                    .find((catalogOption) => catalogOption.id === option.optionId)
+                    ?.values.filter(
+                      (catalogValue) =>
+                        !option.values.some((value) => value.valueId === catalogValue.id)
+                    )
+                    .map((catalogValue) => (
+                      <Button
+                        key={catalogValue.id}
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 px-2 text-xs"
+                        onClick={() => handleReuseValue(option.id, catalogValue.id)}
+                      >
+                        Add {catalogValue.translations[0]?.label ?? catalogValue.code}
+                      </Button>
+                    ))}
+                </div>
+              )}
             </div>
           </div>
         ))}

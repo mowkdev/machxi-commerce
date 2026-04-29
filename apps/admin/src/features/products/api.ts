@@ -5,6 +5,7 @@ import type {
   UpdateProductBody,
   UpdateVariantBody,
   GenerateVariantsBody,
+  OptionCatalogOption,
   ProductDetailResponse,
   ProductType,
 } from '@repo/types/admin';
@@ -85,8 +86,19 @@ export async function generateVariants(
   return res.data;
 }
 
+export async function listProductOptionsCatalog(params?: {
+  search?: string;
+  languageCode?: string;
+}): Promise<OptionCatalogOption[]> {
+  const res = await api.get<OptionCatalogOption[]>('/api/products/options', {
+    params,
+  });
+  return res.data;
+}
+
 export const productsKeys = {
   all: ['products'] as const,
   list: () => [...productsKeys.all, 'list'] as const,
   detail: (id: string) => [...productsKeys.all, 'detail', id] as const,
+  optionsCatalog: () => [...productsKeys.all, 'options-catalog'] as const,
 };

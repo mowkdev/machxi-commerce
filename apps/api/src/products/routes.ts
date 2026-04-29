@@ -3,6 +3,7 @@ import type { AppEnv } from '../context';
 import { requireAdmin } from '../auth/middleware';
 import {
   listProductsController,
+  listOptionDefinitionsController,
   getProductController,
   createProductController,
   updateProductController,
@@ -17,6 +18,7 @@ productsRoutes.use('*', requireAdmin);
 
 productsRoutes.get('/', listProductsController);
 productsRoutes.post('/', createProductController);
+productsRoutes.get('/options', listOptionDefinitionsController);
 productsRoutes.get('/:id', getProductController);
 productsRoutes.put('/:id', updateProductController);
 productsRoutes.delete('/:id', deleteProductController);

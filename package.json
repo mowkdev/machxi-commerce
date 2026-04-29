@@ -23,7 +23,9 @@
     "db:studio": "pnpm --filter @repo/database db:studio",
     "docker:dev": "docker compose up -d && docker compose logs -f db",
     "db:setup": "node scripts/db-setup.mjs",
-    "db:seed": "pnpm --filter @repo/database db:seed"
+    "db:seed": "pnpm --filter @repo/database db:seed",
+    "db:reset-catalog": "pnpm --filter @repo/database db:reset-catalog",
+    "db:seed-products": "pnpm --filter @repo/database db:seed-products"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",

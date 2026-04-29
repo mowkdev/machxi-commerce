@@ -568,7 +568,7 @@ describe('generateVariants', () => {
     );
   });
 
-  it('rejects duplicate submitted option names', async () => {
+  it('rejects duplicate submitted option definitions', async () => {
     const { id } = await createProduct(
       makeCreateBody({ type: 'variable', options: [], variants: [] })
     );
@@ -582,6 +582,6 @@ describe('generateVariants', () => {
           makeOption('color', ['Blue']),
         ],
       })
-    ).rejects.toThrow('Option names must be unique');
+    ).rejects.toThrow('Option definitions must be unique per product');
   });
 });

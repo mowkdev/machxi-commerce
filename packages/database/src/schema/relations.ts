@@ -5,10 +5,12 @@ import {
   taxRates,
   products,
   productTranslations,
+  optionDefinitions,
+  optionDefinitionTranslations,
+  optionValues,
+  optionValueTranslations,
   productOptions,
-  productOptionTranslations,
   productOptionValues,
-  productOptionValueTranslations,
   productVariants,
   variantOptionValues,
   media,
@@ -74,8 +76,8 @@ import {
 
 export const languagesRelations = relations(languages, ({ many }) => ({
   productTranslations: many(productTranslations),
-  productOptionTranslations: many(productOptionTranslations),
-  productOptionValueTranslations: many(productOptionValueTranslations),
+  optionDefinitionTranslations: many(optionDefinitionTranslations),
+  optionValueTranslations: many(optionValueTranslations),
   categoryTranslations: many(categoryTranslations),
   priceListTranslations: many(priceListTranslations),
   promotionTranslations: many(promotionTranslations),
@@ -108,45 +110,63 @@ export const productTranslationsRelations = relations(productTranslations, ({ on
   language: one(languages, { fields: [productTranslations.languageCode], references: [languages.code] }),
 }));
 
-export const productOptionsRelations = relations(productOptions, ({ one, many }) => ({
-  product: one(products, { fields: [productOptions.productId], references: [products.id] }),
-  translations: many(productOptionTranslations),
-  values: many(productOptionValues),
+export const optionDefinitionsRelations = relations(optionDefinitions, ({ many }) => ({
+  translations: many(optionDefinitionTranslations),
+  values: many(optionValues),
+  productAssignments: many(productOptions),
 }));
 
-export const productOptionTranslationsRelations = relations(productOptionTranslations, ({ one }) => ({
-  option: one(productOptions, {
-    fields: [productOptionTranslations.optionId],
-    references: [productOptions.id],
+export const optionDefinitionTranslationsRelations = relations(optionDefinitionTranslations, ({ one }) => ({
+  option: one(optionDefinitions, {
+    fields: [optionDefinitionTranslations.optionId],
+    references: [optionDefinitions.id],
   }),
   language: one(languages, {
-    fields: [productOptionTranslations.languageCode],
+    fields: [optionDefinitionTranslations.languageCode],
     references: [languages.code],
   }),
 }));
 
-export const productOptionValuesRelations = relations(productOptionValues, ({ one, many }) => ({
-  option: one(productOptions, {
-    fields: [productOptionValues.optionId],
-    references: [productOptions.id],
+export const optionValuesRelations = relations(optionValues, ({ one, many }) => ({
+  option: one(optionDefinitions, {
+    fields: [optionValues.optionId],
+    references: [optionDefinitions.id],
   }),
-  translations: many(productOptionValueTranslations),
-  variantAssignments: many(variantOptionValues),
+  translations: many(optionValueTranslations),
+  productAssignments: many(productOptionValues),
 }));
 
-export const productOptionValueTranslationsRelations = relations(
-  productOptionValueTranslations,
-  ({ one }) => ({
-    value: one(productOptionValues, {
-      fields: [productOptionValueTranslations.valueId],
-      references: [productOptionValues.id],
-    }),
-    language: one(languages, {
-      fields: [productOptionValueTranslations.languageCode],
-      references: [languages.code],
-    }),
-  })
-);
+export const optionValueTranslationsRelations = relations(optionValueTranslations, ({ one }) => ({
+  value: one(optionValues, {
+    fields: [optionValueTranslations.valueId],
+    references: [optionValues.id],
+  }),
+  language: one(languages, {
+    fields: [optionValueTranslations.languageCode],
+    references: [languages.code],
+  }),
+}));
+
+export const productOptionsRelations = relations(productOptions, ({ one, many }) => ({
+  product: one(products, { fields: [productOptions.productId], references: [products.id] }),
+  option: one(optionDefinitions, {
+    fields: [productOptions.optionId],
+    references: [optionDefinitions.id],
+  }),
+  values: many(productOptionValues),
+}));
+
+export const productOptionValuesRelations = relations(productOptionValues, ({ one, many }) => ({
+  productOption: one(productOptions, {
+    fields: [productOptionValues.productOptionId],
+    references: [productOptions.id],
+  }),
+  optionValue: one(optionValues, {
+    fields: [productOptionValues.optionValueId],
+    references: [optionValues.id],
+  }),
+  variantAssignments: many(variantOptionValues),
+}));
 
 export const productVariantsRelations = relations(productVariants, ({ one, many }) => ({
   product: one(products, { fields: [productVariants.productId], references: [products.id] }),

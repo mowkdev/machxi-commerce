@@ -14,10 +14,12 @@ import {
   languages,
   products,
   productTranslations,
+  optionDefinitions,
+  optionDefinitionTranslations,
+  optionValues,
+  optionValueTranslations,
   productOptions,
-  productOptionTranslations,
   productOptionValues,
-  productOptionValueTranslations,
   productVariants,
   variantOptionValues,
   productCategories,
@@ -35,8 +37,9 @@ import type {
   UpdateVariantBody,
   GenerateVariantsBody,
   ProductDetailResponse,
+  OptionCatalogOption,
 } from '@repo/types/admin';
-import type { ListProductsQuery, ProductListRow } from './schema';
+import type { ListOptionDefinitionsQuery, ListProductsQuery, ProductListRow } from './schema';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -54,6 +57,191 @@ async function getDefaultLanguageCode(): Promise<string | undefined> {
     .where(eq(languages.isDefault, true))
     .limit(1);
   return row[0]?.code;
+}
+
+type CatalogTx = Parameters<Parameters<typeof db.transaction>[0]>[0];
+type SubmittedOption = NonNullable<GenerateVariantsBody['options']>[number];
+type SubmittedOptionValue = SubmittedOption['values'][number];
+
+function codeFromText(text: string): string {
+  const code = text
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return code || `option-${Date.now()}`;
+}
+
+function firstOptionName(option: SubmittedOption): string | undefined {
+  return option.translations[0]?.name.trim() || undefined;
+}
+
+function firstValueLabel(value: SubmittedOptionValue): string | undefined {
+  return value.translations[0]?.label.trim() || undefined;
+}
+
+async function upsertOptionTranslations(
+  tx: CatalogTx,
+  optionId: string,
+  translations: SubmittedOption['translations']
+) {
+  if (translations.length === 0) return;
+  await tx
+    .insert(optionDefinitionTranslations)
+    .values(
+      translations.map((translation) => ({
+        optionId,
+        languageCode: translation.languageCode,
+        name: translation.name,
+      }))
+    )
+    .onConflictDoNothing();
+}
+
+async function upsertValueTranslations(
+  tx: CatalogTx,
+  valueId: string,
+  translations: SubmittedOptionValue['translations']
+) {
+  if (translations.length === 0) return;
+  await tx
+    .insert(optionValueTranslations)
+    .values(
+      translations.map((translation) => ({
+        valueId,
+        languageCode: translation.languageCode,
+        label: translation.label,
+      }))
+    )
+    .onConflictDoNothing();
+}
+
+async function resolveOptionDefinition(tx: CatalogTx, option: SubmittedOption) {
+  if (option.optionId) {
+    const [existing] = await tx
+      .select({ id: optionDefinitions.id, code: optionDefinitions.code })
+      .from(optionDefinitions)
+      .where(eq(optionDefinitions.id, option.optionId))
+      .limit(1);
+    if (!existing) throw new Error('Option definition not found');
+    await upsertOptionTranslations(tx, existing.id, option.translations);
+    return existing;
+  }
+
+  const name = firstOptionName(option);
+  const code = option.code?.trim() ?? (name ? codeFromText(name) : undefined);
+  if (!code) throw new Error('Option name or code is required');
+
+  const [existing] = await tx
+    .select({ id: optionDefinitions.id, code: optionDefinitions.code })
+    .from(optionDefinitions)
+    .where(eq(optionDefinitions.code, code))
+    .limit(1);
+  if (existing) {
+    await upsertOptionTranslations(tx, existing.id, option.translations);
+    return existing;
+  }
+
+  const [created] = await tx
+    .insert(optionDefinitions)
+    .values({ code })
+    .returning({ id: optionDefinitions.id, code: optionDefinitions.code });
+  await upsertOptionTranslations(tx, created.id, option.translations);
+  return created;
+}
+
+async function resolveOptionValue(
+  tx: CatalogTx,
+  optionId: string,
+  value: SubmittedOptionValue
+) {
+  if (value.valueId) {
+    const [existing] = await tx
+      .select({ id: optionValues.id, code: optionValues.code, optionId: optionValues.optionId })
+      .from(optionValues)
+      .where(eq(optionValues.id, value.valueId))
+      .limit(1);
+    if (!existing || existing.optionId !== optionId) {
+      throw new Error('Option value not found for option');
+    }
+    await upsertValueTranslations(tx, existing.id, value.translations);
+    return existing;
+  }
+
+  const label = firstValueLabel(value);
+  const code = value.code?.trim() ?? (label ? codeFromText(label) : undefined);
+  if (!code) throw new Error('Option value label or code is required');
+
+  const [existing] = await tx
+    .select({ id: optionValues.id, code: optionValues.code, optionId: optionValues.optionId })
+    .from(optionValues)
+    .where(and(eq(optionValues.optionId, optionId), eq(optionValues.code, code)))
+    .limit(1);
+  if (existing) {
+    await upsertValueTranslations(tx, existing.id, value.translations);
+    return existing;
+  }
+
+  const [created] = await tx
+    .insert(optionValues)
+    .values({ optionId, code })
+    .returning({ id: optionValues.id, code: optionValues.code, optionId: optionValues.optionId });
+  await upsertValueTranslations(tx, created.id, value.translations);
+  return created;
+}
+
+async function insertSubmittedProductOptions(
+  tx: CatalogTx,
+  productId: string,
+  submittedOptions: SubmittedOption[]
+): Promise<string[][]> {
+  const seenOptionIds = new Set<string>();
+  const optionValueIdMap: string[][] = [];
+
+  for (let optionIndex = 0; optionIndex < submittedOptions.length; optionIndex++) {
+    const submittedOption = submittedOptions[optionIndex];
+    const optionDefinition = await resolveOptionDefinition(tx, submittedOption);
+    if (seenOptionIds.has(optionDefinition.id)) {
+      throw new Error('Option definitions must be unique per product');
+    }
+    seenOptionIds.add(optionDefinition.id);
+
+    const [productOption] = await tx
+      .insert(productOptions)
+      .values({
+        productId,
+        optionId: optionDefinition.id,
+        rank: optionIndex,
+      })
+      .returning({ id: productOptions.id });
+
+    const seenValueIds = new Set<string>();
+    const valueIds: string[] = [];
+    for (let valueIndex = 0; valueIndex < submittedOption.values.length; valueIndex++) {
+      const optionValue = await resolveOptionValue(
+        tx,
+        optionDefinition.id,
+        submittedOption.values[valueIndex]
+      );
+      if (seenValueIds.has(optionValue.id)) {
+        throw new Error('Option values must be unique per product option');
+      }
+      seenValueIds.add(optionValue.id);
+
+      const [productOptionValue] = await tx
+        .insert(productOptionValues)
+        .values({
+          productOptionId: productOption.id,
+          optionValueId: optionValue.id,
+          rank: valueIndex,
+        })
+        .returning({ id: productOptionValues.id });
+      valueIds.push(productOptionValue.id);
+    }
+    optionValueIdMap.push(valueIds);
+  }
+
+  return optionValueIdMap;
 }
 
 // ── List Products ───────────────────────────────────────────────────────────
@@ -125,6 +313,57 @@ export async function listProducts(
   };
 }
 
+// ── List Reusable Option Definitions ────────────────────────────────────────
+
+export async function listOptionDefinitions(
+  query: ListOptionDefinitionsQuery
+): Promise<OptionCatalogOption[]> {
+  const languageCode = query.languageCode ?? (await getDefaultLanguageCode());
+  const searchPattern = query.search ? `%${query.search}%` : undefined;
+
+  const rows = await db.query.optionDefinitions.findMany({
+    where: searchPattern
+      ? sql`exists (
+          select 1 from option_definition_translations odt
+          where odt.option_id = ${optionDefinitions.id}
+            and odt.name ilike ${searchPattern}
+        )`
+      : undefined,
+    with: {
+      translations: languageCode
+        ? { where: eq(optionDefinitionTranslations.languageCode, languageCode) }
+        : true,
+      values: {
+        with: {
+          translations: languageCode
+            ? { where: eq(optionValueTranslations.languageCode, languageCode) }
+            : true,
+        },
+      },
+    },
+    orderBy: asc(optionDefinitions.code),
+  });
+
+  return rows.map((option) => ({
+    id: option.id,
+    code: option.code,
+    translations: option.translations.map((translation) => ({
+      id: translation.id,
+      languageCode: translation.languageCode,
+      name: translation.name,
+    })),
+    values: option.values.map((value) => ({
+      id: value.id,
+      code: value.code,
+      translations: value.translations.map((translation) => ({
+        id: translation.id,
+        languageCode: translation.languageCode,
+        label: translation.label,
+      })),
+    })),
+  }));
+}
+
 // ── Get Product Detail ──────────────────────────────────────────────────────
 
 export async function getProduct(id: string): Promise<ProductDetailResponse | null> {
@@ -134,11 +373,19 @@ export async function getProduct(id: string): Promise<ProductDetailResponse | nu
       translations: true,
       options: {
         with: {
-          translations: true,
-          values: {
+          option: {
             with: { translations: true },
           },
+          values: {
+            with: {
+              optionValue: {
+                with: { translations: true },
+              },
+            },
+            orderBy: asc(productOptionValues.rank),
+          },
         },
+        orderBy: asc(productOptions.rank),
       },
       variants: {
         where: ne(productVariants.status, 'deleted'),
@@ -146,7 +393,11 @@ export async function getProduct(id: string): Promise<ProductDetailResponse | nu
           optionValues: {
             with: {
               value: {
-                with: { translations: true },
+                with: {
+                  optionValue: {
+                    with: { translations: true },
+                  },
+                },
               },
             },
           },
@@ -195,14 +446,19 @@ export async function getProduct(id: string): Promise<ProductDetailResponse | nu
     })),
     options: result.options.map((o) => ({
       id: o.id,
-      translations: o.translations.map((t) => ({
+      optionId: o.optionId,
+      code: o.option.code,
+      rank: o.rank,
+      translations: o.option.translations.map((t) => ({
         id: t.id,
         languageCode: t.languageCode,
         name: t.name,
       })),
       values: o.values.map((v) => ({
         id: v.id,
-        translations: v.translations.map((t) => ({
+        valueId: v.optionValueId,
+        code: v.optionValue.code,
+        translations: v.optionValue.translations.map((t) => ({
           id: t.id,
           languageCode: t.languageCode,
           label: t.label,
@@ -223,8 +479,10 @@ export async function getProduct(id: string): Promise<ProductDetailResponse | nu
         valueId: ov.valueId,
         value: {
           id: ov.value.id,
-          optionId: ov.value.optionId,
-          translations: ov.value.translations.map((t) => ({
+          valueId: ov.value.optionValueId,
+          code: ov.value.optionValue.code,
+          productOptionId: ov.value.productOptionId,
+          translations: ov.value.optionValue.translations.map((t) => ({
             id: t.id,
             languageCode: t.languageCode,
             label: t.label,
@@ -306,51 +564,9 @@ export async function createProduct(body: CreateProductBody): Promise<{ id: stri
       );
     }
 
-    // 3. Insert options + option values (track IDs for variant linking)
-    // optionValueIdMap[optionIndex][valueIndex] = uuid
-    const optionValueIdMap: string[][] = [];
-
-    for (let oi = 0; oi < body.options.length; oi++) {
-      const opt = body.options[oi];
-
-      const [option] = await tx
-        .insert(productOptions)
-        .values({ productId: product.id })
-        .returning({ id: productOptions.id });
-
-      if (opt.translations.length > 0) {
-        await tx.insert(productOptionTranslations).values(
-          opt.translations.map((t) => ({
-            optionId: option.id,
-            languageCode: t.languageCode,
-            name: t.name,
-          }))
-        );
-      }
-
-      const valueIds: string[] = [];
-      for (let vi = 0; vi < opt.values.length; vi++) {
-        const val = opt.values[vi];
-
-        const [value] = await tx
-          .insert(productOptionValues)
-          .values({ optionId: option.id })
-          .returning({ id: productOptionValues.id });
-
-        valueIds.push(value.id);
-
-        if (val.translations.length > 0) {
-          await tx.insert(productOptionValueTranslations).values(
-            val.translations.map((t) => ({
-              valueId: value.id,
-              languageCode: t.languageCode,
-              label: t.label,
-            }))
-          );
-        }
-      }
-      optionValueIdMap.push(valueIds);
-    }
+    // 3. Insert product option assignments and track product-scoped value IDs
+    // for variant linking: optionValueIdMap[optionIndex][valueIndex] = uuid.
+    const optionValueIdMap = await insertSubmittedProductOptions(tx, product.id, body.options);
 
     // 4. Insert variants
     //
@@ -620,14 +836,14 @@ export async function generateVariants(
     const submittedOptions = body.options ?? [];
 
     if (submittedOptions.length > 0) {
-      const optionNames = submittedOptions.map((option) =>
-        option.translations[0]?.name.trim().toLowerCase()
+      const optionKeys = submittedOptions.map((option) =>
+        option.optionId ?? option.code?.trim().toLowerCase() ?? firstOptionName(option)?.toLowerCase()
       );
-      if (optionNames.some((name) => !name)) {
-        throw new Error('Option names are required');
+      if (optionKeys.some((key) => !key)) {
+        throw new Error('Option name, code, or id is required');
       }
-      if (new Set(optionNames).size !== optionNames.length) {
-        throw new Error('Option names must be unique');
+      if (new Set(optionKeys).size !== optionKeys.length) {
+        throw new Error('Option definitions must be unique per product');
       }
       if (submittedOptions.some((option) => option.values.length === 0)) {
         throw new Error('Each option must have at least one value');
@@ -638,43 +854,23 @@ export async function generateVariants(
       tx.query.productOptions.findMany({
         where: eq(productOptions.productId, productId),
         with: {
-          values: {
+          option: {
             with: { translations: true },
           },
-          translations: true,
+          values: {
+            with: {
+              optionValue: {
+                with: { translations: true },
+              },
+            },
+            orderBy: asc(productOptionValues.rank),
+          },
         },
+        orderBy: asc(productOptions.rank),
       });
 
     const insertSubmittedOptions = async () => {
-      for (const opt of submittedOptions) {
-        const [option] = await tx
-          .insert(productOptions)
-          .values({ productId })
-          .returning({ id: productOptions.id });
-
-        await tx.insert(productOptionTranslations).values(
-          opt.translations.map((t) => ({
-            optionId: option.id,
-            languageCode: t.languageCode,
-            name: t.name,
-          }))
-        );
-
-        for (const val of opt.values) {
-          const [value] = await tx
-            .insert(productOptionValues)
-            .values({ optionId: option.id })
-            .returning({ id: productOptionValues.id });
-
-          await tx.insert(productOptionValueTranslations).values(
-            val.translations.map((t) => ({
-              valueId: value.id,
-              languageCode: t.languageCode,
-              label: t.label,
-            }))
-          );
-        }
-      }
+      await insertSubmittedProductOptions(tx, productId, submittedOptions);
     };
 
     // Load product options with values
@@ -797,7 +993,7 @@ export async function generateVariants(
     const valueLabels = new Map<string, string>();
     for (const opt of opts) {
       for (const v of opt.values) {
-        const label = v.translations[0]?.label ?? v.id.slice(0, 8);
+        const label = v.optionValue.translations[0]?.label ?? v.optionValue.code ?? v.id.slice(0, 8);
         valueLabels.set(v.id, label);
       }
     }

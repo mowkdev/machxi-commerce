@@ -38,6 +38,7 @@ function translatePgError(err: unknown): never {
 }
 import {
   listProductsQuery,
+  listOptionDefinitionsQuery,
   productIdParam,
   variantIdParams,
   createProductBody,
@@ -47,6 +48,7 @@ import {
 } from './schema';
 import {
   listProducts,
+  listOptionDefinitions,
   getProduct,
   createProduct,
   updateProduct,
@@ -67,6 +69,20 @@ export async function listProductsController(c: Context<AppEnv>) {
 
   const result = await listProducts(parsed.data);
   return ok(c, result.data, result.meta);
+}
+
+export async function listOptionDefinitionsController(c: Context<AppEnv>) {
+  const parsed = listOptionDefinitionsQuery.safeParse(
+    Object.fromEntries(new URL(c.req.url).searchParams.entries())
+  );
+  if (!parsed.success) {
+    throw validationFailed('Invalid query parameters', {
+      issues: parsed.error.issues,
+    });
+  }
+
+  const result = await listOptionDefinitions(parsed.data);
+  return ok(c, result);
 }
 
 export async function getProductController(c: Context<AppEnv>) {

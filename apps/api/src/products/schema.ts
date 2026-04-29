@@ -10,7 +10,10 @@ export {
   type UpdateVariantBody,
   generateVariantsBody,
   type GenerateVariantsBody,
+  listOptionDefinitionsQuery,
+  type ListOptionDefinitionsQuery,
   type ProductDetailResponse,
+  type OptionCatalogOption,
   productTypeValues,
   type ProductType,
 } from '@repo/types/admin';

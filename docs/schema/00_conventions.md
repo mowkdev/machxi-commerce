@@ -36,7 +36,7 @@ CREATE TRIGGER trg_<table>_set_updated_at
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 ```
 
-The tables requiring this trigger are: `languages`, `tax_classes`, `tax_rates`, `products`, `product_translations`, `product_options`, `product_option_translations`, `product_option_values`, `product_option_value_translations`, `product_variants`, `media`, `price_sets`, `prices`, `inventory_items`, `stock_locations`, `inventory_levels`, `price_lists`, `price_list_translations`, `price_list_prices`, `customers`, `addresses`, `carts`, `cart_items`, `shipping_options`, `shipping_zones`, `orders`, `payments`, `fulfillments`, `returns`, `categories`, `category_translations`, `promotions`, `promotion_amounts`, `promotion_translations`.
+The tables requiring this trigger are: `languages`, `tax_classes`, `tax_rates`, `products`, `product_translations`, `option_definitions`, `option_definition_translations`, `option_values`, `option_value_translations`, `product_options`, `product_option_values`, `product_variants`, `media`, `price_sets`, `prices`, `inventory_items`, `stock_locations`, `inventory_levels`, `price_lists`, `price_list_translations`, `price_list_prices`, `customers`, `addresses`, `carts`, `cart_items`, `shipping_options`, `shipping_zones`, `orders`, `payments`, `fulfillments`, `returns`, `categories`, `category_translations`, `promotions`, `promotion_amounts`, `promotion_translations`.
 
 ## 4. Immutability Triggers
 

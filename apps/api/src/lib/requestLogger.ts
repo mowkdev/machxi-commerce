@@ -29,12 +29,9 @@ export const requestLogger: MiddlewareHandler<AppEnv> = async (c, next) => {
     const durationMs = Number((performance.now() - start).toFixed(1));
     const status = c.res.status;
     const principal = c.get('principal');
-    const actor =
-      principal?.kind === 'admin'
-        ? { actorKind: 'admin' as const, userId: principal.userId }
-        : principal?.kind === 'customer'
-          ? { actorKind: 'customer' as const, customerId: principal.customerId }
-          : {};
+    const actor = principal
+      ? { actorKind: principal.kind, userId: principal.userId }
+      : {};
 
     const level =
       status >= 500

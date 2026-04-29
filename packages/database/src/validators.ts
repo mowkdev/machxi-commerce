@@ -48,6 +48,34 @@ export type ProductTranslationsInsert = z.infer<typeof productTranslationsInsert
 export type ProductTranslationsSelect = z.infer<typeof productTranslationsSelect>;
 export type ProductTranslationsUpdate = z.infer<typeof productTranslationsUpdate>;
 
+export const optionDefinitionsInsert = createInsertSchema(s.optionDefinitions);
+export const optionDefinitionsSelect = createSelectSchema(s.optionDefinitions);
+export const optionDefinitionsUpdate = createUpdateSchema(s.optionDefinitions);
+export type OptionDefinitionsInsert = z.infer<typeof optionDefinitionsInsert>;
+export type OptionDefinitionsSelect = z.infer<typeof optionDefinitionsSelect>;
+export type OptionDefinitionsUpdate = z.infer<typeof optionDefinitionsUpdate>;
+
+export const optionDefinitionTranslationsInsert = createInsertSchema(s.optionDefinitionTranslations);
+export const optionDefinitionTranslationsSelect = createSelectSchema(s.optionDefinitionTranslations);
+export const optionDefinitionTranslationsUpdate = createUpdateSchema(s.optionDefinitionTranslations);
+export type OptionDefinitionTranslationsInsert = z.infer<typeof optionDefinitionTranslationsInsert>;
+export type OptionDefinitionTranslationsSelect = z.infer<typeof optionDefinitionTranslationsSelect>;
+export type OptionDefinitionTranslationsUpdate = z.infer<typeof optionDefinitionTranslationsUpdate>;
+
+export const optionValuesInsert = createInsertSchema(s.optionValues);
+export const optionValuesSelect = createSelectSchema(s.optionValues);
+export const optionValuesUpdate = createUpdateSchema(s.optionValues);
+export type OptionValuesInsert = z.infer<typeof optionValuesInsert>;
+export type OptionValuesSelect = z.infer<typeof optionValuesSelect>;
+export type OptionValuesUpdate = z.infer<typeof optionValuesUpdate>;
+
+export const optionValueTranslationsInsert = createInsertSchema(s.optionValueTranslations);
+export const optionValueTranslationsSelect = createSelectSchema(s.optionValueTranslations);
+export const optionValueTranslationsUpdate = createUpdateSchema(s.optionValueTranslations);
+export type OptionValueTranslationsInsert = z.infer<typeof optionValueTranslationsInsert>;
+export type OptionValueTranslationsSelect = z.infer<typeof optionValueTranslationsSelect>;
+export type OptionValueTranslationsUpdate = z.infer<typeof optionValueTranslationsUpdate>;
+
 export const productOptionsInsert = createInsertSchema(s.productOptions);
 export const productOptionsSelect = createSelectSchema(s.productOptions);
 export const productOptionsUpdate = createUpdateSchema(s.productOptions);
@@ -55,26 +83,12 @@ export type ProductOptionsInsert = z.infer<typeof productOptionsInsert>;
 export type ProductOptionsSelect = z.infer<typeof productOptionsSelect>;
 export type ProductOptionsUpdate = z.infer<typeof productOptionsUpdate>;
 
-export const productOptionTranslationsInsert = createInsertSchema(s.productOptionTranslations);
-export const productOptionTranslationsSelect = createSelectSchema(s.productOptionTranslations);
-export const productOptionTranslationsUpdate = createUpdateSchema(s.productOptionTranslations);
-export type ProductOptionTranslationsInsert = z.infer<typeof productOptionTranslationsInsert>;
-export type ProductOptionTranslationsSelect = z.infer<typeof productOptionTranslationsSelect>;
-export type ProductOptionTranslationsUpdate = z.infer<typeof productOptionTranslationsUpdate>;
-
 export const productOptionValuesInsert = createInsertSchema(s.productOptionValues);
 export const productOptionValuesSelect = createSelectSchema(s.productOptionValues);
 export const productOptionValuesUpdate = createUpdateSchema(s.productOptionValues);
 export type ProductOptionValuesInsert = z.infer<typeof productOptionValuesInsert>;
 export type ProductOptionValuesSelect = z.infer<typeof productOptionValuesSelect>;
 export type ProductOptionValuesUpdate = z.infer<typeof productOptionValuesUpdate>;
-
-export const productOptionValueTranslationsInsert = createInsertSchema(s.productOptionValueTranslations);
-export const productOptionValueTranslationsSelect = createSelectSchema(s.productOptionValueTranslations);
-export const productOptionValueTranslationsUpdate = createUpdateSchema(s.productOptionValueTranslations);
-export type ProductOptionValueTranslationsInsert = z.infer<typeof productOptionValueTranslationsInsert>;
-export type ProductOptionValueTranslationsSelect = z.infer<typeof productOptionValueTranslationsSelect>;
-export type ProductOptionValueTranslationsUpdate = z.infer<typeof productOptionValueTranslationsUpdate>;
 
 export const productVariantsInsert = createInsertSchema(s.productVariants);
 export const productVariantsSelect = createSelectSchema(s.productVariants);

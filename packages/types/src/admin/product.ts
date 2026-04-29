@@ -39,11 +39,15 @@ const orderedMediaInputSchema = z.object({
 });
 
 const optionValueSchema = z.object({
-  translations: z.array(optionValueTranslationSchema).min(1),
+  valueId: z.string().uuid().optional(),
+  code: z.string().trim().min(1).optional(),
+  translations: z.array(optionValueTranslationSchema).default([]),
 });
 
 const optionSchema = z.object({
-  translations: z.array(optionTranslationSchema).min(1),
+  optionId: z.string().uuid().optional(),
+  code: z.string().trim().min(1).optional(),
+  translations: z.array(optionTranslationSchema).default([]),
   values: z.array(optionValueSchema).min(1),
 });
 
@@ -113,6 +117,14 @@ export const generateVariantsBody = z.object({
 });
 export type GenerateVariantsBody = z.infer<typeof generateVariantsBody>;
 
+// ── Reusable Option Catalog ─────────────────────────────────────────────────
+
+export const listOptionDefinitionsQuery = z.object({
+  search: z.string().trim().min(1).optional(),
+  languageCode: z.string().min(1).optional(),
+});
+export type ListOptionDefinitionsQuery = z.infer<typeof listOptionDefinitionsQuery>;
+
 // ── Response types ──────────────────────────────────────────────────────────
 
 export interface ProductDetailPrice {
@@ -131,7 +143,10 @@ export interface ProductDetailOptionValueTranslation {
 }
 
 export interface ProductDetailOptionValue {
+  // Product-scoped assignment id used by variant_option_values.
   id: string;
+  valueId: string;
+  code: string;
   translations: ProductDetailOptionValueTranslation[];
 }
 
@@ -142,7 +157,11 @@ export interface ProductDetailOptionTranslation {
 }
 
 export interface ProductDetailOption {
+  // Product-scoped assignment id.
   id: string;
+  optionId: string;
+  code: string;
+  rank: number;
   translations: ProductDetailOptionTranslation[];
   values: ProductDetailOptionValue[];
 }
@@ -151,7 +170,9 @@ export interface ProductDetailVariantOptionValue {
   valueId: string;
   value: {
     id: string;
-    optionId: string;
+    valueId: string;
+    code: string;
+    productOptionId: string;
     translations: ProductDetailOptionValueTranslation[];
   };
 }
@@ -217,4 +238,17 @@ export interface ProductDetailResponse {
   variants: ProductDetailVariant[];
   media: ProductDetailMedia[];
   categories: ProductDetailCategory[];
+}
+
+export interface OptionCatalogValue {
+  id: string;
+  code: string;
+  translations: ProductDetailOptionValueTranslation[];
+}
+
+export interface OptionCatalogOption {
+  id: string;
+  code: string;
+  translations: ProductDetailOptionTranslation[];
+  values: OptionCatalogValue[];
 }

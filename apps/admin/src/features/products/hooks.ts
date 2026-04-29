@@ -7,6 +7,7 @@ import type {
   UpdateProductBody,
   UpdateVariantBody,
   GenerateVariantsBody,
+  OptionCatalogOption,
   ProductDetailResponse,
 } from '@repo/types/admin';
 import {
@@ -16,6 +17,7 @@ import {
   deleteProduct,
   updateVariant,
   generateVariants,
+  listProductOptionsCatalog,
   productsKeys,
 } from './api';
 
@@ -23,6 +25,13 @@ export function useProduct(id: string) {
   return useQuery<ProductDetailResponse, ApiRequestError>({
     queryKey: productsKeys.detail(id),
     queryFn: () => getProduct(id),
+  });
+}
+
+export function useProductOptionsCatalog() {
+  return useQuery<OptionCatalogOption[], ApiRequestError>({
+    queryKey: productsKeys.optionsCatalog(),
+    queryFn: () => listProductOptionsCatalog({ languageCode: 'en' }),
   });
 }
 

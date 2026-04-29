@@ -115,51 +115,80 @@ CREATE UNIQUE INDEX uk_product_translations_product_lang
   ON product_translations(product_id, language_code);
 ```
 
-## 3. Options & Values
-### Table: `product_options` & `product_option_translations`
+## 3. Reusable Options & Product Assignments
+### Table: `option_definitions` & `option_definition_translations`
 | Table | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| **`product_options`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
-| | `product_id` | UUID | NOT NULL, FK (products) ON DELETE CASCADE | |
+| **`option_definitions`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
+| | `code` | VARCHAR(128) | NOT NULL, UNIQUE | Stable reusable option code, e.g. `color`. |
 | | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
 | | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
-| **`product_option_translations`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
-| | `option_id` | UUID | NOT NULL, FK (product_options) ON DELETE CASCADE | |
+| **`option_definition_translations`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
+| | `option_id` | UUID | NOT NULL, FK (option_definitions) ON DELETE CASCADE | |
 | | `language_code`| VARCHAR(10) | NOT NULL, FK (languages) ON DELETE RESTRICT | |
-| | `name` | VARCHAR | NOT NULL | e.g., "Color", "Size". |
+| | `name` | VARCHAR | NOT NULL | Localized option name, e.g. "Color", "Size". |
+| | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
+| | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
+
+**Indexes:**
+```sql
+CREATE UNIQUE INDEX uk_option_definitions_code ON option_definitions(code);
+CREATE INDEX idx_option_definition_translations_option ON option_definition_translations(option_id);
+CREATE INDEX idx_option_definition_translations_language ON option_definition_translations(language_code);
+CREATE UNIQUE INDEX uk_option_definition_translations_option_lang
+  ON option_definition_translations(option_id, language_code);
+```
+
+### Table: `option_values` & `option_value_translations`
+| Table | Column | Type | Constraints | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **`option_values`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
+| | `option_id` | UUID | NOT NULL, FK (option_definitions) ON DELETE CASCADE | |
+| | `code` | VARCHAR(128) | NOT NULL | Stable reusable value code scoped to the option, e.g. `red`. |
+| | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
+| | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
+| **`option_value_translations`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
+| | `value_id` | UUID | NOT NULL, FK (option_values) ON DELETE CASCADE | |
+| | `language_code`| VARCHAR(10) | NOT NULL, FK (languages) ON DELETE RESTRICT | |
+| | `label` | VARCHAR | NOT NULL | Localized label, e.g. "Red", "XL". |
+| | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
+| | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
+
+**Indexes:**
+```sql
+CREATE INDEX idx_option_values_option ON option_values(option_id);
+CREATE UNIQUE INDEX uk_option_values_option_code ON option_values(option_id, code);
+CREATE INDEX idx_option_value_translations_value ON option_value_translations(value_id);
+CREATE INDEX idx_option_value_translations_language ON option_value_translations(language_code);
+CREATE UNIQUE INDEX uk_option_value_translations_value_lang
+  ON option_value_translations(value_id, language_code);
+```
+
+### Table: `product_options` & `product_option_values`
+| Table | Column | Type | Constraints | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **`product_options`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | Product-scoped option assignment. |
+| | `product_id` | UUID | NOT NULL, FK (products) ON DELETE CASCADE | |
+| | `option_id` | UUID | NOT NULL, FK (option_definitions) ON DELETE RESTRICT | |
+| | `rank` | INTEGER | NOT NULL, DEFAULT 0 | Display/generation order. |
+| | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
+| | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
+| **`product_option_values`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | Product-scoped allowed value assignment. |
+| | `product_option_id` | UUID | NOT NULL, FK (product_options) ON DELETE CASCADE | |
+| | `option_value_id` | UUID | NOT NULL, FK (option_values) ON DELETE RESTRICT | |
+| | `rank` | INTEGER | NOT NULL, DEFAULT 0 | Display/generation order. |
 | | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
 | | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
 
 **Indexes:**
 ```sql
 CREATE INDEX idx_product_options_product ON product_options(product_id);
-CREATE INDEX idx_product_option_translations_option ON product_option_translations(option_id);
-CREATE INDEX idx_product_option_translations_language ON product_option_translations(language_code);
-CREATE UNIQUE INDEX uk_product_option_translations_option_lang
-  ON product_option_translations(option_id, language_code);
-```
-
-### Table: `product_option_values` & `product_option_value_translations`
-| Table | Column | Type | Constraints | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| **`product_option_values`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
-| | `option_id` | UUID | NOT NULL, FK (product_options) ON DELETE CASCADE | |
-| | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
-| | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
-| **`product_option_value_translations`** | `id` | UUID | PK, DEFAULT gen_random_uuid() | |
-| | `value_id` | UUID | NOT NULL, FK (product_option_values) ON DELETE CASCADE | |
-| | `language_code`| VARCHAR(10) | NOT NULL, FK (languages) ON DELETE RESTRICT | |
-| | `label` | VARCHAR | NOT NULL | e.g., "Red", "XL". |
-| | `created_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | |
-| | `updated_at` | TIMESTAMPTZ | NOT NULL, DEFAULT NOW() | Maintained by trigger. |
-
-**Indexes:**
-```sql
-CREATE INDEX idx_product_option_values_option ON product_option_values(option_id);
-CREATE INDEX idx_product_option_value_translations_value ON product_option_value_translations(value_id);
-CREATE INDEX idx_product_option_value_translations_language ON product_option_value_translations(language_code);
-CREATE UNIQUE INDEX uk_product_option_value_translations_value_lang
-  ON product_option_value_translations(value_id, language_code);
+CREATE UNIQUE INDEX uk_product_options_product_option ON product_options(product_id, option_id);
+CREATE UNIQUE INDEX uk_product_options_rank ON product_options(product_id, rank);
+CREATE INDEX idx_product_option_values_product_option ON product_option_values(product_option_id);
+CREATE UNIQUE INDEX uk_product_option_values_product_option_value
+  ON product_option_values(product_option_id, option_value_id);
+CREATE UNIQUE INDEX uk_product_option_values_rank ON product_option_values(product_option_id, rank);
 ```
 
 ## 4. Variants

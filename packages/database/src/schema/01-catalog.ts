@@ -157,7 +157,97 @@ export const productTranslations = pgTable(
 // Note: Requires updated_at trigger (see migrations/triggers.sql)
 
 // ────────────────────────────────────────────────────────────────────────────
-// PRODUCT OPTIONS
+// REUSABLE PRODUCT OPTIONS
+// ────────────────────────────────────────────────────────────────────────────
+
+export const optionDefinitions = pgTable(
+  'option_definitions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    code: varchar('code', { length: 128 }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (table) => ({
+    codeUnique: uniqueIndex('uk_option_definitions_code').on(table.code),
+  })
+);
+// Note: Requires updated_at trigger (see migrations/triggers.sql)
+
+export const optionDefinitionTranslations = pgTable(
+  'option_definition_translations',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    optionId: uuid('option_id')
+      .notNull()
+      .references(() => optionDefinitions.id, { onDelete: 'cascade' }),
+    languageCode: varchar('language_code', { length: 10 })
+      .notNull()
+      .references(() => languages.code, { onDelete: 'restrict' }),
+    name: varchar('name').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (table) => ({
+    optionIdx: index('idx_option_definition_translations_option').on(table.optionId),
+    languageIdx: index('idx_option_definition_translations_language').on(table.languageCode),
+    optionLangUnique: uniqueIndex('uk_option_definition_translations_option_lang').on(
+      table.optionId,
+      table.languageCode
+    ),
+  })
+);
+// Note: Requires updated_at trigger (see migrations/triggers.sql)
+
+// ────────────────────────────────────────────────────────────────────────────
+// REUSABLE PRODUCT OPTION VALUES
+// ────────────────────────────────────────────────────────────────────────────
+
+export const optionValues = pgTable(
+  'option_values',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    optionId: uuid('option_id')
+      .notNull()
+      .references(() => optionDefinitions.id, { onDelete: 'cascade' }),
+    code: varchar('code', { length: 128 }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (table) => ({
+    optionIdx: index('idx_option_values_option').on(table.optionId),
+    optionCodeUnique: uniqueIndex('uk_option_values_option_code').on(table.optionId, table.code),
+  })
+);
+// Note: Requires updated_at trigger (see migrations/triggers.sql)
+
+export const optionValueTranslations = pgTable(
+  'option_value_translations',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    valueId: uuid('value_id')
+      .notNull()
+      .references(() => optionValues.id, { onDelete: 'cascade' }),
+    languageCode: varchar('language_code', { length: 10 })
+      .notNull()
+      .references(() => languages.code, { onDelete: 'restrict' }),
+    label: varchar('label').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (table) => ({
+    valueIdx: index('idx_option_value_translations_value').on(table.valueId),
+    languageIdx: index('idx_option_value_translations_language').on(table.languageCode),
+    valueLangUnique: uniqueIndex('uk_option_value_translations_value_lang').on(
+      table.valueId,
+      table.languageCode
+    ),
+  })
+);
+// Note: Requires updated_at trigger (see migrations/triggers.sql)
+
+// ────────────────────────────────────────────────────────────────────────────
+// PRODUCT OPTION ASSIGNMENTS
 // ────────────────────────────────────────────────────────────────────────────
 
 export const productOptions = pgTable(
@@ -167,81 +257,44 @@ export const productOptions = pgTable(
     productId: uuid('product_id')
       .notNull()
       .references(() => products.id, { onDelete: 'cascade' }),
+    optionId: uuid('option_id')
+      .notNull()
+      .references(() => optionDefinitions.id, { onDelete: 'restrict' }),
+    rank: integer('rank').notNull().default(0),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
     productIdx: index('idx_product_options_product').on(table.productId),
+    optionIdx: index('idx_product_options_option').on(table.optionId),
+    productOptionUnique: uniqueIndex('uk_product_options_product_option').on(table.productId, table.optionId),
+    productRankUnique: uniqueIndex('uk_product_options_rank').on(table.productId, table.rank),
   })
 );
 // Note: Requires updated_at trigger (see migrations/triggers.sql)
-
-export const productOptionTranslations = pgTable(
-  'product_option_translations',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    optionId: uuid('option_id')
-      .notNull()
-      .references(() => productOptions.id, { onDelete: 'cascade' }),
-    languageCode: varchar('language_code', { length: 10 })
-      .notNull()
-      .references(() => languages.code, { onDelete: 'restrict' }),
-    name: varchar('name').notNull(),
-    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-  },
-  (table) => ({
-    optionIdx: index('idx_product_option_translations_option').on(table.optionId),
-    languageIdx: index('idx_product_option_translations_language').on(table.languageCode),
-    optionLangUnique: uniqueIndex('uk_product_option_translations_option_lang').on(
-      table.optionId,
-      table.languageCode
-    ),
-  })
-);
-// Note: Requires updated_at trigger (see migrations/triggers.sql)
-
-// ────────────────────────────────────────────────────────────────────────────
-// PRODUCT OPTION VALUES
-// ────────────────────────────────────────────────────────────────────────────
 
 export const productOptionValues = pgTable(
   'product_option_values',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    optionId: uuid('option_id')
+    productOptionId: uuid('product_option_id')
       .notNull()
       .references(() => productOptions.id, { onDelete: 'cascade' }),
+    optionValueId: uuid('option_value_id')
+      .notNull()
+      .references(() => optionValues.id, { onDelete: 'restrict' }),
+    rank: integer('rank').notNull().default(0),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    optionIdx: index('idx_product_option_values_option').on(table.optionId),
-  })
-);
-// Note: Requires updated_at trigger (see migrations/triggers.sql)
-
-export const productOptionValueTranslations = pgTable(
-  'product_option_value_translations',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    valueId: uuid('value_id')
-      .notNull()
-      .references(() => productOptionValues.id, { onDelete: 'cascade' }),
-    languageCode: varchar('language_code', { length: 10 })
-      .notNull()
-      .references(() => languages.code, { onDelete: 'restrict' }),
-    label: varchar('label').notNull(),
-    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-  },
-  (table) => ({
-    valueIdx: index('idx_product_option_value_translations_value').on(table.valueId),
-    languageIdx: index('idx_product_option_value_translations_language').on(table.languageCode),
-    valueLangUnique: uniqueIndex('uk_product_option_value_translations_value_lang').on(
-      table.valueId,
-      table.languageCode
+    productOptionIdx: index('idx_product_option_values_product_option').on(table.productOptionId),
+    optionValueIdx: index('idx_product_option_values_option_value').on(table.optionValueId),
+    productOptionValueUnique: uniqueIndex('uk_product_option_values_product_option_value').on(
+      table.productOptionId,
+      table.optionValueId
     ),
+    productOptionRankUnique: uniqueIndex('uk_product_option_values_rank').on(table.productOptionId, table.rank),
   })
 );
 // Note: Requires updated_at trigger (see migrations/triggers.sql)
