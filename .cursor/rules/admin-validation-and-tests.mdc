@@ -1,0 +1,30 @@
+---
+description: Admin frontend validation expectations for refactors, feature changes, and extracted components.
+globs: apps/admin/src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Admin Validation And Tests
+
+Validate refactors at the same layer where behavior lives.
+
+## Type Safety
+
+- Run `pnpm --filter @app/admin type-check` after changing admin forms, hooks, SDK usage, or shared components.
+- Pay special attention to Zod input/output differences in `react-hook-form` generics.
+
+## Tests
+
+- Add or update focused feature tests when changing business behavior: option generation, variant mapping, schema validation, media assignment, and form submit branching.
+- Prefer pure utility tests for pure transformations such as option normalization, variant generation, and DTO mapping.
+- Prefer component tests for user-visible flows such as option editing, drawers, selectors, and media picking.
+
+## Lint
+
+- Use IDE diagnostics for edited files.
+- The current admin lint command may report project-wide resolver/import issues unrelated to a focused change; do not treat unrelated global lint noise as part of a feature refactor unless the task is to fix lint infrastructure.
+
+## Scope Control
+
+- Do not edit `.cursor/plans/**` unless explicitly asked.
+- Do not refactor unrelated feature slices while implementing a product/admin frontend change.

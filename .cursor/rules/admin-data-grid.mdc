@@ -1,0 +1,31 @@
+---
+description: Admin AppDataGrid ownership, page fetcher, filtering, sorting, and query-key conventions.
+globs: apps/admin/src/{components/app-data-grid,pages}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Admin Data Grid
+
+`AppDataGrid` is a shared admin table primitive. Keep it outside feature slices.
+
+## Responsibilities
+
+- `AppDataGrid` owns table UI state: page, page size, search input, debounced search, filters, sorting, column visibility, loading, empty, and error states.
+- Feature/list pages own columns, feature-specific filters, toolbar actions, and the SDK client fetcher.
+- Do not move the grid into a feature folder. Products, categories, and tax classes all reuse the same grid pattern.
+
+## Fetchers
+
+- Grid fetchers should call raw SDK list clients and adapt the response to `{ data, meta }`.
+- Cast grid sort/filter values to the generated SDK query param enum types at the page boundary.
+- Include every query-shaping parameter in the grid query key by passing `queryKey` plus grid `params`.
+
+## Cache Keys
+
+- Pass a resource query-key prefix from the feature hook module, preferably from generated SDK key helpers.
+- Mutations should invalidate the same prefix so grid queries refresh with detail and option queries.
+
+## UI
+
+- Keep generic toolbar, pagination, search, filter, and column visibility behavior in `components/app-data-grid`.
+- Keep feature-specific cell formatting in the page or a feature-owned helper.

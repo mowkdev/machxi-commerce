@@ -1,0 +1,34 @@
+---
+description: Admin SDK and React Query usage conventions for generated SDK hooks, app hooks, cache keys, and grids.
+globs: apps/admin/src/{features,pages,components}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Admin SDK And React Query
+
+The generated `@repo/admin-sdk` already exposes both raw client functions and TanStack Query hooks. Use exactly one React Query layer per operation.
+
+## Reads
+
+- For regular detail/options reads, compose generated SDK query hooks directly in feature hooks.
+- Use SDK query options such as `enabled`, `select`, `staleTime`, and `placeholderData` instead of wrapping generated query hooks in another `useQuery`.
+- Unwrap response envelopes with `select: (response) => response.data` in app feature hooks when the UI wants domain data.
+
+## Grids
+
+- `AppDataGrid` owns its own `useQuery` because pagination, search, sort, and filters live inside the grid.
+- Grid pages should pass raw SDK client fetchers such as `adminListProducts`, not generated SDK list hooks.
+- Grid query keys should use the same prefix shape as generated SDK query keys so mutation invalidation catches grid/list/detail queries.
+- Prefer generated SDK query key helpers such as `adminListProductsQueryKey()` when available instead of hand-written URL-key tuples.
+
+## Mutations
+
+- Current admin app convention: feature mutation hooks wrap raw SDK client functions with app concerns: toast, navigation, and cache invalidation.
+- Do not call a generated SDK mutation hook from inside another `useMutation`.
+- If switching a feature to generated SDK mutation hooks, do it consistently for the full feature and keep app callbacks in the generated hook options.
+- Mutation hooks should invalidate the generated query key prefix for the affected resource.
+
+## Generated SDK
+
+- Treat `packages/admin-sdk/src/gen/**` as generated code. Do not edit it manually.
+- If SDK shape is wrong, update the API/OpenAPI source and regenerate the SDK.

@@ -1,0 +1,30 @@
+---
+description: Admin component extraction, selector ownership, media picker reuse, and product feature boundaries.
+globs: apps/admin/src/features/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Admin Components And Media
+
+Extract components according to ownership, not just first usage.
+
+## Reusable Components
+
+- Extract generic layout/chrome to `apps/admin/src/components/**`.
+- Extract reusable data-owned components to the feature that owns the data:
+  - Category selection UI belongs in `features/categories/components`.
+  - Tax class selection UI belongs in `features/tax-classes/components`.
+  - Media picking and assigned-media preview UI belongs in `features/media/components`.
+- Product-specific orchestration remains in `features/products`, even when it composes shared media/category/tax components.
+
+## Product Media Pattern
+
+- `features/media` owns reusable media UI: picker modal, gallery/list/grid previews, upload selection UI.
+- `features/products` owns product/variant media assignment: target shape, rank payload, update-product vs update-variant branching.
+- Do not make media components depend on product IDs, variant IDs, or product DTOs.
+
+## Product Variant Pattern
+
+- Keep variant form mapping and labels in product utils/hooks.
+- Reuse one variant details field component between default simple-product editing and variable-product drawer editing.
+- Put product variant submit/update orchestration in hooks or the owning drawer/card, not in generic field components.

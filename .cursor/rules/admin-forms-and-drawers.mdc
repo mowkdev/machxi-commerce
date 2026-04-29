@@ -1,0 +1,40 @@
+---
+description: Admin create/edit form, React Hook Form, Zod resolver, and side-panel patterns.
+globs: apps/admin/src/{features,components}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Admin Forms And Drawers
+
+Use the product/category/tax-class forms as the reference for admin create/edit flows.
+
+## Form Shells
+
+- Use `FormPageShell` for create/edit pages with sticky header, back button, discard action, submit action, and shared content layout.
+- Keep the `<form>` at the shell level so submit behavior is consistent across feature forms.
+- Use `SidePanelForm` for drawer/sheet edit flows with header, scrollable form body, and footer submit button.
+- Keep domain-specific fields inside feature components; only extract generic page/sheet chrome.
+
+## React Hook Form And Zod
+
+- Use `zodResolver(schema)` with `react-hook-form`.
+- When a Zod schema has defaults, transforms, coercions, or other input/output differences, type `useForm` with input and output generics:
+
+```ts
+type FormInput = z.input<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>;
+
+const form = useForm<FormInput, unknown, FormValues>({
+  resolver: zodResolver(formSchema),
+  defaultValues,
+});
+```
+
+- Default values should match `z.input<typeof schema>`. Submit handlers should receive the parsed output type.
+- Keep DTO mapping near the form orchestration hook, not hidden inside presentational field components.
+
+## Field Components
+
+- Presentational field groups should accept form/field-array props when they are reused by multiple shells.
+- Put repeated form logic in hooks such as `useVariantForm`, not in multiple cards/drawers.
+- Extract reusable field behavior, such as name-to-handle slug syncing, into hooks before duplicating it across features.

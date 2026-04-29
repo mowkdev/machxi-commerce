@@ -1,0 +1,31 @@
+---
+description: Admin frontend feature-slice architecture for pages, features, shared components, and generated SDK boundaries.
+globs: apps/admin/src/{features,pages,components}/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Admin Feature Architecture
+
+Use the product feature refactor as the reference pattern for admin frontend structure.
+
+## Ownership Boundaries
+
+- Keep route files in `apps/admin/src/pages/**` thin. Pages should load route params, fetch page-level data, handle loading/error/not-found states, and render feature components.
+- Keep domain workflows in `apps/admin/src/features/<feature>/**`. Product-specific forms, tables, option generation, variant editing, and product media assignment stay in `features/products`.
+- Move reusable UI primitives to `apps/admin/src/components/**` when they are not domain-specific, such as `FormPageShell`, `SidePanelForm`, `AppDataGrid`, and `AppModal`.
+- Move cross-feature selectors/components to the feature that owns the data. For example, category selectors belong in `features/categories`, tax class selectors in `features/tax-classes`, and media picker UI in `features/media`.
+- Do not move generic shared components into a product feature just because products use them first.
+
+## File Splitting
+
+- Components should be mostly presentational. Move stateful orchestration and DTO mapping into hooks or utils when a component starts mixing UI, local state machines, validation, and API calls.
+- Prefer product-owned hooks for product workflows: `features/products/hooks/useProductForm.ts`, `useVariantForm.ts`, `useProductOptionsEditor.ts`.
+- Prefer product-owned utils for pure domain transformations: variant labels, variant form mapping, option normalization, duplicate detection, submitted option payloads.
+- Keep final API payload construction explicit per feature. Avoid a generic CRUD abstraction that hides product/category/tax-class business differences.
+
+## Naming
+
+- `components/**`: React components and small presentational helpers.
+- `hooks/**`: local React hooks and workflow orchestration.
+- `utils/**`: pure functions and DTO/form value mapping.
+- `schema.ts`: Zod schemas and inferred form value types.
