@@ -19,13 +19,16 @@ Use the product feature refactor as the reference pattern for admin frontend str
 ## File Splitting
 
 - Components should be mostly presentational. Move stateful orchestration and DTO mapping into hooks or utils when a component starts mixing UI, local state machines, validation, and API calls.
-- Prefer product-owned hooks for product workflows: `features/products/hooks/useProductForm.ts`, `useVariantForm.ts`, `useProductOptionsEditor.ts`.
+- Use `features/<feature>/hooks/index.ts` as the feature's public hook module for SDK query wrappers, query key prefixes, and mutation wrappers.
+- Put workflow/composition hooks next to that index as `features/<feature>/hooks/use*.ts`, for example `features/products/hooks/useProductForm.ts`, `useVariantForm.ts`, and `useProductOptionsEditor.ts`.
+- Do not keep a root `features/<feature>/hooks.ts` alongside a `features/<feature>/hooks/` directory. Collapse tiny features to `hooks/index.ts`, then add `hooks/use*.ts` files as needed.
 - Prefer product-owned utils for pure domain transformations: variant labels, variant form mapping, option normalization, duplicate detection, submitted option payloads.
 - Keep final API payload construction explicit per feature. Avoid a generic CRUD abstraction that hides product/category/tax-class business differences.
 
 ## Naming
 
 - `components/**`: React components and small presentational helpers.
-- `hooks/**`: local React hooks and workflow orchestration.
+- `hooks/index.ts`: public feature hook entrypoint for server/cache hooks.
+- `hooks/use*.ts`: local React workflow hooks and UI orchestration.
 - `utils/**`: pure functions and DTO/form value mapping.
 - `schema.ts`: Zod schemas and inferred form value types.

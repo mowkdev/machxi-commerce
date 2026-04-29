@@ -1,12 +1,3 @@
-// Feature hooks compose SDK hooks directly with app-side concerns:
-// envelope unwrap (`select: r => r.data`), toast, navigation, and cache
-// invalidation. There is no per-feature `api.ts` indirection — the SDK is
-// the API layer.
-//
-// Cache key convention: every tax-class query lives under the SDK's URL
-// prefix `[{ url: '/api/tax-classes' }, ...]`. Invalidating that prefix
-// catches list views, detail queries, and option pickers in one shot.
-
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -14,6 +5,7 @@ import {
   SdkRequestError,
   adminCreateTaxClass,
   adminDeleteTaxClass,
+  adminListTaxClassesQueryKey,
   adminUpdateTaxClass,
   useAdminGetTaxClass,
   useAdminListTaxClasses,
@@ -25,9 +17,9 @@ import type {
   UpdateTaxClassBody,
 } from '@repo/types/admin';
 
-// Shared cache prefix — pages pass this to AppDataGrid so its internal
-// useQuery shares a key prefix with SDK hooks; one invalidate clears all.
-export const taxClassesQueryPrefix = [{ url: '/api/tax-classes' }] as const;
+// Query hooks compose generated SDK hooks directly. Mutation hooks wrap raw SDK
+// clients so app concerns stay local: toast, navigation, and cache invalidation.
+export const taxClassesQueryPrefix = adminListTaxClassesQueryKey();
 
 export function useTaxClass(id: string) {
   return useAdminGetTaxClass<TaxClassDetail>(id, {

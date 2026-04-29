@@ -15,8 +15,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import type { CategoryListItem } from '@repo/types/admin';
 import { useCategoryOptions } from '../hooks';
+import { getCategoryLabel } from '../utils/category-options';
 
 interface CategoryMultiSelectProps {
   value: string[];
@@ -117,10 +117,4 @@ export function CategoryMultiSelect({
       )}
     </div>
   );
-}
-
-function getCategoryLabel(category: CategoryListItem) {
-  return category.parentName
-    ? `${category.parentName} / ${category.name}`
-    : category.name;
 }

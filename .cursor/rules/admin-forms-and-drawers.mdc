@@ -32,6 +32,7 @@ const form = useForm<FormInput, unknown, FormValues>({
 
 - Default values should match `z.input<typeof schema>`. Submit handlers should receive the parsed output type.
 - Keep DTO mapping near the form orchestration hook, not hidden inside presentational field components.
+- Place form orchestration hooks under the feature's canonical `hooks/` directory, e.g. `features/products/hooks/useProductForm.ts`; keep `hooks/index.ts` for the feature hook entrypoint.
 
 ## Field Components
 

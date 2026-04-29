@@ -13,6 +13,7 @@ The generated `@repo/admin-sdk` already exposes both raw client functions and Ta
 - For regular detail/options reads, compose generated SDK query hooks directly in feature hooks.
 - Use SDK query options such as `enabled`, `select`, `staleTime`, and `placeholderData` instead of wrapping generated query hooks in another `useQuery`.
 - Unwrap response envelopes with `select: (response) => response.data` in app feature hooks when the UI wants domain data.
+- Keep generated SDK query wrappers in `features/<feature>/hooks/index.ts`, the feature's public hook entrypoint.
 
 ## Grids
 
@@ -27,6 +28,7 @@ The generated `@repo/admin-sdk` already exposes both raw client functions and Ta
 - Do not call a generated SDK mutation hook from inside another `useMutation`.
 - If switching a feature to generated SDK mutation hooks, do it consistently for the full feature and keep app callbacks in the generated hook options.
 - Mutation hooks should invalidate the generated query key prefix for the affected resource.
+- Keep app mutation wrappers in `features/<feature>/hooks/index.ts` beside the matching query key prefix.
 
 ## Generated SDK
 

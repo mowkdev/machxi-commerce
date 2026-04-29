@@ -5,6 +5,7 @@ import {
   SdkRequestError,
   adminCreateCategory,
   adminDeleteCategory,
+  adminListCategoriesQueryKey,
   adminUpdateCategory,
   useAdminGetCategory,
   useAdminListCategories,
@@ -16,7 +17,9 @@ import type {
   UpdateCategoryBody,
 } from '@repo/types/admin';
 
-export const categoriesQueryPrefix = [{ url: '/api/categories' }] as const;
+// Query hooks compose generated SDK hooks directly. Mutation hooks wrap raw SDK
+// clients so app concerns stay local: toast, navigation, and cache invalidation.
+export const categoriesQueryPrefix = adminListCategoriesQueryKey();
 
 export function useCategory(id: string) {
   return useAdminGetCategory<CategoryDetail>(id, {

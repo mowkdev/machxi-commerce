@@ -1,7 +1,4 @@
-import { useEffect, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
+import { FormProvider } from 'react-hook-form';
 import { FormPageShell } from '@/components/form-page-shell';
 import {
   Card,
@@ -17,8 +14,7 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import type { TaxClassDetail } from '@repo/types/admin';
-import { useCreateTaxClass, useUpdateTaxClass } from '../hooks';
-import { taxClassFormSchema, type TaxClassFormValues } from '../schema';
+import { useTaxClassForm } from '../hooks/useTaxClassForm';
 
 interface TaxClassFormProps {
   mode: 'create' | 'edit';
@@ -26,48 +22,25 @@ interface TaxClassFormProps {
 }
 
 export function TaxClassForm({ mode, initialData }: TaxClassFormProps) {
-  const navigate = useNavigate();
-  const createMutation = useCreateTaxClass();
-  const updateMutation = useUpdateTaxClass(initialData?.id ?? '');
-
-  const defaultValues = useMemo<TaxClassFormValues>(
-    () => ({
-      name: initialData?.name ?? '',
-    }),
-    [initialData]
-  );
-
-  const form = useForm<TaxClassFormValues>({
-    resolver: zodResolver(taxClassFormSchema),
-    defaultValues,
-  });
-
-  useEffect(() => {
-    if (mode === 'edit' && initialData) {
-      form.reset(defaultValues);
-    }
-  }, [initialData, mode, form, defaultValues]);
-
-  const onSubmit = form.handleSubmit((values) => {
-    if (mode === 'create') {
-      createMutation.mutate({ name: values.name });
-    } else {
-      updateMutation.mutate({ name: values.name });
-    }
-  });
-
-  const isPending = createMutation.isPending || updateMutation.isPending;
-  const title = mode === 'create' ? 'New tax class' : (form.watch('name') || 'Untitled');
+  const {
+    form,
+    isCreateMode,
+    isPending,
+    navigateToTaxClasses,
+    onSubmit,
+    title,
+  } = useTaxClassForm({ mode, initialData });
 
   return (
-    <FormPageShell
-      title={title}
-      onBack={() => navigate('/tax-classes')}
-      onSubmit={onSubmit}
-      submitLabel={isPending ? 'Saving...' : mode === 'create' ? 'Create' : 'Save'}
-      isSubmitting={isPending}
-      contentClassName="mx-auto w-full max-w-xl p-4 lg:p-6"
-    >
+    <FormProvider {...form}>
+      <FormPageShell
+        title={title}
+        onBack={navigateToTaxClasses}
+        onSubmit={onSubmit}
+        submitLabel={isPending ? 'Saving...' : isCreateMode ? 'Create' : 'Save'}
+        isSubmitting={isPending}
+        contentClassName="mx-auto w-full max-w-xl p-4 lg:p-6"
+      >
         <Card>
           <CardHeader>
             <CardTitle>General</CardTitle>
@@ -86,6 +59,7 @@ export function TaxClassForm({ mode, initialData }: TaxClassFormProps) {
             </FieldGroup>
           </CardContent>
         </Card>
-    </FormPageShell>
+      </FormPageShell>
+    </FormProvider>
   );
 }

@@ -8,6 +8,7 @@ import {
   SdkRequestError,
   adminBulkDeleteMedia,
   adminDeleteMedia,
+  adminListMediaQueryKey,
   adminReplaceMedia,
   adminUpdateMedia,
   adminUploadMedia,
@@ -24,7 +25,9 @@ import type {
 } from '@repo/types/admin';
 import type { PaginationMeta } from '@repo/types';
 
-export const mediaQueryPrefix = [{ url: '/api/media' }] as const;
+// Query hooks compose generated SDK hooks directly. Mutation hooks wrap raw SDK
+// clients so app concerns stay local: toast and cache invalidation.
+export const mediaQueryPrefix = adminListMediaQueryKey();
 
 export interface ListMediaParams {
   page: number;
