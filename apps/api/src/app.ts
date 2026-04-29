@@ -10,6 +10,7 @@ import { attachPrincipal } from './auth/middleware';
 import { healthRoutes } from './health/routes';
 import { mediaRoutes } from './media/routes';
 import { productsRoutes } from './products/routes';
+import { categoriesRoutes } from './categories/routes';
 import { taxClassesRoutes } from './tax-classes/routes';
 import { logger } from './lib/logger';
 import { requestLogger } from './lib/requestLogger';
@@ -46,6 +47,7 @@ export function createApp() {
 
   app.route('/health', healthRoutes);
   app.route('/api/products', productsRoutes);
+  app.route('/api/categories', categoriesRoutes);
   app.route('/api/tax-classes', taxClassesRoutes);
   app.route('/api/media', mediaRoutes);
 

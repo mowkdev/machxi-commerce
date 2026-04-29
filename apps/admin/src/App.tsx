@@ -9,6 +9,8 @@ import ProductsPage from "@/pages/products/ProductsPage"
 import ProductCreatePage from "@/pages/products/ProductCreatePage"
 import ProductEditPage from "@/pages/products/ProductEditPage"
 import CategoriesPage from "@/pages/categories/CategoriesPage"
+import CategoryCreatePage from "@/pages/categories/CategoryCreatePage"
+import CategoryEditPage from "@/pages/categories/CategoryEditPage"
 import MediaLibraryPage from "@/pages/media/MediaLibraryPage"
 import OrdersPage from "@/pages/orders/OrdersPage"
 import CustomersPage from "@/pages/customers/CustomersPage"
@@ -37,6 +39,8 @@ export default function App() {
           <Route path="/products/new" element={<ProductCreatePage />} />
           <Route path="/products/:id" element={<ProductEditPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/categories/new" element={<CategoryCreatePage />} />
+          <Route path="/categories/:id" element={<CategoryEditPage />} />
           <Route path="/media" element={<MediaLibraryPage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/customers" element={<CustomersPage />} />
