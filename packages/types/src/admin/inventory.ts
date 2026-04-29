@@ -22,6 +22,35 @@ export const inventoryLevelListItem = z.object({
 });
 export type InventoryLevelListItem = z.infer<typeof inventoryLevelListItem>;
 
+export const inventoryItemOption = z.object({
+  inventoryItemId: z.string().uuid(),
+  productId: z.string().uuid(),
+  productName: z.string().nullable(),
+  variantId: z.string().uuid(),
+  sku: z.string(),
+});
+export type InventoryItemOption = z.infer<typeof inventoryItemOption>;
+
+export const createInventoryLevelBody = z.object({
+  inventoryItemId: z.string().uuid(),
+  locationId: z.string().uuid(),
+});
+export type CreateInventoryLevelBody = z.infer<typeof createInventoryLevelBody>;
+
+export const inventoryLevelResult = z.object({
+  inventoryItemId: z.string().uuid(),
+  locationId: z.string().uuid(),
+  stockedQuantity: z.number().int().nonnegative(),
+});
+export type InventoryLevelResult = z.infer<typeof inventoryLevelResult>;
+
+export const deleteInventoryLevelResult = z.object({
+  inventoryItemId: z.string().uuid(),
+  locationId: z.string().uuid(),
+  deleted: z.literal(true),
+});
+export type DeleteInventoryLevelResult = z.infer<typeof deleteInventoryLevelResult>;
+
 export const createInventoryAdjustmentBody = z.object({
   inventoryItemId: z.string().uuid(),
   locationId: z.string().uuid(),
@@ -40,6 +69,25 @@ export const inventoryAdjustmentResult = z.object({
   stockedQuantity: z.number().int().nonnegative(),
 });
 export type InventoryAdjustmentResult = z.infer<typeof inventoryAdjustmentResult>;
+
+export const createInventoryTransferBody = z.object({
+  inventoryItemId: z.string().uuid(),
+  fromLocationId: z.string().uuid(),
+  toLocationId: z.string().uuid(),
+  quantity: z.number().int().positive(),
+  reason: inventoryTransactionReason.default('adjustment'),
+});
+export type CreateInventoryTransferBody = z.infer<typeof createInventoryTransferBody>;
+
+export const inventoryTransferResult = z.object({
+  transferId: z.string().uuid(),
+  inventoryItemId: z.string().uuid(),
+  fromLocationId: z.string().uuid(),
+  toLocationId: z.string().uuid(),
+  fromStockedQuantity: z.number().int().nonnegative(),
+  toStockedQuantity: z.number().int().nonnegative(),
+});
+export type InventoryTransferResult = z.infer<typeof inventoryTransferResult>;
 
 export const inventoryTransactionListItem = z.object({
   id: z.string().uuid(),

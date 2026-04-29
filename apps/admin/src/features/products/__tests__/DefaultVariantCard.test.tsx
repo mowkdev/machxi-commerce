@@ -26,6 +26,12 @@ vi.mock('@/features/stock-locations/hooks', () => ({
         createdAt: '2026-01-01T00:00:00.000Z',
         updatedAt: '2026-01-01T00:00:00.000Z',
       },
+      {
+        id: 'location-2',
+        name: 'Overflow warehouse',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-01-01T00:00:00.000Z',
+      },
     ],
     isPending: false,
     isError: false,
@@ -153,6 +159,13 @@ describe('DefaultVariantCard', () => {
     expect(screen.getByText('Inventory')).toBeInTheDocument();
     expect(screen.getByText('Main warehouse')).toBeInTheDocument();
     expect(screen.getByText('Stock: 7')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Open actions for Main warehouse' })
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Adjust' })).not.toBeInTheDocument();
+    expect(screen.getByText('Overflow warehouse')).toBeInTheDocument();
+    expect(screen.getByText('Not assigned')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Assign' })).toBeInTheDocument();
     expect(
       screen.queryByRole('button', { name: 'Save details' })
     ).not.toBeInTheDocument();

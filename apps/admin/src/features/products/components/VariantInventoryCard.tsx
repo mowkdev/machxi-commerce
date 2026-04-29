@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { IconDotsVertical } from '@tabler/icons-react';
 import {
   Card,
   CardContent,
@@ -7,12 +8,21 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Skeleton } from '@/components/ui/skeleton';
+import { InventoryAssignmentDialog } from '@/features/inventory/components/InventoryAssignmentDialog';
 import {
   InventoryAdjustmentDialog,
   type InventoryAdjustmentTarget,
 } from '@/features/inventory/components/InventoryAdjustmentDialog';
+import { InventoryTransferDialog } from '@/features/inventory/components/InventoryTransferDialog';
+import { RemoveInventoryLevelDialog } from '@/features/inventory/components/RemoveInventoryLevelDialog';
 import { useStockLocationOptions } from '@/features/stock-locations/hooks';
 import { adminGetProductQueryKey } from '@repo/admin-sdk';
 import type { ProductDetailVariant } from '@repo/types/admin';
@@ -25,7 +35,15 @@ interface VariantInventoryCardProps {
 
 export function VariantInventoryCard({ productId, variant }: VariantInventoryCardProps) {
   const queryClient = useQueryClient();
+  const [assignmentTarget, setAssignmentTarget] = useState<{
+    inventoryItemId: string;
+    locationId: string;
+  } | null>(null);
   const [adjustmentTarget, setAdjustmentTarget] =
+    useState<InventoryAdjustmentTarget | null>(null);
+  const [transferTarget, setTransferTarget] =
+    useState<InventoryAdjustmentTarget | null>(null);
+  const [removeTarget, setRemoveTarget] =
     useState<InventoryAdjustmentTarget | null>(null);
   const { data: stockLocations, isPending, isError } = useStockLocationOptions();
 
@@ -41,12 +59,17 @@ export function VariantInventoryCard({ productId, variant }: VariantInventoryCar
         locationName: location.name,
         sku: variant.sku,
         stockedQuantity: level?.stockedQuantity ?? 0,
+        isAssigned: Boolean(level),
       };
     });
   }, [stockLocations, variant.inventoryItemId, variant.inventoryLevels, variant.sku]);
 
   const totalStock = rows.reduce((sum, row) => sum + row.stockedQuantity, 0);
   const canAdjust = Boolean(variant.inventoryItemId);
+  const refreshInventory = () => {
+    queryClient.invalidateQueries({ queryKey: productsQueryPrefix });
+    queryClient.invalidateQueries({ queryKey: adminGetProductQueryKey(productId) });
+  };
 
   return (
     <Card>
@@ -89,37 +112,105 @@ export function VariantInventoryCard({ productId, variant }: VariantInventoryCar
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium">{row.locationName}</p>
                   <p className="font-mono text-xs text-muted-foreground">
-                    Stock: {row.stockedQuantity}
+                    {row.isAssigned ? `Stock: ${row.stockedQuantity}` : 'Not assigned'}
                   </p>
                 </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    setAdjustmentTarget({
-                      ...row,
-                      inventoryItemId: row.inventoryItemId!,
-                    })
-                  }
-                >
-                  Adjust
-                </Button>
+                {row.isAssigned ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger
+                      type="button"
+                      aria-label={`Open actions for ${row.locationName}`}
+                      className={buttonVariants({ variant: 'ghost', size: 'icon-sm' })}
+                    >
+                      <IconDotsVertical className="size-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onSelect={() =>
+                          setAdjustmentTarget({
+                            ...row,
+                            inventoryItemId: row.inventoryItemId!,
+                          })
+                        }
+                      >
+                        Adjust
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        disabled={row.stockedQuantity === 0}
+                        onSelect={() =>
+                          setTransferTarget({
+                            ...row,
+                            inventoryItemId: row.inventoryItemId!,
+                          })
+                        }
+                      >
+                        Transfer
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        variant="destructive"
+                        onSelect={() =>
+                          setRemoveTarget({
+                            ...row,
+                            inventoryItemId: row.inventoryItemId!,
+                          })
+                        }
+                      >
+                        Remove
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      setAssignmentTarget({
+                        inventoryItemId: row.inventoryItemId!,
+                        locationId: row.locationId,
+                      })
+                    }
+                  >
+                    Assign
+                  </Button>
+                )}
               </div>
             ))}
           </div>
         )}
 
+        <InventoryAssignmentDialog
+          open={!!assignmentTarget}
+          onOpenChange={(open) => {
+            if (!open) setAssignmentTarget(null);
+          }}
+          inventoryItemId={assignmentTarget?.inventoryItemId}
+          locationId={assignmentTarget?.locationId}
+          onAssigned={refreshInventory}
+        />
         <InventoryAdjustmentDialog
           row={adjustmentTarget}
           open={!!adjustmentTarget}
           onOpenChange={(open) => {
             if (!open) setAdjustmentTarget(null);
           }}
-          onAdjusted={() => {
-            queryClient.invalidateQueries({ queryKey: productsQueryPrefix });
-            queryClient.invalidateQueries({ queryKey: adminGetProductQueryKey(productId) });
+          onAdjusted={refreshInventory}
+        />
+        <InventoryTransferDialog
+          row={transferTarget}
+          open={!!transferTarget}
+          onOpenChange={(open) => {
+            if (!open) setTransferTarget(null);
           }}
+          onTransferred={refreshInventory}
+        />
+        <RemoveInventoryLevelDialog
+          row={removeTarget}
+          open={!!removeTarget}
+          onOpenChange={(open) => {
+            if (!open) setRemoveTarget(null);
+          }}
+          onRemoved={refreshInventory}
         />
       </CardContent>
     </Card>

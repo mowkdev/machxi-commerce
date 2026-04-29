@@ -1,10 +1,13 @@
 export type { AdminBulkDeleteMediaMutationKey } from "./hooks/useAdminBulkDeleteMedia.ts";
 export type { AdminCreateCategoryMutationKey } from "./hooks/useAdminCreateCategory.ts";
 export type { AdminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdminCreateInventoryAdjustment.ts";
+export type { AdminCreateInventoryLevelMutationKey } from "./hooks/useAdminCreateInventoryLevel.ts";
+export type { AdminCreateInventoryTransferMutationKey } from "./hooks/useAdminCreateInventoryTransfer.ts";
 export type { AdminCreateProductMutationKey } from "./hooks/useAdminCreateProduct.ts";
 export type { AdminCreateStockLocationMutationKey } from "./hooks/useAdminCreateStockLocation.ts";
 export type { AdminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
 export type { AdminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
+export type { AdminDeleteInventoryLevelMutationKey } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export type { AdminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts";
 export type { AdminDeleteProductMutationKey } from "./hooks/useAdminDeleteProduct.ts";
 export type { AdminDeleteStockLocationMutationKey } from "./hooks/useAdminDeleteStockLocation.ts";
@@ -22,6 +25,8 @@ export type { AdminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
 export type { AdminGetTaxClassSuspenseQueryKey } from "./hooks/useAdminGetTaxClassSuspense.ts";
 export type { AdminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export type { AdminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
+export type { AdminListInventoryItemsQueryKey } from "./hooks/useAdminListInventoryItems.ts";
+export type { AdminListInventoryItemsSuspenseQueryKey } from "./hooks/useAdminListInventoryItemsSuspense.ts";
 export type { AdminListInventoryLevelsQueryKey } from "./hooks/useAdminListInventoryLevels.ts";
 export type { AdminListInventoryLevelsSuspenseQueryKey } from "./hooks/useAdminListInventoryLevelsSuspense.ts";
 export type { AdminListInventoryTransactionsQueryKey } from "./hooks/useAdminListInventoryTransactions.ts";
@@ -81,6 +86,30 @@ export type {
   AdminCreateInventoryAdjustmentMutationResponse,
 } from "./types/AdminCreateInventoryAdjustment.ts";
 export type {
+  AdminCreateInventoryLevel201,
+  AdminCreateInventoryLevel400,
+  AdminCreateInventoryLevel401,
+  AdminCreateInventoryLevel403,
+  AdminCreateInventoryLevel404,
+  AdminCreateInventoryLevel409,
+  AdminCreateInventoryLevel500,
+  AdminCreateInventoryLevelMutation,
+  AdminCreateInventoryLevelMutationRequest,
+  AdminCreateInventoryLevelMutationResponse,
+} from "./types/AdminCreateInventoryLevel.ts";
+export type {
+  AdminCreateInventoryTransfer201,
+  AdminCreateInventoryTransfer400,
+  AdminCreateInventoryTransfer401,
+  AdminCreateInventoryTransfer403,
+  AdminCreateInventoryTransfer404,
+  AdminCreateInventoryTransfer409,
+  AdminCreateInventoryTransfer500,
+  AdminCreateInventoryTransferMutation,
+  AdminCreateInventoryTransferMutationRequest,
+  AdminCreateInventoryTransferMutationResponse,
+} from "./types/AdminCreateInventoryTransfer.ts";
+export type {
   AdminCreateProduct201,
   AdminCreateProduct400,
   AdminCreateProduct401,
@@ -128,6 +157,18 @@ export type {
   AdminDeleteCategoryMutationResponse,
   AdminDeleteCategoryPathParams,
 } from "./types/AdminDeleteCategory.ts";
+export type {
+  AdminDeleteInventoryLevel200,
+  AdminDeleteInventoryLevel400,
+  AdminDeleteInventoryLevel401,
+  AdminDeleteInventoryLevel403,
+  AdminDeleteInventoryLevel404,
+  AdminDeleteInventoryLevel409,
+  AdminDeleteInventoryLevel500,
+  AdminDeleteInventoryLevelMutation,
+  AdminDeleteInventoryLevelMutationResponse,
+  AdminDeleteInventoryLevelPathParams,
+} from "./types/AdminDeleteInventoryLevel.ts";
 export type {
   AdminDeleteMedia200,
   AdminDeleteMedia400,
@@ -264,6 +305,18 @@ export type {
   AdminListCategoriesQueryParamsSortOrderEnumKey,
   AdminListCategoriesQueryResponse,
 } from "./types/AdminListCategories.ts";
+export type {
+  AdminListInventoryItems200,
+  AdminListInventoryItems400,
+  AdminListInventoryItems401,
+  AdminListInventoryItems403,
+  AdminListInventoryItems404,
+  AdminListInventoryItems409,
+  AdminListInventoryItems500,
+  AdminListInventoryItemsQuery,
+  AdminListInventoryItemsQueryParams,
+  AdminListInventoryItemsQueryResponse,
+} from "./types/AdminListInventoryItems.ts";
 export type {
   AdminListInventoryLevels200,
   AdminListInventoryLevels400,
@@ -471,10 +524,13 @@ export type {
 export { adminBulkDeleteMedia } from "./client/adminBulkDeleteMedia.ts";
 export { adminCreateCategory } from "./client/adminCreateCategory.ts";
 export { adminCreateInventoryAdjustment } from "./client/adminCreateInventoryAdjustment.ts";
+export { adminCreateInventoryLevel } from "./client/adminCreateInventoryLevel.ts";
+export { adminCreateInventoryTransfer } from "./client/adminCreateInventoryTransfer.ts";
 export { adminCreateProduct } from "./client/adminCreateProduct.ts";
 export { adminCreateStockLocation } from "./client/adminCreateStockLocation.ts";
 export { adminCreateTaxClass } from "./client/adminCreateTaxClass.ts";
 export { adminDeleteCategory } from "./client/adminDeleteCategory.ts";
+export { adminDeleteInventoryLevel } from "./client/adminDeleteInventoryLevel.ts";
 export { adminDeleteMedia } from "./client/adminDeleteMedia.ts";
 export { adminDeleteProduct } from "./client/adminDeleteProduct.ts";
 export { adminDeleteStockLocation } from "./client/adminDeleteStockLocation.ts";
@@ -486,6 +542,7 @@ export { adminGetProduct } from "./client/adminGetProduct.ts";
 export { adminGetStockLocation } from "./client/adminGetStockLocation.ts";
 export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
+export { adminListInventoryItems } from "./client/adminListInventoryItems.ts";
 export { adminListInventoryLevels } from "./client/adminListInventoryLevels.ts";
 export { adminListInventoryTransactions } from "./client/adminListInventoryTransactions.ts";
 export { adminListMedia } from "./client/adminListMedia.ts";
@@ -510,6 +567,12 @@ export { useAdminCreateCategory } from "./hooks/useAdminCreateCategory.ts";
 export { adminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export { adminCreateInventoryAdjustmentMutationOptions } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export { useAdminCreateInventoryAdjustment } from "./hooks/useAdminCreateInventoryAdjustment.ts";
+export { adminCreateInventoryLevelMutationKey } from "./hooks/useAdminCreateInventoryLevel.ts";
+export { adminCreateInventoryLevelMutationOptions } from "./hooks/useAdminCreateInventoryLevel.ts";
+export { useAdminCreateInventoryLevel } from "./hooks/useAdminCreateInventoryLevel.ts";
+export { adminCreateInventoryTransferMutationKey } from "./hooks/useAdminCreateInventoryTransfer.ts";
+export { adminCreateInventoryTransferMutationOptions } from "./hooks/useAdminCreateInventoryTransfer.ts";
+export { useAdminCreateInventoryTransfer } from "./hooks/useAdminCreateInventoryTransfer.ts";
 export { adminCreateProductMutationKey } from "./hooks/useAdminCreateProduct.ts";
 export { adminCreateProductMutationOptions } from "./hooks/useAdminCreateProduct.ts";
 export { useAdminCreateProduct } from "./hooks/useAdminCreateProduct.ts";
@@ -522,6 +585,9 @@ export { useAdminCreateTaxClass } from "./hooks/useAdminCreateTaxClass.ts";
 export { adminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
 export { adminDeleteCategoryMutationOptions } from "./hooks/useAdminDeleteCategory.ts";
 export { useAdminDeleteCategory } from "./hooks/useAdminDeleteCategory.ts";
+export { adminDeleteInventoryLevelMutationKey } from "./hooks/useAdminDeleteInventoryLevel.ts";
+export { adminDeleteInventoryLevelMutationOptions } from "./hooks/useAdminDeleteInventoryLevel.ts";
+export { useAdminDeleteInventoryLevel } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export { adminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts";
 export { adminDeleteMediaMutationOptions } from "./hooks/useAdminDeleteMedia.ts";
 export { useAdminDeleteMedia } from "./hooks/useAdminDeleteMedia.ts";
@@ -573,6 +639,12 @@ export { useAdminListCategories } from "./hooks/useAdminListCategories.ts";
 export { adminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { adminListCategoriesSuspenseQueryOptions } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { useAdminListCategoriesSuspense } from "./hooks/useAdminListCategoriesSuspense.ts";
+export { adminListInventoryItemsQueryKey } from "./hooks/useAdminListInventoryItems.ts";
+export { adminListInventoryItemsQueryOptions } from "./hooks/useAdminListInventoryItems.ts";
+export { useAdminListInventoryItems } from "./hooks/useAdminListInventoryItems.ts";
+export { adminListInventoryItemsSuspenseQueryKey } from "./hooks/useAdminListInventoryItemsSuspense.ts";
+export { adminListInventoryItemsSuspenseQueryOptions } from "./hooks/useAdminListInventoryItemsSuspense.ts";
+export { useAdminListInventoryItemsSuspense } from "./hooks/useAdminListInventoryItemsSuspense.ts";
 export { adminListInventoryLevelsQueryKey } from "./hooks/useAdminListInventoryLevels.ts";
 export { adminListInventoryLevelsQueryOptions } from "./hooks/useAdminListInventoryLevels.ts";
 export { useAdminListInventoryLevels } from "./hooks/useAdminListInventoryLevels.ts";
@@ -693,6 +765,28 @@ export {
   adminCreateInventoryAdjustmentMutationResponseSchema,
 } from "./zod/adminCreateInventoryAdjustmentSchema.ts";
 export {
+  adminCreateInventoryLevel201Schema,
+  adminCreateInventoryLevel400Schema,
+  adminCreateInventoryLevel401Schema,
+  adminCreateInventoryLevel403Schema,
+  adminCreateInventoryLevel404Schema,
+  adminCreateInventoryLevel409Schema,
+  adminCreateInventoryLevel500Schema,
+  adminCreateInventoryLevelMutationRequestSchema,
+  adminCreateInventoryLevelMutationResponseSchema,
+} from "./zod/adminCreateInventoryLevelSchema.ts";
+export {
+  adminCreateInventoryTransfer201Schema,
+  adminCreateInventoryTransfer400Schema,
+  adminCreateInventoryTransfer401Schema,
+  adminCreateInventoryTransfer403Schema,
+  adminCreateInventoryTransfer404Schema,
+  adminCreateInventoryTransfer409Schema,
+  adminCreateInventoryTransfer500Schema,
+  adminCreateInventoryTransferMutationRequestSchema,
+  adminCreateInventoryTransferMutationResponseSchema,
+} from "./zod/adminCreateInventoryTransferSchema.ts";
+export {
   adminCreateProduct201Schema,
   adminCreateProduct400Schema,
   adminCreateProduct401Schema,
@@ -736,6 +830,17 @@ export {
   adminDeleteCategoryMutationResponseSchema,
   adminDeleteCategoryPathParamsSchema,
 } from "./zod/adminDeleteCategorySchema.ts";
+export {
+  adminDeleteInventoryLevel200Schema,
+  adminDeleteInventoryLevel400Schema,
+  adminDeleteInventoryLevel401Schema,
+  adminDeleteInventoryLevel403Schema,
+  adminDeleteInventoryLevel404Schema,
+  adminDeleteInventoryLevel409Schema,
+  adminDeleteInventoryLevel500Schema,
+  adminDeleteInventoryLevelMutationResponseSchema,
+  adminDeleteInventoryLevelPathParamsSchema,
+} from "./zod/adminDeleteInventoryLevelSchema.ts";
 export {
   adminDeleteMedia200Schema,
   adminDeleteMedia400Schema,
@@ -858,6 +963,17 @@ export {
   adminListCategoriesQueryParamsSchema,
   adminListCategoriesQueryResponseSchema,
 } from "./zod/adminListCategoriesSchema.ts";
+export {
+  adminListInventoryItems200Schema,
+  adminListInventoryItems400Schema,
+  adminListInventoryItems401Schema,
+  adminListInventoryItems403Schema,
+  adminListInventoryItems404Schema,
+  adminListInventoryItems409Schema,
+  adminListInventoryItems500Schema,
+  adminListInventoryItemsQueryParamsSchema,
+  adminListInventoryItemsQueryResponseSchema,
+} from "./zod/adminListInventoryItemsSchema.ts";
 export {
   adminListInventoryLevels200Schema,
   adminListInventoryLevels400Schema,
