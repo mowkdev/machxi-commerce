@@ -1,6 +1,6 @@
 import { IconChevronDown, type Icon } from "@tabler/icons-react"
-import { useId, useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useId, useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 
 import {
   SidebarGroup,
@@ -22,16 +22,32 @@ export type NavGroupProps = {
   defaultOpen?: boolean
 }
 
+function isNavItemActive(pathname: string, url: string) {
+  if (url === "/") {
+    return pathname === url
+  }
+
+  return pathname === url || pathname.startsWith(`${url}/`)
+}
+
 export function NavGroup({
   items,
   groupLabel,
   collapseTitle,
   defaultOpen,
 }: NavGroupProps) {
+  const { pathname } = useLocation()
   const contentId = useId()
-  const [open, setOpen] = useState(Boolean(defaultOpen))
+  const hasActiveItem = items.some((item) => isNavItemActive(pathname, item.url))
+  const [open, setOpen] = useState(Boolean(defaultOpen || hasActiveItem))
   const isCollapsible = Boolean(groupLabel && collapseTitle)
   const isContentVisible = !isCollapsible || open
+
+  useEffect(() => {
+    if (hasActiveItem) {
+      setOpen(true)
+    }
+  }, [hasActiveItem])
 
   return (
     <SidebarGroup>
@@ -57,16 +73,24 @@ export function NavGroup({
       {isContentVisible && (
         <SidebarGroupContent id={contentId} className="flex flex-col gap-2">
           <SidebarMenu>
-            {items.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild tooltip={item.title}>
-                  <Link to={item.url}>
-                    {item.icon && <item.icon />}
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            {items.map((item) => {
+              const isActive = isNavItemActive(pathname, item.url)
+
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive}
+                    tooltip={item.title}
+                  >
+                    <Link to={item.url}>
+                      {item.icon && <item.icon />}
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )
+            })}
           </SidebarMenu>
         </SidebarGroupContent>
       )}
