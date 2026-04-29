@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
   IconArrowBackUp,
   IconBuildingWarehouse,
@@ -21,7 +20,9 @@ import {
   IconTruckDelivery,
   IconUserShield,
   IconUsers,
+  type Icon,
 } from "@tabler/icons-react"
+import type { ComponentProps } from "react"
 
 import { NavGroup } from "@/layouts/DashboardLayout/components/nav-group"
 import { NavSecondary } from "@/layouts/DashboardLayout/components/nav-secondary"
@@ -35,6 +36,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+
+type NavItem = {
+  title: string
+  url: string
+  icon?: Icon
+}
+
+type NavGroupConfig = {
+  id: string
+  groupLabel: string
+  collapseTitle?: boolean
+  defaultOpen?: boolean
+  items: NavItem[]
+}
 
 const data = {
   user: {
@@ -61,46 +76,90 @@ const data = {
       icon: IconHelp,
     },
   ],
-  catalog: [
-    { title: "Products", url: "/products", icon: IconPackage },
-    { title: "Categories", url: "/categories", icon: IconCategory },
-  ],
-  content: [
-    { title: "Media", url: "/media", icon: IconPhoto },
-  ],
-  sales: [
-    { title: "Orders", url: "/orders", icon: IconShoppingCart },
-    { title: "Customers", url: "/customers", icon: IconUsers },
-  ],
-  inventory: [
+  navGroups: [
     {
-      title: "Stock locations",
-      url: "/stock-locations",
-      icon: IconBuildingWarehouse,
+      id: "catalog",
+      groupLabel: "Catalog",
+      collapseTitle: true,
+      defaultOpen: true,
+      items: [
+        { title: "Products", url: "/products", icon: IconPackage },
+        { title: "Categories", url: "/categories", icon: IconCategory },
+      ],
     },
-    { title: "Inventory", url: "/inventory", icon: IconStack2 },
-  ],
-  marketing: [
-    { title: "Promotions", url: "/promotions", icon: IconDiscount },
-    { title: "Price lists", url: "/price-lists", icon: IconCurrencyDollar },
-  ],
-  fulfillment: [
-    { title: "Shipments", url: "/shipments", icon: IconTruckDelivery },
-    { title: "Returns", url: "/returns", icon: IconArrowBackUp },
-  ],
-  shipping: [
-    { title: "Shipping zones", url: "/shipping-zones", icon: IconMap },
-    { title: "Shipping options", url: "/shipping-options", icon: IconTruck },
-  ],
-  configuration: [
-    { title: "Languages", url: "/languages", icon: IconLanguage },
-    { title: "Tax classes", url: "/tax-classes", icon: IconReceiptTax },
-    { title: "Users", url: "/users", icon: IconUserShield },
-    { title: "Roles", url: "/roles", icon: IconShieldLock },
-  ],
+    {
+      id: "content",
+      groupLabel: "Content",
+      collapseTitle: true,
+      defaultOpen: true,
+      items: [{ title: "Media", url: "/media", icon: IconPhoto }],
+    },
+    {
+      id: "sales",
+      groupLabel: "Sales",
+      collapseTitle: true,
+      defaultOpen: true,
+      items: [
+        { title: "Orders", url: "/orders", icon: IconShoppingCart },
+        { title: "Customers", url: "/customers", icon: IconUsers },
+      ],
+    },
+    {
+      id: "inventory",
+      groupLabel: "Inventory",
+      collapseTitle: true,
+      defaultOpen: true,
+      items: [
+        {
+          title: "Stock locations",
+          url: "/stock-locations",
+          icon: IconBuildingWarehouse,
+        },
+        { title: "Inventory", url: "/inventory", icon: IconStack2 },
+      ],
+    },
+    {
+      id: "marketing",
+      groupLabel: "Marketing",
+      collapseTitle: true,
+      items: [
+        { title: "Promotions", url: "/promotions", icon: IconDiscount },
+        { title: "Price lists", url: "/price-lists", icon: IconCurrencyDollar },
+      ],
+    },
+    {
+      id: "fulfillment",
+      groupLabel: "Fulfillment",
+      collapseTitle: true,
+      items: [
+        { title: "Shipments", url: "/shipments", icon: IconTruckDelivery },
+        { title: "Returns", url: "/returns", icon: IconArrowBackUp },
+      ],
+    },
+    {
+      id: "shipping",
+      groupLabel: "Shipping",
+      collapseTitle: true,
+      items: [
+        { title: "Shipping zones", url: "/shipping-zones", icon: IconMap },
+        { title: "Shipping options", url: "/shipping-options", icon: IconTruck },
+      ],
+    },
+    {
+      id: "configuration",
+      groupLabel: "Configuration",
+      collapseTitle: true,
+      items: [
+        { title: "Languages", url: "/languages", icon: IconLanguage },
+        { title: "Tax classes", url: "/tax-classes", icon: IconReceiptTax },
+        { title: "Users", url: "/users", icon: IconUserShield },
+        { title: "Roles", url: "/roles", icon: IconShieldLock },
+      ],
+    },
+  ] satisfies NavGroupConfig[],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -120,14 +179,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavGroup items={data.navMain} />
-        <NavGroup items={data.catalog} groupLabel="Catalog" />
-        <NavGroup items={data.content} groupLabel="Content" />
-        <NavGroup items={data.sales} groupLabel="Sales" />
-        <NavGroup items={data.inventory} groupLabel="Inventory" />
-        <NavGroup items={data.marketing} groupLabel="Marketing" />
-        <NavGroup items={data.fulfillment} groupLabel="Fulfillment" />
-        <NavGroup items={data.shipping} groupLabel="Shipping" />
-        <NavGroup items={data.configuration} groupLabel="Configuration" />
+        {data.navGroups.map((group) => (
+          <NavGroup key={group.id} {...group} />
+        ))}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
