@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import { IconArrowLeft, IconCheck, IconChevronDown } from '@tabler/icons-react';
+import { IconCheck, IconChevronDown } from '@tabler/icons-react';
+import { FormPageShell } from '@/components/form-page-shell';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -112,34 +113,14 @@ export function CategoryForm({ mode, initialData }: CategoryFormProps) {
   const title = mode === 'create' ? 'New category' : form.watch('name') || 'Untitled category';
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col">
-      <div className="sticky top-0 z-20 flex items-center justify-between border-b bg-background px-4 py-3 lg:px-6">
-        <div className="flex items-center gap-3">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/categories')}
-          >
-            <IconArrowLeft className="size-4" />
-          </Button>
-          <h1 className="text-lg font-semibold">{title}</h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => navigate('/categories')}
-          >
-            Discard
-          </Button>
-          <Button type="submit" disabled={isPending}>
-            {isPending ? 'Saving...' : mode === 'create' ? 'Create' : 'Save'}
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid gap-6 p-4 lg:grid-cols-3 lg:p-6">
+    <FormPageShell
+      title={title}
+      onBack={() => navigate('/categories')}
+      onSubmit={onSubmit}
+      submitLabel={isPending ? 'Saving...' : mode === 'create' ? 'Create' : 'Save'}
+      isSubmitting={isPending}
+      contentClassName="grid gap-6 p-4 lg:grid-cols-3 lg:p-6"
+    >
         <div className="flex flex-col gap-6 lg:col-span-2">
           <Card>
             <CardHeader>
@@ -247,8 +228,7 @@ export function CategoryForm({ mode, initialData }: CategoryFormProps) {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </form>
+    </FormPageShell>
   );
 }
 

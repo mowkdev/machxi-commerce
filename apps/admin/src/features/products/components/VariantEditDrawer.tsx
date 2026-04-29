@@ -1,25 +1,9 @@
-import { useEffect } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { SidePanelForm } from '@/components/side-panel-form';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
 import type { ProductDetailVariant } from '@repo/types/admin';
 import { useUpdateVariant } from '../hooks';
-import { variantFormSchema, type VariantFormValues } from '../schema';
-import {
-  DEFAULT_VARIANT_FORM_VALUES,
-  getUpdateVariantBody,
-  getVariantFormValues,
-} from '../utils/variant-form';
+import { useVariantForm } from '../hooks/useVariantForm';
+import { getUpdateVariantBody, getVariantLabel } from '../utils/variant-form';
 import { ProductMediaManager } from './ProductMediaManager';
 import { VariantDetailsFields } from './VariantDetailsFields';
 
@@ -30,12 +14,6 @@ interface VariantEditDrawerProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function getVariantLabel(variant: ProductDetailVariant): string {
-  return variant.optionValues
-    .map((ov) => ov.value.translations[0]?.label ?? '?')
-    .join(' / ') || variant.sku;
-}
-
 export function VariantEditDrawer({
   productId,
   variant,
@@ -43,20 +21,7 @@ export function VariantEditDrawer({
   onOpenChange,
 }: VariantEditDrawerProps) {
   const updateMutation = useUpdateVariant(productId);
-
-  const form = useForm<VariantFormValues, unknown, VariantFormValues>({
-    resolver: zodResolver(variantFormSchema),
-    defaultValues: DEFAULT_VARIANT_FORM_VALUES,
-  });
-
-  const { fields: priceFields, append: appendPrice, remove: removePrice } =
-    useFieldArray({ control: form.control, name: 'prices' });
-
-  useEffect(() => {
-    if (variant) {
-      form.reset(getVariantFormValues(variant));
-    }
-  }, [variant, form]);
+  const { form, priceFields, appendPrice, removePrice } = useVariantForm(variant);
 
   const onSubmit = form.handleSubmit((values) => {
     if (!variant) return;
@@ -76,52 +41,39 @@ export function VariantEditDrawer({
   const label = getVariantLabel(variant);
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="flex w-full flex-col sm:max-w-[36.8rem]">
-        <SheetHeader>
-          <SheetTitle>Edit variant</SheetTitle>
-          <SheetDescription>
-            <div className="flex flex-wrap gap-1.5">
-              {variant.optionValues.map((ov) => (
-                <Badge key={ov.valueId} variant="secondary">
-                  {ov.value.translations[0]?.label ?? '?'}
-                </Badge>
-              ))}
-              {variant.optionValues.length === 0 && (
-                <span className="text-muted-foreground">{label}</span>
-              )}
-            </div>
-          </SheetDescription>
-        </SheetHeader>
-
-        <ScrollArea className="flex-1 px-1">
-          <form id="variant-form" onSubmit={onSubmit} className="flex flex-col gap-6 p-1">
-            <VariantDetailsFields
-              form={form}
-              priceFields={priceFields}
-              appendPrice={appendPrice}
-              removePrice={removePrice}
-            />
-            <ProductMediaManager
-              title="Variant media"
-              description="Images specific to this variant."
-              media={variant.media}
-              target={{ type: 'variant', productId, variantId: variant.id }}
-            />
-          </form>
-        </ScrollArea>
-
-        <SheetFooter>
-          <Button
-            type="submit"
-            form="variant-form"
-            disabled={updateMutation.isPending}
-            className="w-full"
-          >
-            {updateMutation.isPending ? 'Saving...' : 'Save variant'}
-          </Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+    <SidePanelForm
+      open={open}
+      onOpenChange={onOpenChange}
+      title="Edit variant"
+      description={
+        <div className="flex flex-wrap gap-1.5">
+          {variant.optionValues.map((ov) => (
+            <Badge key={ov.valueId} variant="secondary">
+              {ov.value.translations[0]?.label ?? '?'}
+            </Badge>
+          ))}
+          {variant.optionValues.length === 0 && (
+            <span className="text-muted-foreground">{label}</span>
+          )}
+        </div>
+      }
+      formId="variant-form"
+      onSubmit={onSubmit}
+      submitLabel={updateMutation.isPending ? 'Saving...' : 'Save variant'}
+      isSubmitting={updateMutation.isPending}
+    >
+      <VariantDetailsFields
+        form={form}
+        priceFields={priceFields}
+        appendPrice={appendPrice}
+        removePrice={removePrice}
+      />
+      <ProductMediaManager
+        title="Variant media"
+        description="Images specific to this variant."
+        media={variant.media}
+        target={{ type: 'variant', productId, variantId: variant.id }}
+      />
+    </SidePanelForm>
   );
 }

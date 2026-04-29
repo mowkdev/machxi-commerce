@@ -48,3 +48,11 @@ export function getUpdateVariantBody(values: VariantFormValues): UpdateVariantBo
     prices: values.prices,
   };
 }
+
+export function getVariantLabel(variant: ProductDetailVariant): string {
+  return (
+    variant.optionValues
+      .map((ov) => ov.value.translations[0]?.label ?? '?')
+      .join(' / ') || variant.sku
+  );
+}

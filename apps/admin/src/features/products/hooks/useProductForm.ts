@@ -1,25 +1,23 @@
 import { useEffect, useMemo } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import type { z } from 'zod';
 import type { ProductDetailResponse } from '@repo/types/admin';
 import { useCreateProduct, useUpdateProduct, useUpdateVariant } from '../hooks';
 import {
   productFormSchema,
-  variantFormSchema,
   type ProductFormValues,
-  type VariantFormValues,
 } from '../schema';
-import {
-  DEFAULT_VARIANT_FORM_VALUES,
-  getUpdateVariantBody,
-  getVariantFormValues,
-} from '../utils/variant-form';
+import { getUpdateVariantBody } from '../utils/variant-form';
+import { useVariantForm } from './useVariantForm';
 
 interface UseProductFormParams {
   mode: 'create' | 'edit';
   initialData?: ProductDetailResponse;
 }
+
+type ProductFormInput = z.input<typeof productFormSchema>;
 
 export function useProductForm({ mode, initialData }: UseProductFormParams) {
   const navigate = useNavigate();
@@ -38,7 +36,7 @@ export function useProductForm({ mode, initialData }: UseProductFormParams) {
     [initialData]
   );
 
-  const defaultValues = useMemo<ProductFormValues>(
+  const defaultValues = useMemo<ProductFormInput>(
     () => ({
       name: defaultTranslation?.name ?? '',
       handle: defaultTranslation?.handle ?? '',
@@ -52,48 +50,23 @@ export function useProductForm({ mode, initialData }: UseProductFormParams) {
     [initialData, defaultTranslation]
   );
 
-  const form = useForm<ProductFormValues>({
+  const form = useForm<ProductFormInput, unknown, ProductFormValues>({
     resolver: zodResolver(productFormSchema),
     defaultValues,
   });
 
-  const defaultVariantValues = useMemo(
-    () =>
-      defaultVariant
-        ? getVariantFormValues(defaultVariant)
-        : DEFAULT_VARIANT_FORM_VALUES,
-    [defaultVariant]
-  );
-
-  const defaultVariantForm = useForm<
-    VariantFormValues,
-    unknown,
-    VariantFormValues
-  >({
-    resolver: zodResolver(variantFormSchema),
-    defaultValues: defaultVariantValues,
-  });
-
   const {
-    fields: defaultVariantPriceFields,
-    append: appendDefaultVariantPrice,
-    remove: removeDefaultVariantPrice,
-  } = useFieldArray({
-    control: defaultVariantForm.control,
-    name: 'prices',
-  });
+    appendPrice: appendDefaultVariantPrice,
+    form: defaultVariantForm,
+    priceFields: defaultVariantPriceFields,
+    removePrice: removeDefaultVariantPrice,
+  } = useVariantForm(defaultVariant, { resetOnVariantChange: isEditMode });
 
   useEffect(() => {
     if (isEditMode && initialData) {
       form.reset(defaultValues);
     }
   }, [initialData, isEditMode, form, defaultValues]);
-
-  useEffect(() => {
-    if (isEditMode) {
-      defaultVariantForm.reset(defaultVariantValues);
-    }
-  }, [defaultVariantForm, defaultVariantValues, isEditMode]);
 
   const productType = form.watch('type');
   const isVariable = productType === 'variable';

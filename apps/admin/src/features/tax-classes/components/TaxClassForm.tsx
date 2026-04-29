@@ -2,8 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import { IconArrowLeft } from '@tabler/icons-react';
-import { Button } from '@/components/ui/button';
+import { FormPageShell } from '@/components/form-page-shell';
 import {
   Card,
   CardContent,
@@ -61,36 +60,14 @@ export function TaxClassForm({ mode, initialData }: TaxClassFormProps) {
   const title = mode === 'create' ? 'New tax class' : (form.watch('name') || 'Untitled');
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col">
-      {/* Sticky header */}
-      <div className="sticky top-0 z-20 flex items-center justify-between border-b bg-background px-4 py-3 lg:px-6">
-        <div className="flex items-center gap-3">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/tax-classes')}
-          >
-            <IconArrowLeft className="size-4" />
-          </Button>
-          <h1 className="text-lg font-semibold">{title}</h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => navigate('/tax-classes')}
-          >
-            Discard
-          </Button>
-          <Button type="submit" disabled={isPending}>
-            {isPending ? 'Saving...' : mode === 'create' ? 'Create' : 'Save'}
-          </Button>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="mx-auto w-full max-w-xl p-4 lg:p-6">
+    <FormPageShell
+      title={title}
+      onBack={() => navigate('/tax-classes')}
+      onSubmit={onSubmit}
+      submitLabel={isPending ? 'Saving...' : mode === 'create' ? 'Create' : 'Save'}
+      isSubmitting={isPending}
+      contentClassName="mx-auto w-full max-w-xl p-4 lg:p-6"
+    >
         <Card>
           <CardHeader>
             <CardTitle>General</CardTitle>
@@ -109,7 +86,6 @@ export function TaxClassForm({ mode, initialData }: TaxClassFormProps) {
             </FieldGroup>
           </CardContent>
         </Card>
-      </div>
-    </form>
+    </FormPageShell>
   );
 }

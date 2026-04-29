@@ -15,7 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { ProductDetailResponse, ProductDetailVariant } from '@repo/types/admin';
+import type { ProductDetailResponse } from '@repo/types/admin';
+import { getVariantLabel } from '../utils/variant-form';
 import { VariantEditDrawer } from './VariantEditDrawer';
 
 interface VariantsTableProps {
@@ -34,12 +35,6 @@ function formatPrice(amount: number, currency: string): string {
     currency,
     minimumFractionDigits: 2,
   }).format(amount / 100);
-}
-
-function getVariantLabel(variant: ProductDetailVariant): string {
-  return variant.optionValues
-    .map((ov) => ov.value.translations[0]?.label ?? '?')
-    .join(' / ') || variant.sku;
 }
 
 export function VariantsTable({ product }: VariantsTableProps) {

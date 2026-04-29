@@ -6,6 +6,7 @@ import {
   adminCreateProduct,
   adminDeleteProduct,
   adminGenerateVariants,
+  adminListProductsQueryKey,
   adminUpdateProduct,
   adminUpdateVariant,
   useAdminGetProduct,
@@ -20,7 +21,10 @@ import type {
   UpdateVariantBody,
 } from '@repo/types/admin';
 
-export const productsQueryPrefix = [{ url: '/api/products' }] as const;
+// Query hooks compose generated SDK hooks directly. Mutation hooks intentionally
+// wrap raw SDK clients so app concerns stay local: toast, navigation, and cache
+// invalidation. This keeps one React Query layer per operation.
+export const productsQueryPrefix = adminListProductsQueryKey();
 
 export function useProduct(id: string) {
   return useAdminGetProduct<ProductDetailResponse>(id, {
