@@ -30,8 +30,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import type { CategoryDetail, CategoryListItem } from '@repo/types/admin';
 import { useCategoryOptions, useCreateCategory, useUpdateCategory } from '../hooks';
@@ -167,10 +167,16 @@ export function CategoryForm({ mode, initialData }: CategoryFormProps) {
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="description">Description</FieldLabel>
-                  <Textarea
-                    id="description"
-                    placeholder="Optional category description"
-                    {...form.register('description')}
+                  <Controller
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <RichTextEditor
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Category description..."
+                      />
+                    )}
                   />
                   <FieldError errors={[form.formState.errors.description]} />
                 </Field>
