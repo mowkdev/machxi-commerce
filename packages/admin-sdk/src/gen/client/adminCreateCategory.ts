@@ -15,6 +15,10 @@ import type {
   AdminCreateCategory409,
   AdminCreateCategory500,
 } from "../types/AdminCreateCategory.ts";
+import {
+  adminCreateCategoryMutationResponseSchema,
+  adminCreateCategoryMutationRequestSchema,
+} from "../zod/adminCreateCategorySchema.ts";
 
 function getAdminCreateCategoryUrl() {
   const res = { method: "POST", url: `/api/categories` as const };
@@ -33,7 +37,7 @@ export async function adminCreateCategory(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminCreateCategoryMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminCreateCategoryMutationResponse,
@@ -52,5 +56,5 @@ export async function adminCreateCategory(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminCreateCategoryMutationResponseSchema.parse(res.data);
 }

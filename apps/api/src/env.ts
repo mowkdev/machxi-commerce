@@ -9,6 +9,10 @@ const schema = z.object({
     .default('info'),
   DATABASE_URL: z.string().url(),
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
+  OPENAPI_DOCS_ENABLED: z
+    .enum(['true', 'false'])
+    .default('false')
+    .transform((v) => v === 'true'),
   AUTH_SECRET: z.string().min(32, 'AUTH_SECRET must be at least 32 characters'),
   AUTH_URL: z.string().url().optional(),
   AUTH_TRUST_HOST: z

@@ -16,6 +16,10 @@ import type {
   AdminGenerateVariants409,
   AdminGenerateVariants500,
 } from "../types/AdminGenerateVariants.ts";
+import {
+  adminGenerateVariantsMutationResponseSchema,
+  adminGenerateVariantsMutationRequestSchema,
+} from "../zod/adminGenerateVariantsSchema.ts";
 
 function getAdminGenerateVariantsUrl(
   id: AdminGenerateVariantsPathParams["id"],
@@ -40,7 +44,7 @@ export async function adminGenerateVariants(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminGenerateVariantsMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminGenerateVariantsMutationResponse,
@@ -59,5 +63,5 @@ export async function adminGenerateVariants(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminGenerateVariantsMutationResponseSchema.parse(res.data);
 }

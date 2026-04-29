@@ -24,7 +24,6 @@
     "clean": "rm -rf src/gen"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.62.8",
     "axios": "^1.15.2",
     "zod": "^4.3.6"
   },
@@ -38,10 +37,12 @@
     "@kubb/plugin-zod": "^4.37.4",
     "@repo/eslint-config": "workspace:*",
     "@repo/tsconfig": "workspace:*",
+    "@tanstack/react-query": "^5.62.8",
     "react": "^18.3.1",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
+    "@tanstack/react-query": "^5.62.8",
     "react": "^18.3.1"
   }
 }

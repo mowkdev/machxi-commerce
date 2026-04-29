@@ -16,6 +16,10 @@ import type {
   AdminUpdateMedia409,
   AdminUpdateMedia500,
 } from "../types/AdminUpdateMedia.ts";
+import {
+  adminUpdateMediaMutationResponseSchema,
+  adminUpdateMediaMutationRequestSchema,
+} from "../zod/adminUpdateMediaSchema.ts";
 
 function getAdminUpdateMediaUrl(id: AdminUpdateMediaPathParams["id"]) {
   const res = { method: "PATCH", url: `/api/media/${id}` as const };
@@ -35,7 +39,7 @@ export async function adminUpdateMedia(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminUpdateMediaMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminUpdateMediaMutationResponse,
@@ -54,5 +58,5 @@ export async function adminUpdateMedia(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminUpdateMediaMutationResponseSchema.parse(res.data);
 }

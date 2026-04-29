@@ -16,6 +16,10 @@ import type {
   AdminUpdateCategory409,
   AdminUpdateCategory500,
 } from "../types/AdminUpdateCategory.ts";
+import {
+  adminUpdateCategoryMutationResponseSchema,
+  adminUpdateCategoryMutationRequestSchema,
+} from "../zod/adminUpdateCategorySchema.ts";
 
 function getAdminUpdateCategoryUrl(id: AdminUpdateCategoryPathParams["id"]) {
   const res = { method: "PUT", url: `/api/categories/${id}` as const };
@@ -35,7 +39,7 @@ export async function adminUpdateCategory(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminUpdateCategoryMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminUpdateCategoryMutationResponse,
@@ -54,5 +58,5 @@ export async function adminUpdateCategory(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminUpdateCategoryMutationResponseSchema.parse(res.data);
 }

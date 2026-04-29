@@ -16,6 +16,10 @@ import type {
   AdminUpdateTaxClass409,
   AdminUpdateTaxClass500,
 } from "../types/AdminUpdateTaxClass.ts";
+import {
+  adminUpdateTaxClassMutationResponseSchema,
+  adminUpdateTaxClassMutationRequestSchema,
+} from "../zod/adminUpdateTaxClassSchema.ts";
 
 function getAdminUpdateTaxClassUrl(id: AdminUpdateTaxClassPathParams["id"]) {
   const res = { method: "PUT", url: `/api/tax-classes/${id}` as const };
@@ -35,7 +39,7 @@ export async function adminUpdateTaxClass(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminUpdateTaxClassMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminUpdateTaxClassMutationResponse,
@@ -54,5 +58,5 @@ export async function adminUpdateTaxClass(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminUpdateTaxClassMutationResponseSchema.parse(res.data);
 }

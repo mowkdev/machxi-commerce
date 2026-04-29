@@ -416,10 +416,13 @@ describe('ProductForm', () => {
 
   it('updates product media from the gallery picker', async () => {
     const user = userEvent.setup();
-    renderProductForm({ mode: 'edit', initialData: makeProduct() });
+    renderProductForm({
+      mode: 'edit',
+      initialData: makeProduct({ type: 'variable' }),
+    });
 
     const addImageButtons = screen.getAllByRole('button', { name: 'Add Images' });
-    await user.click(addImageButtons[addImageButtons.length - 1]);
+    await user.click(addImageButtons[0]);
     await user.click(screen.getByLabelText('Select image-one.jpg'));
     await user.click(screen.getByRole('button', { name: 'Add selected' }));
 
@@ -461,10 +464,13 @@ describe('ProductForm', () => {
 
   it('previews selected uploads and updates product media after upload', async () => {
     const user = userEvent.setup();
-    const { container } = renderProductForm({ mode: 'edit', initialData: makeProduct() });
+    const { container } = renderProductForm({
+      mode: 'edit',
+      initialData: makeProduct({ type: 'variable' }),
+    });
 
     const addImageButtons = screen.getAllByRole('button', { name: 'Add Images' });
-    await user.click(addImageButtons[addImageButtons.length - 1]);
+    await user.click(addImageButtons[0]);
     await user.click(screen.getByRole('tab', { name: 'Upload' }));
 
     const input = container.ownerDocument.querySelector(

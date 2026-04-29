@@ -15,6 +15,7 @@ import type {
   AdminDeleteTaxClass409,
   AdminDeleteTaxClass500,
 } from "../types/AdminDeleteTaxClass.ts";
+import { adminDeleteTaxClassMutationResponseSchema } from "../zod/adminDeleteTaxClassSchema.ts";
 
 function getAdminDeleteTaxClassUrl(id: AdminDeleteTaxClassPathParams["id"]) {
   const res = { method: "DELETE", url: `/api/tax-classes/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminDeleteTaxClass(
     url: getAdminDeleteTaxClassUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminDeleteTaxClassMutationResponseSchema.parse(res.data);
 }

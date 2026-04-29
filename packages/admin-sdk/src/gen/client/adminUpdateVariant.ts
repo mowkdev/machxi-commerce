@@ -16,6 +16,10 @@ import type {
   AdminUpdateVariant409,
   AdminUpdateVariant500,
 } from "../types/AdminUpdateVariant.ts";
+import {
+  adminUpdateVariantMutationResponseSchema,
+  adminUpdateVariantMutationRequestSchema,
+} from "../zod/adminUpdateVariantSchema.ts";
 
 function getAdminUpdateVariantUrl(
   id: AdminUpdateVariantPathParams["id"],
@@ -42,7 +46,7 @@ export async function adminUpdateVariant(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminUpdateVariantMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminUpdateVariantMutationResponse,
@@ -61,5 +65,5 @@ export async function adminUpdateVariant(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminUpdateVariantMutationResponseSchema.parse(res.data);
 }

@@ -15,6 +15,7 @@ import type {
   AdminGetCategory409,
   AdminGetCategory500,
 } from "../types/AdminGetCategory.ts";
+import { adminGetCategoryQueryResponseSchema } from "../zod/adminGetCategorySchema.ts";
 
 function getAdminGetCategoryUrl(id: AdminGetCategoryPathParams["id"]) {
   const res = { method: "GET", url: `/api/categories/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminGetCategory(
     url: getAdminGetCategoryUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminGetCategoryQueryResponseSchema.parse(res.data);
 }

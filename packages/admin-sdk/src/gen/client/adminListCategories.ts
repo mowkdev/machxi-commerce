@@ -15,6 +15,7 @@ import type {
   AdminListCategories409,
   AdminListCategories500,
 } from "../types/AdminListCategories.ts";
+import { adminListCategoriesQueryResponseSchema } from "../zod/adminListCategoriesSchema.ts";
 
 function getAdminListCategoriesUrl() {
   const res = { method: "GET", url: `/api/categories` as const };
@@ -48,5 +49,5 @@ export async function adminListCategories(
     params,
     ...requestConfig,
   });
-  return res.data;
+  return adminListCategoriesQueryResponseSchema.parse(res.data);
 }

@@ -15,6 +15,7 @@ import type {
   AdminGetProduct409,
   AdminGetProduct500,
 } from "../types/AdminGetProduct.ts";
+import { adminGetProductQueryResponseSchema } from "../zod/adminGetProductSchema.ts";
 
 function getAdminGetProductUrl(id: AdminGetProductPathParams["id"]) {
   const res = { method: "GET", url: `/api/products/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminGetProduct(
     url: getAdminGetProductUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminGetProductQueryResponseSchema.parse(res.data);
 }

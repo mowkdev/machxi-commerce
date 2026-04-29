@@ -52,8 +52,10 @@ export function createApp() {
   app.route('/api/tax-classes', taxClassesRoutes);
   app.route('/api/media', mediaRoutes);
 
-  // Mounted last so it can introspect every registered route.
-  mountOpenAPI(app);
+  if (env.OPENAPI_DOCS_ENABLED) {
+    // Mounted last so it can introspect every registered route.
+    mountOpenAPI(app);
+  }
 
   return app;
 }

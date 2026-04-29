@@ -15,6 +15,7 @@ import type {
   AdminDeleteProduct409,
   AdminDeleteProduct500,
 } from "../types/AdminDeleteProduct.ts";
+import { adminDeleteProductMutationResponseSchema } from "../zod/adminDeleteProductSchema.ts";
 
 function getAdminDeleteProductUrl(id: AdminDeleteProductPathParams["id"]) {
   const res = { method: "DELETE", url: `/api/products/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminDeleteProduct(
     url: getAdminDeleteProductUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminDeleteProductMutationResponseSchema.parse(res.data);
 }

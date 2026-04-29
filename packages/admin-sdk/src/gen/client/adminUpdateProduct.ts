@@ -16,6 +16,10 @@ import type {
   AdminUpdateProduct409,
   AdminUpdateProduct500,
 } from "../types/AdminUpdateProduct.ts";
+import {
+  adminUpdateProductMutationResponseSchema,
+  adminUpdateProductMutationRequestSchema,
+} from "../zod/adminUpdateProductSchema.ts";
 
 function getAdminUpdateProductUrl(id: AdminUpdateProductPathParams["id"]) {
   const res = { method: "PUT", url: `/api/products/${id}` as const };
@@ -35,7 +39,7 @@ export async function adminUpdateProduct(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminUpdateProductMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminUpdateProductMutationResponse,
@@ -54,5 +58,5 @@ export async function adminUpdateProduct(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminUpdateProductMutationResponseSchema.parse(res.data);
 }

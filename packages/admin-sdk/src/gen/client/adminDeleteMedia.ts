@@ -15,6 +15,7 @@ import type {
   AdminDeleteMedia409,
   AdminDeleteMedia500,
 } from "../types/AdminDeleteMedia.ts";
+import { adminDeleteMediaMutationResponseSchema } from "../zod/adminDeleteMediaSchema.ts";
 
 function getAdminDeleteMediaUrl(id: AdminDeleteMediaPathParams["id"]) {
   const res = { method: "DELETE", url: `/api/media/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminDeleteMedia(
     url: getAdminDeleteMediaUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminDeleteMediaMutationResponseSchema.parse(res.data);
 }

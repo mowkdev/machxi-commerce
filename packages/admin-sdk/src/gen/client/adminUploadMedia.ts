@@ -16,6 +16,10 @@ import type {
   AdminUploadMedia500,
 } from "../types/AdminUploadMedia.ts";
 import { buildFormData } from "../.kubb/config.ts";
+import {
+  adminUploadMediaMutationResponseSchema,
+  adminUploadMediaMutationRequestSchema,
+} from "../zod/adminUploadMediaSchema.ts";
 
 function getAdminUploadMediaUrl() {
   const res = { method: "POST", url: `/api/media` as const };
@@ -34,7 +38,7 @@ export async function adminUploadMedia(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminUploadMediaMutationRequestSchema.parse(data);
   const formData = buildFormData(requestData);
   const res = await request<
     AdminUploadMediaMutationResponse,
@@ -53,5 +57,5 @@ export async function adminUploadMedia(
     data: formData as FormData,
     ...requestConfig,
   });
-  return res.data;
+  return adminUploadMediaMutationResponseSchema.parse(res.data);
 }

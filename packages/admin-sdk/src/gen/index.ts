@@ -167,6 +167,7 @@ export type {
 } from "./types/AdminGetMedia.ts";
 export type {
   AdminGetProduct200,
+  AdminGetProduct200DataTypeEnumKey,
   AdminGetProduct400,
   AdminGetProduct401,
   AdminGetProduct403,
@@ -176,7 +177,6 @@ export type {
   AdminGetProductPathParams,
   AdminGetProductQuery,
   AdminGetProductQueryResponse,
-  DataTypeEnum2Key,
 } from "./types/AdminGetProduct.ts";
 export type {
   AdminGetTaxClass200,
@@ -232,6 +232,8 @@ export type {
 } from "./types/AdminListProductOptions.ts";
 export type {
   AdminListProducts200,
+  AdminListProducts200DataStatusEnumKey,
+  AdminListProducts200DataTypeEnumKey,
   AdminListProducts400,
   AdminListProducts401,
   AdminListProducts403,
@@ -244,8 +246,6 @@ export type {
   AdminListProductsQueryParamsSortOrderEnumKey,
   AdminListProductsQueryParamsStatusEnumKey,
   AdminListProductsQueryResponse,
-  DataStatusEnumKey,
-  DataTypeEnumKey,
 } from "./types/AdminListProducts.ts";
 export type {
   AdminListTaxClasses200,
@@ -302,6 +302,7 @@ export type {
 } from "./types/AdminUpdateMedia.ts";
 export type {
   AdminUpdateProduct200,
+  AdminUpdateProduct200DataTypeEnumKey,
   AdminUpdateProduct400,
   AdminUpdateProduct401,
   AdminUpdateProduct403,
@@ -312,7 +313,6 @@ export type {
   AdminUpdateProductMutationRequest,
   AdminUpdateProductMutationResponse,
   AdminUpdateProductPathParams,
-  DataTypeEnum3Key,
 } from "./types/AdminUpdateProduct.ts";
 export type {
   AdminUpdateTaxClass200,
@@ -479,19 +479,19 @@ export { useAdminUpdateVariant } from "./hooks/useAdminUpdateVariant.ts";
 export { adminUploadMediaMutationKey } from "./hooks/useAdminUploadMedia.ts";
 export { adminUploadMediaMutationOptions } from "./hooks/useAdminUploadMedia.ts";
 export { useAdminUploadMedia } from "./hooks/useAdminUploadMedia.ts";
-export { dataTypeEnum2 } from "./types/AdminGetProduct.ts";
+export { adminGetProduct200DataTypeEnum } from "./types/AdminGetProduct.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./types/AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./types/AdminListCategories.ts";
 export { adminListMediaQueryParamsSortByEnum } from "./types/AdminListMedia.ts";
 export { adminListMediaQueryParamsSortOrderEnum } from "./types/AdminListMedia.ts";
+export { adminListProducts200DataStatusEnum } from "./types/AdminListProducts.ts";
+export { adminListProducts200DataTypeEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsSortByEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsSortOrderEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsStatusEnum } from "./types/AdminListProducts.ts";
-export { dataStatusEnum } from "./types/AdminListProducts.ts";
-export { dataTypeEnum } from "./types/AdminListProducts.ts";
 export { adminListTaxClassesQueryParamsSortByEnum } from "./types/AdminListTaxClasses.ts";
 export { adminListTaxClassesQueryParamsSortOrderEnum } from "./types/AdminListTaxClasses.ts";
-export { dataTypeEnum3 } from "./types/AdminUpdateProduct.ts";
+export { adminUpdateProduct200DataTypeEnum } from "./types/AdminUpdateProduct.ts";
 export {
   adminBulkDeleteMedia200Schema,
   adminBulkDeleteMedia400Schema,

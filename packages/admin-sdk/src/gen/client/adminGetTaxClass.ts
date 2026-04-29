@@ -15,6 +15,7 @@ import type {
   AdminGetTaxClass409,
   AdminGetTaxClass500,
 } from "../types/AdminGetTaxClass.ts";
+import { adminGetTaxClassQueryResponseSchema } from "../zod/adminGetTaxClassSchema.ts";
 
 function getAdminGetTaxClassUrl(id: AdminGetTaxClassPathParams["id"]) {
   const res = { method: "GET", url: `/api/tax-classes/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminGetTaxClass(
     url: getAdminGetTaxClassUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminGetTaxClassQueryResponseSchema.parse(res.data);
 }

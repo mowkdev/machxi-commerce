@@ -15,6 +15,10 @@ import type {
   AdminCreateTaxClass409,
   AdminCreateTaxClass500,
 } from "../types/AdminCreateTaxClass.ts";
+import {
+  adminCreateTaxClassMutationResponseSchema,
+  adminCreateTaxClassMutationRequestSchema,
+} from "../zod/adminCreateTaxClassSchema.ts";
 
 function getAdminCreateTaxClassUrl() {
   const res = { method: "POST", url: `/api/tax-classes` as const };
@@ -33,7 +37,7 @@ export async function adminCreateTaxClass(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminCreateTaxClassMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminCreateTaxClassMutationResponse,
@@ -52,5 +56,5 @@ export async function adminCreateTaxClass(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminCreateTaxClassMutationResponseSchema.parse(res.data);
 }

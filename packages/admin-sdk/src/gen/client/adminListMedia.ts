@@ -15,6 +15,7 @@ import type {
   AdminListMedia409,
   AdminListMedia500,
 } from "../types/AdminListMedia.ts";
+import { adminListMediaQueryResponseSchema } from "../zod/adminListMediaSchema.ts";
 
 function getAdminListMediaUrl() {
   const res = { method: "GET", url: `/api/media` as const };
@@ -48,5 +49,5 @@ export async function adminListMedia(
     params,
     ...requestConfig,
   });
-  return res.data;
+  return adminListMediaQueryResponseSchema.parse(res.data);
 }

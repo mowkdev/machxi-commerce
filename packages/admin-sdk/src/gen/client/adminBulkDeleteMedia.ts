@@ -15,6 +15,10 @@ import type {
   AdminBulkDeleteMedia409,
   AdminBulkDeleteMedia500,
 } from "../types/AdminBulkDeleteMedia.ts";
+import {
+  adminBulkDeleteMediaMutationResponseSchema,
+  adminBulkDeleteMediaMutationRequestSchema,
+} from "../zod/adminBulkDeleteMediaSchema.ts";
 
 function getAdminBulkDeleteMediaUrl() {
   const res = { method: "POST", url: `/api/media/bulk-delete` as const };
@@ -33,7 +37,7 @@ export async function adminBulkDeleteMedia(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminBulkDeleteMediaMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminBulkDeleteMediaMutationResponse,
@@ -52,5 +56,5 @@ export async function adminBulkDeleteMedia(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminBulkDeleteMediaMutationResponseSchema.parse(res.data);
 }

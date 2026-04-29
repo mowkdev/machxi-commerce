@@ -15,6 +15,7 @@ import type {
   AdminGetMedia409,
   AdminGetMedia500,
 } from "../types/AdminGetMedia.ts";
+import { adminGetMediaQueryResponseSchema } from "../zod/adminGetMediaSchema.ts";
 
 function getAdminGetMediaUrl(id: AdminGetMediaPathParams["id"]) {
   const res = { method: "GET", url: `/api/media/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminGetMedia(
     url: getAdminGetMediaUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminGetMediaQueryResponseSchema.parse(res.data);
 }

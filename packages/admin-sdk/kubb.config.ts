@@ -10,7 +10,7 @@ export default defineConfig({
   input: { path: '../../apps/api/openapi.json' },
   output: { path: './src/gen', clean: true },
   plugins: [
-    pluginOas({ validate: true }),
+    pluginOas({ validate: true, collisionDetection: true }),
     pluginTs({
       output: { path: './types' },
       enumType: 'asConst',
@@ -23,6 +23,7 @@ export default defineConfig({
       output: { path: './client' },
       importPath: '../../runtime',
       dataReturnType: 'data',
+      parser: 'zod',
     }),
     pluginReactQuery({
       output: { path: './hooks' },

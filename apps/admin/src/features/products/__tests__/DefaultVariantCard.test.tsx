@@ -2,7 +2,9 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import type { ReactElement } from 'react';
+import { useFieldArray, useForm, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type {
   ProductDetailResponse,
@@ -74,7 +76,11 @@ function TestDefaultVariantCard({
   productDetails?: ProductDetailVariant | null;
 }) {
   const form = useForm<VariantFormValues, unknown, VariantFormValues>({
-    resolver: zodResolver(variantFormSchema),
+    resolver: zodResolver(variantFormSchema) as Resolver<
+      VariantFormValues,
+      unknown,
+      VariantFormValues
+    >,
     defaultValues: productDetails
       ? getVariantFormValues(productDetails)
       : DEFAULT_VARIANT_FORM_VALUES,
@@ -84,6 +90,7 @@ function TestDefaultVariantCard({
 
   return (
     <DefaultVariantCard
+      productId="product-1"
       productDetails={productDetails}
       form={form}
       priceFields={priceFields}
@@ -94,6 +101,15 @@ function TestDefaultVariantCard({
 }
 
 describe('DefaultVariantCard', () => {
+  function renderWithQueryClient(ui: ReactElement) {
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+    });
+    return render(
+      <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+    );
+  }
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -104,7 +120,7 @@ describe('DefaultVariantCard', () => {
 
   it('renders neutral product detail fields from the simple product record', () => {
     const product = makeProduct();
-    const { container } = render(
+    renderWithQueryClient(
       <TestDefaultVariantCard productDetails={product.variants[0]} />
     );
 
@@ -114,12 +130,16 @@ describe('DefaultVariantCard', () => {
     expect(screen.getByLabelText('Weight (g)')).toHaveValue(250);
     expect(screen.getByDisplayValue('EUR')).toBeInTheDocument();
     expect(screen.getByDisplayValue('1999')).toBeInTheDocument();
-    expect(container.textContent).not.toMatch(/variant/i);
+    expect(
+      screen.queryByRole('button', { name: 'Save details' })
+    ).not.toBeInTheDocument();
   });
 
   it('does not render a separate details save button', () => {
     const product = makeProduct();
-    render(<TestDefaultVariantCard productDetails={product.variants[0]} />);
+    renderWithQueryClient(
+      <TestDefaultVariantCard productDetails={product.variants[0]} />
+    );
 
     expect(
       screen.queryByRole('button', { name: 'Save details' })
@@ -127,7 +147,7 @@ describe('DefaultVariantCard', () => {
   });
 
   it('shows an unavailable state when no product details exist yet', () => {
-    render(<TestDefaultVariantCard productDetails={null} />);
+    renderWithQueryClient(<TestDefaultVariantCard productDetails={null} />);
 
     expect(screen.getByText('Product details')).toBeInTheDocument();
     expect(

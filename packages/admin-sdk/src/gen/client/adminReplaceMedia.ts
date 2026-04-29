@@ -17,6 +17,10 @@ import type {
   AdminReplaceMedia500,
 } from "../types/AdminReplaceMedia.ts";
 import { buildFormData } from "../.kubb/config.ts";
+import {
+  adminReplaceMediaMutationResponseSchema,
+  adminReplaceMediaMutationRequestSchema,
+} from "../zod/adminReplaceMediaSchema.ts";
 
 function getAdminReplaceMediaUrl(id: AdminReplaceMediaPathParams["id"]) {
   const res = { method: "POST", url: `/api/media/${id}/replace` as const };
@@ -36,7 +40,7 @@ export async function adminReplaceMedia(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminReplaceMediaMutationRequestSchema.parse(data);
   const formData = buildFormData(requestData);
   const res = await request<
     AdminReplaceMediaMutationResponse,
@@ -55,5 +59,5 @@ export async function adminReplaceMedia(
     data: formData as FormData,
     ...requestConfig,
   });
-  return res.data;
+  return adminReplaceMediaMutationResponseSchema.parse(res.data);
 }

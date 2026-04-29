@@ -15,6 +15,7 @@ import type {
   AdminDeleteCategory409,
   AdminDeleteCategory500,
 } from "../types/AdminDeleteCategory.ts";
+import { adminDeleteCategoryMutationResponseSchema } from "../zod/adminDeleteCategorySchema.ts";
 
 function getAdminDeleteCategoryUrl(id: AdminDeleteCategoryPathParams["id"]) {
   const res = { method: "DELETE", url: `/api/categories/${id}` as const };
@@ -47,5 +48,5 @@ export async function adminDeleteCategory(
     url: getAdminDeleteCategoryUrl(id).url.toString(),
     ...requestConfig,
   });
-  return res.data;
+  return adminDeleteCategoryMutationResponseSchema.parse(res.data);
 }

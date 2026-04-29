@@ -10,13 +10,13 @@ export type AdminGetProductPathParams = {
   id: string;
 };
 
-export const dataTypeEnum2 = {
+export const adminGetProduct200DataTypeEnum = {
   simple: "simple",
   variable: "variable",
 } as const;
 
-export type DataTypeEnum2Key =
-  (typeof dataTypeEnum2)[keyof typeof dataTypeEnum2];
+export type AdminGetProduct200DataTypeEnumKey =
+  (typeof adminGetProduct200DataTypeEnum)[keyof typeof adminGetProduct200DataTypeEnum];
 
 /**
  * @description Product detail
@@ -42,7 +42,7 @@ export type AdminGetProduct200 = {
     /**
      * @type string
      */
-    type: DataTypeEnum2Key;
+    type: AdminGetProduct200DataTypeEnumKey;
     /**
      * @type string, uuid
      */

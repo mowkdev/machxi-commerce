@@ -60,22 +60,23 @@ export type AdminListProductsQueryParams = {
   sortOrder?: AdminListProductsQueryParamsSortOrderEnumKey;
 };
 
-export const dataStatusEnum = {
+export const adminListProducts200DataStatusEnum = {
   draft: "draft",
   published: "published",
   archived: "archived",
   deleted: "deleted",
 } as const;
 
-export type DataStatusEnumKey =
-  (typeof dataStatusEnum)[keyof typeof dataStatusEnum];
+export type AdminListProducts200DataStatusEnumKey =
+  (typeof adminListProducts200DataStatusEnum)[keyof typeof adminListProducts200DataStatusEnum];
 
-export const dataTypeEnum = {
+export const adminListProducts200DataTypeEnum = {
   simple: "simple",
   variable: "variable",
 } as const;
 
-export type DataTypeEnumKey = (typeof dataTypeEnum)[keyof typeof dataTypeEnum];
+export type AdminListProducts200DataTypeEnumKey =
+  (typeof adminListProducts200DataTypeEnum)[keyof typeof adminListProducts200DataTypeEnum];
 
 /**
  * @description Page of products
@@ -97,11 +98,11 @@ export type AdminListProducts200 = {
     /**
      * @type string
      */
-    status: DataStatusEnumKey;
+    status: AdminListProducts200DataStatusEnumKey;
     /**
      * @type string
      */
-    type: DataTypeEnumKey;
+    type: AdminListProducts200DataTypeEnumKey;
     name: string | null;
     handle: string | null;
     /**

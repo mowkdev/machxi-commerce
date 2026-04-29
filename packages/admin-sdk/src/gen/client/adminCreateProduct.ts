@@ -15,6 +15,10 @@ import type {
   AdminCreateProduct409,
   AdminCreateProduct500,
 } from "../types/AdminCreateProduct.ts";
+import {
+  adminCreateProductMutationResponseSchema,
+  adminCreateProductMutationRequestSchema,
+} from "../zod/adminCreateProductSchema.ts";
 
 function getAdminCreateProductUrl() {
   const res = { method: "POST", url: `/api/products` as const };
@@ -33,7 +37,7 @@ export async function adminCreateProduct(
 ) {
   const { client: request = fetch, ...requestConfig } = config;
 
-  const requestData = data;
+  const requestData = adminCreateProductMutationRequestSchema.parse(data);
 
   const res = await request<
     AdminCreateProductMutationResponse,
@@ -52,5 +56,5 @@ export async function adminCreateProduct(
     data: requestData,
     ...requestConfig,
   });
-  return res.data;
+  return adminCreateProductMutationResponseSchema.parse(res.data);
 }
