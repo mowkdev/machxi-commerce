@@ -25,21 +25,17 @@ const columns: ColumnDef<CategoryListItem>[] = [
     cell: ({ row }) => (
       <Link
         to={`/categories/${row.original.id}`}
-        className="font-medium text-foreground hover:underline"
+        className="flex flex-col hover:underline"
       >
-        {row.original.name}
+        <span className="font-medium text-foreground">
+          {row.original.name ?? "—"}
+        </span>
+        {row.original.handle && (
+          <span className="text-xs text-muted-foreground">
+            /{row.original.handle}
+          </span>
+        )}
       </Link>
-    ),
-  },
-  {
-    accessorKey: 'handle',
-    header: ({ column }) => (
-      <DataGridColumnHeader column={column} title="Handle" />
-    ),
-    cell: ({ row }) => (
-      <span className="font-mono text-sm text-muted-foreground">
-        {row.original.handle}
-      </span>
     ),
   },
   {

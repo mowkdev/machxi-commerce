@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { ApiRequestError } from '@/lib/api';
-import { adminLogin, adminLogout, fetchAdminMe, type AdminPrincipal } from './api';
+import { adminLogin, adminLogout, fetchAdminMe, type AdminPrincipal } from '../api';
 
 export const authKeys = {
   me: ['auth', 'admin', 'me'] as const,

@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { useCategoryOptions } from '../hooks';
-import { getCategoryLabel } from '../utils/category-options';
 
 interface CategoryMultiSelectProps {
   value: string[];
@@ -76,7 +75,7 @@ export function CategoryMultiSelect({
                   return (
                     <CommandItem
                       key={category.id}
-                      value={getCategoryLabel(category)}
+                      value={category.name}
                       onSelect={() => toggleCategory(category.id)}
                     >
                       <IconCheck
@@ -85,7 +84,7 @@ export function CategoryMultiSelect({
                           isSelected ? 'opacity-100' : 'opacity-0'
                         )}
                       />
-                      <span className="flex-1">{getCategoryLabel(category)}</span>
+                      <span className="flex-1">{category.name}</span>
                       {!category.isActive && (
                         <span className="text-xs text-muted-foreground">Inactive</span>
                       )}
@@ -102,7 +101,7 @@ export function CategoryMultiSelect({
         <div className="flex flex-wrap gap-1.5">
           {selected.map((category) => (
             <Badge key={category.id} variant="secondary" className="gap-1">
-              {getCategoryLabel(category)}
+              {category.name}
               <button
                 type="button"
                 className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
