@@ -14,6 +14,7 @@ import type { ProductDetailVariant } from '@repo/types/admin';
 import type { VariantFormValues } from '../schema';
 import { ProductMediaManager } from './ProductMediaManager';
 import { VariantDetailsFields } from './VariantDetailsFields';
+import { VariantInventoryCard } from './VariantInventoryCard';
 
 interface DefaultVariantCardProps {
   productId: string;
@@ -60,6 +61,7 @@ export function DefaultVariantCard({
           appendPrice={appendPrice}
           removePrice={removePrice}
         />
+        <VariantInventoryCard productId={productId} variant={productDetails} />
         <ProductMediaManager
           title="Product media"
           description="Images specific to this product variant."

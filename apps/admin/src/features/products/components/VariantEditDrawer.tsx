@@ -6,6 +6,7 @@ import { useVariantForm } from '../hooks/useVariantForm';
 import { getUpdateVariantBody, getVariantLabel } from '../utils/variant-form';
 import { ProductMediaManager } from './ProductMediaManager';
 import { VariantDetailsFields } from './VariantDetailsFields';
+import { VariantInventoryCard } from './VariantInventoryCard';
 
 interface VariantEditDrawerProps {
   productId: string;
@@ -68,6 +69,7 @@ export function VariantEditDrawer({
         appendPrice={appendPrice}
         removePrice={removePrice}
       />
+      <VariantInventoryCard productId={productId} variant={variant} />
       <ProductMediaManager
         title="Variant media"
         description="Images specific to this variant."

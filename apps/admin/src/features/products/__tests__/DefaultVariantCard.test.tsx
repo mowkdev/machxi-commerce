@@ -17,6 +17,21 @@ import {
   getVariantFormValues,
 } from '../utils/variant-form';
 
+vi.mock('@/features/stock-locations/hooks', () => ({
+  useStockLocationOptions: () => ({
+    data: [
+      {
+        id: 'location-1',
+        name: 'Main warehouse',
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-01-01T00:00:00.000Z',
+      },
+    ],
+    isPending: false,
+    isError: false,
+  }),
+}));
+
 function makeProduct(
   overrides: Partial<ProductDetailResponse> = {}
 ): ProductDetailResponse {
@@ -60,7 +75,12 @@ function makeProduct(
             taxInclusive: true,
           },
         ],
-        inventoryLevels: [],
+        inventoryLevels: [
+          {
+            locationId: 'location-1',
+            stockedQuantity: 7,
+          },
+        ],
         media: [],
       },
     ],
@@ -130,6 +150,9 @@ describe('DefaultVariantCard', () => {
     expect(screen.getByLabelText('Weight (g)')).toHaveValue(250);
     expect(screen.getByDisplayValue('EUR')).toBeInTheDocument();
     expect(screen.getByDisplayValue('1999')).toBeInTheDocument();
+    expect(screen.getByText('Inventory')).toBeInTheDocument();
+    expect(screen.getByText('Main warehouse')).toBeInTheDocument();
+    expect(screen.getByText('Stock: 7')).toBeInTheDocument();
     expect(
       screen.queryByRole('button', { name: 'Save details' })
     ).not.toBeInTheDocument();

@@ -21,6 +21,17 @@ export {
   adminCreateCategoryMutationResponseSchema,
 } from "./adminCreateCategorySchema.ts";
 export {
+  adminCreateInventoryAdjustment201Schema,
+  adminCreateInventoryAdjustment400Schema,
+  adminCreateInventoryAdjustment401Schema,
+  adminCreateInventoryAdjustment403Schema,
+  adminCreateInventoryAdjustment404Schema,
+  adminCreateInventoryAdjustment409Schema,
+  adminCreateInventoryAdjustment500Schema,
+  adminCreateInventoryAdjustmentMutationRequestSchema,
+  adminCreateInventoryAdjustmentMutationResponseSchema,
+} from "./adminCreateInventoryAdjustmentSchema.ts";
+export {
   adminCreateProduct201Schema,
   adminCreateProduct400Schema,
   adminCreateProduct401Schema,
@@ -31,6 +42,17 @@ export {
   adminCreateProductMutationRequestSchema,
   adminCreateProductMutationResponseSchema,
 } from "./adminCreateProductSchema.ts";
+export {
+  adminCreateStockLocation201Schema,
+  adminCreateStockLocation400Schema,
+  adminCreateStockLocation401Schema,
+  adminCreateStockLocation403Schema,
+  adminCreateStockLocation404Schema,
+  adminCreateStockLocation409Schema,
+  adminCreateStockLocation500Schema,
+  adminCreateStockLocationMutationRequestSchema,
+  adminCreateStockLocationMutationResponseSchema,
+} from "./adminCreateStockLocationSchema.ts";
 export {
   adminCreateTaxClass201Schema,
   adminCreateTaxClass400Schema,
@@ -75,6 +97,17 @@ export {
   adminDeleteProductMutationResponseSchema,
   adminDeleteProductPathParamsSchema,
 } from "./adminDeleteProductSchema.ts";
+export {
+  adminDeleteStockLocation200Schema,
+  adminDeleteStockLocation400Schema,
+  adminDeleteStockLocation401Schema,
+  adminDeleteStockLocation403Schema,
+  adminDeleteStockLocation404Schema,
+  adminDeleteStockLocation409Schema,
+  adminDeleteStockLocation500Schema,
+  adminDeleteStockLocationMutationResponseSchema,
+  adminDeleteStockLocationPathParamsSchema,
+} from "./adminDeleteStockLocationSchema.ts";
 export {
   adminDeleteTaxClass200Schema,
   adminDeleteTaxClass400Schema,
@@ -132,6 +165,17 @@ export {
   adminGetProductQueryResponseSchema,
 } from "./adminGetProductSchema.ts";
 export {
+  adminGetStockLocation200Schema,
+  adminGetStockLocation400Schema,
+  adminGetStockLocation401Schema,
+  adminGetStockLocation403Schema,
+  adminGetStockLocation404Schema,
+  adminGetStockLocation409Schema,
+  adminGetStockLocation500Schema,
+  adminGetStockLocationPathParamsSchema,
+  adminGetStockLocationQueryResponseSchema,
+} from "./adminGetStockLocationSchema.ts";
+export {
   adminGetTaxClass200Schema,
   adminGetTaxClass400Schema,
   adminGetTaxClass401Schema,
@@ -153,6 +197,28 @@ export {
   adminListCategoriesQueryParamsSchema,
   adminListCategoriesQueryResponseSchema,
 } from "./adminListCategoriesSchema.ts";
+export {
+  adminListInventoryLevels200Schema,
+  adminListInventoryLevels400Schema,
+  adminListInventoryLevels401Schema,
+  adminListInventoryLevels403Schema,
+  adminListInventoryLevels404Schema,
+  adminListInventoryLevels409Schema,
+  adminListInventoryLevels500Schema,
+  adminListInventoryLevelsQueryParamsSchema,
+  adminListInventoryLevelsQueryResponseSchema,
+} from "./adminListInventoryLevelsSchema.ts";
+export {
+  adminListInventoryTransactions200Schema,
+  adminListInventoryTransactions400Schema,
+  adminListInventoryTransactions401Schema,
+  adminListInventoryTransactions403Schema,
+  adminListInventoryTransactions404Schema,
+  adminListInventoryTransactions409Schema,
+  adminListInventoryTransactions500Schema,
+  adminListInventoryTransactionsQueryParamsSchema,
+  adminListInventoryTransactionsQueryResponseSchema,
+} from "./adminListInventoryTransactionsSchema.ts";
 export {
   adminListMedia200Schema,
   adminListMedia400Schema,
@@ -186,6 +252,17 @@ export {
   adminListProductsQueryParamsSchema,
   adminListProductsQueryResponseSchema,
 } from "./adminListProductsSchema.ts";
+export {
+  adminListStockLocations200Schema,
+  adminListStockLocations400Schema,
+  adminListStockLocations401Schema,
+  adminListStockLocations403Schema,
+  adminListStockLocations404Schema,
+  adminListStockLocations409Schema,
+  adminListStockLocations500Schema,
+  adminListStockLocationsQueryParamsSchema,
+  adminListStockLocationsQueryResponseSchema,
+} from "./adminListStockLocationsSchema.ts";
 export {
   adminListTaxClasses200Schema,
   adminListTaxClasses400Schema,
@@ -245,6 +322,18 @@ export {
   adminUpdateProductMutationResponseSchema,
   adminUpdateProductPathParamsSchema,
 } from "./adminUpdateProductSchema.ts";
+export {
+  adminUpdateStockLocation200Schema,
+  adminUpdateStockLocation400Schema,
+  adminUpdateStockLocation401Schema,
+  adminUpdateStockLocation403Schema,
+  adminUpdateStockLocation404Schema,
+  adminUpdateStockLocation409Schema,
+  adminUpdateStockLocation500Schema,
+  adminUpdateStockLocationMutationRequestSchema,
+  adminUpdateStockLocationMutationResponseSchema,
+  adminUpdateStockLocationPathParamsSchema,
+} from "./adminUpdateStockLocationSchema.ts";
 export {
   adminUpdateTaxClass200Schema,
   adminUpdateTaxClass400Schema,

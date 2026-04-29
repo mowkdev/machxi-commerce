@@ -15,6 +15,8 @@ import MediaLibraryPage from "@/pages/media/MediaLibraryPage"
 import OrdersPage from "@/pages/orders/OrdersPage"
 import CustomersPage from "@/pages/customers/CustomersPage"
 import StockLocationsPage from "@/pages/stock-locations/StockLocationsPage"
+import StockLocationCreatePage from "@/pages/stock-locations/StockLocationCreatePage"
+import StockLocationEditPage from "@/pages/stock-locations/StockLocationEditPage"
 import InventoryPage from "@/pages/inventory/InventoryPage"
 import PromotionsPage from "@/pages/promotions/PromotionsPage"
 import PriceListsPage from "@/pages/price-lists/PriceListsPage"
@@ -45,6 +47,8 @@ export default function App() {
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/customers" element={<CustomersPage />} />
           <Route path="/stock-locations" element={<StockLocationsPage />} />
+          <Route path="/stock-locations/new" element={<StockLocationCreatePage />} />
+          <Route path="/stock-locations/:id" element={<StockLocationEditPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/price-lists" element={<PriceListsPage />} />

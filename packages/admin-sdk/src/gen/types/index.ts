@@ -23,6 +23,18 @@ export type {
   AdminCreateCategoryMutationResponse,
 } from "./AdminCreateCategory.ts";
 export type {
+  AdminCreateInventoryAdjustment201,
+  AdminCreateInventoryAdjustment400,
+  AdminCreateInventoryAdjustment401,
+  AdminCreateInventoryAdjustment403,
+  AdminCreateInventoryAdjustment404,
+  AdminCreateInventoryAdjustment409,
+  AdminCreateInventoryAdjustment500,
+  AdminCreateInventoryAdjustmentMutation,
+  AdminCreateInventoryAdjustmentMutationRequest,
+  AdminCreateInventoryAdjustmentMutationResponse,
+} from "./AdminCreateInventoryAdjustment.ts";
+export type {
   AdminCreateProduct201,
   AdminCreateProduct400,
   AdminCreateProduct401,
@@ -34,6 +46,18 @@ export type {
   AdminCreateProductMutationRequest,
   AdminCreateProductMutationResponse,
 } from "./AdminCreateProduct.ts";
+export type {
+  AdminCreateStockLocation201,
+  AdminCreateStockLocation400,
+  AdminCreateStockLocation401,
+  AdminCreateStockLocation403,
+  AdminCreateStockLocation404,
+  AdminCreateStockLocation409,
+  AdminCreateStockLocation500,
+  AdminCreateStockLocationMutation,
+  AdminCreateStockLocationMutationRequest,
+  AdminCreateStockLocationMutationResponse,
+} from "./AdminCreateStockLocation.ts";
 export type {
   AdminCreateTaxClass201,
   AdminCreateTaxClass400,
@@ -82,6 +106,18 @@ export type {
   AdminDeleteProductMutationResponse,
   AdminDeleteProductPathParams,
 } from "./AdminDeleteProduct.ts";
+export type {
+  AdminDeleteStockLocation200,
+  AdminDeleteStockLocation400,
+  AdminDeleteStockLocation401,
+  AdminDeleteStockLocation403,
+  AdminDeleteStockLocation404,
+  AdminDeleteStockLocation409,
+  AdminDeleteStockLocation500,
+  AdminDeleteStockLocationMutation,
+  AdminDeleteStockLocationMutationResponse,
+  AdminDeleteStockLocationPathParams,
+} from "./AdminDeleteStockLocation.ts";
 export type {
   AdminDeleteTaxClass200,
   AdminDeleteTaxClass400,
@@ -145,6 +181,18 @@ export type {
   AdminGetProductQueryResponse,
 } from "./AdminGetProduct.ts";
 export type {
+  AdminGetStockLocation200,
+  AdminGetStockLocation400,
+  AdminGetStockLocation401,
+  AdminGetStockLocation403,
+  AdminGetStockLocation404,
+  AdminGetStockLocation409,
+  AdminGetStockLocation500,
+  AdminGetStockLocationPathParams,
+  AdminGetStockLocationQuery,
+  AdminGetStockLocationQueryResponse,
+} from "./AdminGetStockLocation.ts";
+export type {
   AdminGetTaxClass200,
   AdminGetTaxClass400,
   AdminGetTaxClass401,
@@ -170,6 +218,35 @@ export type {
   AdminListCategoriesQueryParamsSortOrderEnumKey,
   AdminListCategoriesQueryResponse,
 } from "./AdminListCategories.ts";
+export type {
+  AdminListInventoryLevels200,
+  AdminListInventoryLevels400,
+  AdminListInventoryLevels401,
+  AdminListInventoryLevels403,
+  AdminListInventoryLevels404,
+  AdminListInventoryLevels409,
+  AdminListInventoryLevels500,
+  AdminListInventoryLevelsQuery,
+  AdminListInventoryLevelsQueryParams,
+  AdminListInventoryLevelsQueryParamsSortByEnumKey,
+  AdminListInventoryLevelsQueryParamsSortOrderEnumKey,
+  AdminListInventoryLevelsQueryResponse,
+} from "./AdminListInventoryLevels.ts";
+export type {
+  AdminListInventoryTransactions200,
+  AdminListInventoryTransactions200DataReasonEnumKey,
+  AdminListInventoryTransactions400,
+  AdminListInventoryTransactions401,
+  AdminListInventoryTransactions403,
+  AdminListInventoryTransactions404,
+  AdminListInventoryTransactions409,
+  AdminListInventoryTransactions500,
+  AdminListInventoryTransactionsQuery,
+  AdminListInventoryTransactionsQueryParams,
+  AdminListInventoryTransactionsQueryParamsSortByEnumKey,
+  AdminListInventoryTransactionsQueryParamsSortOrderEnumKey,
+  AdminListInventoryTransactionsQueryResponse,
+} from "./AdminListInventoryTransactions.ts";
 export type {
   AdminListMedia200,
   AdminListMedia400,
@@ -213,6 +290,20 @@ export type {
   AdminListProductsQueryParamsStatusEnumKey,
   AdminListProductsQueryResponse,
 } from "./AdminListProducts.ts";
+export type {
+  AdminListStockLocations200,
+  AdminListStockLocations400,
+  AdminListStockLocations401,
+  AdminListStockLocations403,
+  AdminListStockLocations404,
+  AdminListStockLocations409,
+  AdminListStockLocations500,
+  AdminListStockLocationsQuery,
+  AdminListStockLocationsQueryParams,
+  AdminListStockLocationsQueryParamsSortByEnumKey,
+  AdminListStockLocationsQueryParamsSortOrderEnumKey,
+  AdminListStockLocationsQueryResponse,
+} from "./AdminListStockLocations.ts";
 export type {
   AdminListTaxClasses200,
   AdminListTaxClasses400,
@@ -281,6 +372,19 @@ export type {
   AdminUpdateProductPathParams,
 } from "./AdminUpdateProduct.ts";
 export type {
+  AdminUpdateStockLocation200,
+  AdminUpdateStockLocation400,
+  AdminUpdateStockLocation401,
+  AdminUpdateStockLocation403,
+  AdminUpdateStockLocation404,
+  AdminUpdateStockLocation409,
+  AdminUpdateStockLocation500,
+  AdminUpdateStockLocationMutation,
+  AdminUpdateStockLocationMutationRequest,
+  AdminUpdateStockLocationMutationResponse,
+  AdminUpdateStockLocationPathParams,
+} from "./AdminUpdateStockLocation.ts";
+export type {
   AdminUpdateTaxClass200,
   AdminUpdateTaxClass400,
   AdminUpdateTaxClass401,
@@ -321,6 +425,11 @@ export type {
 export { adminGetProduct200DataTypeEnum } from "./AdminGetProduct.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./AdminListCategories.ts";
+export { adminListInventoryLevelsQueryParamsSortByEnum } from "./AdminListInventoryLevels.ts";
+export { adminListInventoryLevelsQueryParamsSortOrderEnum } from "./AdminListInventoryLevels.ts";
+export { adminListInventoryTransactions200DataReasonEnum } from "./AdminListInventoryTransactions.ts";
+export { adminListInventoryTransactionsQueryParamsSortByEnum } from "./AdminListInventoryTransactions.ts";
+export { adminListInventoryTransactionsQueryParamsSortOrderEnum } from "./AdminListInventoryTransactions.ts";
 export { adminListMediaQueryParamsSortByEnum } from "./AdminListMedia.ts";
 export { adminListMediaQueryParamsSortOrderEnum } from "./AdminListMedia.ts";
 export { adminListProducts200DataStatusEnum } from "./AdminListProducts.ts";
@@ -328,6 +437,8 @@ export { adminListProducts200DataTypeEnum } from "./AdminListProducts.ts";
 export { adminListProductsQueryParamsSortByEnum } from "./AdminListProducts.ts";
 export { adminListProductsQueryParamsSortOrderEnum } from "./AdminListProducts.ts";
 export { adminListProductsQueryParamsStatusEnum } from "./AdminListProducts.ts";
+export { adminListStockLocationsQueryParamsSortByEnum } from "./AdminListStockLocations.ts";
+export { adminListStockLocationsQueryParamsSortOrderEnum } from "./AdminListStockLocations.ts";
 export { adminListTaxClassesQueryParamsSortByEnum } from "./AdminListTaxClasses.ts";
 export { adminListTaxClassesQueryParamsSortOrderEnum } from "./AdminListTaxClasses.ts";
 export { adminUpdateProduct200DataTypeEnum } from "./AdminUpdateProduct.ts";

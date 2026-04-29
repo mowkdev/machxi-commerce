@@ -1,10 +1,13 @@
 export type { AdminBulkDeleteMediaMutationKey } from "./hooks/useAdminBulkDeleteMedia.ts";
 export type { AdminCreateCategoryMutationKey } from "./hooks/useAdminCreateCategory.ts";
+export type { AdminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export type { AdminCreateProductMutationKey } from "./hooks/useAdminCreateProduct.ts";
+export type { AdminCreateStockLocationMutationKey } from "./hooks/useAdminCreateStockLocation.ts";
 export type { AdminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
 export type { AdminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
 export type { AdminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts";
 export type { AdminDeleteProductMutationKey } from "./hooks/useAdminDeleteProduct.ts";
+export type { AdminDeleteStockLocationMutationKey } from "./hooks/useAdminDeleteStockLocation.ts";
 export type { AdminDeleteTaxClassMutationKey } from "./hooks/useAdminDeleteTaxClass.ts";
 export type { AdminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
 export type { AdminGetCategoryQueryKey } from "./hooks/useAdminGetCategory.ts";
@@ -13,22 +16,31 @@ export type { AdminGetMediaQueryKey } from "./hooks/useAdminGetMedia.ts";
 export type { AdminGetMediaSuspenseQueryKey } from "./hooks/useAdminGetMediaSuspense.ts";
 export type { AdminGetProductQueryKey } from "./hooks/useAdminGetProduct.ts";
 export type { AdminGetProductSuspenseQueryKey } from "./hooks/useAdminGetProductSuspense.ts";
+export type { AdminGetStockLocationQueryKey } from "./hooks/useAdminGetStockLocation.ts";
+export type { AdminGetStockLocationSuspenseQueryKey } from "./hooks/useAdminGetStockLocationSuspense.ts";
 export type { AdminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
 export type { AdminGetTaxClassSuspenseQueryKey } from "./hooks/useAdminGetTaxClassSuspense.ts";
 export type { AdminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export type { AdminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
+export type { AdminListInventoryLevelsQueryKey } from "./hooks/useAdminListInventoryLevels.ts";
+export type { AdminListInventoryLevelsSuspenseQueryKey } from "./hooks/useAdminListInventoryLevelsSuspense.ts";
+export type { AdminListInventoryTransactionsQueryKey } from "./hooks/useAdminListInventoryTransactions.ts";
+export type { AdminListInventoryTransactionsSuspenseQueryKey } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
 export type { AdminListMediaQueryKey } from "./hooks/useAdminListMedia.ts";
 export type { AdminListMediaSuspenseQueryKey } from "./hooks/useAdminListMediaSuspense.ts";
 export type { AdminListProductOptionsQueryKey } from "./hooks/useAdminListProductOptions.ts";
 export type { AdminListProductOptionsSuspenseQueryKey } from "./hooks/useAdminListProductOptionsSuspense.ts";
 export type { AdminListProductsQueryKey } from "./hooks/useAdminListProducts.ts";
 export type { AdminListProductsSuspenseQueryKey } from "./hooks/useAdminListProductsSuspense.ts";
+export type { AdminListStockLocationsQueryKey } from "./hooks/useAdminListStockLocations.ts";
+export type { AdminListStockLocationsSuspenseQueryKey } from "./hooks/useAdminListStockLocationsSuspense.ts";
 export type { AdminListTaxClassesQueryKey } from "./hooks/useAdminListTaxClasses.ts";
 export type { AdminListTaxClassesSuspenseQueryKey } from "./hooks/useAdminListTaxClassesSuspense.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export type { AdminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
 export type { AdminUpdateProductMutationKey } from "./hooks/useAdminUpdateProduct.ts";
+export type { AdminUpdateStockLocationMutationKey } from "./hooks/useAdminUpdateStockLocation.ts";
 export type { AdminUpdateTaxClassMutationKey } from "./hooks/useAdminUpdateTaxClass.ts";
 export type { AdminUpdateVariantMutationKey } from "./hooks/useAdminUpdateVariant.ts";
 export type { AdminUploadMediaMutationKey } from "./hooks/useAdminUploadMedia.ts";
@@ -57,6 +69,18 @@ export type {
   AdminCreateCategoryMutationResponse,
 } from "./types/AdminCreateCategory.ts";
 export type {
+  AdminCreateInventoryAdjustment201,
+  AdminCreateInventoryAdjustment400,
+  AdminCreateInventoryAdjustment401,
+  AdminCreateInventoryAdjustment403,
+  AdminCreateInventoryAdjustment404,
+  AdminCreateInventoryAdjustment409,
+  AdminCreateInventoryAdjustment500,
+  AdminCreateInventoryAdjustmentMutation,
+  AdminCreateInventoryAdjustmentMutationRequest,
+  AdminCreateInventoryAdjustmentMutationResponse,
+} from "./types/AdminCreateInventoryAdjustment.ts";
+export type {
   AdminCreateProduct201,
   AdminCreateProduct400,
   AdminCreateProduct401,
@@ -68,6 +92,18 @@ export type {
   AdminCreateProductMutationRequest,
   AdminCreateProductMutationResponse,
 } from "./types/AdminCreateProduct.ts";
+export type {
+  AdminCreateStockLocation201,
+  AdminCreateStockLocation400,
+  AdminCreateStockLocation401,
+  AdminCreateStockLocation403,
+  AdminCreateStockLocation404,
+  AdminCreateStockLocation409,
+  AdminCreateStockLocation500,
+  AdminCreateStockLocationMutation,
+  AdminCreateStockLocationMutationRequest,
+  AdminCreateStockLocationMutationResponse,
+} from "./types/AdminCreateStockLocation.ts";
 export type {
   AdminCreateTaxClass201,
   AdminCreateTaxClass400,
@@ -116,6 +152,18 @@ export type {
   AdminDeleteProductMutationResponse,
   AdminDeleteProductPathParams,
 } from "./types/AdminDeleteProduct.ts";
+export type {
+  AdminDeleteStockLocation200,
+  AdminDeleteStockLocation400,
+  AdminDeleteStockLocation401,
+  AdminDeleteStockLocation403,
+  AdminDeleteStockLocation404,
+  AdminDeleteStockLocation409,
+  AdminDeleteStockLocation500,
+  AdminDeleteStockLocationMutation,
+  AdminDeleteStockLocationMutationResponse,
+  AdminDeleteStockLocationPathParams,
+} from "./types/AdminDeleteStockLocation.ts";
 export type {
   AdminDeleteTaxClass200,
   AdminDeleteTaxClass400,
@@ -179,6 +227,18 @@ export type {
   AdminGetProductQueryResponse,
 } from "./types/AdminGetProduct.ts";
 export type {
+  AdminGetStockLocation200,
+  AdminGetStockLocation400,
+  AdminGetStockLocation401,
+  AdminGetStockLocation403,
+  AdminGetStockLocation404,
+  AdminGetStockLocation409,
+  AdminGetStockLocation500,
+  AdminGetStockLocationPathParams,
+  AdminGetStockLocationQuery,
+  AdminGetStockLocationQueryResponse,
+} from "./types/AdminGetStockLocation.ts";
+export type {
   AdminGetTaxClass200,
   AdminGetTaxClass400,
   AdminGetTaxClass401,
@@ -204,6 +264,35 @@ export type {
   AdminListCategoriesQueryParamsSortOrderEnumKey,
   AdminListCategoriesQueryResponse,
 } from "./types/AdminListCategories.ts";
+export type {
+  AdminListInventoryLevels200,
+  AdminListInventoryLevels400,
+  AdminListInventoryLevels401,
+  AdminListInventoryLevels403,
+  AdminListInventoryLevels404,
+  AdminListInventoryLevels409,
+  AdminListInventoryLevels500,
+  AdminListInventoryLevelsQuery,
+  AdminListInventoryLevelsQueryParams,
+  AdminListInventoryLevelsQueryParamsSortByEnumKey,
+  AdminListInventoryLevelsQueryParamsSortOrderEnumKey,
+  AdminListInventoryLevelsQueryResponse,
+} from "./types/AdminListInventoryLevels.ts";
+export type {
+  AdminListInventoryTransactions200,
+  AdminListInventoryTransactions200DataReasonEnumKey,
+  AdminListInventoryTransactions400,
+  AdminListInventoryTransactions401,
+  AdminListInventoryTransactions403,
+  AdminListInventoryTransactions404,
+  AdminListInventoryTransactions409,
+  AdminListInventoryTransactions500,
+  AdminListInventoryTransactionsQuery,
+  AdminListInventoryTransactionsQueryParams,
+  AdminListInventoryTransactionsQueryParamsSortByEnumKey,
+  AdminListInventoryTransactionsQueryParamsSortOrderEnumKey,
+  AdminListInventoryTransactionsQueryResponse,
+} from "./types/AdminListInventoryTransactions.ts";
 export type {
   AdminListMedia200,
   AdminListMedia400,
@@ -247,6 +336,20 @@ export type {
   AdminListProductsQueryParamsStatusEnumKey,
   AdminListProductsQueryResponse,
 } from "./types/AdminListProducts.ts";
+export type {
+  AdminListStockLocations200,
+  AdminListStockLocations400,
+  AdminListStockLocations401,
+  AdminListStockLocations403,
+  AdminListStockLocations404,
+  AdminListStockLocations409,
+  AdminListStockLocations500,
+  AdminListStockLocationsQuery,
+  AdminListStockLocationsQueryParams,
+  AdminListStockLocationsQueryParamsSortByEnumKey,
+  AdminListStockLocationsQueryParamsSortOrderEnumKey,
+  AdminListStockLocationsQueryResponse,
+} from "./types/AdminListStockLocations.ts";
 export type {
   AdminListTaxClasses200,
   AdminListTaxClasses400,
@@ -315,6 +418,19 @@ export type {
   AdminUpdateProductPathParams,
 } from "./types/AdminUpdateProduct.ts";
 export type {
+  AdminUpdateStockLocation200,
+  AdminUpdateStockLocation400,
+  AdminUpdateStockLocation401,
+  AdminUpdateStockLocation403,
+  AdminUpdateStockLocation404,
+  AdminUpdateStockLocation409,
+  AdminUpdateStockLocation500,
+  AdminUpdateStockLocationMutation,
+  AdminUpdateStockLocationMutationRequest,
+  AdminUpdateStockLocationMutationResponse,
+  AdminUpdateStockLocationPathParams,
+} from "./types/AdminUpdateStockLocation.ts";
+export type {
   AdminUpdateTaxClass200,
   AdminUpdateTaxClass400,
   AdminUpdateTaxClass401,
@@ -354,26 +470,34 @@ export type {
 } from "./types/AdminUploadMedia.ts";
 export { adminBulkDeleteMedia } from "./client/adminBulkDeleteMedia.ts";
 export { adminCreateCategory } from "./client/adminCreateCategory.ts";
+export { adminCreateInventoryAdjustment } from "./client/adminCreateInventoryAdjustment.ts";
 export { adminCreateProduct } from "./client/adminCreateProduct.ts";
+export { adminCreateStockLocation } from "./client/adminCreateStockLocation.ts";
 export { adminCreateTaxClass } from "./client/adminCreateTaxClass.ts";
 export { adminDeleteCategory } from "./client/adminDeleteCategory.ts";
 export { adminDeleteMedia } from "./client/adminDeleteMedia.ts";
 export { adminDeleteProduct } from "./client/adminDeleteProduct.ts";
+export { adminDeleteStockLocation } from "./client/adminDeleteStockLocation.ts";
 export { adminDeleteTaxClass } from "./client/adminDeleteTaxClass.ts";
 export { adminGenerateVariants } from "./client/adminGenerateVariants.ts";
 export { adminGetCategory } from "./client/adminGetCategory.ts";
 export { adminGetMedia } from "./client/adminGetMedia.ts";
 export { adminGetProduct } from "./client/adminGetProduct.ts";
+export { adminGetStockLocation } from "./client/adminGetStockLocation.ts";
 export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
+export { adminListInventoryLevels } from "./client/adminListInventoryLevels.ts";
+export { adminListInventoryTransactions } from "./client/adminListInventoryTransactions.ts";
 export { adminListMedia } from "./client/adminListMedia.ts";
 export { adminListProductOptions } from "./client/adminListProductOptions.ts";
 export { adminListProducts } from "./client/adminListProducts.ts";
+export { adminListStockLocations } from "./client/adminListStockLocations.ts";
 export { adminListTaxClasses } from "./client/adminListTaxClasses.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
 export { adminUpdateMedia } from "./client/adminUpdateMedia.ts";
 export { adminUpdateProduct } from "./client/adminUpdateProduct.ts";
+export { adminUpdateStockLocation } from "./client/adminUpdateStockLocation.ts";
 export { adminUpdateTaxClass } from "./client/adminUpdateTaxClass.ts";
 export { adminUpdateVariant } from "./client/adminUpdateVariant.ts";
 export { adminUploadMedia } from "./client/adminUploadMedia.ts";
@@ -383,9 +507,15 @@ export { useAdminBulkDeleteMedia } from "./hooks/useAdminBulkDeleteMedia.ts";
 export { adminCreateCategoryMutationKey } from "./hooks/useAdminCreateCategory.ts";
 export { adminCreateCategoryMutationOptions } from "./hooks/useAdminCreateCategory.ts";
 export { useAdminCreateCategory } from "./hooks/useAdminCreateCategory.ts";
+export { adminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdminCreateInventoryAdjustment.ts";
+export { adminCreateInventoryAdjustmentMutationOptions } from "./hooks/useAdminCreateInventoryAdjustment.ts";
+export { useAdminCreateInventoryAdjustment } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export { adminCreateProductMutationKey } from "./hooks/useAdminCreateProduct.ts";
 export { adminCreateProductMutationOptions } from "./hooks/useAdminCreateProduct.ts";
 export { useAdminCreateProduct } from "./hooks/useAdminCreateProduct.ts";
+export { adminCreateStockLocationMutationKey } from "./hooks/useAdminCreateStockLocation.ts";
+export { adminCreateStockLocationMutationOptions } from "./hooks/useAdminCreateStockLocation.ts";
+export { useAdminCreateStockLocation } from "./hooks/useAdminCreateStockLocation.ts";
 export { adminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
 export { adminCreateTaxClassMutationOptions } from "./hooks/useAdminCreateTaxClass.ts";
 export { useAdminCreateTaxClass } from "./hooks/useAdminCreateTaxClass.ts";
@@ -398,6 +528,9 @@ export { useAdminDeleteMedia } from "./hooks/useAdminDeleteMedia.ts";
 export { adminDeleteProductMutationKey } from "./hooks/useAdminDeleteProduct.ts";
 export { adminDeleteProductMutationOptions } from "./hooks/useAdminDeleteProduct.ts";
 export { useAdminDeleteProduct } from "./hooks/useAdminDeleteProduct.ts";
+export { adminDeleteStockLocationMutationKey } from "./hooks/useAdminDeleteStockLocation.ts";
+export { adminDeleteStockLocationMutationOptions } from "./hooks/useAdminDeleteStockLocation.ts";
+export { useAdminDeleteStockLocation } from "./hooks/useAdminDeleteStockLocation.ts";
 export { adminDeleteTaxClassMutationKey } from "./hooks/useAdminDeleteTaxClass.ts";
 export { adminDeleteTaxClassMutationOptions } from "./hooks/useAdminDeleteTaxClass.ts";
 export { useAdminDeleteTaxClass } from "./hooks/useAdminDeleteTaxClass.ts";
@@ -422,6 +555,12 @@ export { useAdminGetProduct } from "./hooks/useAdminGetProduct.ts";
 export { adminGetProductSuspenseQueryKey } from "./hooks/useAdminGetProductSuspense.ts";
 export { adminGetProductSuspenseQueryOptions } from "./hooks/useAdminGetProductSuspense.ts";
 export { useAdminGetProductSuspense } from "./hooks/useAdminGetProductSuspense.ts";
+export { adminGetStockLocationQueryKey } from "./hooks/useAdminGetStockLocation.ts";
+export { adminGetStockLocationQueryOptions } from "./hooks/useAdminGetStockLocation.ts";
+export { useAdminGetStockLocation } from "./hooks/useAdminGetStockLocation.ts";
+export { adminGetStockLocationSuspenseQueryKey } from "./hooks/useAdminGetStockLocationSuspense.ts";
+export { adminGetStockLocationSuspenseQueryOptions } from "./hooks/useAdminGetStockLocationSuspense.ts";
+export { useAdminGetStockLocationSuspense } from "./hooks/useAdminGetStockLocationSuspense.ts";
 export { adminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
 export { adminGetTaxClassQueryOptions } from "./hooks/useAdminGetTaxClass.ts";
 export { useAdminGetTaxClass } from "./hooks/useAdminGetTaxClass.ts";
@@ -434,6 +573,18 @@ export { useAdminListCategories } from "./hooks/useAdminListCategories.ts";
 export { adminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { adminListCategoriesSuspenseQueryOptions } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { useAdminListCategoriesSuspense } from "./hooks/useAdminListCategoriesSuspense.ts";
+export { adminListInventoryLevelsQueryKey } from "./hooks/useAdminListInventoryLevels.ts";
+export { adminListInventoryLevelsQueryOptions } from "./hooks/useAdminListInventoryLevels.ts";
+export { useAdminListInventoryLevels } from "./hooks/useAdminListInventoryLevels.ts";
+export { adminListInventoryLevelsSuspenseQueryKey } from "./hooks/useAdminListInventoryLevelsSuspense.ts";
+export { adminListInventoryLevelsSuspenseQueryOptions } from "./hooks/useAdminListInventoryLevelsSuspense.ts";
+export { useAdminListInventoryLevelsSuspense } from "./hooks/useAdminListInventoryLevelsSuspense.ts";
+export { adminListInventoryTransactionsQueryKey } from "./hooks/useAdminListInventoryTransactions.ts";
+export { adminListInventoryTransactionsQueryOptions } from "./hooks/useAdminListInventoryTransactions.ts";
+export { useAdminListInventoryTransactions } from "./hooks/useAdminListInventoryTransactions.ts";
+export { adminListInventoryTransactionsSuspenseQueryKey } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
+export { adminListInventoryTransactionsSuspenseQueryOptions } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
+export { useAdminListInventoryTransactionsSuspense } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
 export { adminListMediaQueryKey } from "./hooks/useAdminListMedia.ts";
 export { adminListMediaQueryOptions } from "./hooks/useAdminListMedia.ts";
 export { useAdminListMedia } from "./hooks/useAdminListMedia.ts";
@@ -452,6 +603,12 @@ export { useAdminListProducts } from "./hooks/useAdminListProducts.ts";
 export { adminListProductsSuspenseQueryKey } from "./hooks/useAdminListProductsSuspense.ts";
 export { adminListProductsSuspenseQueryOptions } from "./hooks/useAdminListProductsSuspense.ts";
 export { useAdminListProductsSuspense } from "./hooks/useAdminListProductsSuspense.ts";
+export { adminListStockLocationsQueryKey } from "./hooks/useAdminListStockLocations.ts";
+export { adminListStockLocationsQueryOptions } from "./hooks/useAdminListStockLocations.ts";
+export { useAdminListStockLocations } from "./hooks/useAdminListStockLocations.ts";
+export { adminListStockLocationsSuspenseQueryKey } from "./hooks/useAdminListStockLocationsSuspense.ts";
+export { adminListStockLocationsSuspenseQueryOptions } from "./hooks/useAdminListStockLocationsSuspense.ts";
+export { useAdminListStockLocationsSuspense } from "./hooks/useAdminListStockLocationsSuspense.ts";
 export { adminListTaxClassesQueryKey } from "./hooks/useAdminListTaxClasses.ts";
 export { adminListTaxClassesQueryOptions } from "./hooks/useAdminListTaxClasses.ts";
 export { useAdminListTaxClasses } from "./hooks/useAdminListTaxClasses.ts";
@@ -470,6 +627,9 @@ export { useAdminUpdateMedia } from "./hooks/useAdminUpdateMedia.ts";
 export { adminUpdateProductMutationKey } from "./hooks/useAdminUpdateProduct.ts";
 export { adminUpdateProductMutationOptions } from "./hooks/useAdminUpdateProduct.ts";
 export { useAdminUpdateProduct } from "./hooks/useAdminUpdateProduct.ts";
+export { adminUpdateStockLocationMutationKey } from "./hooks/useAdminUpdateStockLocation.ts";
+export { adminUpdateStockLocationMutationOptions } from "./hooks/useAdminUpdateStockLocation.ts";
+export { useAdminUpdateStockLocation } from "./hooks/useAdminUpdateStockLocation.ts";
 export { adminUpdateTaxClassMutationKey } from "./hooks/useAdminUpdateTaxClass.ts";
 export { adminUpdateTaxClassMutationOptions } from "./hooks/useAdminUpdateTaxClass.ts";
 export { useAdminUpdateTaxClass } from "./hooks/useAdminUpdateTaxClass.ts";
@@ -482,6 +642,11 @@ export { useAdminUploadMedia } from "./hooks/useAdminUploadMedia.ts";
 export { adminGetProduct200DataTypeEnum } from "./types/AdminGetProduct.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./types/AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./types/AdminListCategories.ts";
+export { adminListInventoryLevelsQueryParamsSortByEnum } from "./types/AdminListInventoryLevels.ts";
+export { adminListInventoryLevelsQueryParamsSortOrderEnum } from "./types/AdminListInventoryLevels.ts";
+export { adminListInventoryTransactions200DataReasonEnum } from "./types/AdminListInventoryTransactions.ts";
+export { adminListInventoryTransactionsQueryParamsSortByEnum } from "./types/AdminListInventoryTransactions.ts";
+export { adminListInventoryTransactionsQueryParamsSortOrderEnum } from "./types/AdminListInventoryTransactions.ts";
 export { adminListMediaQueryParamsSortByEnum } from "./types/AdminListMedia.ts";
 export { adminListMediaQueryParamsSortOrderEnum } from "./types/AdminListMedia.ts";
 export { adminListProducts200DataStatusEnum } from "./types/AdminListProducts.ts";
@@ -489,6 +654,8 @@ export { adminListProducts200DataTypeEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsSortByEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsSortOrderEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsStatusEnum } from "./types/AdminListProducts.ts";
+export { adminListStockLocationsQueryParamsSortByEnum } from "./types/AdminListStockLocations.ts";
+export { adminListStockLocationsQueryParamsSortOrderEnum } from "./types/AdminListStockLocations.ts";
 export { adminListTaxClassesQueryParamsSortByEnum } from "./types/AdminListTaxClasses.ts";
 export { adminListTaxClassesQueryParamsSortOrderEnum } from "./types/AdminListTaxClasses.ts";
 export { adminUpdateProduct200DataTypeEnum } from "./types/AdminUpdateProduct.ts";
@@ -515,6 +682,17 @@ export {
   adminCreateCategoryMutationResponseSchema,
 } from "./zod/adminCreateCategorySchema.ts";
 export {
+  adminCreateInventoryAdjustment201Schema,
+  adminCreateInventoryAdjustment400Schema,
+  adminCreateInventoryAdjustment401Schema,
+  adminCreateInventoryAdjustment403Schema,
+  adminCreateInventoryAdjustment404Schema,
+  adminCreateInventoryAdjustment409Schema,
+  adminCreateInventoryAdjustment500Schema,
+  adminCreateInventoryAdjustmentMutationRequestSchema,
+  adminCreateInventoryAdjustmentMutationResponseSchema,
+} from "./zod/adminCreateInventoryAdjustmentSchema.ts";
+export {
   adminCreateProduct201Schema,
   adminCreateProduct400Schema,
   adminCreateProduct401Schema,
@@ -525,6 +703,17 @@ export {
   adminCreateProductMutationRequestSchema,
   adminCreateProductMutationResponseSchema,
 } from "./zod/adminCreateProductSchema.ts";
+export {
+  adminCreateStockLocation201Schema,
+  adminCreateStockLocation400Schema,
+  adminCreateStockLocation401Schema,
+  adminCreateStockLocation403Schema,
+  adminCreateStockLocation404Schema,
+  adminCreateStockLocation409Schema,
+  adminCreateStockLocation500Schema,
+  adminCreateStockLocationMutationRequestSchema,
+  adminCreateStockLocationMutationResponseSchema,
+} from "./zod/adminCreateStockLocationSchema.ts";
 export {
   adminCreateTaxClass201Schema,
   adminCreateTaxClass400Schema,
@@ -569,6 +758,17 @@ export {
   adminDeleteProductMutationResponseSchema,
   adminDeleteProductPathParamsSchema,
 } from "./zod/adminDeleteProductSchema.ts";
+export {
+  adminDeleteStockLocation200Schema,
+  adminDeleteStockLocation400Schema,
+  adminDeleteStockLocation401Schema,
+  adminDeleteStockLocation403Schema,
+  adminDeleteStockLocation404Schema,
+  adminDeleteStockLocation409Schema,
+  adminDeleteStockLocation500Schema,
+  adminDeleteStockLocationMutationResponseSchema,
+  adminDeleteStockLocationPathParamsSchema,
+} from "./zod/adminDeleteStockLocationSchema.ts";
 export {
   adminDeleteTaxClass200Schema,
   adminDeleteTaxClass400Schema,
@@ -626,6 +826,17 @@ export {
   adminGetProductQueryResponseSchema,
 } from "./zod/adminGetProductSchema.ts";
 export {
+  adminGetStockLocation200Schema,
+  adminGetStockLocation400Schema,
+  adminGetStockLocation401Schema,
+  adminGetStockLocation403Schema,
+  adminGetStockLocation404Schema,
+  adminGetStockLocation409Schema,
+  adminGetStockLocation500Schema,
+  adminGetStockLocationPathParamsSchema,
+  adminGetStockLocationQueryResponseSchema,
+} from "./zod/adminGetStockLocationSchema.ts";
+export {
   adminGetTaxClass200Schema,
   adminGetTaxClass400Schema,
   adminGetTaxClass401Schema,
@@ -647,6 +858,28 @@ export {
   adminListCategoriesQueryParamsSchema,
   adminListCategoriesQueryResponseSchema,
 } from "./zod/adminListCategoriesSchema.ts";
+export {
+  adminListInventoryLevels200Schema,
+  adminListInventoryLevels400Schema,
+  adminListInventoryLevels401Schema,
+  adminListInventoryLevels403Schema,
+  adminListInventoryLevels404Schema,
+  adminListInventoryLevels409Schema,
+  adminListInventoryLevels500Schema,
+  adminListInventoryLevelsQueryParamsSchema,
+  adminListInventoryLevelsQueryResponseSchema,
+} from "./zod/adminListInventoryLevelsSchema.ts";
+export {
+  adminListInventoryTransactions200Schema,
+  adminListInventoryTransactions400Schema,
+  adminListInventoryTransactions401Schema,
+  adminListInventoryTransactions403Schema,
+  adminListInventoryTransactions404Schema,
+  adminListInventoryTransactions409Schema,
+  adminListInventoryTransactions500Schema,
+  adminListInventoryTransactionsQueryParamsSchema,
+  adminListInventoryTransactionsQueryResponseSchema,
+} from "./zod/adminListInventoryTransactionsSchema.ts";
 export {
   adminListMedia200Schema,
   adminListMedia400Schema,
@@ -680,6 +913,17 @@ export {
   adminListProductsQueryParamsSchema,
   adminListProductsQueryResponseSchema,
 } from "./zod/adminListProductsSchema.ts";
+export {
+  adminListStockLocations200Schema,
+  adminListStockLocations400Schema,
+  adminListStockLocations401Schema,
+  adminListStockLocations403Schema,
+  adminListStockLocations404Schema,
+  adminListStockLocations409Schema,
+  adminListStockLocations500Schema,
+  adminListStockLocationsQueryParamsSchema,
+  adminListStockLocationsQueryResponseSchema,
+} from "./zod/adminListStockLocationsSchema.ts";
 export {
   adminListTaxClasses200Schema,
   adminListTaxClasses400Schema,
@@ -739,6 +983,18 @@ export {
   adminUpdateProductMutationResponseSchema,
   adminUpdateProductPathParamsSchema,
 } from "./zod/adminUpdateProductSchema.ts";
+export {
+  adminUpdateStockLocation200Schema,
+  adminUpdateStockLocation400Schema,
+  adminUpdateStockLocation401Schema,
+  adminUpdateStockLocation403Schema,
+  adminUpdateStockLocation404Schema,
+  adminUpdateStockLocation409Schema,
+  adminUpdateStockLocation500Schema,
+  adminUpdateStockLocationMutationRequestSchema,
+  adminUpdateStockLocationMutationResponseSchema,
+  adminUpdateStockLocationPathParamsSchema,
+} from "./zod/adminUpdateStockLocationSchema.ts";
 export {
   adminUpdateTaxClass200Schema,
   adminUpdateTaxClass400Schema,
