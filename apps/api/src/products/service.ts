@@ -26,6 +26,7 @@ import {
   inventoryItems,
   inventoryTransactions,
   productMedia,
+  variantMedia,
 } from '@repo/database/schema';
 import type { PaginationMeta } from '@repo/types';
 import type {
@@ -157,6 +158,7 @@ export async function getProduct(id: string): Promise<ProductDetailResponse | nu
           },
           media: {
             with: { media: true },
+            orderBy: asc(variantMedia.rank),
           },
         },
       },
@@ -509,6 +511,19 @@ export async function updateProduct(
       }
     }
 
+    if (body.media !== undefined) {
+      await tx.delete(productMedia).where(eq(productMedia.productId, id));
+      if (body.media.length > 0) {
+        await tx.insert(productMedia).values(
+          body.media.map((item, index) => ({
+            productId: id,
+            mediaId: item.mediaId,
+            rank: item.rank ?? index,
+          }))
+        );
+      }
+    }
+
     return null; // caller will re-fetch via getProduct
   });
 }
@@ -573,6 +588,19 @@ export async function updateVariant(
             compareAtAmount: p.compareAtAmount,
             minQuantity: p.minQuantity,
             taxInclusive: p.taxInclusive,
+          }))
+        );
+      }
+    }
+
+    if (body.media !== undefined) {
+      await tx.delete(variantMedia).where(eq(variantMedia.variantId, variantId));
+      if (body.media.length > 0) {
+        await tx.insert(variantMedia).values(
+          body.media.map((item, index) => ({
+            variantId,
+            mediaId: item.mediaId,
+            rank: item.rank ?? index,
           }))
         );
       }

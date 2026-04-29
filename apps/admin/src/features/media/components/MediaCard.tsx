@@ -6,17 +6,31 @@ import { shortMime } from "../utils"
 
 interface MediaCardProps {
   item: MediaListItem
-  selected: boolean
-  onToggleSelect: (id: string, e: React.MouseEvent) => void
-  onOpen: (id: string) => void
+  selected?: boolean
+  onToggleSelect?: (id: string, e: React.MouseEvent) => void
+  onOpen?: (id: string) => void
+  selectable?: boolean
 }
 
-export function MediaCard({ item, selected, onToggleSelect, onOpen }: MediaCardProps) {
+export function MediaCard({
+  item,
+  selected = false,
+  onToggleSelect,
+  onOpen,
+  selectable = true,
+}: MediaCardProps) {
   const preview = item.thumbnailUrl ?? item.url
   return (
-    <button
-      type="button"
-      onClick={() => onOpen(item.id)}
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpen?.(item.id)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault()
+          onOpen?.(item.id)
+        }
+      }}
       className={cn(
         "group relative flex flex-col overflow-hidden rounded-md border bg-card text-left transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         selected && "ring-2 ring-primary ring-offset-2"
@@ -35,22 +49,24 @@ export function MediaCard({ item, selected, onToggleSelect, onOpen }: MediaCardP
             <IconPhoto className="size-10" />
           </div>
         )}
-        <span
-          className="absolute left-2 top-2"
-          onClick={(e) => {
-            e.stopPropagation()
-            onToggleSelect(item.id, e)
-          }}
-        >
-          <Checkbox
-            checked={selected}
-            onCheckedChange={() => {
-              /* handled via the wrapping span's click */
+        {selectable && onToggleSelect ? (
+          <span
+            className="absolute left-2 top-2"
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleSelect(item.id, e)
             }}
-            className="bg-background/90"
-            aria-label={`Select ${item.fileName}`}
-          />
-        </span>
+          >
+            <Checkbox
+              checked={selected}
+              onCheckedChange={() => {
+                /* handled via the wrapping span's click */
+              }}
+              className="bg-background/90"
+              aria-label={`Select ${item.fileName}`}
+            />
+          </span>
+        ) : null}
         <span className="absolute right-2 top-2 rounded bg-background/80 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-foreground/80">
           {shortMime(item.mimeType)}
         </span>
@@ -65,6 +81,6 @@ export function MediaCard({ item, selected, onToggleSelect, onOpen }: MediaCardP
           </div>
         )}
       </div>
-    </button>
+    </div>
   )
 }

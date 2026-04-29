@@ -9,6 +9,7 @@ import { OptionsCard } from './OptionsCard';
 import { VariantsTable } from './VariantsTable';
 import { ProductTypeCard } from './ProductTypeCard';
 import { DefaultVariantCard } from './DefaultVariantCard';
+import { ProductMediaManager } from './ProductMediaManager';
 import { useProductForm } from './useProductForm';
 
 interface ProductFormProps {
@@ -77,11 +78,20 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
             )}
             {isEditMode && initialData && !isVariable && (
               <DefaultVariantCard
+                productId={initialData.id}
                 productDetails={defaultVariant}
                 form={defaultVariantForm}
                 priceFields={defaultVariantPriceFields}
                 appendPrice={appendDefaultVariantPrice}
                 removePrice={removeDefaultVariantPrice}
+              />
+            )}
+            {isEditMode && initialData && isVariable && (
+              <ProductMediaManager
+                title="Product media"
+                description="Images shown for the product."
+                media={initialData.media}
+                target={{ type: 'product', productId: initialData.id }}
               />
             )}
           </div>

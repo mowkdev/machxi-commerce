@@ -17,17 +17,58 @@ class ResizeObserverMock {
 }
 
 vi.stubGlobal('ResizeObserver', ResizeObserverMock);
+Object.defineProperty(URL, 'createObjectURL', {
+  value: vi.fn(() => 'blob:test-preview'),
+  writable: true,
+});
+Object.defineProperty(URL, 'revokeObjectURL', {
+  value: vi.fn(),
+  writable: true,
+});
 
 const mutations = vi.hoisted(() => ({
-  create: { mutate: vi.fn(), isPending: false },
-  update: { mutate: vi.fn(), isPending: false },
-  updateVariant: { mutate: vi.fn(), isPending: false },
+  create: { mutate: vi.fn(), mutateAsync: vi.fn(), isPending: false },
+  update: { mutate: vi.fn(), mutateAsync: vi.fn(), isPending: false },
+  updateVariant: { mutate: vi.fn(), mutateAsync: vi.fn(), isPending: false },
+}));
+
+const mediaMocks = vi.hoisted(() => ({
+  list: {
+    data: {
+      data: [
+        {
+          id: '11111111-1111-4111-8111-111111111111',
+          fileName: 'image-one.jpg',
+          mimeType: 'image/jpeg',
+          sizeBytes: 1234,
+          width: 100,
+          height: 100,
+          url: '/media/image-one.jpg',
+          thumbnailUrl: null,
+          title: null,
+          altText: 'Image one',
+          createdAt: '2026-01-01T00:00:00.000Z',
+          updatedAt: '2026-01-01T00:00:00.000Z',
+        },
+      ],
+      meta: { page: 1, pageSize: 12, totalPages: 1, totalItems: 1 },
+    },
+    isPending: false,
+    isError: false,
+    isFetching: false,
+  },
+  upload: { mutateAsync: vi.fn(), isPending: false },
 }));
 
 vi.mock('../hooks', () => ({
   useCreateProduct: () => mutations.create,
   useUpdateProduct: () => mutations.update,
   useUpdateVariant: () => mutations.updateVariant,
+}));
+
+vi.mock('../../media/hooks', () => ({
+  useMediaList: () => mediaMocks.list,
+  useUploadMedia: () => mediaMocks.upload,
 }));
 
 vi.mock('../components/GeneralInfoCard', () => ({
@@ -142,11 +183,36 @@ function renderProductForm(
 describe('ProductForm', () => {
   beforeEach(() => {
     mutations.create.mutate.mockReset();
+    mutations.create.mutateAsync.mockReset();
     mutations.update.mutate.mockReset();
+    mutations.update.mutateAsync.mockReset();
     mutations.updateVariant.mutate.mockReset();
+    mutations.updateVariant.mutateAsync.mockReset();
     mutations.create.isPending = false;
     mutations.update.isPending = false;
     mutations.updateVariant.isPending = false;
+    mutations.update.mutateAsync.mockResolvedValue(makeProduct());
+    mutations.updateVariant.mutateAsync.mockResolvedValue(undefined);
+    mediaMocks.upload.mutateAsync.mockReset();
+    mediaMocks.upload.mutateAsync.mockResolvedValue({
+      uploaded: [
+        {
+          id: '22222222-2222-4222-8222-222222222222',
+          fileName: 'uploaded.jpg',
+          mimeType: 'image/jpeg',
+          sizeBytes: 4321,
+          width: 100,
+          height: 100,
+          url: '/media/uploaded.jpg',
+          thumbnailUrl: null,
+          title: null,
+          altText: 'Uploaded',
+          createdAt: '2026-01-01T00:00:00.000Z',
+          updatedAt: '2026-01-01T00:00:00.000Z',
+        },
+      ],
+      failed: [],
+    });
   });
 
   afterEach(() => {
@@ -345,6 +411,81 @@ describe('ProductForm', () => {
     await waitFor(() => {
       expect(mutations.update.mutate).toHaveBeenCalledTimes(1);
       expect(mutations.updateVariant.mutate).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('updates product media from the gallery picker', async () => {
+    const user = userEvent.setup();
+    renderProductForm({ mode: 'edit', initialData: makeProduct() });
+
+    const addImageButtons = screen.getAllByRole('button', { name: 'Add Images' });
+    await user.click(addImageButtons[addImageButtons.length - 1]);
+    await user.click(screen.getByLabelText('Select image-one.jpg'));
+    await user.click(screen.getByRole('button', { name: 'Add selected' }));
+
+    await waitFor(() => {
+      expect(mutations.update.mutateAsync).toHaveBeenCalledWith({
+        media: [
+          {
+            mediaId: '11111111-1111-4111-8111-111111111111',
+            rank: 0,
+          },
+        ],
+      });
+    });
+  });
+
+  it('updates default variant media from the gallery picker', async () => {
+    const user = userEvent.setup();
+    renderProductForm({ mode: 'edit', initialData: makeProduct() });
+
+    const addImageButtons = screen.getAllByRole('button', { name: 'Add Images' });
+    await user.click(addImageButtons[0]);
+    await user.click(screen.getByLabelText('Select image-one.jpg'));
+    await user.click(screen.getByRole('button', { name: 'Add selected' }));
+
+    await waitFor(() => {
+      expect(mutations.updateVariant.mutateAsync).toHaveBeenCalledWith({
+        variantId: 'details-1',
+        body: {
+          media: [
+            {
+              mediaId: '11111111-1111-4111-8111-111111111111',
+              rank: 0,
+            },
+          ],
+        },
+      });
+    });
+  });
+
+  it('previews selected uploads and updates product media after upload', async () => {
+    const user = userEvent.setup();
+    const { container } = renderProductForm({ mode: 'edit', initialData: makeProduct() });
+
+    const addImageButtons = screen.getAllByRole('button', { name: 'Add Images' });
+    await user.click(addImageButtons[addImageButtons.length - 1]);
+    await user.click(screen.getByRole('tab', { name: 'Upload' }));
+
+    const input = container.ownerDocument.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
+    const file = new File(['image'], 'upload-preview.jpg', { type: 'image/jpeg' });
+    await user.upload(input, file);
+
+    expect(screen.getByLabelText('Select upload-preview.jpg')).toBeChecked();
+    await user.click(screen.getByRole('button', { name: 'Upload Selected (1)' }));
+
+    await waitFor(() => {
+      expect(mediaMocks.upload.mutateAsync).toHaveBeenCalledWith([file]);
+      expect(mutations.update.mutateAsync).toHaveBeenCalledWith({
+        media: [
+          {
+            mediaId: '22222222-2222-4222-8222-222222222222',
+            rank: 0,
+          },
+        ],
+      });
     });
   });
 });

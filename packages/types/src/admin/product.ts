@@ -33,6 +33,11 @@ const priceSchema = z.object({
   taxInclusive: z.boolean(),
 });
 
+const orderedMediaInputSchema = z.object({
+  mediaId: z.string().uuid(),
+  rank: z.number().int().nonnegative().optional(),
+});
+
 const optionValueSchema = z.object({
   translations: z.array(optionValueTranslationSchema).min(1),
 });
@@ -81,6 +86,7 @@ export const updateProductBody = z.object({
   taxClassId: z.string().uuid().optional(),
   translations: z.array(translationSchema).min(1).optional(),
   categoryIds: z.array(z.string().uuid()).optional(),
+  media: z.array(orderedMediaInputSchema).optional(),
 });
 export type UpdateProductBody = z.infer<typeof updateProductBody>;
 
@@ -92,6 +98,7 @@ export const updateVariantBody = z.object({
   barcode: z.string().nullable().optional(),
   status: z.enum(['draft', 'published', 'archived']).optional(),
   prices: z.array(priceSchema).min(1).optional(),
+  media: z.array(orderedMediaInputSchema).optional(),
 });
 export type UpdateVariantBody = z.infer<typeof updateVariantBody>;
 

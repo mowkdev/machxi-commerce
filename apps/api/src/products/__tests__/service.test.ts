@@ -3,9 +3,12 @@ import { db } from '@repo/database/client';
 import { eq, inArray } from '@repo/database';
 import {
   languages,
+  media,
+  productMedia,
   products,
   productVariants,
   taxClasses,
+  variantMedia,
   variantOptionValues,
 } from '@repo/database/schema';
 import type { CreateProductBody, GenerateVariantsBody } from '@repo/types/admin';
@@ -94,6 +97,23 @@ function makeOption(
       translations: [{ languageCode: 'en', label }],
     })),
   };
+}
+
+async function createMediaRow(label: string) {
+  const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${label}`;
+  const [row] = await db
+    .insert(media)
+    .values({
+      storageKey: `tests/products/${unique}.jpg`,
+      url: `https://cdn.example.test/${unique}.jpg`,
+      fileName: `${label}.jpg`,
+      mimeType: 'image/jpeg',
+      sizeBytes: 100,
+      checksumSha256: unique.padEnd(64, '0').slice(0, 64),
+      altText: label,
+    })
+    .returning({ id: media.id });
+  return row.id;
 }
 
 describe('createProduct', () => {
@@ -213,6 +233,7 @@ describe('updateProduct', () => {
     const { id } = await createProduct(makeCreateBody());
     const before = await getProduct(id);
     const variantSku = before!.variants[0].sku;
+    const handle = `updated-name-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 
     await updateProduct(id, {
       status: 'published',
@@ -221,7 +242,7 @@ describe('updateProduct', () => {
           languageCode: 'en',
           name: 'Updated Name',
           description: 'Updated description',
-          handle: 'updated-name',
+          handle,
         },
       ],
     });
@@ -230,6 +251,36 @@ describe('updateProduct', () => {
     expect(after!.status).toBe('published');
     expect(after!.translations[0].name).toBe('Updated Name');
     expect(after!.variants[0].sku).toBe(variantSku);
+  });
+
+  it('replaces product media and preserves submitted rank order', async () => {
+    const { id } = await createProduct(makeCreateBody());
+    const firstMediaId = await createMediaRow('product-first');
+    const secondMediaId = await createMediaRow('product-second');
+
+    await updateProduct(id, {
+      media: [
+        { mediaId: secondMediaId, rank: 0 },
+        { mediaId: firstMediaId, rank: 1 },
+      ],
+    });
+
+    const product = await getProduct(id);
+    expect(product!.media.map((item) => item.mediaId)).toEqual([
+      secondMediaId,
+      firstMediaId,
+    ]);
+    expect(product!.media.map((item) => item.rank)).toEqual([0, 1]);
+
+    await updateProduct(id, { media: [] });
+    const cleared = await getProduct(id);
+    expect(cleared!.media).toEqual([]);
+
+    const rows = await db
+      .select()
+      .from(productMedia)
+      .where(eq(productMedia.productId, id));
+    expect(rows).toHaveLength(0);
   });
 });
 
@@ -288,6 +339,39 @@ describe('updateVariant', () => {
       { sku: 'nope' }
     );
     expect(result).toBe(false);
+  });
+
+  it('replaces variant media and preserves submitted rank order', async () => {
+    const { id } = await createProduct(makeCreateBody());
+    const product = await getProduct(id);
+    const variantId = product!.variants[0].id;
+    const firstMediaId = await createMediaRow('variant-first');
+    const secondMediaId = await createMediaRow('variant-second');
+
+    const updated = await updateVariant(id, variantId, {
+      media: [
+        { mediaId: secondMediaId, rank: 0 },
+        { mediaId: firstMediaId, rank: 1 },
+      ],
+    });
+    expect(updated).toBe(true);
+
+    const after = await getProduct(id);
+    expect(after!.variants[0].media.map((item) => item.mediaId)).toEqual([
+      secondMediaId,
+      firstMediaId,
+    ]);
+    expect(after!.variants[0].media.map((item) => item.rank)).toEqual([0, 1]);
+
+    await updateVariant(id, variantId, { media: [] });
+    const cleared = await getProduct(id);
+    expect(cleared!.variants[0].media).toEqual([]);
+
+    const rows = await db
+      .select()
+      .from(variantMedia)
+      .where(eq(variantMedia.variantId, variantId));
+    expect(rows).toHaveLength(0);
   });
 });
 

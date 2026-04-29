@@ -20,6 +20,7 @@ import {
   getUpdateVariantBody,
   getVariantFormValues,
 } from '../utils/variant-form';
+import { ProductMediaManager } from './ProductMediaManager';
 import { VariantDetailsFields } from './VariantDetailsFields';
 
 interface VariantEditDrawerProps {
@@ -76,7 +77,7 @@ export function VariantEditDrawer({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="flex w-full flex-col sm:max-w-lg">
+      <SheetContent className="flex w-full flex-col sm:max-w-[36.8rem]">
         <SheetHeader>
           <SheetTitle>Edit variant</SheetTitle>
           <SheetDescription>
@@ -100,6 +101,12 @@ export function VariantEditDrawer({
               priceFields={priceFields}
               appendPrice={appendPrice}
               removePrice={removePrice}
+            />
+            <ProductMediaManager
+              title="Variant media"
+              description="Images specific to this variant."
+              media={variant.media}
+              target={{ type: 'variant', productId, variantId: variant.id }}
             />
           </form>
         </ScrollArea>

@@ -116,7 +116,7 @@ export function MediaDetailDrawer({ id, onClose }: MediaDetailDrawerProps) {
         }
       }}
     >
-      <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-xl">
+      <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-[41.4rem]">
         <SheetHeader className="border-b px-5 py-4">
           <SheetTitle className="truncate text-base">
             {data?.title || data?.fileName || "Media"}

@@ -12,33 +12,37 @@ import { formatBytes, formatDimensions, shortMime } from "../utils"
 
 interface MediaListProps {
   items: MediaListItem[]
-  selected: Set<string>
-  onToggleSelect: (id: string, e: React.MouseEvent) => void
-  onOpen: (id: string) => void
-  allSelected: boolean
-  onSelectAll: (next: boolean) => void
+  selected?: Set<string>
+  onToggleSelect?: (id: string, e: React.MouseEvent) => void
+  onOpen?: (id: string) => void
+  allSelected?: boolean
+  onSelectAll?: (next: boolean) => void
+  selectable?: boolean
 }
 
 export function MediaList({
   items,
-  selected,
+  selected = new Set(),
   onToggleSelect,
   onOpen,
-  allSelected,
+  allSelected = false,
   onSelectAll,
+  selectable = true,
 }: MediaListProps) {
   return (
     <div className="overflow-hidden rounded-md border">
       <Table>
         <TableHeader className="bg-muted">
           <TableRow>
-            <TableHead className="w-10">
-              <Checkbox
-                checked={allSelected}
-                onCheckedChange={(v) => onSelectAll(Boolean(v))}
-                aria-label="Select all"
-              />
-            </TableHead>
+            {selectable ? (
+              <TableHead className="w-10">
+                <Checkbox
+                  checked={allSelected}
+                  onCheckedChange={(v) => onSelectAll?.(Boolean(v))}
+                  aria-label="Select all"
+                />
+              </TableHead>
+            ) : null}
             <TableHead className="w-16">Preview</TableHead>
             <TableHead>Filename</TableHead>
             <TableHead>Type</TableHead>
@@ -54,19 +58,21 @@ export function MediaList({
               key={item.id}
               className="cursor-pointer"
               data-state={selected.has(item.id) ? "selected" : undefined}
-              onClick={() => onOpen(item.id)}
+              onClick={() => onOpen?.(item.id)}
             >
-              <TableCell onClick={(e) => e.stopPropagation()}>
-                <span onClick={(e) => onToggleSelect(item.id, e)}>
-                  <Checkbox
-                    checked={selected.has(item.id)}
-                    onCheckedChange={() => {
-                      /* handled by wrapping onClick */
-                    }}
-                    aria-label={`Select ${item.fileName}`}
-                  />
-                </span>
-              </TableCell>
+              {selectable && onToggleSelect ? (
+                <TableCell onClick={(e) => e.stopPropagation()}>
+                  <span onClick={(e) => onToggleSelect(item.id, e)}>
+                    <Checkbox
+                      checked={selected.has(item.id)}
+                      onCheckedChange={() => {
+                        /* handled by wrapping onClick */
+                      }}
+                      aria-label={`Select ${item.fileName}`}
+                    />
+                  </span>
+                </TableCell>
+              ) : null}
               <TableCell>
                 {item.thumbnailUrl || item.url ? (
                   <img

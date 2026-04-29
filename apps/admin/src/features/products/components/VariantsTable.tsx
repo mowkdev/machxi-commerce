@@ -44,9 +44,11 @@ function getVariantLabel(variant: ProductDetailVariant): string {
 
 export function VariantsTable({ product }: VariantsTableProps) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-  const [editingVariant, setEditingVariant] = useState<ProductDetailVariant | null>(null);
+  const [editingVariantId, setEditingVariantId] = useState<string | null>(null);
 
   const variants = product.variants;
+  const editingVariant =
+    variants.find((variant) => variant.id === editingVariantId) ?? null;
   const allSelected = selectedIds.size === variants.length && variants.length > 0;
 
   const toggleAll = () => {
@@ -112,7 +114,7 @@ export function VariantsTable({ product }: VariantsTableProps) {
                       <TableRow
                         key={variant.id}
                         className="cursor-pointer"
-                        onClick={() => setEditingVariant(variant)}
+                        onClick={() => setEditingVariantId(variant.id)}
                       >
                         <TableCell onClick={(e) => e.stopPropagation()}>
                           <Checkbox
@@ -151,9 +153,9 @@ export function VariantsTable({ product }: VariantsTableProps) {
       <VariantEditDrawer
         productId={product.id}
         variant={editingVariant}
-        open={!!editingVariant}
+        open={!!editingVariantId}
         onOpenChange={(open) => {
-          if (!open) setEditingVariant(null);
+          if (!open) setEditingVariantId(null);
         }}
       />
     </>
