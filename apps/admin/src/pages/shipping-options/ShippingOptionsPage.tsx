@@ -24,7 +24,7 @@ export default function ShippingOptionsPage() {
       getRowId={(row) => row.id}
       toolbarActions={
         <Button size="sm" asChild>
-          <Link to="/shipping-options/new">
+          <Link to="/settings/shipping/options/new">
             <IconPlus />
             <span className="hidden lg:inline">New shipping option</span>
           </Link>
@@ -42,7 +42,7 @@ const columns: ColumnDef<ShippingOptionListItem>[] = [
     ),
     cell: ({ row }) => (
       <Link
-        to={`/shipping-options/${row.original.id}`}
+        to={`/settings/shipping/options/${row.original.id}`}
         className="font-medium text-foreground hover:underline"
       >
         {row.original.name}

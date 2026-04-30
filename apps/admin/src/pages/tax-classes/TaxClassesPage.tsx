@@ -23,7 +23,7 @@ const columns: ColumnDef<TaxClassListItem>[] = [
     ),
     cell: ({ row }) => (
       <Link
-        to={`/tax-classes/${row.original.id}`}
+        to={`/settings/regions/tax-classes/${row.original.id}`}
         className="font-medium text-foreground hover:underline"
       >
         {row.original.name}
@@ -79,7 +79,7 @@ export default function TaxClassesPage() {
       getRowId={(row) => row.id}
       toolbarActions={
         <Button size="sm" asChild>
-          <Link to="/tax-classes/new">
+          <Link to="/settings/regions/tax-classes/new">
             <IconPlus />
             <span className="hidden lg:inline">New tax class</span>
           </Link>

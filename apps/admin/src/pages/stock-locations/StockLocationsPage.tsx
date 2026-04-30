@@ -23,7 +23,7 @@ const columns: ColumnDef<StockLocationListItem>[] = [
     ),
     cell: ({ row }) => (
       <Link
-        to={`/stock-locations/${row.original.id}`}
+        to={`/settings/locations/${row.original.id}`}
         className="font-medium text-foreground hover:underline"
       >
         {row.original.name}
@@ -79,7 +79,7 @@ export default function StockLocationsPage() {
       getRowId={(row) => row.id}
       toolbarActions={
         <Button size="sm" asChild>
-          <Link to="/stock-locations/new">
+          <Link to="/settings/locations/new">
             <IconPlus />
             <span className="hidden lg:inline">New stock location</span>
           </Link>

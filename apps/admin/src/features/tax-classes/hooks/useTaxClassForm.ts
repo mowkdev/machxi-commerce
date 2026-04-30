@@ -58,7 +58,7 @@ export function useTaxClassForm({ mode, initialData }: UseTaxClassFormParams) {
 
   const isPending = createMutation.isPending || updateMutation.isPending;
   const title = isCreateMode ? 'New tax class' : form.watch('name') || 'Untitled';
-  const navigateToTaxClasses = () => navigate('/tax-classes');
+  const navigateToTaxClasses = () => navigate('/settings/regions/tax-classes');
 
   return {
     form,

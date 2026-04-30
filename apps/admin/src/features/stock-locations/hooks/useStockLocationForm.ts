@@ -46,7 +46,7 @@ export function useStockLocationForm({ mode, initialData }: UseStockLocationForm
 
   const isPending = createMutation.isPending || updateMutation.isPending;
   const title = isCreateMode ? 'New stock location' : form.watch('name') || 'Untitled';
-  const navigateToStockLocations = () => navigate('/stock-locations');
+  const navigateToStockLocations = () => navigate('/settings/locations');
 
   return {
     form,

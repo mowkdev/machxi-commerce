@@ -1,24 +1,17 @@
 import {
   IconArrowBackUp,
-  IconBuildingWarehouse,
   IconCategory,
   IconCurrencyDollar,
   IconDashboard,
   IconDiscount,
   IconHelp,
   IconInnerShadowTop,
-  IconLanguage,
-  IconMap,
   IconPackage,
   IconPhoto,
-  IconReceiptTax,
   IconSettings,
-  IconShieldLock,
   IconShoppingCart,
   IconStack2,
-  IconTruck,
   IconTruckDelivery,
-  IconUserShield,
   IconUsers,
   type Icon,
 } from "@tabler/icons-react"
@@ -67,7 +60,7 @@ const data = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: IconSettings,
     },
     {
@@ -109,14 +102,7 @@ const data = {
       groupLabel: "Inventory",
       collapseTitle: true,
       defaultOpen: true,
-      items: [
-        {
-          title: "Stock locations",
-          url: "/stock-locations",
-          icon: IconBuildingWarehouse,
-        },
-        { title: "Inventory", url: "/inventory", icon: IconStack2 },
-      ],
+      items: [{ title: "Inventory", url: "/inventory", icon: IconStack2 }],
     },
     {
       id: "marketing",
@@ -134,26 +120,6 @@ const data = {
       items: [
         { title: "Fulfillments", url: "/fulfillments", icon: IconTruckDelivery },
         { title: "Returns", url: "/returns", icon: IconArrowBackUp },
-      ],
-    },
-    {
-      id: "shipping",
-      groupLabel: "Shipping",
-      collapseTitle: true,
-      items: [
-        { title: "Shipping zones", url: "/shipping-zones", icon: IconMap },
-        { title: "Shipping options", url: "/shipping-options", icon: IconTruck },
-      ],
-    },
-    {
-      id: "configuration",
-      groupLabel: "Configuration",
-      collapseTitle: true,
-      items: [
-        { title: "Languages", url: "/languages", icon: IconLanguage },
-        { title: "Tax classes", url: "/tax-classes", icon: IconReceiptTax },
-        { title: "Users", url: "/users", icon: IconUserShield },
-        { title: "Roles", url: "/roles", icon: IconShieldLock },
       ],
     },
   ] satisfies NavGroupConfig[],

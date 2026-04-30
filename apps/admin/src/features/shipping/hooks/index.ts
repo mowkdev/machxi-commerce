@@ -106,7 +106,7 @@ export function useCreateShippingZone() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: shippingZonesQueryPrefix });
       toast.success("Shipping zone created");
-      navigate(`/shipping-zones/${data.id}`);
+      navigate(`/settings/shipping/zones/${data.id}`);
     },
     onError: (error) =>
       toast.error(error.message || "Failed to create shipping zone"),
@@ -148,7 +148,7 @@ export function useDeleteShippingZone() {
       queryClient.invalidateQueries({ queryKey: shippingZonesQueryPrefix });
       queryClient.invalidateQueries({ queryKey: shippingOptionsQueryPrefix });
       toast.success("Shipping zone deleted");
-      navigate("/shipping-zones");
+      navigate("/settings/shipping/zones");
     },
     onError: (error) =>
       toast.error(error.message || "Failed to delete shipping zone"),
@@ -167,7 +167,7 @@ export function useCreateShippingOption() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: shippingOptionsQueryPrefix });
       toast.success("Shipping option created");
-      navigate(`/shipping-options/${data.id}`);
+      navigate(`/settings/shipping/options/${data.id}`);
     },
     onError: (error) =>
       toast.error(error.message || "Failed to create shipping option"),
@@ -208,7 +208,7 @@ export function useDeleteShippingOption() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: shippingOptionsQueryPrefix });
       toast.success("Shipping option deleted");
-      navigate("/shipping-options");
+      navigate("/settings/shipping/options");
     },
     onError: (error) =>
       toast.error(error.message || "Failed to delete shipping option"),

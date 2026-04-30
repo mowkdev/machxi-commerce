@@ -54,7 +54,7 @@ export function useCreateStockLocation() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: stockLocationsQueryPrefix });
       toast.success('Stock location created');
-      navigate(`/stock-locations/${data.id}`);
+      navigate(`/settings/locations/${data.id}`);
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to create stock location');
@@ -91,7 +91,7 @@ export function useDeleteStockLocation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: stockLocationsQueryPrefix });
       toast.success('Stock location deleted');
-      navigate('/stock-locations');
+      navigate('/settings/locations');
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to delete stock location');

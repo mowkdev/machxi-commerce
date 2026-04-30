@@ -1,7 +1,9 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { PlaceholderPage } from "@/components/placeholder-page";
 import { ProtectedRoute } from "@/components/protected-route";
 import AuthLayout from "@/layouts/AuthLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import SettingsLayout from "@/layouts/SettingsLayout";
 import LoginPage from "@/pages/auth/LoginPage";
 import SignupPage from "@/pages/auth/SignupPage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
@@ -66,15 +68,6 @@ export default function App() {
           <Route path="/customers" element={<CustomersPage />} />
           <Route path="/customers/new" element={<CustomerCreatePage />} />
           <Route path="/customers/:id" element={<CustomerEditPage />} />
-          <Route path="/stock-locations" element={<StockLocationsPage />} />
-          <Route
-            path="/stock-locations/new"
-            element={<StockLocationCreatePage />}
-          />
-          <Route
-            path="/stock-locations/:id"
-            element={<StockLocationEditPage />}
-          />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/promotions/new" element={<PromotionCreatePage />} />
@@ -88,30 +81,49 @@ export default function App() {
           <Route path="/returns" element={<ReturnsPage />} />
           <Route path="/returns/new" element={<ReturnCreatePage />} />
           <Route path="/returns/:id" element={<ReturnEditPage />} />
-          <Route path="/shipping-zones" element={<ShippingZonesPage />} />
-          <Route
-            path="/shipping-zones/new"
-            element={<ShippingZoneCreatePage />}
-          />
-          <Route
-            path="/shipping-zones/:id"
-            element={<ShippingZoneEditPage />}
-          />
-          <Route path="/shipping-options" element={<ShippingOptionsPage />} />
-          <Route
-            path="/shipping-options/new"
-            element={<ShippingOptionCreatePage />}
-          />
-          <Route
-            path="/shipping-options/:id"
-            element={<ShippingOptionEditPage />}
-          />
-          <Route path="/languages" element={<LanguagesPage />} />
-          <Route path="/tax-classes" element={<TaxClassesPage />} />
-          <Route path="/tax-classes/new" element={<TaxClassCreatePage />} />
-          <Route path="/tax-classes/:id" element={<TaxClassEditPage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/roles" element={<RolesPage />} />
+          <Route path="/settings" element={<SettingsLayout />}>
+            <Route
+              index
+              element={<Navigate to="/settings/store/general" replace />}
+            />
+            <Route
+              path="store/general"
+              element={<PlaceholderPage title="General" />}
+            />
+            <Route path="regions/languages" element={<LanguagesPage />} />
+            <Route path="regions/tax-classes" element={<TaxClassesPage />} />
+            <Route
+              path="regions/tax-classes/new"
+              element={<TaxClassCreatePage />}
+            />
+            <Route
+              path="regions/tax-classes/:id"
+              element={<TaxClassEditPage />}
+            />
+            <Route path="shipping/zones" element={<ShippingZonesPage />} />
+            <Route
+              path="shipping/zones/new"
+              element={<ShippingZoneCreatePage />}
+            />
+            <Route
+              path="shipping/zones/:id"
+              element={<ShippingZoneEditPage />}
+            />
+            <Route path="shipping/options" element={<ShippingOptionsPage />} />
+            <Route
+              path="shipping/options/new"
+              element={<ShippingOptionCreatePage />}
+            />
+            <Route
+              path="shipping/options/:id"
+              element={<ShippingOptionEditPage />}
+            />
+            <Route path="locations" element={<StockLocationsPage />} />
+            <Route path="locations/new" element={<StockLocationCreatePage />} />
+            <Route path="locations/:id" element={<StockLocationEditPage />} />
+            <Route path="team/users" element={<UsersPage />} />
+            <Route path="team/roles" element={<RolesPage />} />
+          </Route>
         </Route>
       </Route>
       <Route element={<AuthLayout />}>

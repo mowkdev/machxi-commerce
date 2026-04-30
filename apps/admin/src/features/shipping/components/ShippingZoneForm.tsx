@@ -95,7 +95,7 @@ export function ShippingZoneForm({ mode, initialData }: ShippingZoneFormProps) {
   return (
     <FormPageShell
       title={isCreateMode ? "New shipping zone" : name || "Untitled"}
-      onBack={() => navigate("/shipping-zones")}
+      onBack={() => navigate("/settings/shipping/zones")}
       onSubmit={onSubmit}
       submitLabel={isPending ? "Saving..." : isCreateMode ? "Create" : "Save"}
       isSubmitting={isPending}

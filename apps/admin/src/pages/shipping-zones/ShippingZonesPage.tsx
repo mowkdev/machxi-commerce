@@ -24,7 +24,7 @@ export default function ShippingZonesPage() {
       getRowId={(row) => row.id}
       toolbarActions={
         <Button size="sm" asChild>
-          <Link to="/shipping-zones/new">
+          <Link to="/settings/shipping/zones/new">
             <IconPlus />
             <span className="hidden lg:inline">New shipping zone</span>
           </Link>
@@ -42,7 +42,7 @@ const columns: ColumnDef<ShippingZoneListItem>[] = [
     ),
     cell: ({ row }) => (
       <Link
-        to={`/shipping-zones/${row.original.id}`}
+        to={`/settings/shipping/zones/${row.original.id}`}
         className="font-medium text-foreground hover:underline"
       >
         {row.original.name}

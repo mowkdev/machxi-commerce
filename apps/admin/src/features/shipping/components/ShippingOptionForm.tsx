@@ -214,7 +214,7 @@ export function ShippingOptionForm({
   return (
     <FormPageShell
       title={title}
-      onBack={() => navigate("/shipping-options")}
+      onBack={() => navigate("/settings/shipping/options")}
       onSubmit={submit}
       submitLabel={isPending ? "Saving..." : isCreateMode ? "Create" : "Save"}
       isSubmitting={isPending}

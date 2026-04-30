@@ -82,7 +82,7 @@ export function useCreateTaxClass() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: taxClassesQueryPrefix });
       toast.success('Tax class created');
-      navigate(`/tax-classes/${data.id}`);
+      navigate(`/settings/regions/tax-classes/${data.id}`);
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to create tax class');
@@ -177,7 +177,7 @@ export function useDeleteTaxClass() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: taxClassesQueryPrefix });
       toast.success('Tax class deleted');
-      navigate('/tax-classes');
+      navigate('/settings/regions/tax-classes');
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to delete tax class');
