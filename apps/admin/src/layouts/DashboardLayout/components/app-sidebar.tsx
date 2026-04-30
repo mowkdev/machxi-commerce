@@ -132,7 +132,7 @@ const data = {
       groupLabel: "Fulfillment",
       collapseTitle: true,
       items: [
-        { title: "Shipments", url: "/shipments", icon: IconTruckDelivery },
+        { title: "Fulfillments", url: "/fulfillments", icon: IconTruckDelivery },
         { title: "Returns", url: "/returns", icon: IconArrowBackUp },
       ],
     },

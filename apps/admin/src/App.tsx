@@ -13,6 +13,8 @@ import CategoryCreatePage from "@/pages/categories/CategoryCreatePage";
 import CategoryEditPage from "@/pages/categories/CategoryEditPage";
 import MediaLibraryPage from "@/pages/media/MediaLibraryPage";
 import OrdersPage from "@/pages/orders/OrdersPage";
+import OrderCreatePage from "@/pages/orders/OrderCreatePage";
+import OrderEditPage from "@/pages/orders/OrderEditPage";
 import CustomersPage from "@/pages/customers/CustomersPage";
 import CustomerCreatePage from "@/pages/customers/CustomerCreatePage";
 import CustomerEditPage from "@/pages/customers/CustomerEditPage";
@@ -26,8 +28,12 @@ import PromotionEditPage from "@/pages/promotions/PromotionEditPage";
 import PriceListsPage from "@/pages/price-lists/PriceListsPage";
 import PriceListCreatePage from "@/pages/price-lists/PriceListCreatePage";
 import PriceListEditPage from "@/pages/price-lists/PriceListEditPage";
-import ShipmentsPage from "@/pages/shipments/ShipmentsPage";
+import FulfillmentsPage from "@/pages/fulfillments/FulfillmentsPage";
+import FulfillmentCreatePage from "@/pages/fulfillments/FulfillmentCreatePage";
+import FulfillmentEditPage from "@/pages/fulfillments/FulfillmentEditPage";
 import ReturnsPage from "@/pages/returns/ReturnsPage";
+import ReturnCreatePage from "@/pages/returns/ReturnCreatePage";
+import ReturnEditPage from "@/pages/returns/ReturnEditPage";
 import ShippingZonesPage from "@/pages/shipping-zones/ShippingZonesPage";
 import ShippingZoneCreatePage from "@/pages/shipping-zones/ShippingZoneCreatePage";
 import ShippingZoneEditPage from "@/pages/shipping-zones/ShippingZoneEditPage";
@@ -55,6 +61,8 @@ export default function App() {
           <Route path="/categories/:id" element={<CategoryEditPage />} />
           <Route path="/media" element={<MediaLibraryPage />} />
           <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/orders/new" element={<OrderCreatePage />} />
+          <Route path="/orders/:id" element={<OrderEditPage />} />
           <Route path="/customers" element={<CustomersPage />} />
           <Route path="/customers/new" element={<CustomerCreatePage />} />
           <Route path="/customers/:id" element={<CustomerEditPage />} />
@@ -74,8 +82,12 @@ export default function App() {
           <Route path="/price-lists" element={<PriceListsPage />} />
           <Route path="/price-lists/new" element={<PriceListCreatePage />} />
           <Route path="/price-lists/:id" element={<PriceListEditPage />} />
-          <Route path="/shipments" element={<ShipmentsPage />} />
+          <Route path="/fulfillments" element={<FulfillmentsPage />} />
+          <Route path="/fulfillments/new" element={<FulfillmentCreatePage />} />
+          <Route path="/fulfillments/:id" element={<FulfillmentEditPage />} />
           <Route path="/returns" element={<ReturnsPage />} />
+          <Route path="/returns/new" element={<ReturnCreatePage />} />
+          <Route path="/returns/:id" element={<ReturnEditPage />} />
           <Route path="/shipping-zones" element={<ShippingZonesPage />} />
           <Route
             path="/shipping-zones/new"
