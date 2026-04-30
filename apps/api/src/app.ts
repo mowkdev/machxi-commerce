@@ -12,6 +12,7 @@ import { mediaRoutes } from './media/routes';
 import { productsRoutes } from './products/routes';
 import { categoriesRoutes } from './categories/routes';
 import { taxClassesRoutes } from './tax-classes/routes';
+import { priceListsRoutes } from './price-lists/routes';
 import { stockLocationsRoutes } from './stock-locations/routes';
 import { inventoryRoutes } from './inventory/routes';
 import { logger } from './lib/logger';
@@ -52,6 +53,7 @@ export function createApp() {
   app.route('/api/products', productsRoutes);
   app.route('/api/categories', categoriesRoutes);
   app.route('/api/tax-classes', taxClassesRoutes);
+  app.route('/api/price-lists', priceListsRoutes);
   app.route('/api/stock-locations', stockLocationsRoutes);
   app.route('/api/inventory', inventoryRoutes);
   app.route('/api/media', mediaRoutes);

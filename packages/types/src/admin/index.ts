@@ -6,3 +6,4 @@ export * from './stock-location';
 export * from './inventory';
 export * from './category';
 export * from './media';
+export * from './price-list';

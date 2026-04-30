@@ -20,6 +20,8 @@ import StockLocationEditPage from "@/pages/stock-locations/StockLocationEditPage
 import InventoryPage from "@/pages/inventory/InventoryPage"
 import PromotionsPage from "@/pages/promotions/PromotionsPage"
 import PriceListsPage from "@/pages/price-lists/PriceListsPage"
+import PriceListCreatePage from "@/pages/price-lists/PriceListCreatePage"
+import PriceListEditPage from "@/pages/price-lists/PriceListEditPage"
 import ShipmentsPage from "@/pages/shipments/ShipmentsPage"
 import ReturnsPage from "@/pages/returns/ReturnsPage"
 import ShippingZonesPage from "@/pages/shipping-zones/ShippingZonesPage"
@@ -52,6 +54,8 @@ export default function App() {
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/promotions" element={<PromotionsPage />} />
           <Route path="/price-lists" element={<PriceListsPage />} />
+          <Route path="/price-lists/new" element={<PriceListCreatePage />} />
+          <Route path="/price-lists/:id" element={<PriceListEditPage />} />
           <Route path="/shipments" element={<ShipmentsPage />} />
           <Route path="/returns" element={<ReturnsPage />} />
           <Route path="/shipping-zones" element={<ShippingZonesPage />} />
