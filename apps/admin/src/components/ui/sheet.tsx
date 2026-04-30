@@ -28,12 +28,13 @@ function SheetPortal({
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
 }
 
-function SheetOverlay({
-  className,
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Overlay>) {
+const SheetOverlay = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
+>(function SheetOverlay({ className, ...props }, ref) {
   return (
     <SheetPrimitive.Overlay
+      ref={ref}
       data-slot="sheet-overlay"
       className={cn(
         "fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0",
@@ -42,18 +43,22 @@ function SheetOverlay({
       {...props}
     />
   )
-}
+})
 
 function SheetContent({
   className,
   children,
   side = "right",
+  variant = "edge",
   showCloseButton = true,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
+  variant?: "edge" | "inset"
   showCloseButton?: boolean
 }) {
+  const isInset = variant === "inset"
+
   return (
     <SheetPortal>
       <SheetOverlay />
@@ -62,13 +67,21 @@ function SheetContent({
         className={cn(
           "fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:duration-500",
           side === "right" &&
-            "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-[27.6rem]",
+            (isInset
+              ? "inset-y-2 right-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] overflow-hidden rounded-xl border data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-[27.6rem]"
+              : "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-[27.6rem]"),
           side === "left" &&
-            "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-[27.6rem]",
+            (isInset
+              ? "inset-y-2 left-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] overflow-hidden rounded-xl border data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-[27.6rem]"
+              : "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-[27.6rem]"),
           side === "top" &&
-            "inset-x-0 top-0 h-auto border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+            (isInset
+              ? "inset-x-2 top-2 h-auto overflow-hidden rounded-xl border data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top"
+              : "inset-x-0 top-0 h-auto border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top"),
           side === "bottom" &&
-            "inset-x-0 bottom-0 h-auto border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+            (isInset
+              ? "inset-x-2 bottom-2 h-auto overflow-hidden rounded-xl border data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom"
+              : "inset-x-0 bottom-0 h-auto border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom"),
           className
         )}
         {...props}
