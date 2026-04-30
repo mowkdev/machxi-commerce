@@ -100,6 +100,53 @@ export {
   adminCreateProductMutationResponseSchema,
 } from "./adminCreateProductSchema.ts";
 export {
+  adminCreatePromotionAmount201Schema,
+  adminCreatePromotionAmount400Schema,
+  adminCreatePromotionAmount401Schema,
+  adminCreatePromotionAmount403Schema,
+  adminCreatePromotionAmount404Schema,
+  adminCreatePromotionAmount409Schema,
+  adminCreatePromotionAmount500Schema,
+  adminCreatePromotionAmountMutationRequestSchema,
+  adminCreatePromotionAmountMutationResponseSchema,
+  adminCreatePromotionAmountPathParamsSchema,
+} from "./adminCreatePromotionAmountSchema.ts";
+export {
+  adminCreatePromotion201Schema,
+  adminCreatePromotion400Schema,
+  adminCreatePromotion401Schema,
+  adminCreatePromotion403Schema,
+  adminCreatePromotion404Schema,
+  adminCreatePromotion409Schema,
+  adminCreatePromotion500Schema,
+  adminCreatePromotionMutationRequestSchema,
+  adminCreatePromotionMutationResponseSchema,
+} from "./adminCreatePromotionSchema.ts";
+export {
+  adminCreatePromotionTarget201Schema,
+  adminCreatePromotionTarget400Schema,
+  adminCreatePromotionTarget401Schema,
+  adminCreatePromotionTarget403Schema,
+  adminCreatePromotionTarget404Schema,
+  adminCreatePromotionTarget409Schema,
+  adminCreatePromotionTarget500Schema,
+  adminCreatePromotionTargetMutationRequestSchema,
+  adminCreatePromotionTargetMutationResponseSchema,
+  adminCreatePromotionTargetPathParamsSchema,
+} from "./adminCreatePromotionTargetSchema.ts";
+export {
+  adminCreatePromotionTranslation201Schema,
+  adminCreatePromotionTranslation400Schema,
+  adminCreatePromotionTranslation401Schema,
+  adminCreatePromotionTranslation403Schema,
+  adminCreatePromotionTranslation404Schema,
+  adminCreatePromotionTranslation409Schema,
+  adminCreatePromotionTranslation500Schema,
+  adminCreatePromotionTranslationMutationRequestSchema,
+  adminCreatePromotionTranslationMutationResponseSchema,
+  adminCreatePromotionTranslationPathParamsSchema,
+} from "./adminCreatePromotionTranslationSchema.ts";
+export {
   adminCreateStockLocation201Schema,
   adminCreateStockLocation400Schema,
   adminCreateStockLocation401Schema,
@@ -211,6 +258,50 @@ export {
   adminDeleteProductPathParamsSchema,
 } from "./adminDeleteProductSchema.ts";
 export {
+  adminDeletePromotionAmount200Schema,
+  adminDeletePromotionAmount400Schema,
+  adminDeletePromotionAmount401Schema,
+  adminDeletePromotionAmount403Schema,
+  adminDeletePromotionAmount404Schema,
+  adminDeletePromotionAmount409Schema,
+  adminDeletePromotionAmount500Schema,
+  adminDeletePromotionAmountMutationResponseSchema,
+  adminDeletePromotionAmountPathParamsSchema,
+} from "./adminDeletePromotionAmountSchema.ts";
+export {
+  adminDeletePromotion200Schema,
+  adminDeletePromotion400Schema,
+  adminDeletePromotion401Schema,
+  adminDeletePromotion403Schema,
+  adminDeletePromotion404Schema,
+  adminDeletePromotion409Schema,
+  adminDeletePromotion500Schema,
+  adminDeletePromotionMutationResponseSchema,
+  adminDeletePromotionPathParamsSchema,
+} from "./adminDeletePromotionSchema.ts";
+export {
+  adminDeletePromotionTarget200Schema,
+  adminDeletePromotionTarget400Schema,
+  adminDeletePromotionTarget401Schema,
+  adminDeletePromotionTarget403Schema,
+  adminDeletePromotionTarget404Schema,
+  adminDeletePromotionTarget409Schema,
+  adminDeletePromotionTarget500Schema,
+  adminDeletePromotionTargetMutationResponseSchema,
+  adminDeletePromotionTargetPathParamsSchema,
+} from "./adminDeletePromotionTargetSchema.ts";
+export {
+  adminDeletePromotionTranslation200Schema,
+  adminDeletePromotionTranslation400Schema,
+  adminDeletePromotionTranslation401Schema,
+  adminDeletePromotionTranslation403Schema,
+  adminDeletePromotionTranslation404Schema,
+  adminDeletePromotionTranslation409Schema,
+  adminDeletePromotionTranslation500Schema,
+  adminDeletePromotionTranslationMutationResponseSchema,
+  adminDeletePromotionTranslationPathParamsSchema,
+} from "./adminDeletePromotionTranslationSchema.ts";
+export {
   adminDeleteStockLocation200Schema,
   adminDeleteStockLocation400Schema,
   adminDeleteStockLocation401Schema,
@@ -299,6 +390,17 @@ export {
   adminGetProductPathParamsSchema,
   adminGetProductQueryResponseSchema,
 } from "./adminGetProductSchema.ts";
+export {
+  adminGetPromotion200Schema,
+  adminGetPromotion400Schema,
+  adminGetPromotion401Schema,
+  adminGetPromotion403Schema,
+  adminGetPromotion404Schema,
+  adminGetPromotion409Schema,
+  adminGetPromotion500Schema,
+  adminGetPromotionPathParamsSchema,
+  adminGetPromotionQueryResponseSchema,
+} from "./adminGetPromotionSchema.ts";
 export {
   adminGetStockLocation200Schema,
   adminGetStockLocation400Schema,
@@ -443,6 +545,50 @@ export {
   adminListProductsQueryResponseSchema,
 } from "./adminListProductsSchema.ts";
 export {
+  adminListPromotionAmounts200Schema,
+  adminListPromotionAmounts400Schema,
+  adminListPromotionAmounts401Schema,
+  adminListPromotionAmounts403Schema,
+  adminListPromotionAmounts404Schema,
+  adminListPromotionAmounts409Schema,
+  adminListPromotionAmounts500Schema,
+  adminListPromotionAmountsPathParamsSchema,
+  adminListPromotionAmountsQueryResponseSchema,
+} from "./adminListPromotionAmountsSchema.ts";
+export {
+  adminListPromotionTargets200Schema,
+  adminListPromotionTargets400Schema,
+  adminListPromotionTargets401Schema,
+  adminListPromotionTargets403Schema,
+  adminListPromotionTargets404Schema,
+  adminListPromotionTargets409Schema,
+  adminListPromotionTargets500Schema,
+  adminListPromotionTargetsPathParamsSchema,
+  adminListPromotionTargetsQueryResponseSchema,
+} from "./adminListPromotionTargetsSchema.ts";
+export {
+  adminListPromotionTranslations200Schema,
+  adminListPromotionTranslations400Schema,
+  adminListPromotionTranslations401Schema,
+  adminListPromotionTranslations403Schema,
+  adminListPromotionTranslations404Schema,
+  adminListPromotionTranslations409Schema,
+  adminListPromotionTranslations500Schema,
+  adminListPromotionTranslationsPathParamsSchema,
+  adminListPromotionTranslationsQueryResponseSchema,
+} from "./adminListPromotionTranslationsSchema.ts";
+export {
+  adminListPromotions200Schema,
+  adminListPromotions400Schema,
+  adminListPromotions401Schema,
+  adminListPromotions403Schema,
+  adminListPromotions404Schema,
+  adminListPromotions409Schema,
+  adminListPromotions500Schema,
+  adminListPromotionsQueryParamsSchema,
+  adminListPromotionsQueryResponseSchema,
+} from "./adminListPromotionsSchema.ts";
+export {
   adminListStockLocations200Schema,
   adminListStockLocations400Schema,
   adminListStockLocations401Schema,
@@ -559,6 +705,54 @@ export {
   adminUpdateProductMutationResponseSchema,
   adminUpdateProductPathParamsSchema,
 } from "./adminUpdateProductSchema.ts";
+export {
+  adminUpdatePromotionAmount200Schema,
+  adminUpdatePromotionAmount400Schema,
+  adminUpdatePromotionAmount401Schema,
+  adminUpdatePromotionAmount403Schema,
+  adminUpdatePromotionAmount404Schema,
+  adminUpdatePromotionAmount409Schema,
+  adminUpdatePromotionAmount500Schema,
+  adminUpdatePromotionAmountMutationRequestSchema,
+  adminUpdatePromotionAmountMutationResponseSchema,
+  adminUpdatePromotionAmountPathParamsSchema,
+} from "./adminUpdatePromotionAmountSchema.ts";
+export {
+  adminUpdatePromotion200Schema,
+  adminUpdatePromotion400Schema,
+  adminUpdatePromotion401Schema,
+  adminUpdatePromotion403Schema,
+  adminUpdatePromotion404Schema,
+  adminUpdatePromotion409Schema,
+  adminUpdatePromotion500Schema,
+  adminUpdatePromotionMutationRequestSchema,
+  adminUpdatePromotionMutationResponseSchema,
+  adminUpdatePromotionPathParamsSchema,
+} from "./adminUpdatePromotionSchema.ts";
+export {
+  adminUpdatePromotionTarget200Schema,
+  adminUpdatePromotionTarget400Schema,
+  adminUpdatePromotionTarget401Schema,
+  adminUpdatePromotionTarget403Schema,
+  adminUpdatePromotionTarget404Schema,
+  adminUpdatePromotionTarget409Schema,
+  adminUpdatePromotionTarget500Schema,
+  adminUpdatePromotionTargetMutationRequestSchema,
+  adminUpdatePromotionTargetMutationResponseSchema,
+  adminUpdatePromotionTargetPathParamsSchema,
+} from "./adminUpdatePromotionTargetSchema.ts";
+export {
+  adminUpdatePromotionTranslation200Schema,
+  adminUpdatePromotionTranslation400Schema,
+  adminUpdatePromotionTranslation401Schema,
+  adminUpdatePromotionTranslation403Schema,
+  adminUpdatePromotionTranslation404Schema,
+  adminUpdatePromotionTranslation409Schema,
+  adminUpdatePromotionTranslation500Schema,
+  adminUpdatePromotionTranslationMutationRequestSchema,
+  adminUpdatePromotionTranslationMutationResponseSchema,
+  adminUpdatePromotionTranslationPathParamsSchema,
+} from "./adminUpdatePromotionTranslationSchema.ts";
 export {
   adminUpdateStockLocation200Schema,
   adminUpdateStockLocation400Schema,

@@ -7,6 +7,10 @@ export type { AdminCreatePriceListMutationKey } from "./hooks/useAdminCreatePric
 export type { AdminCreatePriceListPriceMutationKey } from "./hooks/useAdminCreatePriceListPrice.ts";
 export type { AdminCreatePriceListTranslationMutationKey } from "./hooks/useAdminCreatePriceListTranslation.ts";
 export type { AdminCreateProductMutationKey } from "./hooks/useAdminCreateProduct.ts";
+export type { AdminCreatePromotionMutationKey } from "./hooks/useAdminCreatePromotion.ts";
+export type { AdminCreatePromotionAmountMutationKey } from "./hooks/useAdminCreatePromotionAmount.ts";
+export type { AdminCreatePromotionTargetMutationKey } from "./hooks/useAdminCreatePromotionTarget.ts";
+export type { AdminCreatePromotionTranslationMutationKey } from "./hooks/useAdminCreatePromotionTranslation.ts";
 export type { AdminCreateStockLocationMutationKey } from "./hooks/useAdminCreateStockLocation.ts";
 export type { AdminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
 export type { AdminCreateTaxRateMutationKey } from "./hooks/useAdminCreateTaxRate.ts";
@@ -17,6 +21,10 @@ export type { AdminDeletePriceListMutationKey } from "./hooks/useAdminDeletePric
 export type { AdminDeletePriceListPriceMutationKey } from "./hooks/useAdminDeletePriceListPrice.ts";
 export type { AdminDeletePriceListTranslationMutationKey } from "./hooks/useAdminDeletePriceListTranslation.ts";
 export type { AdminDeleteProductMutationKey } from "./hooks/useAdminDeleteProduct.ts";
+export type { AdminDeletePromotionMutationKey } from "./hooks/useAdminDeletePromotion.ts";
+export type { AdminDeletePromotionAmountMutationKey } from "./hooks/useAdminDeletePromotionAmount.ts";
+export type { AdminDeletePromotionTargetMutationKey } from "./hooks/useAdminDeletePromotionTarget.ts";
+export type { AdminDeletePromotionTranslationMutationKey } from "./hooks/useAdminDeletePromotionTranslation.ts";
 export type { AdminDeleteStockLocationMutationKey } from "./hooks/useAdminDeleteStockLocation.ts";
 export type { AdminDeleteTaxClassMutationKey } from "./hooks/useAdminDeleteTaxClass.ts";
 export type { AdminDeleteTaxRateMutationKey } from "./hooks/useAdminDeleteTaxRate.ts";
@@ -29,6 +37,8 @@ export type { AdminGetPriceListQueryKey } from "./hooks/useAdminGetPriceList.ts"
 export type { AdminGetPriceListSuspenseQueryKey } from "./hooks/useAdminGetPriceListSuspense.ts";
 export type { AdminGetProductQueryKey } from "./hooks/useAdminGetProduct.ts";
 export type { AdminGetProductSuspenseQueryKey } from "./hooks/useAdminGetProductSuspense.ts";
+export type { AdminGetPromotionQueryKey } from "./hooks/useAdminGetPromotion.ts";
+export type { AdminGetPromotionSuspenseQueryKey } from "./hooks/useAdminGetPromotionSuspense.ts";
 export type { AdminGetStockLocationQueryKey } from "./hooks/useAdminGetStockLocation.ts";
 export type { AdminGetStockLocationSuspenseQueryKey } from "./hooks/useAdminGetStockLocationSuspense.ts";
 export type { AdminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
@@ -55,6 +65,14 @@ export type { AdminListProductOptionsQueryKey } from "./hooks/useAdminListProduc
 export type { AdminListProductOptionsSuspenseQueryKey } from "./hooks/useAdminListProductOptionsSuspense.ts";
 export type { AdminListProductsQueryKey } from "./hooks/useAdminListProducts.ts";
 export type { AdminListProductsSuspenseQueryKey } from "./hooks/useAdminListProductsSuspense.ts";
+export type { AdminListPromotionAmountsQueryKey } from "./hooks/useAdminListPromotionAmounts.ts";
+export type { AdminListPromotionAmountsSuspenseQueryKey } from "./hooks/useAdminListPromotionAmountsSuspense.ts";
+export type { AdminListPromotionTargetsQueryKey } from "./hooks/useAdminListPromotionTargets.ts";
+export type { AdminListPromotionTargetsSuspenseQueryKey } from "./hooks/useAdminListPromotionTargetsSuspense.ts";
+export type { AdminListPromotionTranslationsQueryKey } from "./hooks/useAdminListPromotionTranslations.ts";
+export type { AdminListPromotionTranslationsSuspenseQueryKey } from "./hooks/useAdminListPromotionTranslationsSuspense.ts";
+export type { AdminListPromotionsQueryKey } from "./hooks/useAdminListPromotions.ts";
+export type { AdminListPromotionsSuspenseQueryKey } from "./hooks/useAdminListPromotionsSuspense.ts";
 export type { AdminListStockLocationsQueryKey } from "./hooks/useAdminListStockLocations.ts";
 export type { AdminListStockLocationsSuspenseQueryKey } from "./hooks/useAdminListStockLocationsSuspense.ts";
 export type { AdminListTaxClassesQueryKey } from "./hooks/useAdminListTaxClasses.ts";
@@ -68,6 +86,10 @@ export type { AdminUpdatePriceListMutationKey } from "./hooks/useAdminUpdatePric
 export type { AdminUpdatePriceListPriceMutationKey } from "./hooks/useAdminUpdatePriceListPrice.ts";
 export type { AdminUpdatePriceListTranslationMutationKey } from "./hooks/useAdminUpdatePriceListTranslation.ts";
 export type { AdminUpdateProductMutationKey } from "./hooks/useAdminUpdateProduct.ts";
+export type { AdminUpdatePromotionMutationKey } from "./hooks/useAdminUpdatePromotion.ts";
+export type { AdminUpdatePromotionAmountMutationKey } from "./hooks/useAdminUpdatePromotionAmount.ts";
+export type { AdminUpdatePromotionTargetMutationKey } from "./hooks/useAdminUpdatePromotionTarget.ts";
+export type { AdminUpdatePromotionTranslationMutationKey } from "./hooks/useAdminUpdatePromotionTranslation.ts";
 export type { AdminUpdateStockLocationMutationKey } from "./hooks/useAdminUpdateStockLocation.ts";
 export type { AdminUpdateTaxClassMutationKey } from "./hooks/useAdminUpdateTaxClass.ts";
 export type { AdminUpdateTaxRateMutationKey } from "./hooks/useAdminUpdateTaxRate.ts";
@@ -183,6 +205,58 @@ export type {
   AdminCreateProductMutationRequest,
   AdminCreateProductMutationResponse,
 } from "./types/AdminCreateProduct.ts";
+export type {
+  AdminCreatePromotion201,
+  AdminCreatePromotion400,
+  AdminCreatePromotion401,
+  AdminCreatePromotion403,
+  AdminCreatePromotion404,
+  AdminCreatePromotion409,
+  AdminCreatePromotion500,
+  AdminCreatePromotionMutation,
+  AdminCreatePromotionMutationRequest,
+  AdminCreatePromotionMutationResponse,
+} from "./types/AdminCreatePromotion.ts";
+export type {
+  AdminCreatePromotionAmount201,
+  AdminCreatePromotionAmount400,
+  AdminCreatePromotionAmount401,
+  AdminCreatePromotionAmount403,
+  AdminCreatePromotionAmount404,
+  AdminCreatePromotionAmount409,
+  AdminCreatePromotionAmount500,
+  AdminCreatePromotionAmountMutation,
+  AdminCreatePromotionAmountMutationRequest,
+  AdminCreatePromotionAmountMutationResponse,
+  AdminCreatePromotionAmountPathParams,
+} from "./types/AdminCreatePromotionAmount.ts";
+export type {
+  AdminCreatePromotionTarget201,
+  AdminCreatePromotionTarget201DataTargetTypeEnumKey,
+  AdminCreatePromotionTarget400,
+  AdminCreatePromotionTarget401,
+  AdminCreatePromotionTarget403,
+  AdminCreatePromotionTarget404,
+  AdminCreatePromotionTarget409,
+  AdminCreatePromotionTarget500,
+  AdminCreatePromotionTargetMutation,
+  AdminCreatePromotionTargetMutationRequest,
+  AdminCreatePromotionTargetMutationResponse,
+  AdminCreatePromotionTargetPathParams,
+} from "./types/AdminCreatePromotionTarget.ts";
+export type {
+  AdminCreatePromotionTranslation201,
+  AdminCreatePromotionTranslation400,
+  AdminCreatePromotionTranslation401,
+  AdminCreatePromotionTranslation403,
+  AdminCreatePromotionTranslation404,
+  AdminCreatePromotionTranslation409,
+  AdminCreatePromotionTranslation500,
+  AdminCreatePromotionTranslationMutation,
+  AdminCreatePromotionTranslationMutationRequest,
+  AdminCreatePromotionTranslationMutationResponse,
+  AdminCreatePromotionTranslationPathParams,
+} from "./types/AdminCreatePromotionTranslation.ts";
 export type {
   AdminCreateStockLocation201,
   AdminCreateStockLocation400,
@@ -305,6 +379,54 @@ export type {
   AdminDeleteProductPathParams,
 } from "./types/AdminDeleteProduct.ts";
 export type {
+  AdminDeletePromotion200,
+  AdminDeletePromotion400,
+  AdminDeletePromotion401,
+  AdminDeletePromotion403,
+  AdminDeletePromotion404,
+  AdminDeletePromotion409,
+  AdminDeletePromotion500,
+  AdminDeletePromotionMutation,
+  AdminDeletePromotionMutationResponse,
+  AdminDeletePromotionPathParams,
+} from "./types/AdminDeletePromotion.ts";
+export type {
+  AdminDeletePromotionAmount200,
+  AdminDeletePromotionAmount400,
+  AdminDeletePromotionAmount401,
+  AdminDeletePromotionAmount403,
+  AdminDeletePromotionAmount404,
+  AdminDeletePromotionAmount409,
+  AdminDeletePromotionAmount500,
+  AdminDeletePromotionAmountMutation,
+  AdminDeletePromotionAmountMutationResponse,
+  AdminDeletePromotionAmountPathParams,
+} from "./types/AdminDeletePromotionAmount.ts";
+export type {
+  AdminDeletePromotionTarget200,
+  AdminDeletePromotionTarget400,
+  AdminDeletePromotionTarget401,
+  AdminDeletePromotionTarget403,
+  AdminDeletePromotionTarget404,
+  AdminDeletePromotionTarget409,
+  AdminDeletePromotionTarget500,
+  AdminDeletePromotionTargetMutation,
+  AdminDeletePromotionTargetMutationResponse,
+  AdminDeletePromotionTargetPathParams,
+} from "./types/AdminDeletePromotionTarget.ts";
+export type {
+  AdminDeletePromotionTranslation200,
+  AdminDeletePromotionTranslation400,
+  AdminDeletePromotionTranslation401,
+  AdminDeletePromotionTranslation403,
+  AdminDeletePromotionTranslation404,
+  AdminDeletePromotionTranslation409,
+  AdminDeletePromotionTranslation500,
+  AdminDeletePromotionTranslationMutation,
+  AdminDeletePromotionTranslationMutationResponse,
+  AdminDeletePromotionTranslationPathParams,
+} from "./types/AdminDeletePromotionTranslation.ts";
+export type {
   AdminDeleteStockLocation200,
   AdminDeleteStockLocation400,
   AdminDeleteStockLocation401,
@@ -404,6 +526,20 @@ export type {
   AdminGetProductQuery,
   AdminGetProductQueryResponse,
 } from "./types/AdminGetProduct.ts";
+export type {
+  AdminGetPromotion200,
+  AdminGetPromotion200DataTypeEnumKey,
+  AdminGetPromotion200TargetsTargetTypeEnumKey,
+  AdminGetPromotion400,
+  AdminGetPromotion401,
+  AdminGetPromotion403,
+  AdminGetPromotion404,
+  AdminGetPromotion409,
+  AdminGetPromotion500,
+  AdminGetPromotionPathParams,
+  AdminGetPromotionQuery,
+  AdminGetPromotionQueryResponse,
+} from "./types/AdminGetPromotion.ts";
 export type {
   AdminGetStockLocation200,
   AdminGetStockLocation400,
@@ -583,6 +719,60 @@ export type {
   AdminListProductsQueryResponse,
 } from "./types/AdminListProducts.ts";
 export type {
+  AdminListPromotionAmounts200,
+  AdminListPromotionAmounts400,
+  AdminListPromotionAmounts401,
+  AdminListPromotionAmounts403,
+  AdminListPromotionAmounts404,
+  AdminListPromotionAmounts409,
+  AdminListPromotionAmounts500,
+  AdminListPromotionAmountsPathParams,
+  AdminListPromotionAmountsQuery,
+  AdminListPromotionAmountsQueryResponse,
+} from "./types/AdminListPromotionAmounts.ts";
+export type {
+  AdminListPromotionTargets200,
+  AdminListPromotionTargets200DataTargetTypeEnumKey,
+  AdminListPromotionTargets400,
+  AdminListPromotionTargets401,
+  AdminListPromotionTargets403,
+  AdminListPromotionTargets404,
+  AdminListPromotionTargets409,
+  AdminListPromotionTargets500,
+  AdminListPromotionTargetsPathParams,
+  AdminListPromotionTargetsQuery,
+  AdminListPromotionTargetsQueryResponse,
+} from "./types/AdminListPromotionTargets.ts";
+export type {
+  AdminListPromotionTranslations200,
+  AdminListPromotionTranslations400,
+  AdminListPromotionTranslations401,
+  AdminListPromotionTranslations403,
+  AdminListPromotionTranslations404,
+  AdminListPromotionTranslations409,
+  AdminListPromotionTranslations500,
+  AdminListPromotionTranslationsPathParams,
+  AdminListPromotionTranslationsQuery,
+  AdminListPromotionTranslationsQueryResponse,
+} from "./types/AdminListPromotionTranslations.ts";
+export type {
+  AdminListPromotions200,
+  AdminListPromotions200DataTypeEnumKey,
+  AdminListPromotions400,
+  AdminListPromotions401,
+  AdminListPromotions403,
+  AdminListPromotions404,
+  AdminListPromotions409,
+  AdminListPromotions500,
+  AdminListPromotionsQuery,
+  AdminListPromotionsQueryParams,
+  AdminListPromotionsQueryParamsScheduleStateEnumKey,
+  AdminListPromotionsQueryParamsSortByEnumKey,
+  AdminListPromotionsQueryParamsSortOrderEnumKey,
+  AdminListPromotionsQueryParamsTypeEnumKey,
+  AdminListPromotionsQueryResponse,
+} from "./types/AdminListPromotions.ts";
+export type {
   AdminListStockLocations200,
   AdminListStockLocations400,
   AdminListStockLocations401,
@@ -717,6 +907,61 @@ export type {
   AdminUpdateProductPathParams,
 } from "./types/AdminUpdateProduct.ts";
 export type {
+  AdminUpdatePromotion200,
+  AdminUpdatePromotion200DataTypeEnumKey,
+  AdminUpdatePromotion200TargetsTargetTypeEnumKey,
+  AdminUpdatePromotion400,
+  AdminUpdatePromotion401,
+  AdminUpdatePromotion403,
+  AdminUpdatePromotion404,
+  AdminUpdatePromotion409,
+  AdminUpdatePromotion500,
+  AdminUpdatePromotionMutation,
+  AdminUpdatePromotionMutationRequest,
+  AdminUpdatePromotionMutationResponse,
+  AdminUpdatePromotionPathParams,
+} from "./types/AdminUpdatePromotion.ts";
+export type {
+  AdminUpdatePromotionAmount200,
+  AdminUpdatePromotionAmount400,
+  AdminUpdatePromotionAmount401,
+  AdminUpdatePromotionAmount403,
+  AdminUpdatePromotionAmount404,
+  AdminUpdatePromotionAmount409,
+  AdminUpdatePromotionAmount500,
+  AdminUpdatePromotionAmountMutation,
+  AdminUpdatePromotionAmountMutationRequest,
+  AdminUpdatePromotionAmountMutationResponse,
+  AdminUpdatePromotionAmountPathParams,
+} from "./types/AdminUpdatePromotionAmount.ts";
+export type {
+  AdminUpdatePromotionTarget200,
+  AdminUpdatePromotionTarget200DataTargetTypeEnumKey,
+  AdminUpdatePromotionTarget400,
+  AdminUpdatePromotionTarget401,
+  AdminUpdatePromotionTarget403,
+  AdminUpdatePromotionTarget404,
+  AdminUpdatePromotionTarget409,
+  AdminUpdatePromotionTarget500,
+  AdminUpdatePromotionTargetMutation,
+  AdminUpdatePromotionTargetMutationRequest,
+  AdminUpdatePromotionTargetMutationResponse,
+  AdminUpdatePromotionTargetPathParams,
+} from "./types/AdminUpdatePromotionTarget.ts";
+export type {
+  AdminUpdatePromotionTranslation200,
+  AdminUpdatePromotionTranslation400,
+  AdminUpdatePromotionTranslation401,
+  AdminUpdatePromotionTranslation403,
+  AdminUpdatePromotionTranslation404,
+  AdminUpdatePromotionTranslation409,
+  AdminUpdatePromotionTranslation500,
+  AdminUpdatePromotionTranslationMutation,
+  AdminUpdatePromotionTranslationMutationRequest,
+  AdminUpdatePromotionTranslationMutationResponse,
+  AdminUpdatePromotionTranslationPathParams,
+} from "./types/AdminUpdatePromotionTranslation.ts";
+export type {
   AdminUpdateStockLocation200,
   AdminUpdateStockLocation400,
   AdminUpdateStockLocation401,
@@ -789,6 +1034,10 @@ export { adminCreatePriceList } from "./client/adminCreatePriceList.ts";
 export { adminCreatePriceListPrice } from "./client/adminCreatePriceListPrice.ts";
 export { adminCreatePriceListTranslation } from "./client/adminCreatePriceListTranslation.ts";
 export { adminCreateProduct } from "./client/adminCreateProduct.ts";
+export { adminCreatePromotion } from "./client/adminCreatePromotion.ts";
+export { adminCreatePromotionAmount } from "./client/adminCreatePromotionAmount.ts";
+export { adminCreatePromotionTarget } from "./client/adminCreatePromotionTarget.ts";
+export { adminCreatePromotionTranslation } from "./client/adminCreatePromotionTranslation.ts";
 export { adminCreateStockLocation } from "./client/adminCreateStockLocation.ts";
 export { adminCreateTaxClass } from "./client/adminCreateTaxClass.ts";
 export { adminCreateTaxRate } from "./client/adminCreateTaxRate.ts";
@@ -799,6 +1048,10 @@ export { adminDeletePriceList } from "./client/adminDeletePriceList.ts";
 export { adminDeletePriceListPrice } from "./client/adminDeletePriceListPrice.ts";
 export { adminDeletePriceListTranslation } from "./client/adminDeletePriceListTranslation.ts";
 export { adminDeleteProduct } from "./client/adminDeleteProduct.ts";
+export { adminDeletePromotion } from "./client/adminDeletePromotion.ts";
+export { adminDeletePromotionAmount } from "./client/adminDeletePromotionAmount.ts";
+export { adminDeletePromotionTarget } from "./client/adminDeletePromotionTarget.ts";
+export { adminDeletePromotionTranslation } from "./client/adminDeletePromotionTranslation.ts";
 export { adminDeleteStockLocation } from "./client/adminDeleteStockLocation.ts";
 export { adminDeleteTaxClass } from "./client/adminDeleteTaxClass.ts";
 export { adminDeleteTaxRate } from "./client/adminDeleteTaxRate.ts";
@@ -807,6 +1060,7 @@ export { adminGetCategory } from "./client/adminGetCategory.ts";
 export { adminGetMedia } from "./client/adminGetMedia.ts";
 export { adminGetPriceList } from "./client/adminGetPriceList.ts";
 export { adminGetProduct } from "./client/adminGetProduct.ts";
+export { adminGetPromotion } from "./client/adminGetPromotion.ts";
 export { adminGetStockLocation } from "./client/adminGetStockLocation.ts";
 export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
@@ -820,6 +1074,10 @@ export { adminListPriceLists } from "./client/adminListPriceLists.ts";
 export { adminListPriceSetTargets } from "./client/adminListPriceSetTargets.ts";
 export { adminListProductOptions } from "./client/adminListProductOptions.ts";
 export { adminListProducts } from "./client/adminListProducts.ts";
+export { adminListPromotionAmounts } from "./client/adminListPromotionAmounts.ts";
+export { adminListPromotionTargets } from "./client/adminListPromotionTargets.ts";
+export { adminListPromotionTranslations } from "./client/adminListPromotionTranslations.ts";
+export { adminListPromotions } from "./client/adminListPromotions.ts";
 export { adminListStockLocations } from "./client/adminListStockLocations.ts";
 export { adminListTaxClasses } from "./client/adminListTaxClasses.ts";
 export { adminListTaxRates } from "./client/adminListTaxRates.ts";
@@ -830,6 +1088,10 @@ export { adminUpdatePriceList } from "./client/adminUpdatePriceList.ts";
 export { adminUpdatePriceListPrice } from "./client/adminUpdatePriceListPrice.ts";
 export { adminUpdatePriceListTranslation } from "./client/adminUpdatePriceListTranslation.ts";
 export { adminUpdateProduct } from "./client/adminUpdateProduct.ts";
+export { adminUpdatePromotion } from "./client/adminUpdatePromotion.ts";
+export { adminUpdatePromotionAmount } from "./client/adminUpdatePromotionAmount.ts";
+export { adminUpdatePromotionTarget } from "./client/adminUpdatePromotionTarget.ts";
+export { adminUpdatePromotionTranslation } from "./client/adminUpdatePromotionTranslation.ts";
 export { adminUpdateStockLocation } from "./client/adminUpdateStockLocation.ts";
 export { adminUpdateTaxClass } from "./client/adminUpdateTaxClass.ts";
 export { adminUpdateTaxRate } from "./client/adminUpdateTaxRate.ts";
@@ -862,6 +1124,18 @@ export { useAdminCreatePriceListTranslation } from "./hooks/useAdminCreatePriceL
 export { adminCreateProductMutationKey } from "./hooks/useAdminCreateProduct.ts";
 export { adminCreateProductMutationOptions } from "./hooks/useAdminCreateProduct.ts";
 export { useAdminCreateProduct } from "./hooks/useAdminCreateProduct.ts";
+export { adminCreatePromotionMutationKey } from "./hooks/useAdminCreatePromotion.ts";
+export { adminCreatePromotionMutationOptions } from "./hooks/useAdminCreatePromotion.ts";
+export { useAdminCreatePromotion } from "./hooks/useAdminCreatePromotion.ts";
+export { adminCreatePromotionAmountMutationKey } from "./hooks/useAdminCreatePromotionAmount.ts";
+export { adminCreatePromotionAmountMutationOptions } from "./hooks/useAdminCreatePromotionAmount.ts";
+export { useAdminCreatePromotionAmount } from "./hooks/useAdminCreatePromotionAmount.ts";
+export { adminCreatePromotionTargetMutationKey } from "./hooks/useAdminCreatePromotionTarget.ts";
+export { adminCreatePromotionTargetMutationOptions } from "./hooks/useAdminCreatePromotionTarget.ts";
+export { useAdminCreatePromotionTarget } from "./hooks/useAdminCreatePromotionTarget.ts";
+export { adminCreatePromotionTranslationMutationKey } from "./hooks/useAdminCreatePromotionTranslation.ts";
+export { adminCreatePromotionTranslationMutationOptions } from "./hooks/useAdminCreatePromotionTranslation.ts";
+export { useAdminCreatePromotionTranslation } from "./hooks/useAdminCreatePromotionTranslation.ts";
 export { adminCreateStockLocationMutationKey } from "./hooks/useAdminCreateStockLocation.ts";
 export { adminCreateStockLocationMutationOptions } from "./hooks/useAdminCreateStockLocation.ts";
 export { useAdminCreateStockLocation } from "./hooks/useAdminCreateStockLocation.ts";
@@ -892,6 +1166,18 @@ export { useAdminDeletePriceListTranslation } from "./hooks/useAdminDeletePriceL
 export { adminDeleteProductMutationKey } from "./hooks/useAdminDeleteProduct.ts";
 export { adminDeleteProductMutationOptions } from "./hooks/useAdminDeleteProduct.ts";
 export { useAdminDeleteProduct } from "./hooks/useAdminDeleteProduct.ts";
+export { adminDeletePromotionMutationKey } from "./hooks/useAdminDeletePromotion.ts";
+export { adminDeletePromotionMutationOptions } from "./hooks/useAdminDeletePromotion.ts";
+export { useAdminDeletePromotion } from "./hooks/useAdminDeletePromotion.ts";
+export { adminDeletePromotionAmountMutationKey } from "./hooks/useAdminDeletePromotionAmount.ts";
+export { adminDeletePromotionAmountMutationOptions } from "./hooks/useAdminDeletePromotionAmount.ts";
+export { useAdminDeletePromotionAmount } from "./hooks/useAdminDeletePromotionAmount.ts";
+export { adminDeletePromotionTargetMutationKey } from "./hooks/useAdminDeletePromotionTarget.ts";
+export { adminDeletePromotionTargetMutationOptions } from "./hooks/useAdminDeletePromotionTarget.ts";
+export { useAdminDeletePromotionTarget } from "./hooks/useAdminDeletePromotionTarget.ts";
+export { adminDeletePromotionTranslationMutationKey } from "./hooks/useAdminDeletePromotionTranslation.ts";
+export { adminDeletePromotionTranslationMutationOptions } from "./hooks/useAdminDeletePromotionTranslation.ts";
+export { useAdminDeletePromotionTranslation } from "./hooks/useAdminDeletePromotionTranslation.ts";
 export { adminDeleteStockLocationMutationKey } from "./hooks/useAdminDeleteStockLocation.ts";
 export { adminDeleteStockLocationMutationOptions } from "./hooks/useAdminDeleteStockLocation.ts";
 export { useAdminDeleteStockLocation } from "./hooks/useAdminDeleteStockLocation.ts";
@@ -928,6 +1214,12 @@ export { useAdminGetProduct } from "./hooks/useAdminGetProduct.ts";
 export { adminGetProductSuspenseQueryKey } from "./hooks/useAdminGetProductSuspense.ts";
 export { adminGetProductSuspenseQueryOptions } from "./hooks/useAdminGetProductSuspense.ts";
 export { useAdminGetProductSuspense } from "./hooks/useAdminGetProductSuspense.ts";
+export { adminGetPromotionQueryKey } from "./hooks/useAdminGetPromotion.ts";
+export { adminGetPromotionQueryOptions } from "./hooks/useAdminGetPromotion.ts";
+export { useAdminGetPromotion } from "./hooks/useAdminGetPromotion.ts";
+export { adminGetPromotionSuspenseQueryKey } from "./hooks/useAdminGetPromotionSuspense.ts";
+export { adminGetPromotionSuspenseQueryOptions } from "./hooks/useAdminGetPromotionSuspense.ts";
+export { useAdminGetPromotionSuspense } from "./hooks/useAdminGetPromotionSuspense.ts";
 export { adminGetStockLocationQueryKey } from "./hooks/useAdminGetStockLocation.ts";
 export { adminGetStockLocationQueryOptions } from "./hooks/useAdminGetStockLocation.ts";
 export { useAdminGetStockLocation } from "./hooks/useAdminGetStockLocation.ts";
@@ -1006,6 +1298,30 @@ export { useAdminListProducts } from "./hooks/useAdminListProducts.ts";
 export { adminListProductsSuspenseQueryKey } from "./hooks/useAdminListProductsSuspense.ts";
 export { adminListProductsSuspenseQueryOptions } from "./hooks/useAdminListProductsSuspense.ts";
 export { useAdminListProductsSuspense } from "./hooks/useAdminListProductsSuspense.ts";
+export { adminListPromotionAmountsQueryKey } from "./hooks/useAdminListPromotionAmounts.ts";
+export { adminListPromotionAmountsQueryOptions } from "./hooks/useAdminListPromotionAmounts.ts";
+export { useAdminListPromotionAmounts } from "./hooks/useAdminListPromotionAmounts.ts";
+export { adminListPromotionAmountsSuspenseQueryKey } from "./hooks/useAdminListPromotionAmountsSuspense.ts";
+export { adminListPromotionAmountsSuspenseQueryOptions } from "./hooks/useAdminListPromotionAmountsSuspense.ts";
+export { useAdminListPromotionAmountsSuspense } from "./hooks/useAdminListPromotionAmountsSuspense.ts";
+export { adminListPromotionTargetsQueryKey } from "./hooks/useAdminListPromotionTargets.ts";
+export { adminListPromotionTargetsQueryOptions } from "./hooks/useAdminListPromotionTargets.ts";
+export { useAdminListPromotionTargets } from "./hooks/useAdminListPromotionTargets.ts";
+export { adminListPromotionTargetsSuspenseQueryKey } from "./hooks/useAdminListPromotionTargetsSuspense.ts";
+export { adminListPromotionTargetsSuspenseQueryOptions } from "./hooks/useAdminListPromotionTargetsSuspense.ts";
+export { useAdminListPromotionTargetsSuspense } from "./hooks/useAdminListPromotionTargetsSuspense.ts";
+export { adminListPromotionTranslationsQueryKey } from "./hooks/useAdminListPromotionTranslations.ts";
+export { adminListPromotionTranslationsQueryOptions } from "./hooks/useAdminListPromotionTranslations.ts";
+export { useAdminListPromotionTranslations } from "./hooks/useAdminListPromotionTranslations.ts";
+export { adminListPromotionTranslationsSuspenseQueryKey } from "./hooks/useAdminListPromotionTranslationsSuspense.ts";
+export { adminListPromotionTranslationsSuspenseQueryOptions } from "./hooks/useAdminListPromotionTranslationsSuspense.ts";
+export { useAdminListPromotionTranslationsSuspense } from "./hooks/useAdminListPromotionTranslationsSuspense.ts";
+export { adminListPromotionsQueryKey } from "./hooks/useAdminListPromotions.ts";
+export { adminListPromotionsQueryOptions } from "./hooks/useAdminListPromotions.ts";
+export { useAdminListPromotions } from "./hooks/useAdminListPromotions.ts";
+export { adminListPromotionsSuspenseQueryKey } from "./hooks/useAdminListPromotionsSuspense.ts";
+export { adminListPromotionsSuspenseQueryOptions } from "./hooks/useAdminListPromotionsSuspense.ts";
+export { useAdminListPromotionsSuspense } from "./hooks/useAdminListPromotionsSuspense.ts";
 export { adminListStockLocationsQueryKey } from "./hooks/useAdminListStockLocations.ts";
 export { adminListStockLocationsQueryOptions } from "./hooks/useAdminListStockLocations.ts";
 export { useAdminListStockLocations } from "./hooks/useAdminListStockLocations.ts";
@@ -1045,6 +1361,18 @@ export { useAdminUpdatePriceListTranslation } from "./hooks/useAdminUpdatePriceL
 export { adminUpdateProductMutationKey } from "./hooks/useAdminUpdateProduct.ts";
 export { adminUpdateProductMutationOptions } from "./hooks/useAdminUpdateProduct.ts";
 export { useAdminUpdateProduct } from "./hooks/useAdminUpdateProduct.ts";
+export { adminUpdatePromotionMutationKey } from "./hooks/useAdminUpdatePromotion.ts";
+export { adminUpdatePromotionMutationOptions } from "./hooks/useAdminUpdatePromotion.ts";
+export { useAdminUpdatePromotion } from "./hooks/useAdminUpdatePromotion.ts";
+export { adminUpdatePromotionAmountMutationKey } from "./hooks/useAdminUpdatePromotionAmount.ts";
+export { adminUpdatePromotionAmountMutationOptions } from "./hooks/useAdminUpdatePromotionAmount.ts";
+export { useAdminUpdatePromotionAmount } from "./hooks/useAdminUpdatePromotionAmount.ts";
+export { adminUpdatePromotionTargetMutationKey } from "./hooks/useAdminUpdatePromotionTarget.ts";
+export { adminUpdatePromotionTargetMutationOptions } from "./hooks/useAdminUpdatePromotionTarget.ts";
+export { useAdminUpdatePromotionTarget } from "./hooks/useAdminUpdatePromotionTarget.ts";
+export { adminUpdatePromotionTranslationMutationKey } from "./hooks/useAdminUpdatePromotionTranslation.ts";
+export { adminUpdatePromotionTranslationMutationOptions } from "./hooks/useAdminUpdatePromotionTranslation.ts";
+export { useAdminUpdatePromotionTranslation } from "./hooks/useAdminUpdatePromotionTranslation.ts";
 export { adminUpdateStockLocationMutationKey } from "./hooks/useAdminUpdateStockLocation.ts";
 export { adminUpdateStockLocationMutationOptions } from "./hooks/useAdminUpdateStockLocation.ts";
 export { useAdminUpdateStockLocation } from "./hooks/useAdminUpdateStockLocation.ts";
@@ -1060,9 +1388,12 @@ export { useAdminUpdateVariant } from "./hooks/useAdminUpdateVariant.ts";
 export { adminUploadMediaMutationKey } from "./hooks/useAdminUploadMedia.ts";
 export { adminUploadMediaMutationOptions } from "./hooks/useAdminUploadMedia.ts";
 export { useAdminUploadMedia } from "./hooks/useAdminUploadMedia.ts";
+export { adminCreatePromotionTarget201DataTargetTypeEnum } from "./types/AdminCreatePromotionTarget.ts";
 export { adminGetPriceList200DataStatusEnum } from "./types/AdminGetPriceList.ts";
 export { adminGetPriceList200DataTypeEnum } from "./types/AdminGetPriceList.ts";
 export { adminGetProduct200DataTypeEnum } from "./types/AdminGetProduct.ts";
+export { adminGetPromotion200DataTypeEnum } from "./types/AdminGetPromotion.ts";
+export { adminGetPromotion200TargetsTargetTypeEnum } from "./types/AdminGetPromotion.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./types/AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./types/AdminListCategories.ts";
 export { adminListInventoryLevelsQueryParamsSortByEnum } from "./types/AdminListInventoryLevels.ts";
@@ -1085,6 +1416,12 @@ export { adminListProducts200DataTypeEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsSortByEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsSortOrderEnum } from "./types/AdminListProducts.ts";
 export { adminListProductsQueryParamsStatusEnum } from "./types/AdminListProducts.ts";
+export { adminListPromotionTargets200DataTargetTypeEnum } from "./types/AdminListPromotionTargets.ts";
+export { adminListPromotions200DataTypeEnum } from "./types/AdminListPromotions.ts";
+export { adminListPromotionsQueryParamsScheduleStateEnum } from "./types/AdminListPromotions.ts";
+export { adminListPromotionsQueryParamsSortByEnum } from "./types/AdminListPromotions.ts";
+export { adminListPromotionsQueryParamsSortOrderEnum } from "./types/AdminListPromotions.ts";
+export { adminListPromotionsQueryParamsTypeEnum } from "./types/AdminListPromotions.ts";
 export { adminListStockLocationsQueryParamsSortByEnum } from "./types/AdminListStockLocations.ts";
 export { adminListStockLocationsQueryParamsSortOrderEnum } from "./types/AdminListStockLocations.ts";
 export { adminListTaxClassesQueryParamsSortByEnum } from "./types/AdminListTaxClasses.ts";
@@ -1092,6 +1429,9 @@ export { adminListTaxClassesQueryParamsSortOrderEnum } from "./types/AdminListTa
 export { adminUpdatePriceList200DataStatusEnum } from "./types/AdminUpdatePriceList.ts";
 export { adminUpdatePriceList200DataTypeEnum } from "./types/AdminUpdatePriceList.ts";
 export { adminUpdateProduct200DataTypeEnum } from "./types/AdminUpdateProduct.ts";
+export { adminUpdatePromotion200DataTypeEnum } from "./types/AdminUpdatePromotion.ts";
+export { adminUpdatePromotion200TargetsTargetTypeEnum } from "./types/AdminUpdatePromotion.ts";
+export { adminUpdatePromotionTarget200DataTargetTypeEnum } from "./types/AdminUpdatePromotionTarget.ts";
 export {
   adminBulkDeleteMedia200Schema,
   adminBulkDeleteMedia400Schema,
@@ -1193,6 +1533,53 @@ export {
   adminCreateProductMutationRequestSchema,
   adminCreateProductMutationResponseSchema,
 } from "./zod/adminCreateProductSchema.ts";
+export {
+  adminCreatePromotionAmount201Schema,
+  adminCreatePromotionAmount400Schema,
+  adminCreatePromotionAmount401Schema,
+  adminCreatePromotionAmount403Schema,
+  adminCreatePromotionAmount404Schema,
+  adminCreatePromotionAmount409Schema,
+  adminCreatePromotionAmount500Schema,
+  adminCreatePromotionAmountMutationRequestSchema,
+  adminCreatePromotionAmountMutationResponseSchema,
+  adminCreatePromotionAmountPathParamsSchema,
+} from "./zod/adminCreatePromotionAmountSchema.ts";
+export {
+  adminCreatePromotion201Schema,
+  adminCreatePromotion400Schema,
+  adminCreatePromotion401Schema,
+  adminCreatePromotion403Schema,
+  adminCreatePromotion404Schema,
+  adminCreatePromotion409Schema,
+  adminCreatePromotion500Schema,
+  adminCreatePromotionMutationRequestSchema,
+  adminCreatePromotionMutationResponseSchema,
+} from "./zod/adminCreatePromotionSchema.ts";
+export {
+  adminCreatePromotionTarget201Schema,
+  adminCreatePromotionTarget400Schema,
+  adminCreatePromotionTarget401Schema,
+  adminCreatePromotionTarget403Schema,
+  adminCreatePromotionTarget404Schema,
+  adminCreatePromotionTarget409Schema,
+  adminCreatePromotionTarget500Schema,
+  adminCreatePromotionTargetMutationRequestSchema,
+  adminCreatePromotionTargetMutationResponseSchema,
+  adminCreatePromotionTargetPathParamsSchema,
+} from "./zod/adminCreatePromotionTargetSchema.ts";
+export {
+  adminCreatePromotionTranslation201Schema,
+  adminCreatePromotionTranslation400Schema,
+  adminCreatePromotionTranslation401Schema,
+  adminCreatePromotionTranslation403Schema,
+  adminCreatePromotionTranslation404Schema,
+  adminCreatePromotionTranslation409Schema,
+  adminCreatePromotionTranslation500Schema,
+  adminCreatePromotionTranslationMutationRequestSchema,
+  adminCreatePromotionTranslationMutationResponseSchema,
+  adminCreatePromotionTranslationPathParamsSchema,
+} from "./zod/adminCreatePromotionTranslationSchema.ts";
 export {
   adminCreateStockLocation201Schema,
   adminCreateStockLocation400Schema,
@@ -1305,6 +1692,50 @@ export {
   adminDeleteProductPathParamsSchema,
 } from "./zod/adminDeleteProductSchema.ts";
 export {
+  adminDeletePromotionAmount200Schema,
+  adminDeletePromotionAmount400Schema,
+  adminDeletePromotionAmount401Schema,
+  adminDeletePromotionAmount403Schema,
+  adminDeletePromotionAmount404Schema,
+  adminDeletePromotionAmount409Schema,
+  adminDeletePromotionAmount500Schema,
+  adminDeletePromotionAmountMutationResponseSchema,
+  adminDeletePromotionAmountPathParamsSchema,
+} from "./zod/adminDeletePromotionAmountSchema.ts";
+export {
+  adminDeletePromotion200Schema,
+  adminDeletePromotion400Schema,
+  adminDeletePromotion401Schema,
+  adminDeletePromotion403Schema,
+  adminDeletePromotion404Schema,
+  adminDeletePromotion409Schema,
+  adminDeletePromotion500Schema,
+  adminDeletePromotionMutationResponseSchema,
+  adminDeletePromotionPathParamsSchema,
+} from "./zod/adminDeletePromotionSchema.ts";
+export {
+  adminDeletePromotionTarget200Schema,
+  adminDeletePromotionTarget400Schema,
+  adminDeletePromotionTarget401Schema,
+  adminDeletePromotionTarget403Schema,
+  adminDeletePromotionTarget404Schema,
+  adminDeletePromotionTarget409Schema,
+  adminDeletePromotionTarget500Schema,
+  adminDeletePromotionTargetMutationResponseSchema,
+  adminDeletePromotionTargetPathParamsSchema,
+} from "./zod/adminDeletePromotionTargetSchema.ts";
+export {
+  adminDeletePromotionTranslation200Schema,
+  adminDeletePromotionTranslation400Schema,
+  adminDeletePromotionTranslation401Schema,
+  adminDeletePromotionTranslation403Schema,
+  adminDeletePromotionTranslation404Schema,
+  adminDeletePromotionTranslation409Schema,
+  adminDeletePromotionTranslation500Schema,
+  adminDeletePromotionTranslationMutationResponseSchema,
+  adminDeletePromotionTranslationPathParamsSchema,
+} from "./zod/adminDeletePromotionTranslationSchema.ts";
+export {
   adminDeleteStockLocation200Schema,
   adminDeleteStockLocation400Schema,
   adminDeleteStockLocation401Schema,
@@ -1393,6 +1824,17 @@ export {
   adminGetProductPathParamsSchema,
   adminGetProductQueryResponseSchema,
 } from "./zod/adminGetProductSchema.ts";
+export {
+  adminGetPromotion200Schema,
+  adminGetPromotion400Schema,
+  adminGetPromotion401Schema,
+  adminGetPromotion403Schema,
+  adminGetPromotion404Schema,
+  adminGetPromotion409Schema,
+  adminGetPromotion500Schema,
+  adminGetPromotionPathParamsSchema,
+  adminGetPromotionQueryResponseSchema,
+} from "./zod/adminGetPromotionSchema.ts";
 export {
   adminGetStockLocation200Schema,
   adminGetStockLocation400Schema,
@@ -1537,6 +1979,50 @@ export {
   adminListProductsQueryResponseSchema,
 } from "./zod/adminListProductsSchema.ts";
 export {
+  adminListPromotionAmounts200Schema,
+  adminListPromotionAmounts400Schema,
+  adminListPromotionAmounts401Schema,
+  adminListPromotionAmounts403Schema,
+  adminListPromotionAmounts404Schema,
+  adminListPromotionAmounts409Schema,
+  adminListPromotionAmounts500Schema,
+  adminListPromotionAmountsPathParamsSchema,
+  adminListPromotionAmountsQueryResponseSchema,
+} from "./zod/adminListPromotionAmountsSchema.ts";
+export {
+  adminListPromotionTargets200Schema,
+  adminListPromotionTargets400Schema,
+  adminListPromotionTargets401Schema,
+  adminListPromotionTargets403Schema,
+  adminListPromotionTargets404Schema,
+  adminListPromotionTargets409Schema,
+  adminListPromotionTargets500Schema,
+  adminListPromotionTargetsPathParamsSchema,
+  adminListPromotionTargetsQueryResponseSchema,
+} from "./zod/adminListPromotionTargetsSchema.ts";
+export {
+  adminListPromotionTranslations200Schema,
+  adminListPromotionTranslations400Schema,
+  adminListPromotionTranslations401Schema,
+  adminListPromotionTranslations403Schema,
+  adminListPromotionTranslations404Schema,
+  adminListPromotionTranslations409Schema,
+  adminListPromotionTranslations500Schema,
+  adminListPromotionTranslationsPathParamsSchema,
+  adminListPromotionTranslationsQueryResponseSchema,
+} from "./zod/adminListPromotionTranslationsSchema.ts";
+export {
+  adminListPromotions200Schema,
+  adminListPromotions400Schema,
+  adminListPromotions401Schema,
+  adminListPromotions403Schema,
+  adminListPromotions404Schema,
+  adminListPromotions409Schema,
+  adminListPromotions500Schema,
+  adminListPromotionsQueryParamsSchema,
+  adminListPromotionsQueryResponseSchema,
+} from "./zod/adminListPromotionsSchema.ts";
+export {
   adminListStockLocations200Schema,
   adminListStockLocations400Schema,
   adminListStockLocations401Schema,
@@ -1653,6 +2139,54 @@ export {
   adminUpdateProductMutationResponseSchema,
   adminUpdateProductPathParamsSchema,
 } from "./zod/adminUpdateProductSchema.ts";
+export {
+  adminUpdatePromotionAmount200Schema,
+  adminUpdatePromotionAmount400Schema,
+  adminUpdatePromotionAmount401Schema,
+  adminUpdatePromotionAmount403Schema,
+  adminUpdatePromotionAmount404Schema,
+  adminUpdatePromotionAmount409Schema,
+  adminUpdatePromotionAmount500Schema,
+  adminUpdatePromotionAmountMutationRequestSchema,
+  adminUpdatePromotionAmountMutationResponseSchema,
+  adminUpdatePromotionAmountPathParamsSchema,
+} from "./zod/adminUpdatePromotionAmountSchema.ts";
+export {
+  adminUpdatePromotion200Schema,
+  adminUpdatePromotion400Schema,
+  adminUpdatePromotion401Schema,
+  adminUpdatePromotion403Schema,
+  adminUpdatePromotion404Schema,
+  adminUpdatePromotion409Schema,
+  adminUpdatePromotion500Schema,
+  adminUpdatePromotionMutationRequestSchema,
+  adminUpdatePromotionMutationResponseSchema,
+  adminUpdatePromotionPathParamsSchema,
+} from "./zod/adminUpdatePromotionSchema.ts";
+export {
+  adminUpdatePromotionTarget200Schema,
+  adminUpdatePromotionTarget400Schema,
+  adminUpdatePromotionTarget401Schema,
+  adminUpdatePromotionTarget403Schema,
+  adminUpdatePromotionTarget404Schema,
+  adminUpdatePromotionTarget409Schema,
+  adminUpdatePromotionTarget500Schema,
+  adminUpdatePromotionTargetMutationRequestSchema,
+  adminUpdatePromotionTargetMutationResponseSchema,
+  adminUpdatePromotionTargetPathParamsSchema,
+} from "./zod/adminUpdatePromotionTargetSchema.ts";
+export {
+  adminUpdatePromotionTranslation200Schema,
+  adminUpdatePromotionTranslation400Schema,
+  adminUpdatePromotionTranslation401Schema,
+  adminUpdatePromotionTranslation403Schema,
+  adminUpdatePromotionTranslation404Schema,
+  adminUpdatePromotionTranslation409Schema,
+  adminUpdatePromotionTranslation500Schema,
+  adminUpdatePromotionTranslationMutationRequestSchema,
+  adminUpdatePromotionTranslationMutationResponseSchema,
+  adminUpdatePromotionTranslationPathParamsSchema,
+} from "./zod/adminUpdatePromotionTranslationSchema.ts";
 export {
   adminUpdateStockLocation200Schema,
   adminUpdateStockLocation400Schema,
