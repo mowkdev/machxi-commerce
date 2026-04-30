@@ -147,6 +147,28 @@ export {
   adminCreatePromotionTranslationPathParamsSchema,
 } from "./adminCreatePromotionTranslationSchema.ts";
 export {
+  adminCreateShippingOption201Schema,
+  adminCreateShippingOption400Schema,
+  adminCreateShippingOption401Schema,
+  adminCreateShippingOption403Schema,
+  adminCreateShippingOption404Schema,
+  adminCreateShippingOption409Schema,
+  adminCreateShippingOption500Schema,
+  adminCreateShippingOptionMutationRequestSchema,
+  adminCreateShippingOptionMutationResponseSchema,
+} from "./adminCreateShippingOptionSchema.ts";
+export {
+  adminCreateShippingZone201Schema,
+  adminCreateShippingZone400Schema,
+  adminCreateShippingZone401Schema,
+  adminCreateShippingZone403Schema,
+  adminCreateShippingZone404Schema,
+  adminCreateShippingZone409Schema,
+  adminCreateShippingZone500Schema,
+  adminCreateShippingZoneMutationRequestSchema,
+  adminCreateShippingZoneMutationResponseSchema,
+} from "./adminCreateShippingZoneSchema.ts";
+export {
   adminCreateStockLocation201Schema,
   adminCreateStockLocation400Schema,
   adminCreateStockLocation401Schema,
@@ -302,6 +324,28 @@ export {
   adminDeletePromotionTranslationPathParamsSchema,
 } from "./adminDeletePromotionTranslationSchema.ts";
 export {
+  adminDeleteShippingOption200Schema,
+  adminDeleteShippingOption400Schema,
+  adminDeleteShippingOption401Schema,
+  adminDeleteShippingOption403Schema,
+  adminDeleteShippingOption404Schema,
+  adminDeleteShippingOption409Schema,
+  adminDeleteShippingOption500Schema,
+  adminDeleteShippingOptionMutationResponseSchema,
+  adminDeleteShippingOptionPathParamsSchema,
+} from "./adminDeleteShippingOptionSchema.ts";
+export {
+  adminDeleteShippingZone200Schema,
+  adminDeleteShippingZone400Schema,
+  adminDeleteShippingZone401Schema,
+  adminDeleteShippingZone403Schema,
+  adminDeleteShippingZone404Schema,
+  adminDeleteShippingZone409Schema,
+  adminDeleteShippingZone500Schema,
+  adminDeleteShippingZoneMutationResponseSchema,
+  adminDeleteShippingZonePathParamsSchema,
+} from "./adminDeleteShippingZoneSchema.ts";
+export {
   adminDeleteStockLocation200Schema,
   adminDeleteStockLocation400Schema,
   adminDeleteStockLocation401Schema,
@@ -401,6 +445,28 @@ export {
   adminGetPromotionPathParamsSchema,
   adminGetPromotionQueryResponseSchema,
 } from "./adminGetPromotionSchema.ts";
+export {
+  adminGetShippingOption200Schema,
+  adminGetShippingOption400Schema,
+  adminGetShippingOption401Schema,
+  adminGetShippingOption403Schema,
+  adminGetShippingOption404Schema,
+  adminGetShippingOption409Schema,
+  adminGetShippingOption500Schema,
+  adminGetShippingOptionPathParamsSchema,
+  adminGetShippingOptionQueryResponseSchema,
+} from "./adminGetShippingOptionSchema.ts";
+export {
+  adminGetShippingZone200Schema,
+  adminGetShippingZone400Schema,
+  adminGetShippingZone401Schema,
+  adminGetShippingZone403Schema,
+  adminGetShippingZone404Schema,
+  adminGetShippingZone409Schema,
+  adminGetShippingZone500Schema,
+  adminGetShippingZonePathParamsSchema,
+  adminGetShippingZoneQueryResponseSchema,
+} from "./adminGetShippingZoneSchema.ts";
 export {
   adminGetStockLocation200Schema,
   adminGetStockLocation400Schema,
@@ -589,6 +655,28 @@ export {
   adminListPromotionsQueryResponseSchema,
 } from "./adminListPromotionsSchema.ts";
 export {
+  adminListShippingOptions200Schema,
+  adminListShippingOptions400Schema,
+  adminListShippingOptions401Schema,
+  adminListShippingOptions403Schema,
+  adminListShippingOptions404Schema,
+  adminListShippingOptions409Schema,
+  adminListShippingOptions500Schema,
+  adminListShippingOptionsQueryParamsSchema,
+  adminListShippingOptionsQueryResponseSchema,
+} from "./adminListShippingOptionsSchema.ts";
+export {
+  adminListShippingZones200Schema,
+  adminListShippingZones400Schema,
+  adminListShippingZones401Schema,
+  adminListShippingZones403Schema,
+  adminListShippingZones404Schema,
+  adminListShippingZones409Schema,
+  adminListShippingZones500Schema,
+  adminListShippingZonesQueryParamsSchema,
+  adminListShippingZonesQueryResponseSchema,
+} from "./adminListShippingZonesSchema.ts";
+export {
   adminListStockLocations200Schema,
   adminListStockLocations400Schema,
   adminListStockLocations401Schema,
@@ -753,6 +841,30 @@ export {
   adminUpdatePromotionTranslationMutationResponseSchema,
   adminUpdatePromotionTranslationPathParamsSchema,
 } from "./adminUpdatePromotionTranslationSchema.ts";
+export {
+  adminUpdateShippingOption200Schema,
+  adminUpdateShippingOption400Schema,
+  adminUpdateShippingOption401Schema,
+  adminUpdateShippingOption403Schema,
+  adminUpdateShippingOption404Schema,
+  adminUpdateShippingOption409Schema,
+  adminUpdateShippingOption500Schema,
+  adminUpdateShippingOptionMutationRequestSchema,
+  adminUpdateShippingOptionMutationResponseSchema,
+  adminUpdateShippingOptionPathParamsSchema,
+} from "./adminUpdateShippingOptionSchema.ts";
+export {
+  adminUpdateShippingZone200Schema,
+  adminUpdateShippingZone400Schema,
+  adminUpdateShippingZone401Schema,
+  adminUpdateShippingZone403Schema,
+  adminUpdateShippingZone404Schema,
+  adminUpdateShippingZone409Schema,
+  adminUpdateShippingZone500Schema,
+  adminUpdateShippingZoneMutationRequestSchema,
+  adminUpdateShippingZoneMutationResponseSchema,
+  adminUpdateShippingZonePathParamsSchema,
+} from "./adminUpdateShippingZoneSchema.ts";
 export {
   adminUpdateStockLocation200Schema,
   adminUpdateStockLocation400Schema,

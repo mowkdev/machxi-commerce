@@ -161,6 +161,30 @@ export type {
   AdminCreatePromotionTranslationPathParams,
 } from "./AdminCreatePromotionTranslation.ts";
 export type {
+  AdminCreateShippingOption201,
+  AdminCreateShippingOption400,
+  AdminCreateShippingOption401,
+  AdminCreateShippingOption403,
+  AdminCreateShippingOption404,
+  AdminCreateShippingOption409,
+  AdminCreateShippingOption500,
+  AdminCreateShippingOptionMutation,
+  AdminCreateShippingOptionMutationRequest,
+  AdminCreateShippingOptionMutationResponse,
+} from "./AdminCreateShippingOption.ts";
+export type {
+  AdminCreateShippingZone201,
+  AdminCreateShippingZone400,
+  AdminCreateShippingZone401,
+  AdminCreateShippingZone403,
+  AdminCreateShippingZone404,
+  AdminCreateShippingZone409,
+  AdminCreateShippingZone500,
+  AdminCreateShippingZoneMutation,
+  AdminCreateShippingZoneMutationRequest,
+  AdminCreateShippingZoneMutationResponse,
+} from "./AdminCreateShippingZone.ts";
+export type {
   AdminCreateStockLocation201,
   AdminCreateStockLocation400,
   AdminCreateStockLocation401,
@@ -330,6 +354,30 @@ export type {
   AdminDeletePromotionTranslationPathParams,
 } from "./AdminDeletePromotionTranslation.ts";
 export type {
+  AdminDeleteShippingOption200,
+  AdminDeleteShippingOption400,
+  AdminDeleteShippingOption401,
+  AdminDeleteShippingOption403,
+  AdminDeleteShippingOption404,
+  AdminDeleteShippingOption409,
+  AdminDeleteShippingOption500,
+  AdminDeleteShippingOptionMutation,
+  AdminDeleteShippingOptionMutationResponse,
+  AdminDeleteShippingOptionPathParams,
+} from "./AdminDeleteShippingOption.ts";
+export type {
+  AdminDeleteShippingZone200,
+  AdminDeleteShippingZone400,
+  AdminDeleteShippingZone401,
+  AdminDeleteShippingZone403,
+  AdminDeleteShippingZone404,
+  AdminDeleteShippingZone409,
+  AdminDeleteShippingZone500,
+  AdminDeleteShippingZoneMutation,
+  AdminDeleteShippingZoneMutationResponse,
+  AdminDeleteShippingZonePathParams,
+} from "./AdminDeleteShippingZone.ts";
+export type {
   AdminDeleteStockLocation200,
   AdminDeleteStockLocation400,
   AdminDeleteStockLocation401,
@@ -443,6 +491,30 @@ export type {
   AdminGetPromotionQuery,
   AdminGetPromotionQueryResponse,
 } from "./AdminGetPromotion.ts";
+export type {
+  AdminGetShippingOption200,
+  AdminGetShippingOption400,
+  AdminGetShippingOption401,
+  AdminGetShippingOption403,
+  AdminGetShippingOption404,
+  AdminGetShippingOption409,
+  AdminGetShippingOption500,
+  AdminGetShippingOptionPathParams,
+  AdminGetShippingOptionQuery,
+  AdminGetShippingOptionQueryResponse,
+} from "./AdminGetShippingOption.ts";
+export type {
+  AdminGetShippingZone200,
+  AdminGetShippingZone400,
+  AdminGetShippingZone401,
+  AdminGetShippingZone403,
+  AdminGetShippingZone404,
+  AdminGetShippingZone409,
+  AdminGetShippingZone500,
+  AdminGetShippingZonePathParams,
+  AdminGetShippingZoneQuery,
+  AdminGetShippingZoneQueryResponse,
+} from "./AdminGetShippingZone.ts";
 export type {
   AdminGetStockLocation200,
   AdminGetStockLocation400,
@@ -676,6 +748,34 @@ export type {
   AdminListPromotionsQueryResponse,
 } from "./AdminListPromotions.ts";
 export type {
+  AdminListShippingOptions200,
+  AdminListShippingOptions400,
+  AdminListShippingOptions401,
+  AdminListShippingOptions403,
+  AdminListShippingOptions404,
+  AdminListShippingOptions409,
+  AdminListShippingOptions500,
+  AdminListShippingOptionsQuery,
+  AdminListShippingOptionsQueryParams,
+  AdminListShippingOptionsQueryParamsSortByEnumKey,
+  AdminListShippingOptionsQueryParamsSortOrderEnumKey,
+  AdminListShippingOptionsQueryResponse,
+} from "./AdminListShippingOptions.ts";
+export type {
+  AdminListShippingZones200,
+  AdminListShippingZones400,
+  AdminListShippingZones401,
+  AdminListShippingZones403,
+  AdminListShippingZones404,
+  AdminListShippingZones409,
+  AdminListShippingZones500,
+  AdminListShippingZonesQuery,
+  AdminListShippingZonesQueryParams,
+  AdminListShippingZonesQueryParamsSortByEnumKey,
+  AdminListShippingZonesQueryParamsSortOrderEnumKey,
+  AdminListShippingZonesQueryResponse,
+} from "./AdminListShippingZones.ts";
+export type {
   AdminListStockLocations200,
   AdminListStockLocations400,
   AdminListStockLocations401,
@@ -865,6 +965,32 @@ export type {
   AdminUpdatePromotionTranslationPathParams,
 } from "./AdminUpdatePromotionTranslation.ts";
 export type {
+  AdminUpdateShippingOption200,
+  AdminUpdateShippingOption400,
+  AdminUpdateShippingOption401,
+  AdminUpdateShippingOption403,
+  AdminUpdateShippingOption404,
+  AdminUpdateShippingOption409,
+  AdminUpdateShippingOption500,
+  AdminUpdateShippingOptionMutation,
+  AdminUpdateShippingOptionMutationRequest,
+  AdminUpdateShippingOptionMutationResponse,
+  AdminUpdateShippingOptionPathParams,
+} from "./AdminUpdateShippingOption.ts";
+export type {
+  AdminUpdateShippingZone200,
+  AdminUpdateShippingZone400,
+  AdminUpdateShippingZone401,
+  AdminUpdateShippingZone403,
+  AdminUpdateShippingZone404,
+  AdminUpdateShippingZone409,
+  AdminUpdateShippingZone500,
+  AdminUpdateShippingZoneMutation,
+  AdminUpdateShippingZoneMutationRequest,
+  AdminUpdateShippingZoneMutationResponse,
+  AdminUpdateShippingZonePathParams,
+} from "./AdminUpdateShippingZone.ts";
+export type {
   AdminUpdateStockLocation200,
   AdminUpdateStockLocation400,
   AdminUpdateStockLocation401,
@@ -962,6 +1088,10 @@ export { adminListPromotionsQueryParamsScheduleStateEnum } from "./AdminListProm
 export { adminListPromotionsQueryParamsSortByEnum } from "./AdminListPromotions.ts";
 export { adminListPromotionsQueryParamsSortOrderEnum } from "./AdminListPromotions.ts";
 export { adminListPromotionsQueryParamsTypeEnum } from "./AdminListPromotions.ts";
+export { adminListShippingOptionsQueryParamsSortByEnum } from "./AdminListShippingOptions.ts";
+export { adminListShippingOptionsQueryParamsSortOrderEnum } from "./AdminListShippingOptions.ts";
+export { adminListShippingZonesQueryParamsSortByEnum } from "./AdminListShippingZones.ts";
+export { adminListShippingZonesQueryParamsSortOrderEnum } from "./AdminListShippingZones.ts";
 export { adminListStockLocationsQueryParamsSortByEnum } from "./AdminListStockLocations.ts";
 export { adminListStockLocationsQueryParamsSortOrderEnum } from "./AdminListStockLocations.ts";
 export { adminListTaxClassesQueryParamsSortByEnum } from "./AdminListTaxClasses.ts";
