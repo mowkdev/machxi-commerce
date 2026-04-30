@@ -159,3 +159,28 @@ export function useDeleteCustomerAddress(customerId: string) {
     },
   });
 }
+
+export function useBulkDeleteCustomerAddresses(customerId: string) {
+  const invalidateCustomer = useInvalidateCustomer(customerId);
+
+  return useMutation<void, SdkRequestError, string[]>({
+    mutationFn: async (addressIds) => {
+      await Promise.all(
+        addressIds.map((addressId) =>
+          adminDeleteCustomerAddress(customerId, addressId),
+        ),
+      );
+    },
+    onSuccess: (_data, addressIds) => {
+      invalidateCustomer();
+      toast.success(
+        addressIds.length === 1
+          ? "Address deleted"
+          : `${addressIds.length} addresses deleted`,
+      );
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to delete addresses");
+    },
+  });
+}
