@@ -14,6 +14,8 @@ import CategoryEditPage from "@/pages/categories/CategoryEditPage";
 import MediaLibraryPage from "@/pages/media/MediaLibraryPage";
 import OrdersPage from "@/pages/orders/OrdersPage";
 import CustomersPage from "@/pages/customers/CustomersPage";
+import CustomerCreatePage from "@/pages/customers/CustomerCreatePage";
+import CustomerEditPage from "@/pages/customers/CustomerEditPage";
 import StockLocationsPage from "@/pages/stock-locations/StockLocationsPage";
 import StockLocationCreatePage from "@/pages/stock-locations/StockLocationCreatePage";
 import StockLocationEditPage from "@/pages/stock-locations/StockLocationEditPage";
@@ -54,6 +56,8 @@ export default function App() {
           <Route path="/media" element={<MediaLibraryPage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/customers" element={<CustomersPage />} />
+          <Route path="/customers/new" element={<CustomerCreatePage />} />
+          <Route path="/customers/:id" element={<CustomerEditPage />} />
           <Route path="/stock-locations" element={<StockLocationsPage />} />
           <Route
             path="/stock-locations/new"

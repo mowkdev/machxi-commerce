@@ -21,6 +21,29 @@ export {
   adminCreateCategoryMutationResponseSchema,
 } from "./adminCreateCategorySchema.ts";
 export {
+  adminCreateCustomerAddress201Schema,
+  adminCreateCustomerAddress400Schema,
+  adminCreateCustomerAddress401Schema,
+  adminCreateCustomerAddress403Schema,
+  adminCreateCustomerAddress404Schema,
+  adminCreateCustomerAddress409Schema,
+  adminCreateCustomerAddress500Schema,
+  adminCreateCustomerAddressMutationRequestSchema,
+  adminCreateCustomerAddressMutationResponseSchema,
+  adminCreateCustomerAddressPathParamsSchema,
+} from "./adminCreateCustomerAddressSchema.ts";
+export {
+  adminCreateCustomer201Schema,
+  adminCreateCustomer400Schema,
+  adminCreateCustomer401Schema,
+  adminCreateCustomer403Schema,
+  adminCreateCustomer404Schema,
+  adminCreateCustomer409Schema,
+  adminCreateCustomer500Schema,
+  adminCreateCustomerMutationRequestSchema,
+  adminCreateCustomerMutationResponseSchema,
+} from "./adminCreateCustomerSchema.ts";
+export {
   adminCreateInventoryAdjustment201Schema,
   adminCreateInventoryAdjustment400Schema,
   adminCreateInventoryAdjustment401Schema,
@@ -214,6 +237,28 @@ export {
   adminDeleteCategoryPathParamsSchema,
 } from "./adminDeleteCategorySchema.ts";
 export {
+  adminDeleteCustomerAddress200Schema,
+  adminDeleteCustomerAddress400Schema,
+  adminDeleteCustomerAddress401Schema,
+  adminDeleteCustomerAddress403Schema,
+  adminDeleteCustomerAddress404Schema,
+  adminDeleteCustomerAddress409Schema,
+  adminDeleteCustomerAddress500Schema,
+  adminDeleteCustomerAddressMutationResponseSchema,
+  adminDeleteCustomerAddressPathParamsSchema,
+} from "./adminDeleteCustomerAddressSchema.ts";
+export {
+  adminDeleteCustomer200Schema,
+  adminDeleteCustomer400Schema,
+  adminDeleteCustomer401Schema,
+  adminDeleteCustomer403Schema,
+  adminDeleteCustomer404Schema,
+  adminDeleteCustomer409Schema,
+  adminDeleteCustomer500Schema,
+  adminDeleteCustomerMutationResponseSchema,
+  adminDeleteCustomerPathParamsSchema,
+} from "./adminDeleteCustomerSchema.ts";
+export {
   adminDeleteInventoryLevel200Schema,
   adminDeleteInventoryLevel400Schema,
   adminDeleteInventoryLevel401Schema,
@@ -402,6 +447,17 @@ export {
   adminGetCategoryQueryResponseSchema,
 } from "./adminGetCategorySchema.ts";
 export {
+  adminGetCustomer200Schema,
+  adminGetCustomer400Schema,
+  adminGetCustomer401Schema,
+  adminGetCustomer403Schema,
+  adminGetCustomer404Schema,
+  adminGetCustomer409Schema,
+  adminGetCustomer500Schema,
+  adminGetCustomerPathParamsSchema,
+  adminGetCustomerQueryResponseSchema,
+} from "./adminGetCustomerSchema.ts";
+export {
   adminGetMedia200Schema,
   adminGetMedia400Schema,
   adminGetMedia401Schema,
@@ -500,6 +556,17 @@ export {
   adminListCategoriesQueryParamsSchema,
   adminListCategoriesQueryResponseSchema,
 } from "./adminListCategoriesSchema.ts";
+export {
+  adminListCustomers200Schema,
+  adminListCustomers400Schema,
+  adminListCustomers401Schema,
+  adminListCustomers403Schema,
+  adminListCustomers404Schema,
+  adminListCustomers409Schema,
+  adminListCustomers500Schema,
+  adminListCustomersQueryParamsSchema,
+  adminListCustomersQueryResponseSchema,
+} from "./adminListCustomersSchema.ts";
 export {
   adminListInventoryItems200Schema,
   adminListInventoryItems400Schema,
@@ -733,6 +800,30 @@ export {
   adminUpdateCategoryMutationResponseSchema,
   adminUpdateCategoryPathParamsSchema,
 } from "./adminUpdateCategorySchema.ts";
+export {
+  adminUpdateCustomerAddress200Schema,
+  adminUpdateCustomerAddress400Schema,
+  adminUpdateCustomerAddress401Schema,
+  adminUpdateCustomerAddress403Schema,
+  adminUpdateCustomerAddress404Schema,
+  adminUpdateCustomerAddress409Schema,
+  adminUpdateCustomerAddress500Schema,
+  adminUpdateCustomerAddressMutationRequestSchema,
+  adminUpdateCustomerAddressMutationResponseSchema,
+  adminUpdateCustomerAddressPathParamsSchema,
+} from "./adminUpdateCustomerAddressSchema.ts";
+export {
+  adminUpdateCustomer200Schema,
+  adminUpdateCustomer400Schema,
+  adminUpdateCustomer401Schema,
+  adminUpdateCustomer403Schema,
+  adminUpdateCustomer404Schema,
+  adminUpdateCustomer409Schema,
+  adminUpdateCustomer500Schema,
+  adminUpdateCustomerMutationRequestSchema,
+  adminUpdateCustomerMutationResponseSchema,
+  adminUpdateCustomerPathParamsSchema,
+} from "./adminUpdateCustomerSchema.ts";
 export {
   adminUpdateMedia200Schema,
   adminUpdateMedia400Schema,

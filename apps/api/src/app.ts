@@ -17,6 +17,7 @@ import { promotionsRoutes } from "./promotions/routes";
 import { stockLocationsRoutes } from "./stock-locations/routes";
 import { inventoryRoutes } from "./inventory/routes";
 import { shippingRoutes } from "./shipping/routes";
+import { customersRoutes } from "./customers/routes";
 import { logger } from "./lib/logger";
 import { requestLogger } from "./lib/requestLogger";
 import { err, errFromException } from "./lib/response";
@@ -64,6 +65,7 @@ export function createApp() {
   app.route("/api/inventory", inventoryRoutes);
   app.route("/api/media", mediaRoutes);
   app.route("/api/shipping", shippingRoutes);
+  app.route("/api/customers", customersRoutes);
 
   if (env.OPENAPI_DOCS_ENABLED) {
     // Mounted last so it can introspect every registered route.

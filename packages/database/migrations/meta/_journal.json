@@ -8,6 +8,13 @@
       "when": 1777424820876,
       "tag": "0000_tranquil_captain_cross",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1777555600000,
+      "tag": "0001_fix_address_default_indexes",
+      "breakpoints": true
     }
   ]
 }

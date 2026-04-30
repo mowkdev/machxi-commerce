@@ -9,3 +9,4 @@ export * from "./media";
 export * from "./price-list";
 export * from "./promotion";
 export * from "./shipping";
+export * from "./customer";

@@ -1,5 +1,7 @@
 export type { AdminBulkDeleteMediaMutationKey } from "./hooks/useAdminBulkDeleteMedia.ts";
 export type { AdminCreateCategoryMutationKey } from "./hooks/useAdminCreateCategory.ts";
+export type { AdminCreateCustomerMutationKey } from "./hooks/useAdminCreateCustomer.ts";
+export type { AdminCreateCustomerAddressMutationKey } from "./hooks/useAdminCreateCustomerAddress.ts";
 export type { AdminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export type { AdminCreateInventoryLevelMutationKey } from "./hooks/useAdminCreateInventoryLevel.ts";
 export type { AdminCreateInventoryTransferMutationKey } from "./hooks/useAdminCreateInventoryTransfer.ts";
@@ -17,6 +19,8 @@ export type { AdminCreateStockLocationMutationKey } from "./hooks/useAdminCreate
 export type { AdminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
 export type { AdminCreateTaxRateMutationKey } from "./hooks/useAdminCreateTaxRate.ts";
 export type { AdminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
+export type { AdminDeleteCustomerMutationKey } from "./hooks/useAdminDeleteCustomer.ts";
+export type { AdminDeleteCustomerAddressMutationKey } from "./hooks/useAdminDeleteCustomerAddress.ts";
 export type { AdminDeleteInventoryLevelMutationKey } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export type { AdminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts";
 export type { AdminDeletePriceListMutationKey } from "./hooks/useAdminDeletePriceList.ts";
@@ -35,6 +39,8 @@ export type { AdminDeleteTaxRateMutationKey } from "./hooks/useAdminDeleteTaxRat
 export type { AdminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
 export type { AdminGetCategoryQueryKey } from "./hooks/useAdminGetCategory.ts";
 export type { AdminGetCategorySuspenseQueryKey } from "./hooks/useAdminGetCategorySuspense.ts";
+export type { AdminGetCustomerQueryKey } from "./hooks/useAdminGetCustomer.ts";
+export type { AdminGetCustomerSuspenseQueryKey } from "./hooks/useAdminGetCustomerSuspense.ts";
 export type { AdminGetMediaQueryKey } from "./hooks/useAdminGetMedia.ts";
 export type { AdminGetMediaSuspenseQueryKey } from "./hooks/useAdminGetMediaSuspense.ts";
 export type { AdminGetPriceListQueryKey } from "./hooks/useAdminGetPriceList.ts";
@@ -53,6 +59,8 @@ export type { AdminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
 export type { AdminGetTaxClassSuspenseQueryKey } from "./hooks/useAdminGetTaxClassSuspense.ts";
 export type { AdminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export type { AdminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
+export type { AdminListCustomersQueryKey } from "./hooks/useAdminListCustomers.ts";
+export type { AdminListCustomersSuspenseQueryKey } from "./hooks/useAdminListCustomersSuspense.ts";
 export type { AdminListInventoryItemsQueryKey } from "./hooks/useAdminListInventoryItems.ts";
 export type { AdminListInventoryItemsSuspenseQueryKey } from "./hooks/useAdminListInventoryItemsSuspense.ts";
 export type { AdminListInventoryLevelsQueryKey } from "./hooks/useAdminListInventoryLevels.ts";
@@ -93,6 +101,8 @@ export type { AdminListTaxRatesQueryKey } from "./hooks/useAdminListTaxRates.ts"
 export type { AdminListTaxRatesSuspenseQueryKey } from "./hooks/useAdminListTaxRatesSuspense.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
+export type { AdminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
+export type { AdminUpdateCustomerAddressMutationKey } from "./hooks/useAdminUpdateCustomerAddress.ts";
 export type { AdminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
 export type { AdminUpdatePriceListMutationKey } from "./hooks/useAdminUpdatePriceList.ts";
 export type { AdminUpdatePriceListPriceMutationKey } from "./hooks/useAdminUpdatePriceListPrice.ts";
@@ -133,6 +143,31 @@ export type {
   AdminCreateCategoryMutationRequest,
   AdminCreateCategoryMutationResponse,
 } from "./types/AdminCreateCategory.ts";
+export type {
+  AdminCreateCustomer201,
+  AdminCreateCustomer400,
+  AdminCreateCustomer401,
+  AdminCreateCustomer403,
+  AdminCreateCustomer404,
+  AdminCreateCustomer409,
+  AdminCreateCustomer500,
+  AdminCreateCustomerMutation,
+  AdminCreateCustomerMutationRequest,
+  AdminCreateCustomerMutationResponse,
+} from "./types/AdminCreateCustomer.ts";
+export type {
+  AdminCreateCustomerAddress201,
+  AdminCreateCustomerAddress400,
+  AdminCreateCustomerAddress401,
+  AdminCreateCustomerAddress403,
+  AdminCreateCustomerAddress404,
+  AdminCreateCustomerAddress409,
+  AdminCreateCustomerAddress500,
+  AdminCreateCustomerAddressMutation,
+  AdminCreateCustomerAddressMutationRequest,
+  AdminCreateCustomerAddressMutationResponse,
+  AdminCreateCustomerAddressPathParams,
+} from "./types/AdminCreateCustomerAddress.ts";
 export type {
   AdminCreateInventoryAdjustment201,
   AdminCreateInventoryAdjustment400,
@@ -345,6 +380,30 @@ export type {
   AdminDeleteCategoryPathParams,
 } from "./types/AdminDeleteCategory.ts";
 export type {
+  AdminDeleteCustomer200,
+  AdminDeleteCustomer400,
+  AdminDeleteCustomer401,
+  AdminDeleteCustomer403,
+  AdminDeleteCustomer404,
+  AdminDeleteCustomer409,
+  AdminDeleteCustomer500,
+  AdminDeleteCustomerMutation,
+  AdminDeleteCustomerMutationResponse,
+  AdminDeleteCustomerPathParams,
+} from "./types/AdminDeleteCustomer.ts";
+export type {
+  AdminDeleteCustomerAddress200,
+  AdminDeleteCustomerAddress400,
+  AdminDeleteCustomerAddress401,
+  AdminDeleteCustomerAddress403,
+  AdminDeleteCustomerAddress404,
+  AdminDeleteCustomerAddress409,
+  AdminDeleteCustomerAddress500,
+  AdminDeleteCustomerAddressMutation,
+  AdminDeleteCustomerAddressMutationResponse,
+  AdminDeleteCustomerAddressPathParams,
+} from "./types/AdminDeleteCustomerAddress.ts";
+export type {
   AdminDeleteInventoryLevel200,
   AdminDeleteInventoryLevel400,
   AdminDeleteInventoryLevel401,
@@ -550,6 +609,18 @@ export type {
   AdminGetCategoryQueryResponse,
 } from "./types/AdminGetCategory.ts";
 export type {
+  AdminGetCustomer200,
+  AdminGetCustomer400,
+  AdminGetCustomer401,
+  AdminGetCustomer403,
+  AdminGetCustomer404,
+  AdminGetCustomer409,
+  AdminGetCustomer500,
+  AdminGetCustomerPathParams,
+  AdminGetCustomerQuery,
+  AdminGetCustomerQueryResponse,
+} from "./types/AdminGetCustomer.ts";
+export type {
   AdminGetMedia200,
   AdminGetMedia400,
   AdminGetMedia401,
@@ -664,6 +735,20 @@ export type {
   AdminListCategoriesQueryParamsSortOrderEnumKey,
   AdminListCategoriesQueryResponse,
 } from "./types/AdminListCategories.ts";
+export type {
+  AdminListCustomers200,
+  AdminListCustomers400,
+  AdminListCustomers401,
+  AdminListCustomers403,
+  AdminListCustomers404,
+  AdminListCustomers409,
+  AdminListCustomers500,
+  AdminListCustomersQuery,
+  AdminListCustomersQueryParams,
+  AdminListCustomersQueryParamsSortByEnumKey,
+  AdminListCustomersQueryParamsSortOrderEnumKey,
+  AdminListCustomersQueryResponse,
+} from "./types/AdminListCustomers.ts";
 export type {
   AdminListInventoryItems200,
   AdminListInventoryItems400,
@@ -953,6 +1038,32 @@ export type {
   AdminUpdateCategoryPathParams,
 } from "./types/AdminUpdateCategory.ts";
 export type {
+  AdminUpdateCustomer200,
+  AdminUpdateCustomer400,
+  AdminUpdateCustomer401,
+  AdminUpdateCustomer403,
+  AdminUpdateCustomer404,
+  AdminUpdateCustomer409,
+  AdminUpdateCustomer500,
+  AdminUpdateCustomerMutation,
+  AdminUpdateCustomerMutationRequest,
+  AdminUpdateCustomerMutationResponse,
+  AdminUpdateCustomerPathParams,
+} from "./types/AdminUpdateCustomer.ts";
+export type {
+  AdminUpdateCustomerAddress200,
+  AdminUpdateCustomerAddress400,
+  AdminUpdateCustomerAddress401,
+  AdminUpdateCustomerAddress403,
+  AdminUpdateCustomerAddress404,
+  AdminUpdateCustomerAddress409,
+  AdminUpdateCustomerAddress500,
+  AdminUpdateCustomerAddressMutation,
+  AdminUpdateCustomerAddressMutationRequest,
+  AdminUpdateCustomerAddressMutationResponse,
+  AdminUpdateCustomerAddressPathParams,
+} from "./types/AdminUpdateCustomerAddress.ts";
+export type {
   AdminUpdateMedia200,
   AdminUpdateMedia400,
   AdminUpdateMedia401,
@@ -1167,6 +1278,8 @@ export type {
 } from "./types/AdminUploadMedia.ts";
 export { adminBulkDeleteMedia } from "./client/adminBulkDeleteMedia.ts";
 export { adminCreateCategory } from "./client/adminCreateCategory.ts";
+export { adminCreateCustomer } from "./client/adminCreateCustomer.ts";
+export { adminCreateCustomerAddress } from "./client/adminCreateCustomerAddress.ts";
 export { adminCreateInventoryAdjustment } from "./client/adminCreateInventoryAdjustment.ts";
 export { adminCreateInventoryLevel } from "./client/adminCreateInventoryLevel.ts";
 export { adminCreateInventoryTransfer } from "./client/adminCreateInventoryTransfer.ts";
@@ -1184,6 +1297,8 @@ export { adminCreateStockLocation } from "./client/adminCreateStockLocation.ts";
 export { adminCreateTaxClass } from "./client/adminCreateTaxClass.ts";
 export { adminCreateTaxRate } from "./client/adminCreateTaxRate.ts";
 export { adminDeleteCategory } from "./client/adminDeleteCategory.ts";
+export { adminDeleteCustomer } from "./client/adminDeleteCustomer.ts";
+export { adminDeleteCustomerAddress } from "./client/adminDeleteCustomerAddress.ts";
 export { adminDeleteInventoryLevel } from "./client/adminDeleteInventoryLevel.ts";
 export { adminDeleteMedia } from "./client/adminDeleteMedia.ts";
 export { adminDeletePriceList } from "./client/adminDeletePriceList.ts";
@@ -1201,6 +1316,7 @@ export { adminDeleteTaxClass } from "./client/adminDeleteTaxClass.ts";
 export { adminDeleteTaxRate } from "./client/adminDeleteTaxRate.ts";
 export { adminGenerateVariants } from "./client/adminGenerateVariants.ts";
 export { adminGetCategory } from "./client/adminGetCategory.ts";
+export { adminGetCustomer } from "./client/adminGetCustomer.ts";
 export { adminGetMedia } from "./client/adminGetMedia.ts";
 export { adminGetPriceList } from "./client/adminGetPriceList.ts";
 export { adminGetProduct } from "./client/adminGetProduct.ts";
@@ -1210,6 +1326,7 @@ export { adminGetShippingZone } from "./client/adminGetShippingZone.ts";
 export { adminGetStockLocation } from "./client/adminGetStockLocation.ts";
 export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
+export { adminListCustomers } from "./client/adminListCustomers.ts";
 export { adminListInventoryItems } from "./client/adminListInventoryItems.ts";
 export { adminListInventoryLevels } from "./client/adminListInventoryLevels.ts";
 export { adminListInventoryTransactions } from "./client/adminListInventoryTransactions.ts";
@@ -1231,6 +1348,8 @@ export { adminListTaxClasses } from "./client/adminListTaxClasses.ts";
 export { adminListTaxRates } from "./client/adminListTaxRates.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
+export { adminUpdateCustomer } from "./client/adminUpdateCustomer.ts";
+export { adminUpdateCustomerAddress } from "./client/adminUpdateCustomerAddress.ts";
 export { adminUpdateMedia } from "./client/adminUpdateMedia.ts";
 export { adminUpdatePriceList } from "./client/adminUpdatePriceList.ts";
 export { adminUpdatePriceListPrice } from "./client/adminUpdatePriceListPrice.ts";
@@ -1253,6 +1372,12 @@ export { useAdminBulkDeleteMedia } from "./hooks/useAdminBulkDeleteMedia.ts";
 export { adminCreateCategoryMutationKey } from "./hooks/useAdminCreateCategory.ts";
 export { adminCreateCategoryMutationOptions } from "./hooks/useAdminCreateCategory.ts";
 export { useAdminCreateCategory } from "./hooks/useAdminCreateCategory.ts";
+export { adminCreateCustomerMutationKey } from "./hooks/useAdminCreateCustomer.ts";
+export { adminCreateCustomerMutationOptions } from "./hooks/useAdminCreateCustomer.ts";
+export { useAdminCreateCustomer } from "./hooks/useAdminCreateCustomer.ts";
+export { adminCreateCustomerAddressMutationKey } from "./hooks/useAdminCreateCustomerAddress.ts";
+export { adminCreateCustomerAddressMutationOptions } from "./hooks/useAdminCreateCustomerAddress.ts";
+export { useAdminCreateCustomerAddress } from "./hooks/useAdminCreateCustomerAddress.ts";
 export { adminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export { adminCreateInventoryAdjustmentMutationOptions } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export { useAdminCreateInventoryAdjustment } from "./hooks/useAdminCreateInventoryAdjustment.ts";
@@ -1304,6 +1429,12 @@ export { useAdminCreateTaxRate } from "./hooks/useAdminCreateTaxRate.ts";
 export { adminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
 export { adminDeleteCategoryMutationOptions } from "./hooks/useAdminDeleteCategory.ts";
 export { useAdminDeleteCategory } from "./hooks/useAdminDeleteCategory.ts";
+export { adminDeleteCustomerMutationKey } from "./hooks/useAdminDeleteCustomer.ts";
+export { adminDeleteCustomerMutationOptions } from "./hooks/useAdminDeleteCustomer.ts";
+export { useAdminDeleteCustomer } from "./hooks/useAdminDeleteCustomer.ts";
+export { adminDeleteCustomerAddressMutationKey } from "./hooks/useAdminDeleteCustomerAddress.ts";
+export { adminDeleteCustomerAddressMutationOptions } from "./hooks/useAdminDeleteCustomerAddress.ts";
+export { useAdminDeleteCustomerAddress } from "./hooks/useAdminDeleteCustomerAddress.ts";
 export { adminDeleteInventoryLevelMutationKey } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export { adminDeleteInventoryLevelMutationOptions } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export { useAdminDeleteInventoryLevel } from "./hooks/useAdminDeleteInventoryLevel.ts";
@@ -1358,6 +1489,12 @@ export { useAdminGetCategory } from "./hooks/useAdminGetCategory.ts";
 export { adminGetCategorySuspenseQueryKey } from "./hooks/useAdminGetCategorySuspense.ts";
 export { adminGetCategorySuspenseQueryOptions } from "./hooks/useAdminGetCategorySuspense.ts";
 export { useAdminGetCategorySuspense } from "./hooks/useAdminGetCategorySuspense.ts";
+export { adminGetCustomerQueryKey } from "./hooks/useAdminGetCustomer.ts";
+export { adminGetCustomerQueryOptions } from "./hooks/useAdminGetCustomer.ts";
+export { useAdminGetCustomer } from "./hooks/useAdminGetCustomer.ts";
+export { adminGetCustomerSuspenseQueryKey } from "./hooks/useAdminGetCustomerSuspense.ts";
+export { adminGetCustomerSuspenseQueryOptions } from "./hooks/useAdminGetCustomerSuspense.ts";
+export { useAdminGetCustomerSuspense } from "./hooks/useAdminGetCustomerSuspense.ts";
 export { adminGetMediaQueryKey } from "./hooks/useAdminGetMedia.ts";
 export { adminGetMediaQueryOptions } from "./hooks/useAdminGetMedia.ts";
 export { useAdminGetMedia } from "./hooks/useAdminGetMedia.ts";
@@ -1412,6 +1549,12 @@ export { useAdminListCategories } from "./hooks/useAdminListCategories.ts";
 export { adminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { adminListCategoriesSuspenseQueryOptions } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { useAdminListCategoriesSuspense } from "./hooks/useAdminListCategoriesSuspense.ts";
+export { adminListCustomersQueryKey } from "./hooks/useAdminListCustomers.ts";
+export { adminListCustomersQueryOptions } from "./hooks/useAdminListCustomers.ts";
+export { useAdminListCustomers } from "./hooks/useAdminListCustomers.ts";
+export { adminListCustomersSuspenseQueryKey } from "./hooks/useAdminListCustomersSuspense.ts";
+export { adminListCustomersSuspenseQueryOptions } from "./hooks/useAdminListCustomersSuspense.ts";
+export { useAdminListCustomersSuspense } from "./hooks/useAdminListCustomersSuspense.ts";
 export { adminListInventoryItemsQueryKey } from "./hooks/useAdminListInventoryItems.ts";
 export { adminListInventoryItemsQueryOptions } from "./hooks/useAdminListInventoryItems.ts";
 export { useAdminListInventoryItems } from "./hooks/useAdminListInventoryItems.ts";
@@ -1532,6 +1675,12 @@ export { useAdminReplaceMedia } from "./hooks/useAdminReplaceMedia.ts";
 export { adminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export { adminUpdateCategoryMutationOptions } from "./hooks/useAdminUpdateCategory.ts";
 export { useAdminUpdateCategory } from "./hooks/useAdminUpdateCategory.ts";
+export { adminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
+export { adminUpdateCustomerMutationOptions } from "./hooks/useAdminUpdateCustomer.ts";
+export { useAdminUpdateCustomer } from "./hooks/useAdminUpdateCustomer.ts";
+export { adminUpdateCustomerAddressMutationKey } from "./hooks/useAdminUpdateCustomerAddress.ts";
+export { adminUpdateCustomerAddressMutationOptions } from "./hooks/useAdminUpdateCustomerAddress.ts";
+export { useAdminUpdateCustomerAddress } from "./hooks/useAdminUpdateCustomerAddress.ts";
 export { adminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
 export { adminUpdateMediaMutationOptions } from "./hooks/useAdminUpdateMedia.ts";
 export { useAdminUpdateMedia } from "./hooks/useAdminUpdateMedia.ts";
@@ -1588,6 +1737,8 @@ export { adminGetPromotion200DataTypeEnum } from "./types/AdminGetPromotion.ts";
 export { adminGetPromotion200TargetsTargetTypeEnum } from "./types/AdminGetPromotion.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./types/AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./types/AdminListCategories.ts";
+export { adminListCustomersQueryParamsSortByEnum } from "./types/AdminListCustomers.ts";
+export { adminListCustomersQueryParamsSortOrderEnum } from "./types/AdminListCustomers.ts";
 export { adminListInventoryLevelsQueryParamsSortByEnum } from "./types/AdminListInventoryLevels.ts";
 export { adminListInventoryLevelsQueryParamsSortOrderEnum } from "./types/AdminListInventoryLevels.ts";
 export { adminListInventoryTransactions200DataReasonEnum } from "./types/AdminListInventoryTransactions.ts";
@@ -1650,6 +1801,29 @@ export {
   adminCreateCategoryMutationRequestSchema,
   adminCreateCategoryMutationResponseSchema,
 } from "./zod/adminCreateCategorySchema.ts";
+export {
+  adminCreateCustomerAddress201Schema,
+  adminCreateCustomerAddress400Schema,
+  adminCreateCustomerAddress401Schema,
+  adminCreateCustomerAddress403Schema,
+  adminCreateCustomerAddress404Schema,
+  adminCreateCustomerAddress409Schema,
+  adminCreateCustomerAddress500Schema,
+  adminCreateCustomerAddressMutationRequestSchema,
+  adminCreateCustomerAddressMutationResponseSchema,
+  adminCreateCustomerAddressPathParamsSchema,
+} from "./zod/adminCreateCustomerAddressSchema.ts";
+export {
+  adminCreateCustomer201Schema,
+  adminCreateCustomer400Schema,
+  adminCreateCustomer401Schema,
+  adminCreateCustomer403Schema,
+  adminCreateCustomer404Schema,
+  adminCreateCustomer409Schema,
+  adminCreateCustomer500Schema,
+  adminCreateCustomerMutationRequestSchema,
+  adminCreateCustomerMutationResponseSchema,
+} from "./zod/adminCreateCustomerSchema.ts";
 export {
   adminCreateInventoryAdjustment201Schema,
   adminCreateInventoryAdjustment400Schema,
@@ -1844,6 +2018,28 @@ export {
   adminDeleteCategoryPathParamsSchema,
 } from "./zod/adminDeleteCategorySchema.ts";
 export {
+  adminDeleteCustomerAddress200Schema,
+  adminDeleteCustomerAddress400Schema,
+  adminDeleteCustomerAddress401Schema,
+  adminDeleteCustomerAddress403Schema,
+  adminDeleteCustomerAddress404Schema,
+  adminDeleteCustomerAddress409Schema,
+  adminDeleteCustomerAddress500Schema,
+  adminDeleteCustomerAddressMutationResponseSchema,
+  adminDeleteCustomerAddressPathParamsSchema,
+} from "./zod/adminDeleteCustomerAddressSchema.ts";
+export {
+  adminDeleteCustomer200Schema,
+  adminDeleteCustomer400Schema,
+  adminDeleteCustomer401Schema,
+  adminDeleteCustomer403Schema,
+  adminDeleteCustomer404Schema,
+  adminDeleteCustomer409Schema,
+  adminDeleteCustomer500Schema,
+  adminDeleteCustomerMutationResponseSchema,
+  adminDeleteCustomerPathParamsSchema,
+} from "./zod/adminDeleteCustomerSchema.ts";
+export {
   adminDeleteInventoryLevel200Schema,
   adminDeleteInventoryLevel400Schema,
   adminDeleteInventoryLevel401Schema,
@@ -2032,6 +2228,17 @@ export {
   adminGetCategoryQueryResponseSchema,
 } from "./zod/adminGetCategorySchema.ts";
 export {
+  adminGetCustomer200Schema,
+  adminGetCustomer400Schema,
+  adminGetCustomer401Schema,
+  adminGetCustomer403Schema,
+  adminGetCustomer404Schema,
+  adminGetCustomer409Schema,
+  adminGetCustomer500Schema,
+  adminGetCustomerPathParamsSchema,
+  adminGetCustomerQueryResponseSchema,
+} from "./zod/adminGetCustomerSchema.ts";
+export {
   adminGetMedia200Schema,
   adminGetMedia400Schema,
   adminGetMedia401Schema,
@@ -2130,6 +2337,17 @@ export {
   adminListCategoriesQueryParamsSchema,
   adminListCategoriesQueryResponseSchema,
 } from "./zod/adminListCategoriesSchema.ts";
+export {
+  adminListCustomers200Schema,
+  adminListCustomers400Schema,
+  adminListCustomers401Schema,
+  adminListCustomers403Schema,
+  adminListCustomers404Schema,
+  adminListCustomers409Schema,
+  adminListCustomers500Schema,
+  adminListCustomersQueryParamsSchema,
+  adminListCustomersQueryResponseSchema,
+} from "./zod/adminListCustomersSchema.ts";
 export {
   adminListInventoryItems200Schema,
   adminListInventoryItems400Schema,
@@ -2363,6 +2581,30 @@ export {
   adminUpdateCategoryMutationResponseSchema,
   adminUpdateCategoryPathParamsSchema,
 } from "./zod/adminUpdateCategorySchema.ts";
+export {
+  adminUpdateCustomerAddress200Schema,
+  adminUpdateCustomerAddress400Schema,
+  adminUpdateCustomerAddress401Schema,
+  adminUpdateCustomerAddress403Schema,
+  adminUpdateCustomerAddress404Schema,
+  adminUpdateCustomerAddress409Schema,
+  adminUpdateCustomerAddress500Schema,
+  adminUpdateCustomerAddressMutationRequestSchema,
+  adminUpdateCustomerAddressMutationResponseSchema,
+  adminUpdateCustomerAddressPathParamsSchema,
+} from "./zod/adminUpdateCustomerAddressSchema.ts";
+export {
+  adminUpdateCustomer200Schema,
+  adminUpdateCustomer400Schema,
+  adminUpdateCustomer401Schema,
+  adminUpdateCustomer403Schema,
+  adminUpdateCustomer404Schema,
+  adminUpdateCustomer409Schema,
+  adminUpdateCustomer500Schema,
+  adminUpdateCustomerMutationRequestSchema,
+  adminUpdateCustomerMutationResponseSchema,
+  adminUpdateCustomerPathParamsSchema,
+} from "./zod/adminUpdateCustomerSchema.ts";
 export {
   adminUpdateMedia200Schema,
   adminUpdateMedia400Schema,

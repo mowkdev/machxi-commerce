@@ -23,6 +23,31 @@ export type {
   AdminCreateCategoryMutationResponse,
 } from "./AdminCreateCategory.ts";
 export type {
+  AdminCreateCustomer201,
+  AdminCreateCustomer400,
+  AdminCreateCustomer401,
+  AdminCreateCustomer403,
+  AdminCreateCustomer404,
+  AdminCreateCustomer409,
+  AdminCreateCustomer500,
+  AdminCreateCustomerMutation,
+  AdminCreateCustomerMutationRequest,
+  AdminCreateCustomerMutationResponse,
+} from "./AdminCreateCustomer.ts";
+export type {
+  AdminCreateCustomerAddress201,
+  AdminCreateCustomerAddress400,
+  AdminCreateCustomerAddress401,
+  AdminCreateCustomerAddress403,
+  AdminCreateCustomerAddress404,
+  AdminCreateCustomerAddress409,
+  AdminCreateCustomerAddress500,
+  AdminCreateCustomerAddressMutation,
+  AdminCreateCustomerAddressMutationRequest,
+  AdminCreateCustomerAddressMutationResponse,
+  AdminCreateCustomerAddressPathParams,
+} from "./AdminCreateCustomerAddress.ts";
+export type {
   AdminCreateInventoryAdjustment201,
   AdminCreateInventoryAdjustment400,
   AdminCreateInventoryAdjustment401,
@@ -234,6 +259,30 @@ export type {
   AdminDeleteCategoryPathParams,
 } from "./AdminDeleteCategory.ts";
 export type {
+  AdminDeleteCustomer200,
+  AdminDeleteCustomer400,
+  AdminDeleteCustomer401,
+  AdminDeleteCustomer403,
+  AdminDeleteCustomer404,
+  AdminDeleteCustomer409,
+  AdminDeleteCustomer500,
+  AdminDeleteCustomerMutation,
+  AdminDeleteCustomerMutationResponse,
+  AdminDeleteCustomerPathParams,
+} from "./AdminDeleteCustomer.ts";
+export type {
+  AdminDeleteCustomerAddress200,
+  AdminDeleteCustomerAddress400,
+  AdminDeleteCustomerAddress401,
+  AdminDeleteCustomerAddress403,
+  AdminDeleteCustomerAddress404,
+  AdminDeleteCustomerAddress409,
+  AdminDeleteCustomerAddress500,
+  AdminDeleteCustomerAddressMutation,
+  AdminDeleteCustomerAddressMutationResponse,
+  AdminDeleteCustomerAddressPathParams,
+} from "./AdminDeleteCustomerAddress.ts";
+export type {
   AdminDeleteInventoryLevel200,
   AdminDeleteInventoryLevel400,
   AdminDeleteInventoryLevel401,
@@ -439,6 +488,18 @@ export type {
   AdminGetCategoryQueryResponse,
 } from "./AdminGetCategory.ts";
 export type {
+  AdminGetCustomer200,
+  AdminGetCustomer400,
+  AdminGetCustomer401,
+  AdminGetCustomer403,
+  AdminGetCustomer404,
+  AdminGetCustomer409,
+  AdminGetCustomer500,
+  AdminGetCustomerPathParams,
+  AdminGetCustomerQuery,
+  AdminGetCustomerQueryResponse,
+} from "./AdminGetCustomer.ts";
+export type {
   AdminGetMedia200,
   AdminGetMedia400,
   AdminGetMedia401,
@@ -553,6 +614,20 @@ export type {
   AdminListCategoriesQueryParamsSortOrderEnumKey,
   AdminListCategoriesQueryResponse,
 } from "./AdminListCategories.ts";
+export type {
+  AdminListCustomers200,
+  AdminListCustomers400,
+  AdminListCustomers401,
+  AdminListCustomers403,
+  AdminListCustomers404,
+  AdminListCustomers409,
+  AdminListCustomers500,
+  AdminListCustomersQuery,
+  AdminListCustomersQueryParams,
+  AdminListCustomersQueryParamsSortByEnumKey,
+  AdminListCustomersQueryParamsSortOrderEnumKey,
+  AdminListCustomersQueryResponse,
+} from "./AdminListCustomers.ts";
 export type {
   AdminListInventoryItems200,
   AdminListInventoryItems400,
@@ -842,6 +917,32 @@ export type {
   AdminUpdateCategoryPathParams,
 } from "./AdminUpdateCategory.ts";
 export type {
+  AdminUpdateCustomer200,
+  AdminUpdateCustomer400,
+  AdminUpdateCustomer401,
+  AdminUpdateCustomer403,
+  AdminUpdateCustomer404,
+  AdminUpdateCustomer409,
+  AdminUpdateCustomer500,
+  AdminUpdateCustomerMutation,
+  AdminUpdateCustomerMutationRequest,
+  AdminUpdateCustomerMutationResponse,
+  AdminUpdateCustomerPathParams,
+} from "./AdminUpdateCustomer.ts";
+export type {
+  AdminUpdateCustomerAddress200,
+  AdminUpdateCustomerAddress400,
+  AdminUpdateCustomerAddress401,
+  AdminUpdateCustomerAddress403,
+  AdminUpdateCustomerAddress404,
+  AdminUpdateCustomerAddress409,
+  AdminUpdateCustomerAddress500,
+  AdminUpdateCustomerAddressMutation,
+  AdminUpdateCustomerAddressMutationRequest,
+  AdminUpdateCustomerAddressMutationResponse,
+  AdminUpdateCustomerAddressPathParams,
+} from "./AdminUpdateCustomerAddress.ts";
+export type {
   AdminUpdateMedia200,
   AdminUpdateMedia400,
   AdminUpdateMedia401,
@@ -1062,6 +1163,8 @@ export { adminGetPromotion200DataTypeEnum } from "./AdminGetPromotion.ts";
 export { adminGetPromotion200TargetsTargetTypeEnum } from "./AdminGetPromotion.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./AdminListCategories.ts";
+export { adminListCustomersQueryParamsSortByEnum } from "./AdminListCustomers.ts";
+export { adminListCustomersQueryParamsSortOrderEnum } from "./AdminListCustomers.ts";
 export { adminListInventoryLevelsQueryParamsSortByEnum } from "./AdminListInventoryLevels.ts";
 export { adminListInventoryLevelsQueryParamsSortOrderEnum } from "./AdminListInventoryLevels.ts";
 export { adminListInventoryTransactions200DataReasonEnum } from "./AdminListInventoryTransactions.ts";
