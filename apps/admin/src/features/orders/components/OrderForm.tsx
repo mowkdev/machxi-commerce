@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { IconTrash } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { FormContentLayout } from "@/components/form-content-layout";
 import { FormPageShell } from "@/components/form-page-shell";
+import { RecordTimestamps } from "@/components/record-timestamps";
 import { SidePanelForm } from "@/components/side-panel-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -325,8 +327,8 @@ export function OrderForm({ mode, initialData }: OrderFormProps) {
         onSubmit={onSubmit}
         submitLabel={isPending ? "Saving..." : isCreateMode ? "Create" : "Save"}
         isSubmitting={isPending}
-        contentClassName="mx-auto flex w-full max-w-5xl flex-col gap-4 p-4 lg:p-6"
       >
+        <FormContentLayout maxWidth="5xl">
         {error ? (
           <p className="rounded-md border border-destructive p-3 text-sm text-destructive">
             {error}
@@ -512,6 +514,10 @@ export function OrderForm({ mode, initialData }: OrderFormProps) {
             </Card>
           </>
         ) : null}
+        {!isCreateMode && initialData ? (
+          <RecordTimestamps record={initialData} />
+        ) : null}
+        </FormContentLayout>
       </FormPageShell>
 
       {!isCreateMode ? (

@@ -1,5 +1,7 @@
 import { FormProvider } from 'react-hook-form';
+import { FormContentLayout } from '@/components/form-content-layout';
 import { FormPageShell } from '@/components/form-page-shell';
+import { RecordTimestamps } from '@/components/record-timestamps';
 import {
   Card,
   CardContent,
@@ -54,8 +56,8 @@ export function StockLocationForm({ mode, initialData }: StockLocationFormProps)
         onSubmit={onSubmit}
         submitLabel={isPending ? 'Saving...' : isCreateMode ? 'Create' : 'Save'}
         isSubmitting={isPending}
-        contentClassName="mx-auto w-full max-w-xl p-4 lg:p-6"
       >
+        <FormContentLayout maxWidth="xl">
         <Card>
           <CardHeader>
             <CardTitle>General</CardTitle>
@@ -112,6 +114,10 @@ export function StockLocationForm({ mode, initialData }: StockLocationFormProps)
             </CardContent>
           </Card>
         ) : null}
+        {!isCreateMode && initialData ? (
+          <RecordTimestamps record={initialData} />
+        ) : null}
+        </FormContentLayout>
       </FormPageShell>
     </FormProvider>
   );

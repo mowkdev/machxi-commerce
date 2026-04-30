@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
+import { FormContentLayout } from '@/components/form-content-layout';
 import { FormPageShell } from '@/components/form-page-shell';
+import { RecordTimestampsCard } from '@/components/record-timestamps-card';
 import { SidePanelForm } from '@/components/side-panel-form';
 import {
   AlertDialog,
@@ -330,9 +332,73 @@ export function PromotionForm({ mode, initialData }: PromotionFormProps) {
         onSubmit={onSubmit}
         submitLabel={isPending ? 'Saving...' : isCreateMode ? 'Create' : 'Save'}
         isSubmitting={isPending}
-        contentClassName="grid gap-6 p-4 lg:grid-cols-3 lg:p-6"
       >
-        <div className="flex flex-col gap-6 lg:col-span-2">
+        <FormContentLayout
+          sidebar={
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  <div className="flex justify-between gap-4">
+                    <span className="text-muted-foreground">Schedule</span>
+                    <span className="text-right">
+                      {formatDate(form.watch('startsAt'))} to {formatDate(form.watch('expiresAt'))}
+                    </span>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-muted-foreground">Scope</span>
+                    <span>{targets.length === 0 ? 'Global' : `${targets.length} targets`}</span>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-muted-foreground">Discount</span>
+                    <span className="capitalize">{type.replace('_', ' ')}</span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {isEditMode && initialData ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Danger zone</CardTitle>
+                    <CardDescription>Delete this promotion and its configuration.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <AlertDialog>
+                      <AlertDialogTrigger
+                        type="button"
+                        className={buttonVariants({ variant: 'destructive', className: 'w-full' })}
+                      >
+                        Delete promotion
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete promotion?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This cannot be undone. Promotions with usage history may be protected.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            className={buttonVariants({ variant: 'destructive' })}
+                            onClick={() => deletePromotionMutation.mutate(initialData.id)}
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </CardContent>
+                </Card>
+              ) : null}
+              {isEditMode && initialData ? (
+                <RecordTimestampsCard record={initialData} />
+              ) : null}
+            </>
+          }
+        >
           <Card>
             <CardHeader>
               <CardTitle>General</CardTitle>
@@ -598,67 +664,7 @@ export function PromotionForm({ mode, initialData }: PromotionFormProps) {
               </Card>
             </>
           ) : null}
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="flex justify-between gap-4">
-                <span className="text-muted-foreground">Schedule</span>
-                <span className="text-right">
-                  {formatDate(form.watch('startsAt'))} to {formatDate(form.watch('expiresAt'))}
-                </span>
-              </div>
-              <div className="flex justify-between gap-4">
-                <span className="text-muted-foreground">Scope</span>
-                <span>{targets.length === 0 ? 'Global' : `${targets.length} targets`}</span>
-              </div>
-              <div className="flex justify-between gap-4">
-                <span className="text-muted-foreground">Discount</span>
-                <span className="capitalize">{type.replace('_', ' ')}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          {isEditMode && initialData ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>Danger zone</CardTitle>
-                <CardDescription>Delete this promotion and its configuration.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <AlertDialog>
-                  <AlertDialogTrigger
-                    type="button"
-                    className={buttonVariants({ variant: 'destructive', className: 'w-full' })}
-                  >
-                    Delete promotion
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Delete promotion?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This cannot be undone. Promotions with usage history may be protected.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        className={buttonVariants({ variant: 'destructive' })}
-                        onClick={() => deletePromotionMutation.mutate(initialData.id)}
-                      >
-                        Delete
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </CardContent>
-            </Card>
-          ) : null}
-        </div>
+        </FormContentLayout>
       </FormPageShell>
 
       <SidePanelForm

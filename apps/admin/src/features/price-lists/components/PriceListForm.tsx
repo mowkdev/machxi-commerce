@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
+import { FormContentLayout } from '@/components/form-content-layout';
 import { FormPageShell } from '@/components/form-page-shell';
+import { RecordTimestampsCard } from '@/components/record-timestamps-card';
 import { SidePanelForm } from '@/components/side-panel-form';
 import {
   AlertDialog,
@@ -229,9 +231,70 @@ export function PriceListForm({ mode, initialData }: PriceListFormProps) {
         onSubmit={onSubmit}
         submitLabel={isPending ? 'Saving...' : isCreateMode ? 'Create' : 'Save'}
         isSubmitting={isPending}
-        contentClassName="grid gap-6 p-4 lg:grid-cols-3 lg:p-6"
       >
-        <div className="flex flex-col gap-6 lg:col-span-2">
+        <FormContentLayout
+          sidebar={
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Schedule</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Starts</span>
+                    <span>{formatDate(toDateTimeLocalValue(form.watch('startsAt')))}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Ends</span>
+                    <span>{form.watch('endsAt') ? formatDate(form.watch('endsAt')) : 'No end'}</span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {!isCreateMode && initialData ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Danger zone</CardTitle>
+                    <CardDescription>
+                      Deleting a price list removes its translations and price overrides.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <AlertDialog>
+                      <AlertDialogTrigger
+                        type="button"
+                        className={buttonVariants({ variant: 'destructive' })}
+                      >
+                        Delete price list
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete price list?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This cannot be undone. Scheduled overrides attached to this price list
+                            will also be removed.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            variant="destructive"
+                            onClick={() => deletePriceListMutation.mutate(initialData.id)}
+                          >
+                            {deletePriceListMutation.isPending ? 'Deleting...' : 'Delete'}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </CardContent>
+                </Card>
+              ) : null}
+              {!isCreateMode && initialData ? (
+                <RecordTimestampsCard record={initialData} />
+              ) : null}
+            </>
+          }
+        >
           <Card>
             <CardHeader>
               <CardTitle>General</CardTitle>
@@ -551,64 +614,7 @@ export function PriceListForm({ mode, initialData }: PriceListFormProps) {
               ) : null}
             </FieldGroup>
           </SidePanelForm>
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Schedule</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Starts</span>
-                <span>{formatDate(toDateTimeLocalValue(form.watch('startsAt')))}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Ends</span>
-                <span>{form.watch('endsAt') ? formatDate(form.watch('endsAt')) : 'No end'}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          {!isCreateMode && initialData ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>Danger zone</CardTitle>
-                <CardDescription>
-                  Deleting a price list removes its translations and price overrides.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <AlertDialog>
-                  <AlertDialogTrigger
-                    type="button"
-                    className={buttonVariants({ variant: 'destructive' })}
-                  >
-                    Delete price list
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Delete price list?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This cannot be undone. Scheduled overrides attached to this price list
-                        will also be removed.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        variant="destructive"
-                        onClick={() => deletePriceListMutation.mutate(initialData.id)}
-                      >
-                        {deletePriceListMutation.isPending ? 'Deleting...' : 'Delete'}
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </CardContent>
-            </Card>
-          ) : null}
-        </div>
+        </FormContentLayout>
       </FormPageShell>
     </FormProvider>
   );

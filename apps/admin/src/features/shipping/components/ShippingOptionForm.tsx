@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { FormContentLayout } from "@/components/form-content-layout";
 import { FormPageShell } from "@/components/form-page-shell";
+import { RecordTimestamps } from "@/components/record-timestamps";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -218,8 +220,8 @@ export function ShippingOptionForm({
       onSubmit={submit}
       submitLabel={isPending ? "Saving..." : isCreateMode ? "Create" : "Save"}
       isSubmitting={isPending}
-      contentClassName="mx-auto flex w-full max-w-4xl flex-col gap-4 p-4 lg:p-6"
     >
+      <FormContentLayout>
       {error ? (
         <p className="rounded-md border border-destructive p-3 text-sm text-destructive">
           {error}
@@ -439,6 +441,10 @@ export function ShippingOptionForm({
           </CardContent>
         </Card>
       ) : null}
+      {!isCreateMode && initialData ? (
+        <RecordTimestamps record={initialData} />
+      ) : null}
+      </FormContentLayout>
     </FormPageShell>
   );
 }

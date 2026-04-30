@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { IconTrash } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { FormContentLayout } from "@/components/form-content-layout";
 import { FormPageShell } from "@/components/form-page-shell";
+import { RecordTimestamps } from "@/components/record-timestamps";
 import { SidePanelForm } from "@/components/side-panel-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -149,8 +151,8 @@ export function FulfillmentForm({ mode, initialData }: FulfillmentFormProps) {
               : "Save"
         }
         isSubmitting={createMutation.isPending || updateMutation.isPending}
-        contentClassName="mx-auto flex w-full max-w-4xl flex-col gap-4 p-4 lg:p-6"
       >
+        <FormContentLayout>
         {error ? (
           <p className="rounded-md border border-destructive p-3 text-sm text-destructive">
             {error}
@@ -276,6 +278,10 @@ export function FulfillmentForm({ mode, initialData }: FulfillmentFormProps) {
             </Card>
           </>
         ) : null}
+        {!isCreateMode && initialData ? (
+          <RecordTimestamps record={initialData} />
+        ) : null}
+        </FormContentLayout>
       </FormPageShell>
 
       {!isCreateMode ? (

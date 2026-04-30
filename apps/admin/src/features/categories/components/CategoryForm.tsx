@@ -1,5 +1,7 @@
 import { Controller, FormProvider } from 'react-hook-form';
+import { FormContentLayout } from '@/components/form-content-layout';
 import { FormPageShell } from '@/components/form-page-shell';
+import { RecordTimestampsCard } from '@/components/record-timestamps-card';
 import {
   Card,
   CardContent,
@@ -44,9 +46,76 @@ export function CategoryForm({ mode, initialData }: CategoryFormProps) {
         onSubmit={onSubmit}
         submitLabel={isPending ? 'Saving...' : isCreateMode ? 'Create' : 'Save'}
         isSubmitting={isPending}
-        contentClassName="grid gap-6 p-4 lg:grid-cols-3 lg:p-6"
       >
-        <div className="flex flex-col gap-6 lg:col-span-2">
+        <FormContentLayout
+          sidebar={
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Organization</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <FieldGroup>
+                    <Field>
+                      <FieldLabel>Parent category</FieldLabel>
+                      <Controller
+                        control={form.control}
+                        name="parentId"
+                        render={({ field }) => (
+                          <ParentCategoryCombobox
+                            value={field.value}
+                            onChange={field.onChange}
+                            excludeId={initialData?.id}
+                            categories={categoryOptions ?? []}
+                            isPending={isCategoryOptionsPending}
+                          />
+                        )}
+                      />
+                      <FieldError errors={[form.formState.errors.parentId]} />
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="rank">Rank</FieldLabel>
+                      <Input
+                        id="rank"
+                        type="number"
+                        min={0}
+                        readOnly
+                        className="bg-muted"
+                        {...form.register('rank', { valueAsNumber: true })}
+                      />
+                      <p className="text-sm text-muted-foreground">
+                        Rank is assigned automatically for the selected level.
+                      </p>
+                      <FieldError errors={[form.formState.errors.rank]} />
+                    </Field>
+                    <Field className="flex-row items-center justify-between rounded-lg border p-3">
+                      <div className="space-y-0.5">
+                        <FieldLabel>Active</FieldLabel>
+                        <p className="text-sm text-muted-foreground">
+                          Active categories can be assigned to products.
+                        </p>
+                      </div>
+                      <Controller
+                        control={form.control}
+                        name="isActive"
+                        render={({ field }) => (
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            aria-label="Category active status"
+                          />
+                        )}
+                      />
+                    </Field>
+                  </FieldGroup>
+                </CardContent>
+              </Card>
+              {!isCreateMode && initialData && (
+                <RecordTimestampsCard record={initialData} />
+              )}
+            </>
+          }
+        >
           <Card>
             <CardHeader>
               <CardTitle>General</CardTitle>
@@ -89,70 +158,7 @@ export function CategoryForm({ mode, initialData }: CategoryFormProps) {
               </FieldGroup>
             </CardContent>
           </Card>
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Organization</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <FieldGroup>
-                <Field>
-                  <FieldLabel>Parent category</FieldLabel>
-                  <Controller
-                    control={form.control}
-                    name="parentId"
-                    render={({ field }) => (
-                      <ParentCategoryCombobox
-                        value={field.value}
-                        onChange={field.onChange}
-                        excludeId={initialData?.id}
-                        categories={categoryOptions ?? []}
-                        isPending={isCategoryOptionsPending}
-                      />
-                    )}
-                  />
-                  <FieldError errors={[form.formState.errors.parentId]} />
-                </Field>
-                <Field>
-                  <FieldLabel htmlFor="rank">Rank</FieldLabel>
-                  <Input
-                    id="rank"
-                    type="number"
-                    min={0}
-                    readOnly
-                    className="bg-muted"
-                    {...form.register('rank', { valueAsNumber: true })}
-                  />
-                  <p className="text-sm text-muted-foreground">
-                    Rank is assigned automatically for the selected level.
-                  </p>
-                  <FieldError errors={[form.formState.errors.rank]} />
-                </Field>
-                <Field className="flex-row items-center justify-between rounded-lg border p-3">
-                  <div className="space-y-0.5">
-                    <FieldLabel>Active</FieldLabel>
-                    <p className="text-sm text-muted-foreground">
-                      Active categories can be assigned to products.
-                    </p>
-                  </div>
-                  <Controller
-                    control={form.control}
-                    name="isActive"
-                    render={({ field }) => (
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        aria-label="Category active status"
-                      />
-                    )}
-                  />
-                </Field>
-              </FieldGroup>
-            </CardContent>
-          </Card>
-        </div>
+        </FormContentLayout>
       </FormPageShell>
     </FormProvider>
   );
