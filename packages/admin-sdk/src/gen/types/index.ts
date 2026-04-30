@@ -95,6 +95,19 @@ export type {
   AdminCreateTaxClassMutationResponse,
 } from "./AdminCreateTaxClass.ts";
 export type {
+  AdminCreateTaxRate201,
+  AdminCreateTaxRate400,
+  AdminCreateTaxRate401,
+  AdminCreateTaxRate403,
+  AdminCreateTaxRate404,
+  AdminCreateTaxRate409,
+  AdminCreateTaxRate500,
+  AdminCreateTaxRateMutation,
+  AdminCreateTaxRateMutationRequest,
+  AdminCreateTaxRateMutationResponse,
+  AdminCreateTaxRatePathParams,
+} from "./AdminCreateTaxRate.ts";
+export type {
   AdminDeleteCategory200,
   AdminDeleteCategory400,
   AdminDeleteCategory401,
@@ -166,6 +179,18 @@ export type {
   AdminDeleteTaxClassMutationResponse,
   AdminDeleteTaxClassPathParams,
 } from "./AdminDeleteTaxClass.ts";
+export type {
+  AdminDeleteTaxRate200,
+  AdminDeleteTaxRate400,
+  AdminDeleteTaxRate401,
+  AdminDeleteTaxRate403,
+  AdminDeleteTaxRate404,
+  AdminDeleteTaxRate409,
+  AdminDeleteTaxRate500,
+  AdminDeleteTaxRateMutation,
+  AdminDeleteTaxRateMutationResponse,
+  AdminDeleteTaxRatePathParams,
+} from "./AdminDeleteTaxRate.ts";
 export type {
   AdminGenerateVariants200,
   AdminGenerateVariants400,
@@ -367,6 +392,18 @@ export type {
   AdminListTaxClassesQueryResponse,
 } from "./AdminListTaxClasses.ts";
 export type {
+  AdminListTaxRates200,
+  AdminListTaxRates400,
+  AdminListTaxRates401,
+  AdminListTaxRates403,
+  AdminListTaxRates404,
+  AdminListTaxRates409,
+  AdminListTaxRates500,
+  AdminListTaxRatesPathParams,
+  AdminListTaxRatesQuery,
+  AdminListTaxRatesQueryResponse,
+} from "./AdminListTaxRates.ts";
+export type {
   AdminReplaceMedia200,
   AdminReplaceMedia400,
   AdminReplaceMedia401,
@@ -445,6 +482,19 @@ export type {
   AdminUpdateTaxClassMutationResponse,
   AdminUpdateTaxClassPathParams,
 } from "./AdminUpdateTaxClass.ts";
+export type {
+  AdminUpdateTaxRate200,
+  AdminUpdateTaxRate400,
+  AdminUpdateTaxRate401,
+  AdminUpdateTaxRate403,
+  AdminUpdateTaxRate404,
+  AdminUpdateTaxRate409,
+  AdminUpdateTaxRate500,
+  AdminUpdateTaxRateMutation,
+  AdminUpdateTaxRateMutationRequest,
+  AdminUpdateTaxRateMutationResponse,
+  AdminUpdateTaxRatePathParams,
+} from "./AdminUpdateTaxRate.ts";
 export type {
   AdminUpdateVariant200,
   AdminUpdateVariant400,

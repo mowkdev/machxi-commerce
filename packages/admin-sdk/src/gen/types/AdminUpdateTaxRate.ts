@@ -3,17 +3,21 @@
  * Do not edit manually.
  */
 
-export type AdminUpdateMediaPathParams = {
+export type AdminUpdateTaxRatePathParams = {
   /**
    * @type string, uuid
    */
   id: string;
+  /**
+   * @type string, uuid
+   */
+  rateId: string;
 };
 
 /**
- * @description Updated media
+ * @description Updated tax rate
  */
-export type AdminUpdateMedia200 = {
+export type AdminUpdateTaxRate200 = {
   /**
    * @type boolean
    */
@@ -27,28 +31,20 @@ export type AdminUpdateMedia200 = {
      */
     id: string;
     /**
-     * @type string
+     * @type string, uuid
      */
-    fileName: string;
+    taxClassId: string;
     /**
      * @type string
      */
-    mimeType: string;
-    /**
-     * @minLength 0
-     * @maxLength 9007199254740991
-     * @type integer
-     */
-    sizeBytes: number;
-    width: number | null;
-    height: number | null;
+    countryCode: string;
+    provinceCode: string | null;
     /**
      * @type string
      */
-    url: string;
-    thumbnailUrl: string | null;
-    title: string | null;
-    altText: string | null;
+    rate: string;
+    startsAt: string | null;
+    endsAt: string | null;
     /**
      * @type string
      */
@@ -63,7 +59,7 @@ export type AdminUpdateMedia200 = {
 /**
  * @description Validation failed
  */
-export type AdminUpdateMedia400 = {
+export type AdminUpdateTaxRate400 = {
   /**
    * @type boolean
    */
@@ -92,7 +88,7 @@ export type AdminUpdateMedia400 = {
 /**
  * @description Unauthenticated
  */
-export type AdminUpdateMedia401 = {
+export type AdminUpdateTaxRate401 = {
   /**
    * @type boolean
    */
@@ -121,7 +117,7 @@ export type AdminUpdateMedia401 = {
 /**
  * @description Forbidden
  */
-export type AdminUpdateMedia403 = {
+export type AdminUpdateTaxRate403 = {
   /**
    * @type boolean
    */
@@ -150,7 +146,7 @@ export type AdminUpdateMedia403 = {
 /**
  * @description Not found
  */
-export type AdminUpdateMedia404 = {
+export type AdminUpdateTaxRate404 = {
   /**
    * @type boolean
    */
@@ -179,7 +175,7 @@ export type AdminUpdateMedia404 = {
 /**
  * @description Conflict
  */
-export type AdminUpdateMedia409 = {
+export type AdminUpdateTaxRate409 = {
   /**
    * @type boolean
    */
@@ -208,7 +204,7 @@ export type AdminUpdateMedia409 = {
 /**
  * @description Internal server error
  */
-export type AdminUpdateMedia500 = {
+export type AdminUpdateTaxRate500 = {
   /**
    * @type boolean
    */
@@ -234,19 +230,19 @@ export type AdminUpdateMedia500 = {
   };
 };
 
-export type AdminUpdateMediaMutationRequest = any;
+export type AdminUpdateTaxRateMutationRequest = any;
 
-export type AdminUpdateMediaMutationResponse = AdminUpdateMedia200;
+export type AdminUpdateTaxRateMutationResponse = AdminUpdateTaxRate200;
 
-export type AdminUpdateMediaMutation = {
-  Response: AdminUpdateMedia200;
-  Request: AdminUpdateMediaMutationRequest;
-  PathParams: AdminUpdateMediaPathParams;
+export type AdminUpdateTaxRateMutation = {
+  Response: AdminUpdateTaxRate200;
+  Request: AdminUpdateTaxRateMutationRequest;
+  PathParams: AdminUpdateTaxRatePathParams;
   Errors:
-    | AdminUpdateMedia400
-    | AdminUpdateMedia401
-    | AdminUpdateMedia403
-    | AdminUpdateMedia404
-    | AdminUpdateMedia409
-    | AdminUpdateMedia500;
+    | AdminUpdateTaxRate400
+    | AdminUpdateTaxRate401
+    | AdminUpdateTaxRate403
+    | AdminUpdateTaxRate404
+    | AdminUpdateTaxRate409
+    | AdminUpdateTaxRate500;
 };

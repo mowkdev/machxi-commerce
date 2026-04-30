@@ -31,6 +31,19 @@ export const adminUpdateTaxClass200Schema = z.object({
     name: z.string(),
     createdAt: z.string(),
     updatedAt: z.string(),
+    rates: z.array(
+      z.object({
+        id: z.uuid(),
+        taxClassId: z.uuid(),
+        countryCode: z.string(),
+        provinceCode: z.union([z.string(), z.null()]),
+        rate: z.string(),
+        startsAt: z.union([z.string(), z.null()]),
+        endsAt: z.union([z.string(), z.null()]),
+        createdAt: z.string(),
+        updatedAt: z.string(),
+      }),
+    ),
   }),
 }) as unknown as z.ZodType<AdminUpdateTaxClass200>;
 

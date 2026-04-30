@@ -6,12 +6,14 @@ export type { AdminCreateInventoryTransferMutationKey } from "./hooks/useAdminCr
 export type { AdminCreateProductMutationKey } from "./hooks/useAdminCreateProduct.ts";
 export type { AdminCreateStockLocationMutationKey } from "./hooks/useAdminCreateStockLocation.ts";
 export type { AdminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
+export type { AdminCreateTaxRateMutationKey } from "./hooks/useAdminCreateTaxRate.ts";
 export type { AdminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
 export type { AdminDeleteInventoryLevelMutationKey } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export type { AdminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts";
 export type { AdminDeleteProductMutationKey } from "./hooks/useAdminDeleteProduct.ts";
 export type { AdminDeleteStockLocationMutationKey } from "./hooks/useAdminDeleteStockLocation.ts";
 export type { AdminDeleteTaxClassMutationKey } from "./hooks/useAdminDeleteTaxClass.ts";
+export type { AdminDeleteTaxRateMutationKey } from "./hooks/useAdminDeleteTaxRate.ts";
 export type { AdminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
 export type { AdminGetCategoryQueryKey } from "./hooks/useAdminGetCategory.ts";
 export type { AdminGetCategorySuspenseQueryKey } from "./hooks/useAdminGetCategorySuspense.ts";
@@ -41,12 +43,15 @@ export type { AdminListStockLocationsQueryKey } from "./hooks/useAdminListStockL
 export type { AdminListStockLocationsSuspenseQueryKey } from "./hooks/useAdminListStockLocationsSuspense.ts";
 export type { AdminListTaxClassesQueryKey } from "./hooks/useAdminListTaxClasses.ts";
 export type { AdminListTaxClassesSuspenseQueryKey } from "./hooks/useAdminListTaxClassesSuspense.ts";
+export type { AdminListTaxRatesQueryKey } from "./hooks/useAdminListTaxRates.ts";
+export type { AdminListTaxRatesSuspenseQueryKey } from "./hooks/useAdminListTaxRatesSuspense.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export type { AdminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
 export type { AdminUpdateProductMutationKey } from "./hooks/useAdminUpdateProduct.ts";
 export type { AdminUpdateStockLocationMutationKey } from "./hooks/useAdminUpdateStockLocation.ts";
 export type { AdminUpdateTaxClassMutationKey } from "./hooks/useAdminUpdateTaxClass.ts";
+export type { AdminUpdateTaxRateMutationKey } from "./hooks/useAdminUpdateTaxRate.ts";
 export type { AdminUpdateVariantMutationKey } from "./hooks/useAdminUpdateVariant.ts";
 export type { AdminUploadMediaMutationKey } from "./hooks/useAdminUploadMedia.ts";
 export type {
@@ -146,6 +151,19 @@ export type {
   AdminCreateTaxClassMutationResponse,
 } from "./types/AdminCreateTaxClass.ts";
 export type {
+  AdminCreateTaxRate201,
+  AdminCreateTaxRate400,
+  AdminCreateTaxRate401,
+  AdminCreateTaxRate403,
+  AdminCreateTaxRate404,
+  AdminCreateTaxRate409,
+  AdminCreateTaxRate500,
+  AdminCreateTaxRateMutation,
+  AdminCreateTaxRateMutationRequest,
+  AdminCreateTaxRateMutationResponse,
+  AdminCreateTaxRatePathParams,
+} from "./types/AdminCreateTaxRate.ts";
+export type {
   AdminDeleteCategory200,
   AdminDeleteCategory400,
   AdminDeleteCategory401,
@@ -217,6 +235,18 @@ export type {
   AdminDeleteTaxClassMutationResponse,
   AdminDeleteTaxClassPathParams,
 } from "./types/AdminDeleteTaxClass.ts";
+export type {
+  AdminDeleteTaxRate200,
+  AdminDeleteTaxRate400,
+  AdminDeleteTaxRate401,
+  AdminDeleteTaxRate403,
+  AdminDeleteTaxRate404,
+  AdminDeleteTaxRate409,
+  AdminDeleteTaxRate500,
+  AdminDeleteTaxRateMutation,
+  AdminDeleteTaxRateMutationResponse,
+  AdminDeleteTaxRatePathParams,
+} from "./types/AdminDeleteTaxRate.ts";
 export type {
   AdminGenerateVariants200,
   AdminGenerateVariants400,
@@ -418,6 +448,18 @@ export type {
   AdminListTaxClassesQueryResponse,
 } from "./types/AdminListTaxClasses.ts";
 export type {
+  AdminListTaxRates200,
+  AdminListTaxRates400,
+  AdminListTaxRates401,
+  AdminListTaxRates403,
+  AdminListTaxRates404,
+  AdminListTaxRates409,
+  AdminListTaxRates500,
+  AdminListTaxRatesPathParams,
+  AdminListTaxRatesQuery,
+  AdminListTaxRatesQueryResponse,
+} from "./types/AdminListTaxRates.ts";
+export type {
   AdminReplaceMedia200,
   AdminReplaceMedia400,
   AdminReplaceMedia401,
@@ -497,6 +539,19 @@ export type {
   AdminUpdateTaxClassPathParams,
 } from "./types/AdminUpdateTaxClass.ts";
 export type {
+  AdminUpdateTaxRate200,
+  AdminUpdateTaxRate400,
+  AdminUpdateTaxRate401,
+  AdminUpdateTaxRate403,
+  AdminUpdateTaxRate404,
+  AdminUpdateTaxRate409,
+  AdminUpdateTaxRate500,
+  AdminUpdateTaxRateMutation,
+  AdminUpdateTaxRateMutationRequest,
+  AdminUpdateTaxRateMutationResponse,
+  AdminUpdateTaxRatePathParams,
+} from "./types/AdminUpdateTaxRate.ts";
+export type {
   AdminUpdateVariant200,
   AdminUpdateVariant400,
   AdminUpdateVariant401,
@@ -529,12 +584,14 @@ export { adminCreateInventoryTransfer } from "./client/adminCreateInventoryTrans
 export { adminCreateProduct } from "./client/adminCreateProduct.ts";
 export { adminCreateStockLocation } from "./client/adminCreateStockLocation.ts";
 export { adminCreateTaxClass } from "./client/adminCreateTaxClass.ts";
+export { adminCreateTaxRate } from "./client/adminCreateTaxRate.ts";
 export { adminDeleteCategory } from "./client/adminDeleteCategory.ts";
 export { adminDeleteInventoryLevel } from "./client/adminDeleteInventoryLevel.ts";
 export { adminDeleteMedia } from "./client/adminDeleteMedia.ts";
 export { adminDeleteProduct } from "./client/adminDeleteProduct.ts";
 export { adminDeleteStockLocation } from "./client/adminDeleteStockLocation.ts";
 export { adminDeleteTaxClass } from "./client/adminDeleteTaxClass.ts";
+export { adminDeleteTaxRate } from "./client/adminDeleteTaxRate.ts";
 export { adminGenerateVariants } from "./client/adminGenerateVariants.ts";
 export { adminGetCategory } from "./client/adminGetCategory.ts";
 export { adminGetMedia } from "./client/adminGetMedia.ts";
@@ -550,12 +607,14 @@ export { adminListProductOptions } from "./client/adminListProductOptions.ts";
 export { adminListProducts } from "./client/adminListProducts.ts";
 export { adminListStockLocations } from "./client/adminListStockLocations.ts";
 export { adminListTaxClasses } from "./client/adminListTaxClasses.ts";
+export { adminListTaxRates } from "./client/adminListTaxRates.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
 export { adminUpdateMedia } from "./client/adminUpdateMedia.ts";
 export { adminUpdateProduct } from "./client/adminUpdateProduct.ts";
 export { adminUpdateStockLocation } from "./client/adminUpdateStockLocation.ts";
 export { adminUpdateTaxClass } from "./client/adminUpdateTaxClass.ts";
+export { adminUpdateTaxRate } from "./client/adminUpdateTaxRate.ts";
 export { adminUpdateVariant } from "./client/adminUpdateVariant.ts";
 export { adminUploadMedia } from "./client/adminUploadMedia.ts";
 export { adminBulkDeleteMediaMutationKey } from "./hooks/useAdminBulkDeleteMedia.ts";
@@ -582,6 +641,9 @@ export { useAdminCreateStockLocation } from "./hooks/useAdminCreateStockLocation
 export { adminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
 export { adminCreateTaxClassMutationOptions } from "./hooks/useAdminCreateTaxClass.ts";
 export { useAdminCreateTaxClass } from "./hooks/useAdminCreateTaxClass.ts";
+export { adminCreateTaxRateMutationKey } from "./hooks/useAdminCreateTaxRate.ts";
+export { adminCreateTaxRateMutationOptions } from "./hooks/useAdminCreateTaxRate.ts";
+export { useAdminCreateTaxRate } from "./hooks/useAdminCreateTaxRate.ts";
 export { adminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
 export { adminDeleteCategoryMutationOptions } from "./hooks/useAdminDeleteCategory.ts";
 export { useAdminDeleteCategory } from "./hooks/useAdminDeleteCategory.ts";
@@ -600,6 +662,9 @@ export { useAdminDeleteStockLocation } from "./hooks/useAdminDeleteStockLocation
 export { adminDeleteTaxClassMutationKey } from "./hooks/useAdminDeleteTaxClass.ts";
 export { adminDeleteTaxClassMutationOptions } from "./hooks/useAdminDeleteTaxClass.ts";
 export { useAdminDeleteTaxClass } from "./hooks/useAdminDeleteTaxClass.ts";
+export { adminDeleteTaxRateMutationKey } from "./hooks/useAdminDeleteTaxRate.ts";
+export { adminDeleteTaxRateMutationOptions } from "./hooks/useAdminDeleteTaxRate.ts";
+export { useAdminDeleteTaxRate } from "./hooks/useAdminDeleteTaxRate.ts";
 export { adminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
 export { adminGenerateVariantsMutationOptions } from "./hooks/useAdminGenerateVariants.ts";
 export { useAdminGenerateVariants } from "./hooks/useAdminGenerateVariants.ts";
@@ -687,6 +752,12 @@ export { useAdminListTaxClasses } from "./hooks/useAdminListTaxClasses.ts";
 export { adminListTaxClassesSuspenseQueryKey } from "./hooks/useAdminListTaxClassesSuspense.ts";
 export { adminListTaxClassesSuspenseQueryOptions } from "./hooks/useAdminListTaxClassesSuspense.ts";
 export { useAdminListTaxClassesSuspense } from "./hooks/useAdminListTaxClassesSuspense.ts";
+export { adminListTaxRatesQueryKey } from "./hooks/useAdminListTaxRates.ts";
+export { adminListTaxRatesQueryOptions } from "./hooks/useAdminListTaxRates.ts";
+export { useAdminListTaxRates } from "./hooks/useAdminListTaxRates.ts";
+export { adminListTaxRatesSuspenseQueryKey } from "./hooks/useAdminListTaxRatesSuspense.ts";
+export { adminListTaxRatesSuspenseQueryOptions } from "./hooks/useAdminListTaxRatesSuspense.ts";
+export { useAdminListTaxRatesSuspense } from "./hooks/useAdminListTaxRatesSuspense.ts";
 export { adminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export { adminReplaceMediaMutationOptions } from "./hooks/useAdminReplaceMedia.ts";
 export { useAdminReplaceMedia } from "./hooks/useAdminReplaceMedia.ts";
@@ -705,6 +776,9 @@ export { useAdminUpdateStockLocation } from "./hooks/useAdminUpdateStockLocation
 export { adminUpdateTaxClassMutationKey } from "./hooks/useAdminUpdateTaxClass.ts";
 export { adminUpdateTaxClassMutationOptions } from "./hooks/useAdminUpdateTaxClass.ts";
 export { useAdminUpdateTaxClass } from "./hooks/useAdminUpdateTaxClass.ts";
+export { adminUpdateTaxRateMutationKey } from "./hooks/useAdminUpdateTaxRate.ts";
+export { adminUpdateTaxRateMutationOptions } from "./hooks/useAdminUpdateTaxRate.ts";
+export { useAdminUpdateTaxRate } from "./hooks/useAdminUpdateTaxRate.ts";
 export { adminUpdateVariantMutationKey } from "./hooks/useAdminUpdateVariant.ts";
 export { adminUpdateVariantMutationOptions } from "./hooks/useAdminUpdateVariant.ts";
 export { useAdminUpdateVariant } from "./hooks/useAdminUpdateVariant.ts";
@@ -820,6 +894,18 @@ export {
   adminCreateTaxClassMutationResponseSchema,
 } from "./zod/adminCreateTaxClassSchema.ts";
 export {
+  adminCreateTaxRate201Schema,
+  adminCreateTaxRate400Schema,
+  adminCreateTaxRate401Schema,
+  adminCreateTaxRate403Schema,
+  adminCreateTaxRate404Schema,
+  adminCreateTaxRate409Schema,
+  adminCreateTaxRate500Schema,
+  adminCreateTaxRateMutationRequestSchema,
+  adminCreateTaxRateMutationResponseSchema,
+  adminCreateTaxRatePathParamsSchema,
+} from "./zod/adminCreateTaxRateSchema.ts";
+export {
   adminDeleteCategory200Schema,
   adminDeleteCategory400Schema,
   adminDeleteCategory401Schema,
@@ -885,6 +971,17 @@ export {
   adminDeleteTaxClassMutationResponseSchema,
   adminDeleteTaxClassPathParamsSchema,
 } from "./zod/adminDeleteTaxClassSchema.ts";
+export {
+  adminDeleteTaxRate200Schema,
+  adminDeleteTaxRate400Schema,
+  adminDeleteTaxRate401Schema,
+  adminDeleteTaxRate403Schema,
+  adminDeleteTaxRate404Schema,
+  adminDeleteTaxRate409Schema,
+  adminDeleteTaxRate500Schema,
+  adminDeleteTaxRateMutationResponseSchema,
+  adminDeleteTaxRatePathParamsSchema,
+} from "./zod/adminDeleteTaxRateSchema.ts";
 export {
   adminGenerateVariants200Schema,
   adminGenerateVariants400Schema,
@@ -1052,6 +1149,17 @@ export {
   adminListTaxClassesQueryResponseSchema,
 } from "./zod/adminListTaxClassesSchema.ts";
 export {
+  adminListTaxRates200Schema,
+  adminListTaxRates400Schema,
+  adminListTaxRates401Schema,
+  adminListTaxRates403Schema,
+  adminListTaxRates404Schema,
+  adminListTaxRates409Schema,
+  adminListTaxRates500Schema,
+  adminListTaxRatesPathParamsSchema,
+  adminListTaxRatesQueryResponseSchema,
+} from "./zod/adminListTaxRatesSchema.ts";
+export {
   adminReplaceMedia200Schema,
   adminReplaceMedia400Schema,
   adminReplaceMedia401Schema,
@@ -1123,6 +1231,18 @@ export {
   adminUpdateTaxClassMutationResponseSchema,
   adminUpdateTaxClassPathParamsSchema,
 } from "./zod/adminUpdateTaxClassSchema.ts";
+export {
+  adminUpdateTaxRate200Schema,
+  adminUpdateTaxRate400Schema,
+  adminUpdateTaxRate401Schema,
+  adminUpdateTaxRate403Schema,
+  adminUpdateTaxRate404Schema,
+  adminUpdateTaxRate409Schema,
+  adminUpdateTaxRate500Schema,
+  adminUpdateTaxRateMutationRequestSchema,
+  adminUpdateTaxRateMutationResponseSchema,
+  adminUpdateTaxRatePathParamsSchema,
+} from "./zod/adminUpdateTaxRateSchema.ts";
 export {
   adminUpdateVariant200Schema,
   adminUpdateVariant400Schema,

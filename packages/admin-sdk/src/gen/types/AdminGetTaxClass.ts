@@ -38,6 +38,38 @@ export type AdminGetTaxClass200 = {
      * @type string
      */
     updatedAt: string;
+    /**
+     * @type array
+     */
+    rates: {
+      /**
+       * @type string, uuid
+       */
+      id: string;
+      /**
+       * @type string, uuid
+       */
+      taxClassId: string;
+      /**
+       * @type string
+       */
+      countryCode: string;
+      provinceCode: string | null;
+      /**
+       * @type string
+       */
+      rate: string;
+      startsAt: string | null;
+      endsAt: string | null;
+      /**
+       * @type string
+       */
+      createdAt: string;
+      /**
+       * @type string
+       */
+      updatedAt: string;
+    }[];
   };
 };
 

@@ -3,9 +3,13 @@ import { describeRoute } from 'hono-openapi';
 import { z } from 'zod';
 import {
   createTaxClassBody,
+  createTaxRateBody,
   taxClassDetail,
   taxClassListItem,
+  taxRateDetail,
+  taxRateListItem,
   updateTaxClassBody,
+  updateTaxRateBody,
 } from '@repo/types/admin';
 import type { AppEnv } from '../context';
 import { requireAdmin } from '../auth/middleware';
@@ -23,8 +27,12 @@ import {
   createTaxClassController,
   updateTaxClassController,
   deleteTaxClassController,
+  listTaxRatesController,
+  createTaxRateController,
+  updateTaxRateController,
+  deleteTaxRateController,
 } from './controller';
-import { listTaxClassesQuery, taxClassIdParam } from './schema';
+import { listTaxClassesQuery, taxClassIdParam, taxRateIdParam } from './schema';
 
 export const taxClassesRoutes = new Hono<AppEnv>();
 
@@ -33,6 +41,7 @@ taxClassesRoutes.use('*', requireAdmin);
 const TAGS = ['tax-classes'];
 
 const idParameters = paramsFromSchema(taxClassIdParam, 'path');
+const rateIdParameters = paramsFromSchema(taxRateIdParam, 'path');
 
 const createAck = z.object({ id: z.string().uuid() });
 const deleteAck = z.object({
@@ -88,6 +97,37 @@ taxClassesRoutes.get(
   getTaxClassController
 );
 
+taxClassesRoutes.get(
+  '/:id/rates',
+  describeRoute({
+    operationId: 'adminListTaxRates',
+    summary: 'List tax rates for a tax class',
+    tags: TAGS,
+    parameters: idParameters,
+    responses: {
+      200: jsonResponse('Tax rates', successEnvelope(z.array(taxRateListItem))),
+      ...standardErrorResponses,
+    },
+  }),
+  listTaxRatesController
+);
+
+taxClassesRoutes.post(
+  '/:id/rates',
+  describeRoute({
+    operationId: 'adminCreateTaxRate',
+    summary: 'Create a tax rate for a tax class',
+    tags: TAGS,
+    parameters: idParameters,
+    requestBody: jsonRequestBody(createTaxRateBody),
+    responses: {
+      201: jsonResponse('Created tax rate', successEnvelope(taxRateDetail)),
+      ...standardErrorResponses,
+    },
+  }),
+  createTaxRateController
+);
+
 taxClassesRoutes.put(
   '/:id',
   describeRoute({
@@ -104,6 +144,22 @@ taxClassesRoutes.put(
   updateTaxClassController
 );
 
+taxClassesRoutes.put(
+  '/:id/rates/:rateId',
+  describeRoute({
+    operationId: 'adminUpdateTaxRate',
+    summary: 'Update a tax rate',
+    tags: TAGS,
+    parameters: rateIdParameters,
+    requestBody: jsonRequestBody(updateTaxRateBody),
+    responses: {
+      200: jsonResponse('Updated tax rate', successEnvelope(taxRateDetail)),
+      ...standardErrorResponses,
+    },
+  }),
+  updateTaxRateController
+);
+
 taxClassesRoutes.delete(
   '/:id',
   describeRoute({
@@ -117,4 +173,19 @@ taxClassesRoutes.delete(
     },
   }),
   deleteTaxClassController
+);
+
+taxClassesRoutes.delete(
+  '/:id/rates/:rateId',
+  describeRoute({
+    operationId: 'adminDeleteTaxRate',
+    summary: 'Delete a tax rate',
+    tags: TAGS,
+    parameters: rateIdParameters,
+    responses: {
+      200: jsonResponse('Tax rate deleted', successEnvelope(deleteAck)),
+      ...standardErrorResponses,
+    },
+  }),
+  deleteTaxRateController
 );

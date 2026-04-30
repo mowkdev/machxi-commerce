@@ -11,6 +11,10 @@ interface UseTaxClassFormParams {
   initialData?: TaxClassDetail;
 }
 
+function toDateTimeLocalValue(value: string | null | undefined) {
+  return value ? value.slice(0, 16) : '';
+}
+
 export function useTaxClassForm({ mode, initialData }: UseTaxClassFormParams) {
   const navigate = useNavigate();
   const createMutation = useCreateTaxClass();
@@ -21,6 +25,14 @@ export function useTaxClassForm({ mode, initialData }: UseTaxClassFormParams) {
   const defaultValues = useMemo<TaxClassFormValues>(
     () => ({
       name: initialData?.name ?? '',
+      rates:
+        initialData?.rates?.map((rate) => ({
+          countryCode: rate.countryCode,
+          provinceCode: rate.provinceCode ?? '',
+          rate: rate.rate,
+          startsAt: toDateTimeLocalValue(rate.startsAt),
+          endsAt: toDateTimeLocalValue(rate.endsAt),
+        })) ?? [],
     }),
     [initialData]
   );
@@ -51,6 +63,7 @@ export function useTaxClassForm({ mode, initialData }: UseTaxClassFormParams) {
   return {
     form,
     isCreateMode,
+    isEditMode,
     isPending,
     navigateToTaxClasses,
     onSubmit,
