@@ -22,6 +22,8 @@ import { customersRoutes } from "./customers/routes";
 import { ordersRoutes } from "./orders/routes";
 import { fulfillmentsRoutes } from "./fulfillments/routes";
 import { returnsRoutes } from "./returns/routes";
+import { usersRoutes } from "./users/routes";
+import { rolesRoutes } from "./roles/routes";
 import { logger } from "./lib/logger";
 import { requestLogger } from "./lib/requestLogger";
 import { err, errFromException } from "./lib/response";
@@ -74,6 +76,8 @@ export function createApp() {
   app.route("/api/orders", ordersRoutes);
   app.route("/api/fulfillments", fulfillmentsRoutes);
   app.route("/api/returns", returnsRoutes);
+  app.route("/api/users", usersRoutes);
+  app.route("/api/roles", rolesRoutes);
 
   if (env.OPENAPI_DOCS_ENABLED) {
     // Mounted last so it can introspect every registered route.

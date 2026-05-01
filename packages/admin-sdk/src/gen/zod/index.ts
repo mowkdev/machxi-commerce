@@ -274,6 +274,17 @@ export {
   adminCreateReturnMutationResponseSchema,
 } from "./adminCreateReturnSchema.ts";
 export {
+  adminCreateRole201Schema,
+  adminCreateRole400Schema,
+  adminCreateRole401Schema,
+  adminCreateRole403Schema,
+  adminCreateRole404Schema,
+  adminCreateRole409Schema,
+  adminCreateRole500Schema,
+  adminCreateRoleMutationRequestSchema,
+  adminCreateRoleMutationResponseSchema,
+} from "./adminCreateRoleSchema.ts";
+export {
   adminCreateShippingOption201Schema,
   adminCreateShippingOption400Schema,
   adminCreateShippingOption401Schema,
@@ -329,6 +340,17 @@ export {
   adminCreateTaxRateMutationResponseSchema,
   adminCreateTaxRatePathParamsSchema,
 } from "./adminCreateTaxRateSchema.ts";
+export {
+  adminCreateUser201Schema,
+  adminCreateUser400Schema,
+  adminCreateUser401Schema,
+  adminCreateUser403Schema,
+  adminCreateUser404Schema,
+  adminCreateUser409Schema,
+  adminCreateUser500Schema,
+  adminCreateUserMutationRequestSchema,
+  adminCreateUserMutationResponseSchema,
+} from "./adminCreateUserSchema.ts";
 export {
   adminDeleteCategory200Schema,
   adminDeleteCategory400Schema,
@@ -572,6 +594,17 @@ export {
   adminDeleteReturnPathParamsSchema,
 } from "./adminDeleteReturnSchema.ts";
 export {
+  adminDeleteRole200Schema,
+  adminDeleteRole400Schema,
+  adminDeleteRole401Schema,
+  adminDeleteRole403Schema,
+  adminDeleteRole404Schema,
+  adminDeleteRole409Schema,
+  adminDeleteRole500Schema,
+  adminDeleteRoleMutationResponseSchema,
+  adminDeleteRolePathParamsSchema,
+} from "./adminDeleteRoleSchema.ts";
+export {
   adminDeleteShippingOption200Schema,
   adminDeleteShippingOption400Schema,
   adminDeleteShippingOption401Schema,
@@ -626,6 +659,17 @@ export {
   adminDeleteTaxRateMutationResponseSchema,
   adminDeleteTaxRatePathParamsSchema,
 } from "./adminDeleteTaxRateSchema.ts";
+export {
+  adminDeleteUser200Schema,
+  adminDeleteUser400Schema,
+  adminDeleteUser401Schema,
+  adminDeleteUser403Schema,
+  adminDeleteUser404Schema,
+  adminDeleteUser409Schema,
+  adminDeleteUser500Schema,
+  adminDeleteUserMutationResponseSchema,
+  adminDeleteUserPathParamsSchema,
+} from "./adminDeleteUserSchema.ts";
 export {
   adminGenerateVariants200Schema,
   adminGenerateVariants400Schema,
@@ -749,6 +793,17 @@ export {
   adminGetReturnQueryResponseSchema,
 } from "./adminGetReturnSchema.ts";
 export {
+  adminGetRole200Schema,
+  adminGetRole400Schema,
+  adminGetRole401Schema,
+  adminGetRole403Schema,
+  adminGetRole404Schema,
+  adminGetRole409Schema,
+  adminGetRole500Schema,
+  adminGetRolePathParamsSchema,
+  adminGetRoleQueryResponseSchema,
+} from "./adminGetRoleSchema.ts";
+export {
   adminGetShippingOption200Schema,
   adminGetShippingOption400Schema,
   adminGetShippingOption401Schema,
@@ -792,6 +847,17 @@ export {
   adminGetTaxClassPathParamsSchema,
   adminGetTaxClassQueryResponseSchema,
 } from "./adminGetTaxClassSchema.ts";
+export {
+  adminGetUser200Schema,
+  adminGetUser400Schema,
+  adminGetUser401Schema,
+  adminGetUser403Schema,
+  adminGetUser404Schema,
+  adminGetUser409Schema,
+  adminGetUser500Schema,
+  adminGetUserPathParamsSchema,
+  adminGetUserQueryResponseSchema,
+} from "./adminGetUserSchema.ts";
 export {
   adminListCategories200Schema,
   adminListCategories400Schema,
@@ -891,6 +957,16 @@ export {
   adminListOrdersQueryParamsSchema,
   adminListOrdersQueryResponseSchema,
 } from "./adminListOrdersSchema.ts";
+export {
+  adminListPermissions200Schema,
+  adminListPermissions400Schema,
+  adminListPermissions401Schema,
+  adminListPermissions403Schema,
+  adminListPermissions404Schema,
+  adminListPermissions409Schema,
+  adminListPermissions500Schema,
+  adminListPermissionsQueryResponseSchema,
+} from "./adminListPermissionsSchema.ts";
 export {
   adminListPriceListPrices200Schema,
   adminListPriceListPrices400Schema,
@@ -1013,6 +1089,17 @@ export {
   adminListReturnsQueryResponseSchema,
 } from "./adminListReturnsSchema.ts";
 export {
+  adminListRoles200Schema,
+  adminListRoles400Schema,
+  adminListRoles401Schema,
+  adminListRoles403Schema,
+  adminListRoles404Schema,
+  adminListRoles409Schema,
+  adminListRoles500Schema,
+  adminListRolesQueryParamsSchema,
+  adminListRolesQueryResponseSchema,
+} from "./adminListRolesSchema.ts";
+export {
   adminListShippingOptions200Schema,
   adminListShippingOptions400Schema,
   adminListShippingOptions401Schema,
@@ -1067,6 +1154,17 @@ export {
   adminListTaxRatesPathParamsSchema,
   adminListTaxRatesQueryResponseSchema,
 } from "./adminListTaxRatesSchema.ts";
+export {
+  adminListUsers200Schema,
+  adminListUsers400Schema,
+  adminListUsers401Schema,
+  adminListUsers403Schema,
+  adminListUsers404Schema,
+  adminListUsers409Schema,
+  adminListUsers500Schema,
+  adminListUsersQueryParamsSchema,
+  adminListUsersQueryResponseSchema,
+} from "./adminListUsersSchema.ts";
 export {
   adminReplaceMedia200Schema,
   adminReplaceMedia400Schema,
@@ -1332,6 +1430,18 @@ export {
   adminUpdateReturnPathParamsSchema,
 } from "./adminUpdateReturnSchema.ts";
 export {
+  adminUpdateRole200Schema,
+  adminUpdateRole400Schema,
+  adminUpdateRole401Schema,
+  adminUpdateRole403Schema,
+  adminUpdateRole404Schema,
+  adminUpdateRole409Schema,
+  adminUpdateRole500Schema,
+  adminUpdateRoleMutationRequestSchema,
+  adminUpdateRoleMutationResponseSchema,
+  adminUpdateRolePathParamsSchema,
+} from "./adminUpdateRoleSchema.ts";
+export {
   adminUpdateShippingOption200Schema,
   adminUpdateShippingOption400Schema,
   adminUpdateShippingOption401Schema,
@@ -1391,6 +1501,18 @@ export {
   adminUpdateTaxRateMutationResponseSchema,
   adminUpdateTaxRatePathParamsSchema,
 } from "./adminUpdateTaxRateSchema.ts";
+export {
+  adminUpdateUser200Schema,
+  adminUpdateUser400Schema,
+  adminUpdateUser401Schema,
+  adminUpdateUser403Schema,
+  adminUpdateUser404Schema,
+  adminUpdateUser409Schema,
+  adminUpdateUser500Schema,
+  adminUpdateUserMutationRequestSchema,
+  adminUpdateUserMutationResponseSchema,
+  adminUpdateUserPathParamsSchema,
+} from "./adminUpdateUserSchema.ts";
 export {
   adminUpdateVariant200Schema,
   adminUpdateVariant400Schema,

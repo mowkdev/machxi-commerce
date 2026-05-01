@@ -22,11 +22,13 @@ export type { AdminCreatePromotionTargetMutationKey } from "./hooks/useAdminCrea
 export type { AdminCreatePromotionTranslationMutationKey } from "./hooks/useAdminCreatePromotionTranslation.ts";
 export type { AdminCreateReturnMutationKey } from "./hooks/useAdminCreateReturn.ts";
 export type { AdminCreateReturnItemMutationKey } from "./hooks/useAdminCreateReturnItem.ts";
+export type { AdminCreateRoleMutationKey } from "./hooks/useAdminCreateRole.ts";
 export type { AdminCreateShippingOptionMutationKey } from "./hooks/useAdminCreateShippingOption.ts";
 export type { AdminCreateShippingZoneMutationKey } from "./hooks/useAdminCreateShippingZone.ts";
 export type { AdminCreateStockLocationMutationKey } from "./hooks/useAdminCreateStockLocation.ts";
 export type { AdminCreateTaxClassMutationKey } from "./hooks/useAdminCreateTaxClass.ts";
 export type { AdminCreateTaxRateMutationKey } from "./hooks/useAdminCreateTaxRate.ts";
+export type { AdminCreateUserMutationKey } from "./hooks/useAdminCreateUser.ts";
 export type { AdminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
 export type { AdminDeleteCustomerMutationKey } from "./hooks/useAdminDeleteCustomer.ts";
 export type { AdminDeleteCustomerAddressMutationKey } from "./hooks/useAdminDeleteCustomerAddress.ts";
@@ -49,11 +51,13 @@ export type { AdminDeletePromotionTargetMutationKey } from "./hooks/useAdminDele
 export type { AdminDeletePromotionTranslationMutationKey } from "./hooks/useAdminDeletePromotionTranslation.ts";
 export type { AdminDeleteReturnMutationKey } from "./hooks/useAdminDeleteReturn.ts";
 export type { AdminDeleteReturnItemMutationKey } from "./hooks/useAdminDeleteReturnItem.ts";
+export type { AdminDeleteRoleMutationKey } from "./hooks/useAdminDeleteRole.ts";
 export type { AdminDeleteShippingOptionMutationKey } from "./hooks/useAdminDeleteShippingOption.ts";
 export type { AdminDeleteShippingZoneMutationKey } from "./hooks/useAdminDeleteShippingZone.ts";
 export type { AdminDeleteStockLocationMutationKey } from "./hooks/useAdminDeleteStockLocation.ts";
 export type { AdminDeleteTaxClassMutationKey } from "./hooks/useAdminDeleteTaxClass.ts";
 export type { AdminDeleteTaxRateMutationKey } from "./hooks/useAdminDeleteTaxRate.ts";
+export type { AdminDeleteUserMutationKey } from "./hooks/useAdminDeleteUser.ts";
 export type { AdminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
 export type { AdminGetCategoryQueryKey } from "./hooks/useAdminGetCategory.ts";
 export type { AdminGetCategorySuspenseQueryKey } from "./hooks/useAdminGetCategorySuspense.ts";
@@ -75,6 +79,8 @@ export type { AdminGetPromotionQueryKey } from "./hooks/useAdminGetPromotion.ts"
 export type { AdminGetPromotionSuspenseQueryKey } from "./hooks/useAdminGetPromotionSuspense.ts";
 export type { AdminGetReturnQueryKey } from "./hooks/useAdminGetReturn.ts";
 export type { AdminGetReturnSuspenseQueryKey } from "./hooks/useAdminGetReturnSuspense.ts";
+export type { AdminGetRoleQueryKey } from "./hooks/useAdminGetRole.ts";
+export type { AdminGetRoleSuspenseQueryKey } from "./hooks/useAdminGetRoleSuspense.ts";
 export type { AdminGetShippingOptionQueryKey } from "./hooks/useAdminGetShippingOption.ts";
 export type { AdminGetShippingOptionSuspenseQueryKey } from "./hooks/useAdminGetShippingOptionSuspense.ts";
 export type { AdminGetShippingZoneQueryKey } from "./hooks/useAdminGetShippingZone.ts";
@@ -83,6 +89,8 @@ export type { AdminGetStockLocationQueryKey } from "./hooks/useAdminGetStockLoca
 export type { AdminGetStockLocationSuspenseQueryKey } from "./hooks/useAdminGetStockLocationSuspense.ts";
 export type { AdminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
 export type { AdminGetTaxClassSuspenseQueryKey } from "./hooks/useAdminGetTaxClassSuspense.ts";
+export type { AdminGetUserQueryKey } from "./hooks/useAdminGetUser.ts";
+export type { AdminGetUserSuspenseQueryKey } from "./hooks/useAdminGetUserSuspense.ts";
 export type { AdminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export type { AdminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
 export type { AdminListCustomersQueryKey } from "./hooks/useAdminListCustomers.ts";
@@ -101,6 +109,8 @@ export type { AdminListMediaQueryKey } from "./hooks/useAdminListMedia.ts";
 export type { AdminListMediaSuspenseQueryKey } from "./hooks/useAdminListMediaSuspense.ts";
 export type { AdminListOrdersQueryKey } from "./hooks/useAdminListOrders.ts";
 export type { AdminListOrdersSuspenseQueryKey } from "./hooks/useAdminListOrdersSuspense.ts";
+export type { AdminListPermissionsQueryKey } from "./hooks/useAdminListPermissions.ts";
+export type { AdminListPermissionsSuspenseQueryKey } from "./hooks/useAdminListPermissionsSuspense.ts";
 export type { AdminListPriceListPricesQueryKey } from "./hooks/useAdminListPriceListPrices.ts";
 export type { AdminListPriceListPricesSuspenseQueryKey } from "./hooks/useAdminListPriceListPricesSuspense.ts";
 export type { AdminListPriceListTranslationsQueryKey } from "./hooks/useAdminListPriceListTranslations.ts";
@@ -123,6 +133,8 @@ export type { AdminListPromotionsQueryKey } from "./hooks/useAdminListPromotions
 export type { AdminListPromotionsSuspenseQueryKey } from "./hooks/useAdminListPromotionsSuspense.ts";
 export type { AdminListReturnsQueryKey } from "./hooks/useAdminListReturns.ts";
 export type { AdminListReturnsSuspenseQueryKey } from "./hooks/useAdminListReturnsSuspense.ts";
+export type { AdminListRolesQueryKey } from "./hooks/useAdminListRoles.ts";
+export type { AdminListRolesSuspenseQueryKey } from "./hooks/useAdminListRolesSuspense.ts";
 export type { AdminListShippingOptionsQueryKey } from "./hooks/useAdminListShippingOptions.ts";
 export type { AdminListShippingOptionsSuspenseQueryKey } from "./hooks/useAdminListShippingOptionsSuspense.ts";
 export type { AdminListShippingZonesQueryKey } from "./hooks/useAdminListShippingZones.ts";
@@ -133,6 +145,8 @@ export type { AdminListTaxClassesQueryKey } from "./hooks/useAdminListTaxClasses
 export type { AdminListTaxClassesSuspenseQueryKey } from "./hooks/useAdminListTaxClassesSuspense.ts";
 export type { AdminListTaxRatesQueryKey } from "./hooks/useAdminListTaxRates.ts";
 export type { AdminListTaxRatesSuspenseQueryKey } from "./hooks/useAdminListTaxRatesSuspense.ts";
+export type { AdminListUsersQueryKey } from "./hooks/useAdminListUsers.ts";
+export type { AdminListUsersSuspenseQueryKey } from "./hooks/useAdminListUsersSuspense.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export type { AdminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
@@ -155,11 +169,13 @@ export type { AdminUpdatePromotionTargetMutationKey } from "./hooks/useAdminUpda
 export type { AdminUpdatePromotionTranslationMutationKey } from "./hooks/useAdminUpdatePromotionTranslation.ts";
 export type { AdminUpdateReturnMutationKey } from "./hooks/useAdminUpdateReturn.ts";
 export type { AdminUpdateReturnItemMutationKey } from "./hooks/useAdminUpdateReturnItem.ts";
+export type { AdminUpdateRoleMutationKey } from "./hooks/useAdminUpdateRole.ts";
 export type { AdminUpdateShippingOptionMutationKey } from "./hooks/useAdminUpdateShippingOption.ts";
 export type { AdminUpdateShippingZoneMutationKey } from "./hooks/useAdminUpdateShippingZone.ts";
 export type { AdminUpdateStockLocationMutationKey } from "./hooks/useAdminUpdateStockLocation.ts";
 export type { AdminUpdateTaxClassMutationKey } from "./hooks/useAdminUpdateTaxClass.ts";
 export type { AdminUpdateTaxRateMutationKey } from "./hooks/useAdminUpdateTaxRate.ts";
+export type { AdminUpdateUserMutationKey } from "./hooks/useAdminUpdateUser.ts";
 export type { AdminUpdateVariantMutationKey } from "./hooks/useAdminUpdateVariant.ts";
 export type { AdminUploadMediaMutationKey } from "./hooks/useAdminUploadMedia.ts";
 export type {
@@ -465,6 +481,18 @@ export type {
   AdminCreateReturnItemPathParams,
 } from "./types/AdminCreateReturnItem.ts";
 export type {
+  AdminCreateRole201,
+  AdminCreateRole400,
+  AdminCreateRole401,
+  AdminCreateRole403,
+  AdminCreateRole404,
+  AdminCreateRole409,
+  AdminCreateRole500,
+  AdminCreateRoleMutation,
+  AdminCreateRoleMutationRequest,
+  AdminCreateRoleMutationResponse,
+} from "./types/AdminCreateRole.ts";
+export type {
   AdminCreateShippingOption201,
   AdminCreateShippingOption400,
   AdminCreateShippingOption401,
@@ -525,6 +553,18 @@ export type {
   AdminCreateTaxRateMutationResponse,
   AdminCreateTaxRatePathParams,
 } from "./types/AdminCreateTaxRate.ts";
+export type {
+  AdminCreateUser201,
+  AdminCreateUser400,
+  AdminCreateUser401,
+  AdminCreateUser403,
+  AdminCreateUser404,
+  AdminCreateUser409,
+  AdminCreateUser500,
+  AdminCreateUserMutation,
+  AdminCreateUserMutationRequest,
+  AdminCreateUserMutationResponse,
+} from "./types/AdminCreateUser.ts";
 export type {
   AdminDeleteCategory200,
   AdminDeleteCategory400,
@@ -790,6 +830,18 @@ export type {
   AdminDeleteReturnItemPathParams,
 } from "./types/AdminDeleteReturnItem.ts";
 export type {
+  AdminDeleteRole200,
+  AdminDeleteRole400,
+  AdminDeleteRole401,
+  AdminDeleteRole403,
+  AdminDeleteRole404,
+  AdminDeleteRole409,
+  AdminDeleteRole500,
+  AdminDeleteRoleMutation,
+  AdminDeleteRoleMutationResponse,
+  AdminDeleteRolePathParams,
+} from "./types/AdminDeleteRole.ts";
+export type {
   AdminDeleteShippingOption200,
   AdminDeleteShippingOption400,
   AdminDeleteShippingOption401,
@@ -849,6 +901,18 @@ export type {
   AdminDeleteTaxRateMutationResponse,
   AdminDeleteTaxRatePathParams,
 } from "./types/AdminDeleteTaxRate.ts";
+export type {
+  AdminDeleteUser200,
+  AdminDeleteUser400,
+  AdminDeleteUser401,
+  AdminDeleteUser403,
+  AdminDeleteUser404,
+  AdminDeleteUser409,
+  AdminDeleteUser500,
+  AdminDeleteUserMutation,
+  AdminDeleteUserMutationResponse,
+  AdminDeleteUserPathParams,
+} from "./types/AdminDeleteUser.ts";
 export type {
   AdminGenerateVariants200,
   AdminGenerateVariants400,
@@ -996,6 +1060,18 @@ export type {
   AdminGetReturnQueryResponse,
 } from "./types/AdminGetReturn.ts";
 export type {
+  AdminGetRole200,
+  AdminGetRole400,
+  AdminGetRole401,
+  AdminGetRole403,
+  AdminGetRole404,
+  AdminGetRole409,
+  AdminGetRole500,
+  AdminGetRolePathParams,
+  AdminGetRoleQuery,
+  AdminGetRoleQueryResponse,
+} from "./types/AdminGetRole.ts";
+export type {
   AdminGetShippingOption200,
   AdminGetShippingOption400,
   AdminGetShippingOption401,
@@ -1043,6 +1119,18 @@ export type {
   AdminGetTaxClassQuery,
   AdminGetTaxClassQueryResponse,
 } from "./types/AdminGetTaxClass.ts";
+export type {
+  AdminGetUser200,
+  AdminGetUser400,
+  AdminGetUser401,
+  AdminGetUser403,
+  AdminGetUser404,
+  AdminGetUser409,
+  AdminGetUser500,
+  AdminGetUserPathParams,
+  AdminGetUserQuery,
+  AdminGetUserQueryResponse,
+} from "./types/AdminGetUser.ts";
 export type {
   AdminListCategories200,
   AdminListCategories400,
@@ -1172,6 +1260,17 @@ export type {
   AdminListOrdersQueryParamsStatusEnumKey,
   AdminListOrdersQueryResponse,
 } from "./types/AdminListOrders.ts";
+export type {
+  AdminListPermissions200,
+  AdminListPermissions400,
+  AdminListPermissions401,
+  AdminListPermissions403,
+  AdminListPermissions404,
+  AdminListPermissions409,
+  AdminListPermissions500,
+  AdminListPermissionsQuery,
+  AdminListPermissionsQueryResponse,
+} from "./types/AdminListPermissions.ts";
 export type {
   AdminListPriceListPrices200,
   AdminListPriceListPrices400,
@@ -1328,6 +1427,20 @@ export type {
   AdminListReturnsQueryResponse,
 } from "./types/AdminListReturns.ts";
 export type {
+  AdminListRoles200,
+  AdminListRoles400,
+  AdminListRoles401,
+  AdminListRoles403,
+  AdminListRoles404,
+  AdminListRoles409,
+  AdminListRoles500,
+  AdminListRolesQuery,
+  AdminListRolesQueryParams,
+  AdminListRolesQueryParamsSortByEnumKey,
+  AdminListRolesQueryParamsSortOrderEnumKey,
+  AdminListRolesQueryResponse,
+} from "./types/AdminListRoles.ts";
+export type {
   AdminListShippingOptions200,
   AdminListShippingOptions400,
   AdminListShippingOptions401,
@@ -1395,6 +1508,20 @@ export type {
   AdminListTaxRatesQuery,
   AdminListTaxRatesQueryResponse,
 } from "./types/AdminListTaxRates.ts";
+export type {
+  AdminListUsers200,
+  AdminListUsers400,
+  AdminListUsers401,
+  AdminListUsers403,
+  AdminListUsers404,
+  AdminListUsers409,
+  AdminListUsers500,
+  AdminListUsersQuery,
+  AdminListUsersQueryParams,
+  AdminListUsersQueryParamsSortByEnumKey,
+  AdminListUsersQueryParamsSortOrderEnumKey,
+  AdminListUsersQueryResponse,
+} from "./types/AdminListUsers.ts";
 export type {
   AdminReplaceMedia200,
   AdminReplaceMedia400,
@@ -1698,6 +1825,19 @@ export type {
   AdminUpdateReturnItemPathParams,
 } from "./types/AdminUpdateReturnItem.ts";
 export type {
+  AdminUpdateRole200,
+  AdminUpdateRole400,
+  AdminUpdateRole401,
+  AdminUpdateRole403,
+  AdminUpdateRole404,
+  AdminUpdateRole409,
+  AdminUpdateRole500,
+  AdminUpdateRoleMutation,
+  AdminUpdateRoleMutationRequest,
+  AdminUpdateRoleMutationResponse,
+  AdminUpdateRolePathParams,
+} from "./types/AdminUpdateRole.ts";
+export type {
   AdminUpdateShippingOption200,
   AdminUpdateShippingOption400,
   AdminUpdateShippingOption401,
@@ -1763,6 +1903,19 @@ export type {
   AdminUpdateTaxRatePathParams,
 } from "./types/AdminUpdateTaxRate.ts";
 export type {
+  AdminUpdateUser200,
+  AdminUpdateUser400,
+  AdminUpdateUser401,
+  AdminUpdateUser403,
+  AdminUpdateUser404,
+  AdminUpdateUser409,
+  AdminUpdateUser500,
+  AdminUpdateUserMutation,
+  AdminUpdateUserMutationRequest,
+  AdminUpdateUserMutationResponse,
+  AdminUpdateUserPathParams,
+} from "./types/AdminUpdateUser.ts";
+export type {
   AdminUpdateVariant200,
   AdminUpdateVariant400,
   AdminUpdateVariant401,
@@ -1811,11 +1964,13 @@ export { adminCreatePromotionTarget } from "./client/adminCreatePromotionTarget.
 export { adminCreatePromotionTranslation } from "./client/adminCreatePromotionTranslation.ts";
 export { adminCreateReturn } from "./client/adminCreateReturn.ts";
 export { adminCreateReturnItem } from "./client/adminCreateReturnItem.ts";
+export { adminCreateRole } from "./client/adminCreateRole.ts";
 export { adminCreateShippingOption } from "./client/adminCreateShippingOption.ts";
 export { adminCreateShippingZone } from "./client/adminCreateShippingZone.ts";
 export { adminCreateStockLocation } from "./client/adminCreateStockLocation.ts";
 export { adminCreateTaxClass } from "./client/adminCreateTaxClass.ts";
 export { adminCreateTaxRate } from "./client/adminCreateTaxRate.ts";
+export { adminCreateUser } from "./client/adminCreateUser.ts";
 export { adminDeleteCategory } from "./client/adminDeleteCategory.ts";
 export { adminDeleteCustomer } from "./client/adminDeleteCustomer.ts";
 export { adminDeleteCustomerAddress } from "./client/adminDeleteCustomerAddress.ts";
@@ -1838,11 +1993,13 @@ export { adminDeletePromotionTarget } from "./client/adminDeletePromotionTarget.
 export { adminDeletePromotionTranslation } from "./client/adminDeletePromotionTranslation.ts";
 export { adminDeleteReturn } from "./client/adminDeleteReturn.ts";
 export { adminDeleteReturnItem } from "./client/adminDeleteReturnItem.ts";
+export { adminDeleteRole } from "./client/adminDeleteRole.ts";
 export { adminDeleteShippingOption } from "./client/adminDeleteShippingOption.ts";
 export { adminDeleteShippingZone } from "./client/adminDeleteShippingZone.ts";
 export { adminDeleteStockLocation } from "./client/adminDeleteStockLocation.ts";
 export { adminDeleteTaxClass } from "./client/adminDeleteTaxClass.ts";
 export { adminDeleteTaxRate } from "./client/adminDeleteTaxRate.ts";
+export { adminDeleteUser } from "./client/adminDeleteUser.ts";
 export { adminGenerateVariants } from "./client/adminGenerateVariants.ts";
 export { adminGetCategory } from "./client/adminGetCategory.ts";
 export { adminGetCustomer } from "./client/adminGetCustomer.ts";
@@ -1854,10 +2011,12 @@ export { adminGetPriceList } from "./client/adminGetPriceList.ts";
 export { adminGetProduct } from "./client/adminGetProduct.ts";
 export { adminGetPromotion } from "./client/adminGetPromotion.ts";
 export { adminGetReturn } from "./client/adminGetReturn.ts";
+export { adminGetRole } from "./client/adminGetRole.ts";
 export { adminGetShippingOption } from "./client/adminGetShippingOption.ts";
 export { adminGetShippingZone } from "./client/adminGetShippingZone.ts";
 export { adminGetStockLocation } from "./client/adminGetStockLocation.ts";
 export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
+export { adminGetUser } from "./client/adminGetUser.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
 export { adminListCustomers } from "./client/adminListCustomers.ts";
 export { adminListFulfillments } from "./client/adminListFulfillments.ts";
@@ -1867,6 +2026,7 @@ export { adminListInventoryTransactions } from "./client/adminListInventoryTrans
 export { adminListLanguages } from "./client/adminListLanguages.ts";
 export { adminListMedia } from "./client/adminListMedia.ts";
 export { adminListOrders } from "./client/adminListOrders.ts";
+export { adminListPermissions } from "./client/adminListPermissions.ts";
 export { adminListPriceListPrices } from "./client/adminListPriceListPrices.ts";
 export { adminListPriceListTranslations } from "./client/adminListPriceListTranslations.ts";
 export { adminListPriceLists } from "./client/adminListPriceLists.ts";
@@ -1878,11 +2038,13 @@ export { adminListPromotionTargets } from "./client/adminListPromotionTargets.ts
 export { adminListPromotionTranslations } from "./client/adminListPromotionTranslations.ts";
 export { adminListPromotions } from "./client/adminListPromotions.ts";
 export { adminListReturns } from "./client/adminListReturns.ts";
+export { adminListRoles } from "./client/adminListRoles.ts";
 export { adminListShippingOptions } from "./client/adminListShippingOptions.ts";
 export { adminListShippingZones } from "./client/adminListShippingZones.ts";
 export { adminListStockLocations } from "./client/adminListStockLocations.ts";
 export { adminListTaxClasses } from "./client/adminListTaxClasses.ts";
 export { adminListTaxRates } from "./client/adminListTaxRates.ts";
+export { adminListUsers } from "./client/adminListUsers.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
 export { adminUpdateCustomer } from "./client/adminUpdateCustomer.ts";
@@ -1905,11 +2067,13 @@ export { adminUpdatePromotionTarget } from "./client/adminUpdatePromotionTarget.
 export { adminUpdatePromotionTranslation } from "./client/adminUpdatePromotionTranslation.ts";
 export { adminUpdateReturn } from "./client/adminUpdateReturn.ts";
 export { adminUpdateReturnItem } from "./client/adminUpdateReturnItem.ts";
+export { adminUpdateRole } from "./client/adminUpdateRole.ts";
 export { adminUpdateShippingOption } from "./client/adminUpdateShippingOption.ts";
 export { adminUpdateShippingZone } from "./client/adminUpdateShippingZone.ts";
 export { adminUpdateStockLocation } from "./client/adminUpdateStockLocation.ts";
 export { adminUpdateTaxClass } from "./client/adminUpdateTaxClass.ts";
 export { adminUpdateTaxRate } from "./client/adminUpdateTaxRate.ts";
+export { adminUpdateUser } from "./client/adminUpdateUser.ts";
 export { adminUpdateVariant } from "./client/adminUpdateVariant.ts";
 export { adminUploadMedia } from "./client/adminUploadMedia.ts";
 export { adminBulkDeleteMediaMutationKey } from "./hooks/useAdminBulkDeleteMedia.ts";
@@ -1984,6 +2148,9 @@ export { useAdminCreateReturn } from "./hooks/useAdminCreateReturn.ts";
 export { adminCreateReturnItemMutationKey } from "./hooks/useAdminCreateReturnItem.ts";
 export { adminCreateReturnItemMutationOptions } from "./hooks/useAdminCreateReturnItem.ts";
 export { useAdminCreateReturnItem } from "./hooks/useAdminCreateReturnItem.ts";
+export { adminCreateRoleMutationKey } from "./hooks/useAdminCreateRole.ts";
+export { adminCreateRoleMutationOptions } from "./hooks/useAdminCreateRole.ts";
+export { useAdminCreateRole } from "./hooks/useAdminCreateRole.ts";
 export { adminCreateShippingOptionMutationKey } from "./hooks/useAdminCreateShippingOption.ts";
 export { adminCreateShippingOptionMutationOptions } from "./hooks/useAdminCreateShippingOption.ts";
 export { useAdminCreateShippingOption } from "./hooks/useAdminCreateShippingOption.ts";
@@ -1999,6 +2166,9 @@ export { useAdminCreateTaxClass } from "./hooks/useAdminCreateTaxClass.ts";
 export { adminCreateTaxRateMutationKey } from "./hooks/useAdminCreateTaxRate.ts";
 export { adminCreateTaxRateMutationOptions } from "./hooks/useAdminCreateTaxRate.ts";
 export { useAdminCreateTaxRate } from "./hooks/useAdminCreateTaxRate.ts";
+export { adminCreateUserMutationKey } from "./hooks/useAdminCreateUser.ts";
+export { adminCreateUserMutationOptions } from "./hooks/useAdminCreateUser.ts";
+export { useAdminCreateUser } from "./hooks/useAdminCreateUser.ts";
 export { adminDeleteCategoryMutationKey } from "./hooks/useAdminDeleteCategory.ts";
 export { adminDeleteCategoryMutationOptions } from "./hooks/useAdminDeleteCategory.ts";
 export { useAdminDeleteCategory } from "./hooks/useAdminDeleteCategory.ts";
@@ -2065,6 +2235,9 @@ export { useAdminDeleteReturn } from "./hooks/useAdminDeleteReturn.ts";
 export { adminDeleteReturnItemMutationKey } from "./hooks/useAdminDeleteReturnItem.ts";
 export { adminDeleteReturnItemMutationOptions } from "./hooks/useAdminDeleteReturnItem.ts";
 export { useAdminDeleteReturnItem } from "./hooks/useAdminDeleteReturnItem.ts";
+export { adminDeleteRoleMutationKey } from "./hooks/useAdminDeleteRole.ts";
+export { adminDeleteRoleMutationOptions } from "./hooks/useAdminDeleteRole.ts";
+export { useAdminDeleteRole } from "./hooks/useAdminDeleteRole.ts";
 export { adminDeleteShippingOptionMutationKey } from "./hooks/useAdminDeleteShippingOption.ts";
 export { adminDeleteShippingOptionMutationOptions } from "./hooks/useAdminDeleteShippingOption.ts";
 export { useAdminDeleteShippingOption } from "./hooks/useAdminDeleteShippingOption.ts";
@@ -2080,6 +2253,9 @@ export { useAdminDeleteTaxClass } from "./hooks/useAdminDeleteTaxClass.ts";
 export { adminDeleteTaxRateMutationKey } from "./hooks/useAdminDeleteTaxRate.ts";
 export { adminDeleteTaxRateMutationOptions } from "./hooks/useAdminDeleteTaxRate.ts";
 export { useAdminDeleteTaxRate } from "./hooks/useAdminDeleteTaxRate.ts";
+export { adminDeleteUserMutationKey } from "./hooks/useAdminDeleteUser.ts";
+export { adminDeleteUserMutationOptions } from "./hooks/useAdminDeleteUser.ts";
+export { useAdminDeleteUser } from "./hooks/useAdminDeleteUser.ts";
 export { adminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
 export { adminGenerateVariantsMutationOptions } from "./hooks/useAdminGenerateVariants.ts";
 export { useAdminGenerateVariants } from "./hooks/useAdminGenerateVariants.ts";
@@ -2143,6 +2319,12 @@ export { useAdminGetReturn } from "./hooks/useAdminGetReturn.ts";
 export { adminGetReturnSuspenseQueryKey } from "./hooks/useAdminGetReturnSuspense.ts";
 export { adminGetReturnSuspenseQueryOptions } from "./hooks/useAdminGetReturnSuspense.ts";
 export { useAdminGetReturnSuspense } from "./hooks/useAdminGetReturnSuspense.ts";
+export { adminGetRoleQueryKey } from "./hooks/useAdminGetRole.ts";
+export { adminGetRoleQueryOptions } from "./hooks/useAdminGetRole.ts";
+export { useAdminGetRole } from "./hooks/useAdminGetRole.ts";
+export { adminGetRoleSuspenseQueryKey } from "./hooks/useAdminGetRoleSuspense.ts";
+export { adminGetRoleSuspenseQueryOptions } from "./hooks/useAdminGetRoleSuspense.ts";
+export { useAdminGetRoleSuspense } from "./hooks/useAdminGetRoleSuspense.ts";
 export { adminGetShippingOptionQueryKey } from "./hooks/useAdminGetShippingOption.ts";
 export { adminGetShippingOptionQueryOptions } from "./hooks/useAdminGetShippingOption.ts";
 export { useAdminGetShippingOption } from "./hooks/useAdminGetShippingOption.ts";
@@ -2167,6 +2349,12 @@ export { useAdminGetTaxClass } from "./hooks/useAdminGetTaxClass.ts";
 export { adminGetTaxClassSuspenseQueryKey } from "./hooks/useAdminGetTaxClassSuspense.ts";
 export { adminGetTaxClassSuspenseQueryOptions } from "./hooks/useAdminGetTaxClassSuspense.ts";
 export { useAdminGetTaxClassSuspense } from "./hooks/useAdminGetTaxClassSuspense.ts";
+export { adminGetUserQueryKey } from "./hooks/useAdminGetUser.ts";
+export { adminGetUserQueryOptions } from "./hooks/useAdminGetUser.ts";
+export { useAdminGetUser } from "./hooks/useAdminGetUser.ts";
+export { adminGetUserSuspenseQueryKey } from "./hooks/useAdminGetUserSuspense.ts";
+export { adminGetUserSuspenseQueryOptions } from "./hooks/useAdminGetUserSuspense.ts";
+export { useAdminGetUserSuspense } from "./hooks/useAdminGetUserSuspense.ts";
 export { adminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export { adminListCategoriesQueryOptions } from "./hooks/useAdminListCategories.ts";
 export { useAdminListCategories } from "./hooks/useAdminListCategories.ts";
@@ -2221,6 +2409,12 @@ export { useAdminListOrders } from "./hooks/useAdminListOrders.ts";
 export { adminListOrdersSuspenseQueryKey } from "./hooks/useAdminListOrdersSuspense.ts";
 export { adminListOrdersSuspenseQueryOptions } from "./hooks/useAdminListOrdersSuspense.ts";
 export { useAdminListOrdersSuspense } from "./hooks/useAdminListOrdersSuspense.ts";
+export { adminListPermissionsQueryKey } from "./hooks/useAdminListPermissions.ts";
+export { adminListPermissionsQueryOptions } from "./hooks/useAdminListPermissions.ts";
+export { useAdminListPermissions } from "./hooks/useAdminListPermissions.ts";
+export { adminListPermissionsSuspenseQueryKey } from "./hooks/useAdminListPermissionsSuspense.ts";
+export { adminListPermissionsSuspenseQueryOptions } from "./hooks/useAdminListPermissionsSuspense.ts";
+export { useAdminListPermissionsSuspense } from "./hooks/useAdminListPermissionsSuspense.ts";
 export { adminListPriceListPricesQueryKey } from "./hooks/useAdminListPriceListPrices.ts";
 export { adminListPriceListPricesQueryOptions } from "./hooks/useAdminListPriceListPrices.ts";
 export { useAdminListPriceListPrices } from "./hooks/useAdminListPriceListPrices.ts";
@@ -2287,6 +2481,12 @@ export { useAdminListReturns } from "./hooks/useAdminListReturns.ts";
 export { adminListReturnsSuspenseQueryKey } from "./hooks/useAdminListReturnsSuspense.ts";
 export { adminListReturnsSuspenseQueryOptions } from "./hooks/useAdminListReturnsSuspense.ts";
 export { useAdminListReturnsSuspense } from "./hooks/useAdminListReturnsSuspense.ts";
+export { adminListRolesQueryKey } from "./hooks/useAdminListRoles.ts";
+export { adminListRolesQueryOptions } from "./hooks/useAdminListRoles.ts";
+export { useAdminListRoles } from "./hooks/useAdminListRoles.ts";
+export { adminListRolesSuspenseQueryKey } from "./hooks/useAdminListRolesSuspense.ts";
+export { adminListRolesSuspenseQueryOptions } from "./hooks/useAdminListRolesSuspense.ts";
+export { useAdminListRolesSuspense } from "./hooks/useAdminListRolesSuspense.ts";
 export { adminListShippingOptionsQueryKey } from "./hooks/useAdminListShippingOptions.ts";
 export { adminListShippingOptionsQueryOptions } from "./hooks/useAdminListShippingOptions.ts";
 export { useAdminListShippingOptions } from "./hooks/useAdminListShippingOptions.ts";
@@ -2317,6 +2517,12 @@ export { useAdminListTaxRates } from "./hooks/useAdminListTaxRates.ts";
 export { adminListTaxRatesSuspenseQueryKey } from "./hooks/useAdminListTaxRatesSuspense.ts";
 export { adminListTaxRatesSuspenseQueryOptions } from "./hooks/useAdminListTaxRatesSuspense.ts";
 export { useAdminListTaxRatesSuspense } from "./hooks/useAdminListTaxRatesSuspense.ts";
+export { adminListUsersQueryKey } from "./hooks/useAdminListUsers.ts";
+export { adminListUsersQueryOptions } from "./hooks/useAdminListUsers.ts";
+export { useAdminListUsers } from "./hooks/useAdminListUsers.ts";
+export { adminListUsersSuspenseQueryKey } from "./hooks/useAdminListUsersSuspense.ts";
+export { adminListUsersSuspenseQueryOptions } from "./hooks/useAdminListUsersSuspense.ts";
+export { useAdminListUsersSuspense } from "./hooks/useAdminListUsersSuspense.ts";
 export { adminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export { adminReplaceMediaMutationOptions } from "./hooks/useAdminReplaceMedia.ts";
 export { useAdminReplaceMedia } from "./hooks/useAdminReplaceMedia.ts";
@@ -2383,6 +2589,9 @@ export { useAdminUpdateReturn } from "./hooks/useAdminUpdateReturn.ts";
 export { adminUpdateReturnItemMutationKey } from "./hooks/useAdminUpdateReturnItem.ts";
 export { adminUpdateReturnItemMutationOptions } from "./hooks/useAdminUpdateReturnItem.ts";
 export { useAdminUpdateReturnItem } from "./hooks/useAdminUpdateReturnItem.ts";
+export { adminUpdateRoleMutationKey } from "./hooks/useAdminUpdateRole.ts";
+export { adminUpdateRoleMutationOptions } from "./hooks/useAdminUpdateRole.ts";
+export { useAdminUpdateRole } from "./hooks/useAdminUpdateRole.ts";
 export { adminUpdateShippingOptionMutationKey } from "./hooks/useAdminUpdateShippingOption.ts";
 export { adminUpdateShippingOptionMutationOptions } from "./hooks/useAdminUpdateShippingOption.ts";
 export { useAdminUpdateShippingOption } from "./hooks/useAdminUpdateShippingOption.ts";
@@ -2398,6 +2607,9 @@ export { useAdminUpdateTaxClass } from "./hooks/useAdminUpdateTaxClass.ts";
 export { adminUpdateTaxRateMutationKey } from "./hooks/useAdminUpdateTaxRate.ts";
 export { adminUpdateTaxRateMutationOptions } from "./hooks/useAdminUpdateTaxRate.ts";
 export { useAdminUpdateTaxRate } from "./hooks/useAdminUpdateTaxRate.ts";
+export { adminUpdateUserMutationKey } from "./hooks/useAdminUpdateUser.ts";
+export { adminUpdateUserMutationOptions } from "./hooks/useAdminUpdateUser.ts";
+export { useAdminUpdateUser } from "./hooks/useAdminUpdateUser.ts";
 export { adminUpdateVariantMutationKey } from "./hooks/useAdminUpdateVariant.ts";
 export { adminUpdateVariantMutationOptions } from "./hooks/useAdminUpdateVariant.ts";
 export { useAdminUpdateVariant } from "./hooks/useAdminUpdateVariant.ts";
@@ -2464,6 +2676,8 @@ export { adminListReturns200DataStatusEnum } from "./types/AdminListReturns.ts";
 export { adminListReturnsQueryParamsSortByEnum } from "./types/AdminListReturns.ts";
 export { adminListReturnsQueryParamsSortOrderEnum } from "./types/AdminListReturns.ts";
 export { adminListReturnsQueryParamsStatusEnum } from "./types/AdminListReturns.ts";
+export { adminListRolesQueryParamsSortByEnum } from "./types/AdminListRoles.ts";
+export { adminListRolesQueryParamsSortOrderEnum } from "./types/AdminListRoles.ts";
 export { adminListShippingOptionsQueryParamsSortByEnum } from "./types/AdminListShippingOptions.ts";
 export { adminListShippingOptionsQueryParamsSortOrderEnum } from "./types/AdminListShippingOptions.ts";
 export { adminListShippingZonesQueryParamsSortByEnum } from "./types/AdminListShippingZones.ts";
@@ -2472,6 +2686,8 @@ export { adminListStockLocationsQueryParamsSortByEnum } from "./types/AdminListS
 export { adminListStockLocationsQueryParamsSortOrderEnum } from "./types/AdminListStockLocations.ts";
 export { adminListTaxClassesQueryParamsSortByEnum } from "./types/AdminListTaxClasses.ts";
 export { adminListTaxClassesQueryParamsSortOrderEnum } from "./types/AdminListTaxClasses.ts";
+export { adminListUsersQueryParamsSortByEnum } from "./types/AdminListUsers.ts";
+export { adminListUsersQueryParamsSortOrderEnum } from "./types/AdminListUsers.ts";
 export { adminUpdateFulfillment200DataStatusEnum } from "./types/AdminUpdateFulfillment.ts";
 export { adminUpdateOrder200DataStatusEnum } from "./types/AdminUpdateOrder.ts";
 export { adminUpdateOrder200FulfillmentsStatusEnum } from "./types/AdminUpdateOrder.ts";
@@ -2764,6 +2980,17 @@ export {
   adminCreateReturnMutationResponseSchema,
 } from "./zod/adminCreateReturnSchema.ts";
 export {
+  adminCreateRole201Schema,
+  adminCreateRole400Schema,
+  adminCreateRole401Schema,
+  adminCreateRole403Schema,
+  adminCreateRole404Schema,
+  adminCreateRole409Schema,
+  adminCreateRole500Schema,
+  adminCreateRoleMutationRequestSchema,
+  adminCreateRoleMutationResponseSchema,
+} from "./zod/adminCreateRoleSchema.ts";
+export {
   adminCreateShippingOption201Schema,
   adminCreateShippingOption400Schema,
   adminCreateShippingOption401Schema,
@@ -2819,6 +3046,17 @@ export {
   adminCreateTaxRateMutationResponseSchema,
   adminCreateTaxRatePathParamsSchema,
 } from "./zod/adminCreateTaxRateSchema.ts";
+export {
+  adminCreateUser201Schema,
+  adminCreateUser400Schema,
+  adminCreateUser401Schema,
+  adminCreateUser403Schema,
+  adminCreateUser404Schema,
+  adminCreateUser409Schema,
+  adminCreateUser500Schema,
+  adminCreateUserMutationRequestSchema,
+  adminCreateUserMutationResponseSchema,
+} from "./zod/adminCreateUserSchema.ts";
 export {
   adminDeleteCategory200Schema,
   adminDeleteCategory400Schema,
@@ -3062,6 +3300,17 @@ export {
   adminDeleteReturnPathParamsSchema,
 } from "./zod/adminDeleteReturnSchema.ts";
 export {
+  adminDeleteRole200Schema,
+  adminDeleteRole400Schema,
+  adminDeleteRole401Schema,
+  adminDeleteRole403Schema,
+  adminDeleteRole404Schema,
+  adminDeleteRole409Schema,
+  adminDeleteRole500Schema,
+  adminDeleteRoleMutationResponseSchema,
+  adminDeleteRolePathParamsSchema,
+} from "./zod/adminDeleteRoleSchema.ts";
+export {
   adminDeleteShippingOption200Schema,
   adminDeleteShippingOption400Schema,
   adminDeleteShippingOption401Schema,
@@ -3116,6 +3365,17 @@ export {
   adminDeleteTaxRateMutationResponseSchema,
   adminDeleteTaxRatePathParamsSchema,
 } from "./zod/adminDeleteTaxRateSchema.ts";
+export {
+  adminDeleteUser200Schema,
+  adminDeleteUser400Schema,
+  adminDeleteUser401Schema,
+  adminDeleteUser403Schema,
+  adminDeleteUser404Schema,
+  adminDeleteUser409Schema,
+  adminDeleteUser500Schema,
+  adminDeleteUserMutationResponseSchema,
+  adminDeleteUserPathParamsSchema,
+} from "./zod/adminDeleteUserSchema.ts";
 export {
   adminGenerateVariants200Schema,
   adminGenerateVariants400Schema,
@@ -3239,6 +3499,17 @@ export {
   adminGetReturnQueryResponseSchema,
 } from "./zod/adminGetReturnSchema.ts";
 export {
+  adminGetRole200Schema,
+  adminGetRole400Schema,
+  adminGetRole401Schema,
+  adminGetRole403Schema,
+  adminGetRole404Schema,
+  adminGetRole409Schema,
+  adminGetRole500Schema,
+  adminGetRolePathParamsSchema,
+  adminGetRoleQueryResponseSchema,
+} from "./zod/adminGetRoleSchema.ts";
+export {
   adminGetShippingOption200Schema,
   adminGetShippingOption400Schema,
   adminGetShippingOption401Schema,
@@ -3282,6 +3553,17 @@ export {
   adminGetTaxClassPathParamsSchema,
   adminGetTaxClassQueryResponseSchema,
 } from "./zod/adminGetTaxClassSchema.ts";
+export {
+  adminGetUser200Schema,
+  adminGetUser400Schema,
+  adminGetUser401Schema,
+  adminGetUser403Schema,
+  adminGetUser404Schema,
+  adminGetUser409Schema,
+  adminGetUser500Schema,
+  adminGetUserPathParamsSchema,
+  adminGetUserQueryResponseSchema,
+} from "./zod/adminGetUserSchema.ts";
 export {
   adminListCategories200Schema,
   adminListCategories400Schema,
@@ -3381,6 +3663,16 @@ export {
   adminListOrdersQueryParamsSchema,
   adminListOrdersQueryResponseSchema,
 } from "./zod/adminListOrdersSchema.ts";
+export {
+  adminListPermissions200Schema,
+  adminListPermissions400Schema,
+  adminListPermissions401Schema,
+  adminListPermissions403Schema,
+  adminListPermissions404Schema,
+  adminListPermissions409Schema,
+  adminListPermissions500Schema,
+  adminListPermissionsQueryResponseSchema,
+} from "./zod/adminListPermissionsSchema.ts";
 export {
   adminListPriceListPrices200Schema,
   adminListPriceListPrices400Schema,
@@ -3503,6 +3795,17 @@ export {
   adminListReturnsQueryResponseSchema,
 } from "./zod/adminListReturnsSchema.ts";
 export {
+  adminListRoles200Schema,
+  adminListRoles400Schema,
+  adminListRoles401Schema,
+  adminListRoles403Schema,
+  adminListRoles404Schema,
+  adminListRoles409Schema,
+  adminListRoles500Schema,
+  adminListRolesQueryParamsSchema,
+  adminListRolesQueryResponseSchema,
+} from "./zod/adminListRolesSchema.ts";
+export {
   adminListShippingOptions200Schema,
   adminListShippingOptions400Schema,
   adminListShippingOptions401Schema,
@@ -3557,6 +3860,17 @@ export {
   adminListTaxRatesPathParamsSchema,
   adminListTaxRatesQueryResponseSchema,
 } from "./zod/adminListTaxRatesSchema.ts";
+export {
+  adminListUsers200Schema,
+  adminListUsers400Schema,
+  adminListUsers401Schema,
+  adminListUsers403Schema,
+  adminListUsers404Schema,
+  adminListUsers409Schema,
+  adminListUsers500Schema,
+  adminListUsersQueryParamsSchema,
+  adminListUsersQueryResponseSchema,
+} from "./zod/adminListUsersSchema.ts";
 export {
   adminReplaceMedia200Schema,
   adminReplaceMedia400Schema,
@@ -3822,6 +4136,18 @@ export {
   adminUpdateReturnPathParamsSchema,
 } from "./zod/adminUpdateReturnSchema.ts";
 export {
+  adminUpdateRole200Schema,
+  adminUpdateRole400Schema,
+  adminUpdateRole401Schema,
+  adminUpdateRole403Schema,
+  adminUpdateRole404Schema,
+  adminUpdateRole409Schema,
+  adminUpdateRole500Schema,
+  adminUpdateRoleMutationRequestSchema,
+  adminUpdateRoleMutationResponseSchema,
+  adminUpdateRolePathParamsSchema,
+} from "./zod/adminUpdateRoleSchema.ts";
+export {
   adminUpdateShippingOption200Schema,
   adminUpdateShippingOption400Schema,
   adminUpdateShippingOption401Schema,
@@ -3881,6 +4207,18 @@ export {
   adminUpdateTaxRateMutationResponseSchema,
   adminUpdateTaxRatePathParamsSchema,
 } from "./zod/adminUpdateTaxRateSchema.ts";
+export {
+  adminUpdateUser200Schema,
+  adminUpdateUser400Schema,
+  adminUpdateUser401Schema,
+  adminUpdateUser403Schema,
+  adminUpdateUser404Schema,
+  adminUpdateUser409Schema,
+  adminUpdateUser500Schema,
+  adminUpdateUserMutationRequestSchema,
+  adminUpdateUserMutationResponseSchema,
+  adminUpdateUserPathParamsSchema,
+} from "./zod/adminUpdateUserSchema.ts";
 export {
   adminUpdateVariant200Schema,
   adminUpdateVariant400Schema,

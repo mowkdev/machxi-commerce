@@ -49,7 +49,11 @@ import TaxClassesPage from "@/pages/tax-classes/TaxClassesPage";
 import TaxClassCreatePage from "@/pages/tax-classes/TaxClassCreatePage";
 import TaxClassEditPage from "@/pages/tax-classes/TaxClassEditPage";
 import UsersPage from "@/pages/users/UsersPage";
+import UserCreatePage from "@/pages/users/UserCreatePage";
+import UserEditPage from "@/pages/users/UserEditPage";
 import RolesPage from "@/pages/roles/RolesPage";
+import RoleCreatePage from "@/pages/roles/RoleCreatePage";
+import RoleEditPage from "@/pages/roles/RoleEditPage";
 
 export default function App() {
   return (
@@ -132,7 +136,11 @@ export default function App() {
             <Route path="locations/new" element={<StockLocationCreatePage />} />
             <Route path="locations/:id" element={<StockLocationEditPage />} />
             <Route path="team/users" element={<UsersPage />} />
+            <Route path="team/users/new" element={<UserCreatePage />} />
+            <Route path="team/users/:id" element={<UserEditPage />} />
             <Route path="team/roles" element={<RolesPage />} />
+            <Route path="team/roles/new" element={<RoleCreatePage />} />
+            <Route path="team/roles/:id" element={<RoleEditPage />} />
           </Route>
         </Route>
       </Route>

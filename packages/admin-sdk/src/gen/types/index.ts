@@ -301,6 +301,18 @@ export type {
   AdminCreateReturnItemPathParams,
 } from "./AdminCreateReturnItem.ts";
 export type {
+  AdminCreateRole201,
+  AdminCreateRole400,
+  AdminCreateRole401,
+  AdminCreateRole403,
+  AdminCreateRole404,
+  AdminCreateRole409,
+  AdminCreateRole500,
+  AdminCreateRoleMutation,
+  AdminCreateRoleMutationRequest,
+  AdminCreateRoleMutationResponse,
+} from "./AdminCreateRole.ts";
+export type {
   AdminCreateShippingOption201,
   AdminCreateShippingOption400,
   AdminCreateShippingOption401,
@@ -361,6 +373,18 @@ export type {
   AdminCreateTaxRateMutationResponse,
   AdminCreateTaxRatePathParams,
 } from "./AdminCreateTaxRate.ts";
+export type {
+  AdminCreateUser201,
+  AdminCreateUser400,
+  AdminCreateUser401,
+  AdminCreateUser403,
+  AdminCreateUser404,
+  AdminCreateUser409,
+  AdminCreateUser500,
+  AdminCreateUserMutation,
+  AdminCreateUserMutationRequest,
+  AdminCreateUserMutationResponse,
+} from "./AdminCreateUser.ts";
 export type {
   AdminDeleteCategory200,
   AdminDeleteCategory400,
@@ -626,6 +650,18 @@ export type {
   AdminDeleteReturnItemPathParams,
 } from "./AdminDeleteReturnItem.ts";
 export type {
+  AdminDeleteRole200,
+  AdminDeleteRole400,
+  AdminDeleteRole401,
+  AdminDeleteRole403,
+  AdminDeleteRole404,
+  AdminDeleteRole409,
+  AdminDeleteRole500,
+  AdminDeleteRoleMutation,
+  AdminDeleteRoleMutationResponse,
+  AdminDeleteRolePathParams,
+} from "./AdminDeleteRole.ts";
+export type {
   AdminDeleteShippingOption200,
   AdminDeleteShippingOption400,
   AdminDeleteShippingOption401,
@@ -685,6 +721,18 @@ export type {
   AdminDeleteTaxRateMutationResponse,
   AdminDeleteTaxRatePathParams,
 } from "./AdminDeleteTaxRate.ts";
+export type {
+  AdminDeleteUser200,
+  AdminDeleteUser400,
+  AdminDeleteUser401,
+  AdminDeleteUser403,
+  AdminDeleteUser404,
+  AdminDeleteUser409,
+  AdminDeleteUser500,
+  AdminDeleteUserMutation,
+  AdminDeleteUserMutationResponse,
+  AdminDeleteUserPathParams,
+} from "./AdminDeleteUser.ts";
 export type {
   AdminGenerateVariants200,
   AdminGenerateVariants400,
@@ -832,6 +880,18 @@ export type {
   AdminGetReturnQueryResponse,
 } from "./AdminGetReturn.ts";
 export type {
+  AdminGetRole200,
+  AdminGetRole400,
+  AdminGetRole401,
+  AdminGetRole403,
+  AdminGetRole404,
+  AdminGetRole409,
+  AdminGetRole500,
+  AdminGetRolePathParams,
+  AdminGetRoleQuery,
+  AdminGetRoleQueryResponse,
+} from "./AdminGetRole.ts";
+export type {
   AdminGetShippingOption200,
   AdminGetShippingOption400,
   AdminGetShippingOption401,
@@ -879,6 +939,18 @@ export type {
   AdminGetTaxClassQuery,
   AdminGetTaxClassQueryResponse,
 } from "./AdminGetTaxClass.ts";
+export type {
+  AdminGetUser200,
+  AdminGetUser400,
+  AdminGetUser401,
+  AdminGetUser403,
+  AdminGetUser404,
+  AdminGetUser409,
+  AdminGetUser500,
+  AdminGetUserPathParams,
+  AdminGetUserQuery,
+  AdminGetUserQueryResponse,
+} from "./AdminGetUser.ts";
 export type {
   AdminListCategories200,
   AdminListCategories400,
@@ -1008,6 +1080,17 @@ export type {
   AdminListOrdersQueryParamsStatusEnumKey,
   AdminListOrdersQueryResponse,
 } from "./AdminListOrders.ts";
+export type {
+  AdminListPermissions200,
+  AdminListPermissions400,
+  AdminListPermissions401,
+  AdminListPermissions403,
+  AdminListPermissions404,
+  AdminListPermissions409,
+  AdminListPermissions500,
+  AdminListPermissionsQuery,
+  AdminListPermissionsQueryResponse,
+} from "./AdminListPermissions.ts";
 export type {
   AdminListPriceListPrices200,
   AdminListPriceListPrices400,
@@ -1164,6 +1247,20 @@ export type {
   AdminListReturnsQueryResponse,
 } from "./AdminListReturns.ts";
 export type {
+  AdminListRoles200,
+  AdminListRoles400,
+  AdminListRoles401,
+  AdminListRoles403,
+  AdminListRoles404,
+  AdminListRoles409,
+  AdminListRoles500,
+  AdminListRolesQuery,
+  AdminListRolesQueryParams,
+  AdminListRolesQueryParamsSortByEnumKey,
+  AdminListRolesQueryParamsSortOrderEnumKey,
+  AdminListRolesQueryResponse,
+} from "./AdminListRoles.ts";
+export type {
   AdminListShippingOptions200,
   AdminListShippingOptions400,
   AdminListShippingOptions401,
@@ -1231,6 +1328,20 @@ export type {
   AdminListTaxRatesQuery,
   AdminListTaxRatesQueryResponse,
 } from "./AdminListTaxRates.ts";
+export type {
+  AdminListUsers200,
+  AdminListUsers400,
+  AdminListUsers401,
+  AdminListUsers403,
+  AdminListUsers404,
+  AdminListUsers409,
+  AdminListUsers500,
+  AdminListUsersQuery,
+  AdminListUsersQueryParams,
+  AdminListUsersQueryParamsSortByEnumKey,
+  AdminListUsersQueryParamsSortOrderEnumKey,
+  AdminListUsersQueryResponse,
+} from "./AdminListUsers.ts";
 export type {
   AdminReplaceMedia200,
   AdminReplaceMedia400,
@@ -1534,6 +1645,19 @@ export type {
   AdminUpdateReturnItemPathParams,
 } from "./AdminUpdateReturnItem.ts";
 export type {
+  AdminUpdateRole200,
+  AdminUpdateRole400,
+  AdminUpdateRole401,
+  AdminUpdateRole403,
+  AdminUpdateRole404,
+  AdminUpdateRole409,
+  AdminUpdateRole500,
+  AdminUpdateRoleMutation,
+  AdminUpdateRoleMutationRequest,
+  AdminUpdateRoleMutationResponse,
+  AdminUpdateRolePathParams,
+} from "./AdminUpdateRole.ts";
+export type {
   AdminUpdateShippingOption200,
   AdminUpdateShippingOption400,
   AdminUpdateShippingOption401,
@@ -1598,6 +1722,19 @@ export type {
   AdminUpdateTaxRateMutationResponse,
   AdminUpdateTaxRatePathParams,
 } from "./AdminUpdateTaxRate.ts";
+export type {
+  AdminUpdateUser200,
+  AdminUpdateUser400,
+  AdminUpdateUser401,
+  AdminUpdateUser403,
+  AdminUpdateUser404,
+  AdminUpdateUser409,
+  AdminUpdateUser500,
+  AdminUpdateUserMutation,
+  AdminUpdateUserMutationRequest,
+  AdminUpdateUserMutationResponse,
+  AdminUpdateUserPathParams,
+} from "./AdminUpdateUser.ts";
 export type {
   AdminUpdateVariant200,
   AdminUpdateVariant400,
@@ -1683,6 +1820,8 @@ export { adminListReturns200DataStatusEnum } from "./AdminListReturns.ts";
 export { adminListReturnsQueryParamsSortByEnum } from "./AdminListReturns.ts";
 export { adminListReturnsQueryParamsSortOrderEnum } from "./AdminListReturns.ts";
 export { adminListReturnsQueryParamsStatusEnum } from "./AdminListReturns.ts";
+export { adminListRolesQueryParamsSortByEnum } from "./AdminListRoles.ts";
+export { adminListRolesQueryParamsSortOrderEnum } from "./AdminListRoles.ts";
 export { adminListShippingOptionsQueryParamsSortByEnum } from "./AdminListShippingOptions.ts";
 export { adminListShippingOptionsQueryParamsSortOrderEnum } from "./AdminListShippingOptions.ts";
 export { adminListShippingZonesQueryParamsSortByEnum } from "./AdminListShippingZones.ts";
@@ -1691,6 +1830,8 @@ export { adminListStockLocationsQueryParamsSortByEnum } from "./AdminListStockLo
 export { adminListStockLocationsQueryParamsSortOrderEnum } from "./AdminListStockLocations.ts";
 export { adminListTaxClassesQueryParamsSortByEnum } from "./AdminListTaxClasses.ts";
 export { adminListTaxClassesQueryParamsSortOrderEnum } from "./AdminListTaxClasses.ts";
+export { adminListUsersQueryParamsSortByEnum } from "./AdminListUsers.ts";
+export { adminListUsersQueryParamsSortOrderEnum } from "./AdminListUsers.ts";
 export { adminUpdateFulfillment200DataStatusEnum } from "./AdminUpdateFulfillment.ts";
 export { adminUpdateOrder200DataStatusEnum } from "./AdminUpdateOrder.ts";
 export { adminUpdateOrder200FulfillmentsStatusEnum } from "./AdminUpdateOrder.ts";
