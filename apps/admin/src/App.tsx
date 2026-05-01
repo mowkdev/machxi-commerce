@@ -43,6 +43,8 @@ import ShippingOptionsPage from "@/pages/shipping-options/ShippingOptionsPage";
 import ShippingOptionCreatePage from "@/pages/shipping-options/ShippingOptionCreatePage";
 import ShippingOptionEditPage from "@/pages/shipping-options/ShippingOptionEditPage";
 import LanguagesPage from "@/pages/languages/LanguagesPage";
+import LanguageCreatePage from "@/pages/languages/LanguageCreatePage";
+import LanguageEditPage from "@/pages/languages/LanguageEditPage";
 import TaxClassesPage from "@/pages/tax-classes/TaxClassesPage";
 import TaxClassCreatePage from "@/pages/tax-classes/TaxClassCreatePage";
 import TaxClassEditPage from "@/pages/tax-classes/TaxClassEditPage";
@@ -91,6 +93,14 @@ export default function App() {
               element={<PlaceholderPage title="General" />}
             />
             <Route path="regions/languages" element={<LanguagesPage />} />
+            <Route
+              path="regions/languages/new"
+              element={<LanguageCreatePage />}
+            />
+            <Route
+              path="regions/languages/:code"
+              element={<LanguageEditPage />}
+            />
             <Route path="regions/tax-classes" element={<TaxClassesPage />} />
             <Route
               path="regions/tax-classes/new"

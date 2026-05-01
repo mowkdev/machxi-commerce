@@ -11,6 +11,7 @@ import { healthRoutes } from "./health/routes";
 import { mediaRoutes } from "./media/routes";
 import { productsRoutes } from "./products/routes";
 import { categoriesRoutes } from "./categories/routes";
+import { languagesRoutes } from "./languages/routes";
 import { taxClassesRoutes } from "./tax-classes/routes";
 import { priceListsRoutes } from "./price-lists/routes";
 import { promotionsRoutes } from "./promotions/routes";
@@ -61,6 +62,7 @@ export function createApp() {
   app.route("/health", healthRoutes);
   app.route("/api/products", productsRoutes);
   app.route("/api/categories", categoriesRoutes);
+  app.route("/api/languages", languagesRoutes);
   app.route("/api/tax-classes", taxClassesRoutes);
   app.route("/api/price-lists", priceListsRoutes);
   app.route("/api/promotions", promotionsRoutes);

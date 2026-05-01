@@ -7,6 +7,7 @@ export type { AdminCreateFulfillmentItemMutationKey } from "./hooks/useAdminCrea
 export type { AdminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdminCreateInventoryAdjustment.ts";
 export type { AdminCreateInventoryLevelMutationKey } from "./hooks/useAdminCreateInventoryLevel.ts";
 export type { AdminCreateInventoryTransferMutationKey } from "./hooks/useAdminCreateInventoryTransfer.ts";
+export type { AdminCreateLanguageMutationKey } from "./hooks/useAdminCreateLanguage.ts";
 export type { AdminCreateOrderMutationKey } from "./hooks/useAdminCreateOrder.ts";
 export type { AdminCreateOrderItemMutationKey } from "./hooks/useAdminCreateOrderItem.ts";
 export type { AdminCreateOrderShippingLineMutationKey } from "./hooks/useAdminCreateOrderShippingLine.ts";
@@ -32,6 +33,7 @@ export type { AdminDeleteCustomerAddressMutationKey } from "./hooks/useAdminDele
 export type { AdminDeleteFulfillmentMutationKey } from "./hooks/useAdminDeleteFulfillment.ts";
 export type { AdminDeleteFulfillmentItemMutationKey } from "./hooks/useAdminDeleteFulfillmentItem.ts";
 export type { AdminDeleteInventoryLevelMutationKey } from "./hooks/useAdminDeleteInventoryLevel.ts";
+export type { AdminDeleteLanguageMutationKey } from "./hooks/useAdminDeleteLanguage.ts";
 export type { AdminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts";
 export type { AdminDeleteOrderMutationKey } from "./hooks/useAdminDeleteOrder.ts";
 export type { AdminDeleteOrderItemMutationKey } from "./hooks/useAdminDeleteOrderItem.ts";
@@ -59,6 +61,8 @@ export type { AdminGetCustomerQueryKey } from "./hooks/useAdminGetCustomer.ts";
 export type { AdminGetCustomerSuspenseQueryKey } from "./hooks/useAdminGetCustomerSuspense.ts";
 export type { AdminGetFulfillmentQueryKey } from "./hooks/useAdminGetFulfillment.ts";
 export type { AdminGetFulfillmentSuspenseQueryKey } from "./hooks/useAdminGetFulfillmentSuspense.ts";
+export type { AdminGetLanguageQueryKey } from "./hooks/useAdminGetLanguage.ts";
+export type { AdminGetLanguageSuspenseQueryKey } from "./hooks/useAdminGetLanguageSuspense.ts";
 export type { AdminGetMediaQueryKey } from "./hooks/useAdminGetMedia.ts";
 export type { AdminGetMediaSuspenseQueryKey } from "./hooks/useAdminGetMediaSuspense.ts";
 export type { AdminGetOrderQueryKey } from "./hooks/useAdminGetOrder.ts";
@@ -91,6 +95,8 @@ export type { AdminListInventoryLevelsQueryKey } from "./hooks/useAdminListInven
 export type { AdminListInventoryLevelsSuspenseQueryKey } from "./hooks/useAdminListInventoryLevelsSuspense.ts";
 export type { AdminListInventoryTransactionsQueryKey } from "./hooks/useAdminListInventoryTransactions.ts";
 export type { AdminListInventoryTransactionsSuspenseQueryKey } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
+export type { AdminListLanguagesQueryKey } from "./hooks/useAdminListLanguages.ts";
+export type { AdminListLanguagesSuspenseQueryKey } from "./hooks/useAdminListLanguagesSuspense.ts";
 export type { AdminListMediaQueryKey } from "./hooks/useAdminListMedia.ts";
 export type { AdminListMediaSuspenseQueryKey } from "./hooks/useAdminListMediaSuspense.ts";
 export type { AdminListOrdersQueryKey } from "./hooks/useAdminListOrders.ts";
@@ -133,6 +139,7 @@ export type { AdminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCusto
 export type { AdminUpdateCustomerAddressMutationKey } from "./hooks/useAdminUpdateCustomerAddress.ts";
 export type { AdminUpdateFulfillmentMutationKey } from "./hooks/useAdminUpdateFulfillment.ts";
 export type { AdminUpdateFulfillmentItemMutationKey } from "./hooks/useAdminUpdateFulfillmentItem.ts";
+export type { AdminUpdateLanguageMutationKey } from "./hooks/useAdminUpdateLanguage.ts";
 export type { AdminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
 export type { AdminUpdateOrderMutationKey } from "./hooks/useAdminUpdateOrder.ts";
 export type { AdminUpdateOrderItemMutationKey } from "./hooks/useAdminUpdateOrderItem.ts";
@@ -265,6 +272,18 @@ export type {
   AdminCreateInventoryTransferMutationRequest,
   AdminCreateInventoryTransferMutationResponse,
 } from "./types/AdminCreateInventoryTransfer.ts";
+export type {
+  AdminCreateLanguage201,
+  AdminCreateLanguage400,
+  AdminCreateLanguage401,
+  AdminCreateLanguage403,
+  AdminCreateLanguage404,
+  AdminCreateLanguage409,
+  AdminCreateLanguage500,
+  AdminCreateLanguageMutation,
+  AdminCreateLanguageMutationRequest,
+  AdminCreateLanguageMutationResponse,
+} from "./types/AdminCreateLanguage.ts";
 export type {
   AdminCreateOrder201,
   AdminCreateOrder400,
@@ -579,6 +598,18 @@ export type {
   AdminDeleteInventoryLevelPathParams,
 } from "./types/AdminDeleteInventoryLevel.ts";
 export type {
+  AdminDeleteLanguage200,
+  AdminDeleteLanguage400,
+  AdminDeleteLanguage401,
+  AdminDeleteLanguage403,
+  AdminDeleteLanguage404,
+  AdminDeleteLanguage409,
+  AdminDeleteLanguage500,
+  AdminDeleteLanguageMutation,
+  AdminDeleteLanguageMutationResponse,
+  AdminDeleteLanguagePathParams,
+} from "./types/AdminDeleteLanguage.ts";
+export type {
   AdminDeleteMedia200,
   AdminDeleteMedia400,
   AdminDeleteMedia401,
@@ -869,6 +900,18 @@ export type {
   AdminGetFulfillmentQueryResponse,
 } from "./types/AdminGetFulfillment.ts";
 export type {
+  AdminGetLanguage200,
+  AdminGetLanguage400,
+  AdminGetLanguage401,
+  AdminGetLanguage403,
+  AdminGetLanguage404,
+  AdminGetLanguage409,
+  AdminGetLanguage500,
+  AdminGetLanguagePathParams,
+  AdminGetLanguageQuery,
+  AdminGetLanguageQueryResponse,
+} from "./types/AdminGetLanguage.ts";
+export type {
   AdminGetMedia200,
   AdminGetMedia400,
   AdminGetMedia401,
@@ -1085,6 +1128,20 @@ export type {
   AdminListInventoryTransactionsQueryParamsSortOrderEnumKey,
   AdminListInventoryTransactionsQueryResponse,
 } from "./types/AdminListInventoryTransactions.ts";
+export type {
+  AdminListLanguages200,
+  AdminListLanguages400,
+  AdminListLanguages401,
+  AdminListLanguages403,
+  AdminListLanguages404,
+  AdminListLanguages409,
+  AdminListLanguages500,
+  AdminListLanguagesQuery,
+  AdminListLanguagesQueryParams,
+  AdminListLanguagesQueryParamsSortByEnumKey,
+  AdminListLanguagesQueryParamsSortOrderEnumKey,
+  AdminListLanguagesQueryResponse,
+} from "./types/AdminListLanguages.ts";
 export type {
   AdminListMedia200,
   AdminListMedia400,
@@ -1418,6 +1475,19 @@ export type {
   AdminUpdateFulfillmentItemPathParams,
 } from "./types/AdminUpdateFulfillmentItem.ts";
 export type {
+  AdminUpdateLanguage200,
+  AdminUpdateLanguage400,
+  AdminUpdateLanguage401,
+  AdminUpdateLanguage403,
+  AdminUpdateLanguage404,
+  AdminUpdateLanguage409,
+  AdminUpdateLanguage500,
+  AdminUpdateLanguageMutation,
+  AdminUpdateLanguageMutationRequest,
+  AdminUpdateLanguageMutationResponse,
+  AdminUpdateLanguagePathParams,
+} from "./types/AdminUpdateLanguage.ts";
+export type {
   AdminUpdateMedia200,
   AdminUpdateMedia400,
   AdminUpdateMedia401,
@@ -1726,6 +1796,7 @@ export { adminCreateFulfillmentItem } from "./client/adminCreateFulfillmentItem.
 export { adminCreateInventoryAdjustment } from "./client/adminCreateInventoryAdjustment.ts";
 export { adminCreateInventoryLevel } from "./client/adminCreateInventoryLevel.ts";
 export { adminCreateInventoryTransfer } from "./client/adminCreateInventoryTransfer.ts";
+export { adminCreateLanguage } from "./client/adminCreateLanguage.ts";
 export { adminCreateOrder } from "./client/adminCreateOrder.ts";
 export { adminCreateOrderItem } from "./client/adminCreateOrderItem.ts";
 export { adminCreateOrderShippingLine } from "./client/adminCreateOrderShippingLine.ts";
@@ -1751,6 +1822,7 @@ export { adminDeleteCustomerAddress } from "./client/adminDeleteCustomerAddress.
 export { adminDeleteFulfillment } from "./client/adminDeleteFulfillment.ts";
 export { adminDeleteFulfillmentItem } from "./client/adminDeleteFulfillmentItem.ts";
 export { adminDeleteInventoryLevel } from "./client/adminDeleteInventoryLevel.ts";
+export { adminDeleteLanguage } from "./client/adminDeleteLanguage.ts";
 export { adminDeleteMedia } from "./client/adminDeleteMedia.ts";
 export { adminDeleteOrder } from "./client/adminDeleteOrder.ts";
 export { adminDeleteOrderItem } from "./client/adminDeleteOrderItem.ts";
@@ -1775,6 +1847,7 @@ export { adminGenerateVariants } from "./client/adminGenerateVariants.ts";
 export { adminGetCategory } from "./client/adminGetCategory.ts";
 export { adminGetCustomer } from "./client/adminGetCustomer.ts";
 export { adminGetFulfillment } from "./client/adminGetFulfillment.ts";
+export { adminGetLanguage } from "./client/adminGetLanguage.ts";
 export { adminGetMedia } from "./client/adminGetMedia.ts";
 export { adminGetOrder } from "./client/adminGetOrder.ts";
 export { adminGetPriceList } from "./client/adminGetPriceList.ts";
@@ -1791,6 +1864,7 @@ export { adminListFulfillments } from "./client/adminListFulfillments.ts";
 export { adminListInventoryItems } from "./client/adminListInventoryItems.ts";
 export { adminListInventoryLevels } from "./client/adminListInventoryLevels.ts";
 export { adminListInventoryTransactions } from "./client/adminListInventoryTransactions.ts";
+export { adminListLanguages } from "./client/adminListLanguages.ts";
 export { adminListMedia } from "./client/adminListMedia.ts";
 export { adminListOrders } from "./client/adminListOrders.ts";
 export { adminListPriceListPrices } from "./client/adminListPriceListPrices.ts";
@@ -1815,6 +1889,7 @@ export { adminUpdateCustomer } from "./client/adminUpdateCustomer.ts";
 export { adminUpdateCustomerAddress } from "./client/adminUpdateCustomerAddress.ts";
 export { adminUpdateFulfillment } from "./client/adminUpdateFulfillment.ts";
 export { adminUpdateFulfillmentItem } from "./client/adminUpdateFulfillmentItem.ts";
+export { adminUpdateLanguage } from "./client/adminUpdateLanguage.ts";
 export { adminUpdateMedia } from "./client/adminUpdateMedia.ts";
 export { adminUpdateOrder } from "./client/adminUpdateOrder.ts";
 export { adminUpdateOrderItem } from "./client/adminUpdateOrderItem.ts";
@@ -1864,6 +1939,9 @@ export { useAdminCreateInventoryLevel } from "./hooks/useAdminCreateInventoryLev
 export { adminCreateInventoryTransferMutationKey } from "./hooks/useAdminCreateInventoryTransfer.ts";
 export { adminCreateInventoryTransferMutationOptions } from "./hooks/useAdminCreateInventoryTransfer.ts";
 export { useAdminCreateInventoryTransfer } from "./hooks/useAdminCreateInventoryTransfer.ts";
+export { adminCreateLanguageMutationKey } from "./hooks/useAdminCreateLanguage.ts";
+export { adminCreateLanguageMutationOptions } from "./hooks/useAdminCreateLanguage.ts";
+export { useAdminCreateLanguage } from "./hooks/useAdminCreateLanguage.ts";
 export { adminCreateOrderMutationKey } from "./hooks/useAdminCreateOrder.ts";
 export { adminCreateOrderMutationOptions } from "./hooks/useAdminCreateOrder.ts";
 export { useAdminCreateOrder } from "./hooks/useAdminCreateOrder.ts";
@@ -1939,6 +2017,9 @@ export { useAdminDeleteFulfillmentItem } from "./hooks/useAdminDeleteFulfillment
 export { adminDeleteInventoryLevelMutationKey } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export { adminDeleteInventoryLevelMutationOptions } from "./hooks/useAdminDeleteInventoryLevel.ts";
 export { useAdminDeleteInventoryLevel } from "./hooks/useAdminDeleteInventoryLevel.ts";
+export { adminDeleteLanguageMutationKey } from "./hooks/useAdminDeleteLanguage.ts";
+export { adminDeleteLanguageMutationOptions } from "./hooks/useAdminDeleteLanguage.ts";
+export { useAdminDeleteLanguage } from "./hooks/useAdminDeleteLanguage.ts";
 export { adminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts";
 export { adminDeleteMediaMutationOptions } from "./hooks/useAdminDeleteMedia.ts";
 export { useAdminDeleteMedia } from "./hooks/useAdminDeleteMedia.ts";
@@ -2020,6 +2101,12 @@ export { useAdminGetFulfillment } from "./hooks/useAdminGetFulfillment.ts";
 export { adminGetFulfillmentSuspenseQueryKey } from "./hooks/useAdminGetFulfillmentSuspense.ts";
 export { adminGetFulfillmentSuspenseQueryOptions } from "./hooks/useAdminGetFulfillmentSuspense.ts";
 export { useAdminGetFulfillmentSuspense } from "./hooks/useAdminGetFulfillmentSuspense.ts";
+export { adminGetLanguageQueryKey } from "./hooks/useAdminGetLanguage.ts";
+export { adminGetLanguageQueryOptions } from "./hooks/useAdminGetLanguage.ts";
+export { useAdminGetLanguage } from "./hooks/useAdminGetLanguage.ts";
+export { adminGetLanguageSuspenseQueryKey } from "./hooks/useAdminGetLanguageSuspense.ts";
+export { adminGetLanguageSuspenseQueryOptions } from "./hooks/useAdminGetLanguageSuspense.ts";
+export { useAdminGetLanguageSuspense } from "./hooks/useAdminGetLanguageSuspense.ts";
 export { adminGetMediaQueryKey } from "./hooks/useAdminGetMedia.ts";
 export { adminGetMediaQueryOptions } from "./hooks/useAdminGetMedia.ts";
 export { useAdminGetMedia } from "./hooks/useAdminGetMedia.ts";
@@ -2116,6 +2203,12 @@ export { useAdminListInventoryTransactions } from "./hooks/useAdminListInventory
 export { adminListInventoryTransactionsSuspenseQueryKey } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
 export { adminListInventoryTransactionsSuspenseQueryOptions } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
 export { useAdminListInventoryTransactionsSuspense } from "./hooks/useAdminListInventoryTransactionsSuspense.ts";
+export { adminListLanguagesQueryKey } from "./hooks/useAdminListLanguages.ts";
+export { adminListLanguagesQueryOptions } from "./hooks/useAdminListLanguages.ts";
+export { useAdminListLanguages } from "./hooks/useAdminListLanguages.ts";
+export { adminListLanguagesSuspenseQueryKey } from "./hooks/useAdminListLanguagesSuspense.ts";
+export { adminListLanguagesSuspenseQueryOptions } from "./hooks/useAdminListLanguagesSuspense.ts";
+export { useAdminListLanguagesSuspense } from "./hooks/useAdminListLanguagesSuspense.ts";
 export { adminListMediaQueryKey } from "./hooks/useAdminListMedia.ts";
 export { adminListMediaQueryOptions } from "./hooks/useAdminListMedia.ts";
 export { useAdminListMedia } from "./hooks/useAdminListMedia.ts";
@@ -2242,6 +2335,9 @@ export { useAdminUpdateFulfillment } from "./hooks/useAdminUpdateFulfillment.ts"
 export { adminUpdateFulfillmentItemMutationKey } from "./hooks/useAdminUpdateFulfillmentItem.ts";
 export { adminUpdateFulfillmentItemMutationOptions } from "./hooks/useAdminUpdateFulfillmentItem.ts";
 export { useAdminUpdateFulfillmentItem } from "./hooks/useAdminUpdateFulfillmentItem.ts";
+export { adminUpdateLanguageMutationKey } from "./hooks/useAdminUpdateLanguage.ts";
+export { adminUpdateLanguageMutationOptions } from "./hooks/useAdminUpdateLanguage.ts";
+export { useAdminUpdateLanguage } from "./hooks/useAdminUpdateLanguage.ts";
 export { adminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
 export { adminUpdateMediaMutationOptions } from "./hooks/useAdminUpdateMedia.ts";
 export { useAdminUpdateMedia } from "./hooks/useAdminUpdateMedia.ts";
@@ -2337,6 +2433,8 @@ export { adminListInventoryLevelsQueryParamsSortOrderEnum } from "./types/AdminL
 export { adminListInventoryTransactions200DataReasonEnum } from "./types/AdminListInventoryTransactions.ts";
 export { adminListInventoryTransactionsQueryParamsSortByEnum } from "./types/AdminListInventoryTransactions.ts";
 export { adminListInventoryTransactionsQueryParamsSortOrderEnum } from "./types/AdminListInventoryTransactions.ts";
+export { adminListLanguagesQueryParamsSortByEnum } from "./types/AdminListLanguages.ts";
+export { adminListLanguagesQueryParamsSortOrderEnum } from "./types/AdminListLanguages.ts";
 export { adminListMediaQueryParamsSortByEnum } from "./types/AdminListMedia.ts";
 export { adminListMediaQueryParamsSortOrderEnum } from "./types/AdminListMedia.ts";
 export { adminListOrders200DataStatusEnum } from "./types/AdminListOrders.ts";
@@ -2491,6 +2589,17 @@ export {
   adminCreateInventoryTransferMutationRequestSchema,
   adminCreateInventoryTransferMutationResponseSchema,
 } from "./zod/adminCreateInventoryTransferSchema.ts";
+export {
+  adminCreateLanguage201Schema,
+  adminCreateLanguage400Schema,
+  adminCreateLanguage401Schema,
+  adminCreateLanguage403Schema,
+  adminCreateLanguage404Schema,
+  adminCreateLanguage409Schema,
+  adminCreateLanguage500Schema,
+  adminCreateLanguageMutationRequestSchema,
+  adminCreateLanguageMutationResponseSchema,
+} from "./zod/adminCreateLanguageSchema.ts";
 export {
   adminCreateOrderItem201Schema,
   adminCreateOrderItem400Schema,
@@ -2777,6 +2886,17 @@ export {
   adminDeleteInventoryLevelPathParamsSchema,
 } from "./zod/adminDeleteInventoryLevelSchema.ts";
 export {
+  adminDeleteLanguage200Schema,
+  adminDeleteLanguage400Schema,
+  adminDeleteLanguage401Schema,
+  adminDeleteLanguage403Schema,
+  adminDeleteLanguage404Schema,
+  adminDeleteLanguage409Schema,
+  adminDeleteLanguage500Schema,
+  adminDeleteLanguageMutationResponseSchema,
+  adminDeleteLanguagePathParamsSchema,
+} from "./zod/adminDeleteLanguageSchema.ts";
+export {
   adminDeleteMedia200Schema,
   adminDeleteMedia400Schema,
   adminDeleteMedia401Schema,
@@ -3042,6 +3162,17 @@ export {
   adminGetFulfillmentQueryResponseSchema,
 } from "./zod/adminGetFulfillmentSchema.ts";
 export {
+  adminGetLanguage200Schema,
+  adminGetLanguage400Schema,
+  adminGetLanguage401Schema,
+  adminGetLanguage403Schema,
+  adminGetLanguage404Schema,
+  adminGetLanguage409Schema,
+  adminGetLanguage500Schema,
+  adminGetLanguagePathParamsSchema,
+  adminGetLanguageQueryResponseSchema,
+} from "./zod/adminGetLanguageSchema.ts";
+export {
   adminGetMedia200Schema,
   adminGetMedia400Schema,
   adminGetMedia401Schema,
@@ -3217,6 +3348,17 @@ export {
   adminListInventoryTransactionsQueryParamsSchema,
   adminListInventoryTransactionsQueryResponseSchema,
 } from "./zod/adminListInventoryTransactionsSchema.ts";
+export {
+  adminListLanguages200Schema,
+  adminListLanguages400Schema,
+  adminListLanguages401Schema,
+  adminListLanguages403Schema,
+  adminListLanguages404Schema,
+  adminListLanguages409Schema,
+  adminListLanguages500Schema,
+  adminListLanguagesQueryParamsSchema,
+  adminListLanguagesQueryResponseSchema,
+} from "./zod/adminListLanguagesSchema.ts";
 export {
   adminListMedia200Schema,
   adminListMedia400Schema,
@@ -3487,6 +3629,18 @@ export {
   adminUpdateFulfillmentMutationResponseSchema,
   adminUpdateFulfillmentPathParamsSchema,
 } from "./zod/adminUpdateFulfillmentSchema.ts";
+export {
+  adminUpdateLanguage200Schema,
+  adminUpdateLanguage400Schema,
+  adminUpdateLanguage401Schema,
+  adminUpdateLanguage403Schema,
+  adminUpdateLanguage404Schema,
+  adminUpdateLanguage409Schema,
+  adminUpdateLanguage500Schema,
+  adminUpdateLanguageMutationRequestSchema,
+  adminUpdateLanguageMutationResponseSchema,
+  adminUpdateLanguagePathParamsSchema,
+} from "./zod/adminUpdateLanguageSchema.ts";
 export {
   adminUpdateMedia200Schema,
   adminUpdateMedia400Schema,
