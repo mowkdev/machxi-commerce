@@ -3,11 +3,18 @@ import type { AppEnv } from "../context";
 import { conflict, notFound, unauthorized } from "../lib/errors";
 import { ok } from "../lib/response";
 import { parseBody } from "../lib/validate";
-import { loginBody, registerCustomerBody } from "./schema";
+import {
+  changePasswordBody,
+  loginBody,
+  registerCustomerBody,
+  updateProfileBody,
+} from "./schema";
 import {
   authenticateCustomer,
+  changeCustomerPassword,
   getCustomerProfile,
   registerCustomer,
+  updateCustomerProfile,
 } from "./service";
 
 const PG_UNIQUE_VIOLATION = "23505";
@@ -60,4 +67,31 @@ export async function meController(c: Context<AppEnv>) {
   }
 
   return ok(c, profile);
+}
+
+export async function updateProfileController(c: Context<AppEnv>) {
+  const principal = c.get("principal");
+  if (!principal || principal.kind !== "customer") throw unauthorized();
+  const body = await parseBody(c, updateProfileBody);
+  try {
+    const profile = await updateCustomerProfile(principal.customerId, body);
+    if (!profile) throw notFound("Customer not found");
+    return ok(c, profile);
+  } catch (err) {
+    translatePgError(err);
+  }
+}
+
+export async function changePasswordController(c: Context<AppEnv>) {
+  const principal = c.get("principal");
+  if (!principal || principal.kind !== "customer") throw unauthorized();
+  const body = await parseBody(c, changePasswordBody);
+  const outcome = await changeCustomerPassword(principal.customerId, body);
+  if (!outcome.ok && outcome.reason === "not_found") {
+    throw notFound("Customer not found");
+  }
+  if (!outcome.ok && outcome.reason === "wrong_password") {
+    throw unauthorized("Current password is incorrect");
+  }
+  return ok(c, { changed: true });
 }

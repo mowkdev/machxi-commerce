@@ -4,10 +4,12 @@ import { eq } from "@repo/database";
 import { customers } from "@repo/database/schema";
 import { signCustomerToken } from "../auth/customer-jwt";
 import type {
+  ChangePasswordBody,
   CustomerProfile,
   CustomerSessionResponse,
   LoginBody,
   RegisterCustomerBody,
+  UpdateProfileBody,
 } from "./schema";
 
 const PASSWORD_HASH_ROUNDS = 12;
@@ -88,4 +90,48 @@ export async function getCustomerProfile(
     .where(eq(customers.id, customerId))
     .limit(1);
   return rows[0] ? toProfile(rows[0]) : null;
+}
+
+export async function updateCustomerProfile(
+  customerId: string,
+  body: UpdateProfileBody,
+): Promise<CustomerProfile | null> {
+  const update: Partial<typeof customers.$inferInsert> = {};
+  if (body.firstName !== undefined) update.firstName = body.firstName.trim();
+  if (body.lastName !== undefined) update.lastName = body.lastName.trim();
+  if (body.phone !== undefined) update.phone = normalizePhone(body.phone);
+
+  const [row] = await db
+    .update(customers)
+    .set(update)
+    .where(eq(customers.id, customerId))
+    .returning();
+  return row ? toProfile(row) : null;
+}
+
+export type ChangePasswordOutcome =
+  | { ok: true }
+  | { ok: false; reason: "not_found" | "wrong_password" };
+
+export async function changeCustomerPassword(
+  customerId: string,
+  body: ChangePasswordBody,
+): Promise<ChangePasswordOutcome> {
+  const rows = await db
+    .select()
+    .from(customers)
+    .where(eq(customers.id, customerId))
+    .limit(1);
+  const customer = rows[0];
+  if (!customer) return { ok: false, reason: "not_found" };
+
+  const matches = await bcrypt.compare(body.currentPassword, customer.passwordHash);
+  if (!matches) return { ok: false, reason: "wrong_password" };
+
+  const passwordHash = await bcrypt.hash(body.newPassword, PASSWORD_HASH_ROUNDS);
+  await db
+    .update(customers)
+    .set({ passwordHash })
+    .where(eq(customers.id, customerId));
+  return { ok: true };
 }

@@ -1,10 +1,13 @@
 import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
+import { z } from "zod";
 import {
+  changePasswordBody,
   customerProfile,
   customerSessionResponse,
   loginBody,
   registerCustomerBody,
+  updateProfileBody,
 } from "@repo/types/storefront";
 import type { AppEnv } from "../context";
 import { requireCustomer } from "../auth/middleware";
@@ -15,9 +18,11 @@ import {
   successEnvelope,
 } from "../openapi/envelope";
 import {
+  changePasswordController,
   loginCustomerController,
   meController,
   registerCustomerController,
+  updateProfileController,
 } from "./controller";
 
 export const storeAuthRoutes = new Hono<AppEnv>();
@@ -60,6 +65,8 @@ storeAuthRoutes.post(
   loginCustomerController,
 );
 
+const passwordChangeAck = z.object({ changed: z.literal(true) });
+
 const meRouter = new Hono<AppEnv>();
 meRouter.use("*", requireCustomer);
 meRouter.get(
@@ -77,5 +84,36 @@ meRouter.get(
     },
   }),
   meController,
+);
+meRouter.put(
+  "/",
+  describeRoute({
+    operationId: "storeUpdateCurrentCustomer",
+    summary: "Update the current customer profile",
+    tags: TAGS,
+    requestBody: jsonRequestBody(updateProfileBody),
+    responses: {
+      200: jsonResponse("Customer profile", successEnvelope(customerProfile)),
+      ...standardErrorResponses,
+    },
+  }),
+  updateProfileController,
+);
+meRouter.post(
+  "/password",
+  describeRoute({
+    operationId: "storeChangeCustomerPassword",
+    summary: "Change the current customer password",
+    tags: TAGS,
+    requestBody: jsonRequestBody(changePasswordBody),
+    responses: {
+      200: jsonResponse(
+        "Password changed",
+        successEnvelope(passwordChangeAck),
+      ),
+      ...standardErrorResponses,
+    },
+  }),
+  changePasswordController,
 );
 storeAuthRoutes.route("/me", meRouter);

@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { customersUpdate, addressesInsert } from '@repo/database/validators';
 
 const phoneInput = z
   .string()
@@ -42,17 +41,23 @@ export const customerSessionResponse = z.object({
 });
 export type CustomerSessionResponse = z.infer<typeof customerSessionResponse>;
 
-export const updateProfileBody = customersUpdate.pick({
-  firstName: true,
-  lastName: true,
-  phone: true,
-});
+export const updateProfileBody = z
+  .object({
+    firstName: z.string().trim().min(1).optional(),
+    lastName: z.string().trim().min(1).optional(),
+    phone: phoneInput,
+  })
+  .refine((value) => Object.keys(value).length > 0, {
+    message: 'At least one field is required',
+  });
 export type UpdateProfileBody = z.infer<typeof updateProfileBody>;
 
-export const upsertAddressBody = addressesInsert.omit({
-  id: true,
-  customerId: true,
-  createdAt: true,
-  updatedAt: true,
+export const changePasswordBody = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: z.string().min(12).max(128),
 });
-export type UpsertAddressBody = z.infer<typeof upsertAddressBody>;
+export type ChangePasswordBody = z.infer<typeof changePasswordBody>;
+
+// Address request/response schemas are reused from @repo/types/admin via the
+// store-addresses module — the field shape is identical, only the auth scope
+// differs (storefront scopes to the authenticated customer).

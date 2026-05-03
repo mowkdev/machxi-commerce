@@ -25,6 +25,11 @@ import { returnsRoutes } from "./returns/routes";
 import { usersRoutes } from "./users/routes";
 import { rolesRoutes } from "./roles/routes";
 import { storeAuthRoutes } from "./store-auth/routes";
+import { storeAddressesRoutes } from "./store-addresses/routes";
+import { storeCatalogRoutes } from "./store-catalog/routes";
+import { storeCartsRoutes } from "./store-carts/routes";
+import { storeCheckoutRoutes } from "./store-checkout/routes";
+import { storeOrdersRoutes } from "./store-orders/routes";
 import { logger } from "./lib/logger";
 import { requestLogger } from "./lib/requestLogger";
 import { err, errFromException } from "./lib/response";
@@ -80,6 +85,11 @@ export function createApp() {
   app.route("/api/users", usersRoutes);
   app.route("/api/roles", rolesRoutes);
   app.route("/api/store/auth", storeAuthRoutes);
+  app.route("/api/store/addresses", storeAddressesRoutes);
+  app.route("/api/store", storeCatalogRoutes);
+  app.route("/api/store/carts", storeCartsRoutes);
+  app.route("/api/store", storeCheckoutRoutes);
+  app.route("/api/store/orders", storeOrdersRoutes);
 
   if (env.OPENAPI_DOCS_ENABLED) {
     // Mounted last so it can introspect every registered route.
