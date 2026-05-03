@@ -30,7 +30,13 @@ export const requestLogger: MiddlewareHandler<AppEnv> = async (c, next) => {
     const status = c.res.status;
     const principal = c.get('principal');
     const actor = principal
-      ? { actorKind: principal.kind, userId: principal.userId }
+      ? {
+          actorKind: principal.kind,
+          actorId:
+            principal.kind === 'admin'
+              ? principal.userId
+              : principal.customerId,
+        }
       : {};
 
     const level =

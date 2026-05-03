@@ -1,7 +1,8 @@
-// Session shape carried in request context after Auth.js verifies the JWT.
-// Only admin principals exist — auth flows through Auth.js with the
-// Credentials provider against the `users` table. Roles/permissions are
-// dynamic — never hardcode a finite union.
+// Session shape carried in request context after auth middleware verifies
+// the cookie (admin, via Auth.js) or the Bearer JWT (customer/storefront).
+//
+// Discriminated by `kind` so callers must narrow before accessing role-
+// specific fields.
 
 export interface AdminSession {
   userId: string;
@@ -10,4 +11,11 @@ export interface AdminSession {
   permissions: string[];
 }
 
-export type Principal = { kind: 'admin' } & AdminSession;
+export interface CustomerSession {
+  customerId: string;
+  email: string;
+}
+
+export type Principal =
+  | ({ kind: 'admin' } & AdminSession)
+  | ({ kind: 'customer' } & CustomerSession);

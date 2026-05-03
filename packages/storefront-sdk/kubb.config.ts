@@ -5,8 +5,9 @@ import { pluginZod } from '@kubb/plugin-zod';
 import { pluginClient } from '@kubb/plugin-client';
 import { pluginReactQuery } from '@kubb/plugin-react-query';
 
-// Storefront operations live under `/api/store/*` and ship in
-// @repo/storefront-sdk; exclude them here so the admin bundle stays focused.
+// Storefront SDK is restricted to operations under `/api/store/*`. As more
+// public-facing endpoints land (cart, checkout, public catalog) they pick up
+// this filter automatically by virtue of their path prefix.
 const storefrontPathFilter = { type: 'path' as const, pattern: /^\/api\/store\// };
 
 export default defineConfig({
@@ -18,26 +19,26 @@ export default defineConfig({
     pluginTs({
       output: { path: './types' },
       enumType: 'asConst',
-      exclude: [storefrontPathFilter],
+      include: [storefrontPathFilter],
     }),
     pluginZod({
       output: { path: './zod' },
       typed: true,
-      exclude: [storefrontPathFilter],
+      include: [storefrontPathFilter],
     }),
     pluginClient({
       output: { path: './client' },
       importPath: '../../runtime',
       dataReturnType: 'data',
       parser: 'zod',
-      exclude: [storefrontPathFilter],
+      include: [storefrontPathFilter],
     }),
     pluginReactQuery({
       output: { path: './hooks' },
       client: { importPath: '../../runtime' },
       query: { methods: ['get'] },
       mutation: { methods: ['post', 'put', 'patch', 'delete'] },
-      exclude: [storefrontPathFilter],
+      include: [storefrontPathFilter],
     }),
   ],
 });

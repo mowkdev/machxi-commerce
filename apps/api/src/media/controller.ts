@@ -62,8 +62,10 @@ export async function getMediaController(c: Context<AppEnv>) {
 
 export async function uploadMediaController(c: Context<AppEnv>) {
   const principal = c.get('principal');
+  const uploaderId =
+    principal?.kind === 'admin' ? principal.userId : null;
   const files = await readUploadedFiles(c);
-  const result = await uploadMedia(files, principal?.userId ?? null);
+  const result = await uploadMedia(files, uploaderId);
   return ok(c, result, undefined, 201);
 }
 

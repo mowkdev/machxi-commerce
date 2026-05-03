@@ -27,7 +27,7 @@
     "db:reset-catalog": "pnpm --filter @repo/database db:reset-catalog",
     "db:seed-products": "pnpm --filter @repo/database db:seed-products",
     "openapi:emit": "pnpm --filter @app/api openapi:emit",
-    "sdk:generate": "pnpm openapi:emit && pnpm --filter @repo/admin-sdk generate"
+    "sdk:generate": "pnpm openapi:emit && pnpm --filter @repo/admin-sdk generate && pnpm --filter @repo/storefront-sdk generate"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
