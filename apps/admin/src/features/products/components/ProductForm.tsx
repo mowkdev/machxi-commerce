@@ -2,6 +2,13 @@ import { FormProvider } from 'react-hook-form';
 import { FormContentLayout } from '@/components/form-content-layout';
 import { FormPageShell } from '@/components/form-page-shell';
 import { RecordTimestampsCard } from '@/components/record-timestamps-card';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import type { ProductDetailResponse } from '@repo/types/admin';
 import { GeneralInfoCard } from './GeneralInfoCard';
 import { StatusCard } from './StatusCard';
@@ -40,6 +47,26 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
     title,
   } = useProductForm({ mode, initialData });
 
+  const localeOptions =
+    languages.length > 0
+      ? languages
+      : [{ code: selectedLocale, name: selectedLocale, isDefault: true, createdAt: '', updatedAt: '' }];
+
+  const headerActions = isEditMode ? (
+    <Select value={selectedLocale} onValueChange={setSelectedLocale}>
+      <SelectTrigger size="sm" aria-label="Locale" className="w-20 uppercase">
+        <SelectValue placeholder="Locale" />
+      </SelectTrigger>
+      <SelectContent>
+        {localeOptions.map((lang) => (
+          <SelectItem key={lang.code} value={lang.code} className="uppercase">
+            {lang.code}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  ) : undefined;
+
   return (
     <FormProvider {...form}>
       <FormPageShell
@@ -49,6 +76,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
         submitLabel={isPending ? 'Saving...' : isCreateMode ? 'Create product' : 'Save'}
         isSubmitting={isPending}
         canSubmit={canSave}
+        headerActions={headerActions}
       >
         <FormContentLayout maxWidth="5xl"
           sidebar={
@@ -62,11 +90,7 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
             </>
           }
         >
-          <GeneralInfoCard
-            selectedLocale={selectedLocale}
-            onLocaleChange={setSelectedLocale}
-            languages={languages}
-          />
+          <GeneralInfoCard selectedLocale={selectedLocale} />
           {isEditMode && initialData && isVariable && (
             <>
               <OptionsCard product={initialData} />

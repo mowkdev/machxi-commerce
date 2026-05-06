@@ -14,14 +14,6 @@ import {
   FieldGroup,
   FieldLabel,
 } from '@/components/ui/field';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import type { LanguageListItem } from '@repo/types/admin';
 import type { ProductFormValues } from '../schema';
 
 function slugify(text: string): string {
@@ -35,15 +27,9 @@ function slugify(text: string): string {
 
 interface GeneralInfoCardProps {
   selectedLocale: string;
-  onLocaleChange: (locale: string) => void;
-  languages: LanguageListItem[];
 }
 
-export function GeneralInfoCard({
-  selectedLocale,
-  onLocaleChange,
-  languages,
-}: GeneralInfoCardProps) {
+export function GeneralInfoCard({ selectedLocale }: GeneralInfoCardProps) {
   const {
     register,
     watch,
@@ -78,48 +64,22 @@ export function GeneralInfoCard({
     }
   }, [name, setValue, handlePath, handleDirty, selectedLocale]);
 
-  // Build options with default-language tag, ensuring at least the active
-  // locale shows up if the languages list hasn't loaded yet.
-  const options =
-    languages.length > 0
-      ? languages
-      : [
-          {
-            code: selectedLocale,
-            name: selectedLocale,
-            isDefault: true,
-            createdAt: '',
-            updatedAt: '',
-          },
-        ];
-
+  const localeLabel = selectedLocale.toUpperCase();
   const nameError = errors.translations?.[selectedLocale]?.name;
   const handleError = errors.translations?.[selectedLocale]?.handle;
   const descriptionError = errors.translations?.[selectedLocale]?.description;
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between gap-4 space-y-0">
+      <CardHeader>
         <CardTitle>General information</CardTitle>
-        <Select value={selectedLocale} onValueChange={onLocaleChange}>
-          <SelectTrigger className="w-44" aria-label="Locale">
-            <SelectValue placeholder="Locale" />
-          </SelectTrigger>
-          <SelectContent>
-            {options.map((lang) => (
-              <SelectItem key={lang.code} value={lang.code}>
-                {lang.name} ({lang.code})
-                {lang.isDefault ? ' • default' : ''}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
       </CardHeader>
       <CardContent>
         <FieldGroup>
           <Field>
-            <FieldLabel htmlFor="name">Name ({selectedLocale})</FieldLabel>
+            <FieldLabel htmlFor="name">Name ({localeLabel})</FieldLabel>
             <Input
+              key={`name-${selectedLocale}`}
               id="name"
               placeholder="Product name"
               {...register(namePath)}
@@ -127,8 +87,9 @@ export function GeneralInfoCard({
             <FieldError errors={[nameError]} />
           </Field>
           <Field>
-            <FieldLabel htmlFor="handle">Handle ({selectedLocale})</FieldLabel>
+            <FieldLabel htmlFor="handle">Handle ({localeLabel})</FieldLabel>
             <Input
+              key={`handle-${selectedLocale}`}
               id="handle"
               placeholder="product-handle"
               {...register(handlePath, {
@@ -141,10 +102,10 @@ export function GeneralInfoCard({
           </Field>
           <Field>
             <FieldLabel htmlFor="description">
-              Description ({selectedLocale})
+              Description ({localeLabel})
             </FieldLabel>
             <RichTextEditor
-              key={selectedLocale}
+              key={`description-${selectedLocale}`}
               value={descriptionField.value ?? ''}
               onChange={descriptionField.onChange}
               placeholder="Product description..."

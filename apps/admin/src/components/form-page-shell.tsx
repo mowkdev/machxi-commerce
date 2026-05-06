@@ -12,6 +12,7 @@ interface FormPageShellProps {
   onSubmit: FormEventHandler<HTMLFormElement>;
   isSubmitting?: boolean;
   canSubmit?: boolean;
+  headerActions?: ReactNode;
   children: ReactNode;
   className?: string;
   contentClassName?: string;
@@ -25,6 +26,7 @@ export function FormPageShell({
   onSubmit,
   isSubmitting = false,
   canSubmit = true,
+  headerActions,
   children,
   className,
   contentClassName,
@@ -39,6 +41,7 @@ export function FormPageShell({
           <h1 className="text-lg font-semibold">{title}</h1>
         </div>
         <div className="flex items-center gap-2">
+          {headerActions}
           <Button type="button" variant="outline" onClick={onDiscard}>
             Discard
           </Button>
