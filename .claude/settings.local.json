@@ -91,7 +91,10 @@
       "Bash(pnpm --filter @app/admin test src/features/media/__tests__/MediaGallery.test.tsx)",
       "Bash(pnpm sdk:generate)",
       "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
-      "Bash(pnpm vitest *)"
+      "Bash(pnpm vitest *)",
+      "Bash(pnpm --filter @repo/admin-sdk build)",
+      "Bash(npx tsc *)",
+      "Bash(npx vitest *)"
     ]
   }
 }
