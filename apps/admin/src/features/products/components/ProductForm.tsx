@@ -31,9 +31,12 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
     isEditMode,
     isPending,
     isVariable,
+    languages,
     navigateToProducts,
     onSubmit,
     removeDefaultVariantPrice,
+    selectedLocale,
+    setSelectedLocale,
     title,
   } = useProductForm({ mode, initialData });
 
@@ -59,7 +62,11 @@ export function ProductForm({ mode, initialData }: ProductFormProps) {
             </>
           }
         >
-          <GeneralInfoCard />
+          <GeneralInfoCard
+            selectedLocale={selectedLocale}
+            onLocaleChange={setSelectedLocale}
+            languages={languages}
+          />
           {isEditMode && initialData && isVariable && (
             <>
               <OptionsCard product={initialData} />

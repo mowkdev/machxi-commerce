@@ -71,16 +71,38 @@ vi.mock('../../media/hooks', () => ({
   useUploadMedia: () => mediaMocks.upload,
 }));
 
+vi.mock('../../languages/hooks', () => ({
+  useLanguageOptions: () => ({
+    data: [
+      {
+        code: 'en',
+        name: 'English',
+        isDefault: true,
+        createdAt: '2026-01-01T00:00:00.000Z',
+        updatedAt: '2026-01-01T00:00:00.000Z',
+      },
+    ],
+    isPending: false,
+    isError: false,
+  }),
+}));
+
 vi.mock('../components/GeneralInfoCard', () => ({
-  GeneralInfoCard: () => {
+  GeneralInfoCard: ({ selectedLocale }: { selectedLocale: string }) => {
     const { register } = useFormContext<ProductFormValues>();
 
     return (
       <section data-testid="general-info-card">
         <label htmlFor="name">Name</label>
-        <input id="name" {...register('name')} />
+        <input
+          id="name"
+          {...register(`translations.${selectedLocale}.name` as const)}
+        />
         <label htmlFor="handle">Handle</label>
-        <input id="handle" {...register('handle')} />
+        <input
+          id="handle"
+          {...register(`translations.${selectedLocale}.handle` as const)}
+        />
       </section>
     );
   },
