@@ -8,7 +8,15 @@ const schema = z.object({
     .enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'silent'])
     .default('info'),
   DATABASE_URL: z.string().url(),
-  CORS_ORIGIN: z.string().default('http://localhost:3000'),
+  CORS_ORIGIN: z
+    .string()
+    .default('http://localhost:3000')
+    .transform((value) =>
+      value
+        .split(',')
+        .map((origin) => origin.trim())
+        .filter((origin) => origin.length > 0)
+    ),
   OPENAPI_DOCS_ENABLED: z
     .enum(['true', 'false'])
     .default('false')

@@ -58,7 +58,10 @@ export type { AdminDeleteStockLocationMutationKey } from "./hooks/useAdminDelete
 export type { AdminDeleteTaxClassMutationKey } from "./hooks/useAdminDeleteTaxClass.ts";
 export type { AdminDeleteTaxRateMutationKey } from "./hooks/useAdminDeleteTaxRate.ts";
 export type { AdminDeleteUserMutationKey } from "./hooks/useAdminDeleteUser.ts";
+export type { AdminExpireCartMutationKey } from "./hooks/useAdminExpireCart.ts";
 export type { AdminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
+export type { AdminGetCartQueryKey } from "./hooks/useAdminGetCart.ts";
+export type { AdminGetCartSuspenseQueryKey } from "./hooks/useAdminGetCartSuspense.ts";
 export type { AdminGetCategoryQueryKey } from "./hooks/useAdminGetCategory.ts";
 export type { AdminGetCategorySuspenseQueryKey } from "./hooks/useAdminGetCategorySuspense.ts";
 export type { AdminGetCustomerQueryKey } from "./hooks/useAdminGetCustomer.ts";
@@ -91,6 +94,8 @@ export type { AdminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
 export type { AdminGetTaxClassSuspenseQueryKey } from "./hooks/useAdminGetTaxClassSuspense.ts";
 export type { AdminGetUserQueryKey } from "./hooks/useAdminGetUser.ts";
 export type { AdminGetUserSuspenseQueryKey } from "./hooks/useAdminGetUserSuspense.ts";
+export type { AdminListCartsQueryKey } from "./hooks/useAdminListCarts.ts";
+export type { AdminListCartsSuspenseQueryKey } from "./hooks/useAdminListCartsSuspense.ts";
 export type { AdminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export type { AdminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
 export type { AdminListCustomersQueryKey } from "./hooks/useAdminListCustomers.ts";
@@ -914,6 +919,19 @@ export type {
   AdminDeleteUserPathParams,
 } from "./types/AdminDeleteUser.ts";
 export type {
+  AdminExpireCart200,
+  AdminExpireCart200PromotionsTypeEnumKey,
+  AdminExpireCart400,
+  AdminExpireCart401,
+  AdminExpireCart403,
+  AdminExpireCart404,
+  AdminExpireCart409,
+  AdminExpireCart500,
+  AdminExpireCartMutation,
+  AdminExpireCartMutationResponse,
+  AdminExpireCartPathParams,
+} from "./types/AdminExpireCart.ts";
+export type {
   AdminGenerateVariants200,
   AdminGenerateVariants400,
   AdminGenerateVariants401,
@@ -926,6 +944,19 @@ export type {
   AdminGenerateVariantsMutationResponse,
   AdminGenerateVariantsPathParams,
 } from "./types/AdminGenerateVariants.ts";
+export type {
+  AdminGetCart200,
+  AdminGetCart200PromotionsTypeEnumKey,
+  AdminGetCart400,
+  AdminGetCart401,
+  AdminGetCart403,
+  AdminGetCart404,
+  AdminGetCart409,
+  AdminGetCart500,
+  AdminGetCartPathParams,
+  AdminGetCartQuery,
+  AdminGetCartQueryResponse,
+} from "./types/AdminGetCart.ts";
 export type {
   AdminGetCategory200,
   AdminGetCategory400,
@@ -1131,6 +1162,22 @@ export type {
   AdminGetUserQuery,
   AdminGetUserQueryResponse,
 } from "./types/AdminGetUser.ts";
+export type {
+  AdminListCarts200,
+  AdminListCarts400,
+  AdminListCarts401,
+  AdminListCarts403,
+  AdminListCarts404,
+  AdminListCarts409,
+  AdminListCarts500,
+  AdminListCartsQuery,
+  AdminListCartsQueryParams,
+  AdminListCartsQueryParamsCustomerTypeEnumKey,
+  AdminListCartsQueryParamsSortByEnumKey,
+  AdminListCartsQueryParamsSortOrderEnumKey,
+  AdminListCartsQueryParamsStatusEnumKey,
+  AdminListCartsQueryResponse,
+} from "./types/AdminListCarts.ts";
 export type {
   AdminListCategories200,
   AdminListCategories400,
@@ -2000,7 +2047,9 @@ export { adminDeleteStockLocation } from "./client/adminDeleteStockLocation.ts";
 export { adminDeleteTaxClass } from "./client/adminDeleteTaxClass.ts";
 export { adminDeleteTaxRate } from "./client/adminDeleteTaxRate.ts";
 export { adminDeleteUser } from "./client/adminDeleteUser.ts";
+export { adminExpireCart } from "./client/adminExpireCart.ts";
 export { adminGenerateVariants } from "./client/adminGenerateVariants.ts";
+export { adminGetCart } from "./client/adminGetCart.ts";
 export { adminGetCategory } from "./client/adminGetCategory.ts";
 export { adminGetCustomer } from "./client/adminGetCustomer.ts";
 export { adminGetFulfillment } from "./client/adminGetFulfillment.ts";
@@ -2017,6 +2066,7 @@ export { adminGetShippingZone } from "./client/adminGetShippingZone.ts";
 export { adminGetStockLocation } from "./client/adminGetStockLocation.ts";
 export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
 export { adminGetUser } from "./client/adminGetUser.ts";
+export { adminListCarts } from "./client/adminListCarts.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
 export { adminListCustomers } from "./client/adminListCustomers.ts";
 export { adminListFulfillments } from "./client/adminListFulfillments.ts";
@@ -2256,9 +2306,18 @@ export { useAdminDeleteTaxRate } from "./hooks/useAdminDeleteTaxRate.ts";
 export { adminDeleteUserMutationKey } from "./hooks/useAdminDeleteUser.ts";
 export { adminDeleteUserMutationOptions } from "./hooks/useAdminDeleteUser.ts";
 export { useAdminDeleteUser } from "./hooks/useAdminDeleteUser.ts";
+export { adminExpireCartMutationKey } from "./hooks/useAdminExpireCart.ts";
+export { adminExpireCartMutationOptions } from "./hooks/useAdminExpireCart.ts";
+export { useAdminExpireCart } from "./hooks/useAdminExpireCart.ts";
 export { adminGenerateVariantsMutationKey } from "./hooks/useAdminGenerateVariants.ts";
 export { adminGenerateVariantsMutationOptions } from "./hooks/useAdminGenerateVariants.ts";
 export { useAdminGenerateVariants } from "./hooks/useAdminGenerateVariants.ts";
+export { adminGetCartQueryKey } from "./hooks/useAdminGetCart.ts";
+export { adminGetCartQueryOptions } from "./hooks/useAdminGetCart.ts";
+export { useAdminGetCart } from "./hooks/useAdminGetCart.ts";
+export { adminGetCartSuspenseQueryKey } from "./hooks/useAdminGetCartSuspense.ts";
+export { adminGetCartSuspenseQueryOptions } from "./hooks/useAdminGetCartSuspense.ts";
+export { useAdminGetCartSuspense } from "./hooks/useAdminGetCartSuspense.ts";
 export { adminGetCategoryQueryKey } from "./hooks/useAdminGetCategory.ts";
 export { adminGetCategoryQueryOptions } from "./hooks/useAdminGetCategory.ts";
 export { useAdminGetCategory } from "./hooks/useAdminGetCategory.ts";
@@ -2355,6 +2414,12 @@ export { useAdminGetUser } from "./hooks/useAdminGetUser.ts";
 export { adminGetUserSuspenseQueryKey } from "./hooks/useAdminGetUserSuspense.ts";
 export { adminGetUserSuspenseQueryOptions } from "./hooks/useAdminGetUserSuspense.ts";
 export { useAdminGetUserSuspense } from "./hooks/useAdminGetUserSuspense.ts";
+export { adminListCartsQueryKey } from "./hooks/useAdminListCarts.ts";
+export { adminListCartsQueryOptions } from "./hooks/useAdminListCarts.ts";
+export { useAdminListCarts } from "./hooks/useAdminListCarts.ts";
+export { adminListCartsSuspenseQueryKey } from "./hooks/useAdminListCartsSuspense.ts";
+export { adminListCartsSuspenseQueryOptions } from "./hooks/useAdminListCartsSuspense.ts";
+export { useAdminListCartsSuspense } from "./hooks/useAdminListCartsSuspense.ts";
 export { adminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export { adminListCategoriesQueryOptions } from "./hooks/useAdminListCategories.ts";
 export { useAdminListCategories } from "./hooks/useAdminListCategories.ts";
@@ -2619,6 +2684,8 @@ export { useAdminUploadMedia } from "./hooks/useAdminUploadMedia.ts";
 export { adminCreatePayment201DataStatusEnum } from "./types/AdminCreatePayment.ts";
 export { adminCreatePromotionTarget201DataTargetTypeEnum } from "./types/AdminCreatePromotionTarget.ts";
 export { adminCreateReturnItem201DataReasonEnum } from "./types/AdminCreateReturnItem.ts";
+export { adminExpireCart200PromotionsTypeEnum } from "./types/AdminExpireCart.ts";
+export { adminGetCart200PromotionsTypeEnum } from "./types/AdminGetCart.ts";
 export { adminGetFulfillment200DataStatusEnum } from "./types/AdminGetFulfillment.ts";
 export { adminGetOrder200DataStatusEnum } from "./types/AdminGetOrder.ts";
 export { adminGetOrder200FulfillmentsStatusEnum } from "./types/AdminGetOrder.ts";
@@ -2632,6 +2699,10 @@ export { adminGetPromotion200DataTypeEnum } from "./types/AdminGetPromotion.ts";
 export { adminGetPromotion200TargetsTargetTypeEnum } from "./types/AdminGetPromotion.ts";
 export { adminGetReturn200DataStatusEnum } from "./types/AdminGetReturn.ts";
 export { adminGetReturn200ItemsReasonEnum } from "./types/AdminGetReturn.ts";
+export { adminListCartsQueryParamsCustomerTypeEnum } from "./types/AdminListCarts.ts";
+export { adminListCartsQueryParamsSortByEnum } from "./types/AdminListCarts.ts";
+export { adminListCartsQueryParamsSortOrderEnum } from "./types/AdminListCarts.ts";
+export { adminListCartsQueryParamsStatusEnum } from "./types/AdminListCarts.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./types/AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./types/AdminListCategories.ts";
 export { adminListCustomersQueryParamsSortByEnum } from "./types/AdminListCustomers.ts";
@@ -3377,6 +3448,17 @@ export {
   adminDeleteUserPathParamsSchema,
 } from "./zod/adminDeleteUserSchema.ts";
 export {
+  adminExpireCart200Schema,
+  adminExpireCart400Schema,
+  adminExpireCart401Schema,
+  adminExpireCart403Schema,
+  adminExpireCart404Schema,
+  adminExpireCart409Schema,
+  adminExpireCart500Schema,
+  adminExpireCartMutationResponseSchema,
+  adminExpireCartPathParamsSchema,
+} from "./zod/adminExpireCartSchema.ts";
+export {
   adminGenerateVariants200Schema,
   adminGenerateVariants400Schema,
   adminGenerateVariants401Schema,
@@ -3388,6 +3470,17 @@ export {
   adminGenerateVariantsMutationResponseSchema,
   adminGenerateVariantsPathParamsSchema,
 } from "./zod/adminGenerateVariantsSchema.ts";
+export {
+  adminGetCart200Schema,
+  adminGetCart400Schema,
+  adminGetCart401Schema,
+  adminGetCart403Schema,
+  adminGetCart404Schema,
+  adminGetCart409Schema,
+  adminGetCart500Schema,
+  adminGetCartPathParamsSchema,
+  adminGetCartQueryResponseSchema,
+} from "./zod/adminGetCartSchema.ts";
 export {
   adminGetCategory200Schema,
   adminGetCategory400Schema,
@@ -3564,6 +3657,17 @@ export {
   adminGetUserPathParamsSchema,
   adminGetUserQueryResponseSchema,
 } from "./zod/adminGetUserSchema.ts";
+export {
+  adminListCarts200Schema,
+  adminListCarts400Schema,
+  adminListCarts401Schema,
+  adminListCarts403Schema,
+  adminListCarts404Schema,
+  adminListCarts409Schema,
+  adminListCarts500Schema,
+  adminListCartsQueryParamsSchema,
+  adminListCartsQueryResponseSchema,
+} from "./zod/adminListCartsSchema.ts";
 export {
   adminListCategories200Schema,
   adminListCategories400Schema,

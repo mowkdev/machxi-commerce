@@ -19,7 +19,7 @@ import {
   promotionUsage,
   promotions,
 } from "@repo/database/schema";
-import { conflict, notFound, validationFailed } from "../lib/errors";
+import { conflict, gone, notFound, validationFailed } from "../lib/errors";
 import { loadCart } from "./query";
 import {
   InsufficientStockError,
@@ -58,7 +58,14 @@ export async function createCart(input: {
   return cart;
 }
 
+function isExpired(expiresAt: Date | string): boolean {
+  return new Date(expiresAt) <= new Date();
+}
+
 export async function getCart(cartId: string): Promise<StoreCart | null> {
+  const [cartRow] = await db.select().from(carts).where(eq(carts.id, cartId)).limit(1);
+  if (!cartRow) return null;
+  if (isExpired(cartRow.expiresAt)) throw gone("Cart has expired");
   return loadCart(cartId);
 }
 
@@ -69,6 +76,7 @@ async function ensureCartExists(cartId: string): Promise<typeof carts.$inferSele
     .where(eq(carts.id, cartId))
     .limit(1);
   if (!cart) throw notFound("Cart not found");
+  if (isExpired(cart.expiresAt)) throw gone("Cart has expired");
   return cart;
 }
 

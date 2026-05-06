@@ -19,6 +19,7 @@ import { stockLocationsRoutes } from "./stock-locations/routes";
 import { inventoryRoutes } from "./inventory/routes";
 import { shippingRoutes } from "./shipping/routes";
 import { customersRoutes } from "./customers/routes";
+import { adminCartsRoutes } from "./admin-carts/routes";
 import { ordersRoutes } from "./orders/routes";
 import { fulfillmentsRoutes } from "./fulfillments/routes";
 import { returnsRoutes } from "./returns/routes";
@@ -79,6 +80,7 @@ export function createApp() {
   app.route("/api/media", mediaRoutes);
   app.route("/api/shipping", shippingRoutes);
   app.route("/api/customers", customersRoutes);
+  app.route("/api/carts", adminCartsRoutes);
   app.route("/api/orders", ordersRoutes);
   app.route("/api/fulfillments", fulfillmentsRoutes);
   app.route("/api/returns", returnsRoutes);

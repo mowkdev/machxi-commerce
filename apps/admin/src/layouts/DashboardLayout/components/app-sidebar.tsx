@@ -8,6 +8,7 @@ import {
   IconInnerShadowTop,
   IconPackage,
   IconPhoto,
+  IconReceipt2,
   IconSettings,
   IconShoppingCart,
   IconStack2,
@@ -93,7 +94,8 @@ const data = {
       collapseTitle: true,
       defaultOpen: true,
       items: [
-        { title: "Orders", url: "/orders", icon: IconShoppingCart },
+        { title: "Carts", url: "/carts", icon: IconShoppingCart },
+        { title: "Orders", url: "/orders", icon: IconReceipt2 },
         { title: "Customers", url: "/customers", icon: IconUsers },
       ],
     },

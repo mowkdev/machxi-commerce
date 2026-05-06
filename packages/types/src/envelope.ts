@@ -40,6 +40,7 @@ export type SortParams = z.infer<typeof sortParams>;
 // audit of all consumers.
 export const ERROR_CODES = {
   NOT_FOUND: 'NOT_FOUND',
+  GONE: 'GONE',
   UNAUTHORIZED: 'UNAUTHORIZED',
   FORBIDDEN: 'FORBIDDEN',
   VALIDATION_FAILED: 'VALIDATION_FAILED',
