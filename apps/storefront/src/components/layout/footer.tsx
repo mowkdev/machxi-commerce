@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3 lg:px-8">
         <div>
           <Link href="/" className="text-lg font-semibold tracking-tight">
-            Machxi
+            MachXI
           </Link>
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
             A minimal commerce theme built for fast product discovery and a
