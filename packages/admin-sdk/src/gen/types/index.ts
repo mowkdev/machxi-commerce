@@ -121,6 +121,31 @@ export type {
   AdminCreateLanguageMutationResponse,
 } from "./AdminCreateLanguage.ts";
 export type {
+  AdminCreateOptionDefinition201,
+  AdminCreateOptionDefinition400,
+  AdminCreateOptionDefinition401,
+  AdminCreateOptionDefinition403,
+  AdminCreateOptionDefinition404,
+  AdminCreateOptionDefinition409,
+  AdminCreateOptionDefinition500,
+  AdminCreateOptionDefinitionMutation,
+  AdminCreateOptionDefinitionMutationRequest,
+  AdminCreateOptionDefinitionMutationResponse,
+} from "./AdminCreateOptionDefinition.ts";
+export type {
+  AdminCreateOptionValue201,
+  AdminCreateOptionValue400,
+  AdminCreateOptionValue401,
+  AdminCreateOptionValue403,
+  AdminCreateOptionValue404,
+  AdminCreateOptionValue409,
+  AdminCreateOptionValue500,
+  AdminCreateOptionValueMutation,
+  AdminCreateOptionValueMutationRequest,
+  AdminCreateOptionValueMutationResponse,
+  AdminCreateOptionValuePathParams,
+} from "./AdminCreateOptionValue.ts";
+export type {
   AdminCreateOrder201,
   AdminCreateOrder400,
   AdminCreateOrder401,
@@ -834,6 +859,18 @@ export type {
   AdminGetMediaQueryResponse,
 } from "./AdminGetMedia.ts";
 export type {
+  AdminGetOptionDefinition200,
+  AdminGetOptionDefinition400,
+  AdminGetOptionDefinition401,
+  AdminGetOptionDefinition403,
+  AdminGetOptionDefinition404,
+  AdminGetOptionDefinition409,
+  AdminGetOptionDefinition500,
+  AdminGetOptionDefinitionPathParams,
+  AdminGetOptionDefinitionQuery,
+  AdminGetOptionDefinitionQueryResponse,
+} from "./AdminGetOptionDefinition.ts";
+export type {
   AdminGetOrder200,
   AdminGetOrder200DataStatusEnumKey,
   AdminGetOrder200FulfillmentsStatusEnumKey,
@@ -1106,6 +1143,20 @@ export type {
   AdminListMediaQueryParamsSortOrderEnumKey,
   AdminListMediaQueryResponse,
 } from "./AdminListMedia.ts";
+export type {
+  AdminListOptionDefinitionsCatalog200,
+  AdminListOptionDefinitionsCatalog400,
+  AdminListOptionDefinitionsCatalog401,
+  AdminListOptionDefinitionsCatalog403,
+  AdminListOptionDefinitionsCatalog404,
+  AdminListOptionDefinitionsCatalog409,
+  AdminListOptionDefinitionsCatalog500,
+  AdminListOptionDefinitionsCatalogQuery,
+  AdminListOptionDefinitionsCatalogQueryParams,
+  AdminListOptionDefinitionsCatalogQueryParamsSortByEnumKey,
+  AdminListOptionDefinitionsCatalogQueryParamsSortOrderEnumKey,
+  AdminListOptionDefinitionsCatalogQueryResponse,
+} from "./AdminListOptionDefinitionsCatalog.ts";
 export type {
   AdminListOrders200,
   AdminListOrders200DataStatusEnumKey,
@@ -1490,6 +1541,32 @@ export type {
   AdminUpdateMediaPathParams,
 } from "./AdminUpdateMedia.ts";
 export type {
+  AdminUpdateOptionDefinition200,
+  AdminUpdateOptionDefinition400,
+  AdminUpdateOptionDefinition401,
+  AdminUpdateOptionDefinition403,
+  AdminUpdateOptionDefinition404,
+  AdminUpdateOptionDefinition409,
+  AdminUpdateOptionDefinition500,
+  AdminUpdateOptionDefinitionMutation,
+  AdminUpdateOptionDefinitionMutationRequest,
+  AdminUpdateOptionDefinitionMutationResponse,
+  AdminUpdateOptionDefinitionPathParams,
+} from "./AdminUpdateOptionDefinition.ts";
+export type {
+  AdminUpdateOptionValue200,
+  AdminUpdateOptionValue400,
+  AdminUpdateOptionValue401,
+  AdminUpdateOptionValue403,
+  AdminUpdateOptionValue404,
+  AdminUpdateOptionValue409,
+  AdminUpdateOptionValue500,
+  AdminUpdateOptionValueMutation,
+  AdminUpdateOptionValueMutationRequest,
+  AdminUpdateOptionValueMutationResponse,
+  AdminUpdateOptionValuePathParams,
+} from "./AdminUpdateOptionValue.ts";
+export type {
   AdminUpdateOrder200,
   AdminUpdateOrder200DataStatusEnumKey,
   AdminUpdateOrder200FulfillmentsStatusEnumKey,
@@ -1841,6 +1918,8 @@ export { adminListLanguagesQueryParamsSortByEnum } from "./AdminListLanguages.ts
 export { adminListLanguagesQueryParamsSortOrderEnum } from "./AdminListLanguages.ts";
 export { adminListMediaQueryParamsSortByEnum } from "./AdminListMedia.ts";
 export { adminListMediaQueryParamsSortOrderEnum } from "./AdminListMedia.ts";
+export { adminListOptionDefinitionsCatalogQueryParamsSortByEnum } from "./AdminListOptionDefinitionsCatalog.ts";
+export { adminListOptionDefinitionsCatalogQueryParamsSortOrderEnum } from "./AdminListOptionDefinitionsCatalog.ts";
 export { adminListOrders200DataStatusEnum } from "./AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortByEnum } from "./AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortOrderEnum } from "./AdminListOrders.ts";

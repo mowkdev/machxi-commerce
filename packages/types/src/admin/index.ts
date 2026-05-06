@@ -12,3 +12,4 @@ export * from "./promotion";
 export * from "./shipping";
 export * from "./cart";
 export * from "./customer";
+export * from "./option-definition";

@@ -8,6 +8,8 @@ export type { AdminCreateInventoryAdjustmentMutationKey } from "./hooks/useAdmin
 export type { AdminCreateInventoryLevelMutationKey } from "./hooks/useAdminCreateInventoryLevel.ts";
 export type { AdminCreateInventoryTransferMutationKey } from "./hooks/useAdminCreateInventoryTransfer.ts";
 export type { AdminCreateLanguageMutationKey } from "./hooks/useAdminCreateLanguage.ts";
+export type { AdminCreateOptionDefinitionMutationKey } from "./hooks/useAdminCreateOptionDefinition.ts";
+export type { AdminCreateOptionValueMutationKey } from "./hooks/useAdminCreateOptionValue.ts";
 export type { AdminCreateOrderMutationKey } from "./hooks/useAdminCreateOrder.ts";
 export type { AdminCreateOrderItemMutationKey } from "./hooks/useAdminCreateOrderItem.ts";
 export type { AdminCreateOrderShippingLineMutationKey } from "./hooks/useAdminCreateOrderShippingLine.ts";
@@ -72,6 +74,8 @@ export type { AdminGetLanguageQueryKey } from "./hooks/useAdminGetLanguage.ts";
 export type { AdminGetLanguageSuspenseQueryKey } from "./hooks/useAdminGetLanguageSuspense.ts";
 export type { AdminGetMediaQueryKey } from "./hooks/useAdminGetMedia.ts";
 export type { AdminGetMediaSuspenseQueryKey } from "./hooks/useAdminGetMediaSuspense.ts";
+export type { AdminGetOptionDefinitionQueryKey } from "./hooks/useAdminGetOptionDefinition.ts";
+export type { AdminGetOptionDefinitionSuspenseQueryKey } from "./hooks/useAdminGetOptionDefinitionSuspense.ts";
 export type { AdminGetOrderQueryKey } from "./hooks/useAdminGetOrder.ts";
 export type { AdminGetOrderSuspenseQueryKey } from "./hooks/useAdminGetOrderSuspense.ts";
 export type { AdminGetPriceListQueryKey } from "./hooks/useAdminGetPriceList.ts";
@@ -112,6 +116,8 @@ export type { AdminListLanguagesQueryKey } from "./hooks/useAdminListLanguages.t
 export type { AdminListLanguagesSuspenseQueryKey } from "./hooks/useAdminListLanguagesSuspense.ts";
 export type { AdminListMediaQueryKey } from "./hooks/useAdminListMedia.ts";
 export type { AdminListMediaSuspenseQueryKey } from "./hooks/useAdminListMediaSuspense.ts";
+export type { AdminListOptionDefinitionsCatalogQueryKey } from "./hooks/useAdminListOptionDefinitionsCatalog.ts";
+export type { AdminListOptionDefinitionsCatalogSuspenseQueryKey } from "./hooks/useAdminListOptionDefinitionsCatalogSuspense.ts";
 export type { AdminListOrdersQueryKey } from "./hooks/useAdminListOrders.ts";
 export type { AdminListOrdersSuspenseQueryKey } from "./hooks/useAdminListOrdersSuspense.ts";
 export type { AdminListPermissionsQueryKey } from "./hooks/useAdminListPermissions.ts";
@@ -160,6 +166,8 @@ export type { AdminUpdateFulfillmentMutationKey } from "./hooks/useAdminUpdateFu
 export type { AdminUpdateFulfillmentItemMutationKey } from "./hooks/useAdminUpdateFulfillmentItem.ts";
 export type { AdminUpdateLanguageMutationKey } from "./hooks/useAdminUpdateLanguage.ts";
 export type { AdminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
+export type { AdminUpdateOptionDefinitionMutationKey } from "./hooks/useAdminUpdateOptionDefinition.ts";
+export type { AdminUpdateOptionValueMutationKey } from "./hooks/useAdminUpdateOptionValue.ts";
 export type { AdminUpdateOrderMutationKey } from "./hooks/useAdminUpdateOrder.ts";
 export type { AdminUpdateOrderItemMutationKey } from "./hooks/useAdminUpdateOrderItem.ts";
 export type { AdminUpdateOrderShippingLineMutationKey } from "./hooks/useAdminUpdateOrderShippingLine.ts";
@@ -305,6 +313,31 @@ export type {
   AdminCreateLanguageMutationRequest,
   AdminCreateLanguageMutationResponse,
 } from "./types/AdminCreateLanguage.ts";
+export type {
+  AdminCreateOptionDefinition201,
+  AdminCreateOptionDefinition400,
+  AdminCreateOptionDefinition401,
+  AdminCreateOptionDefinition403,
+  AdminCreateOptionDefinition404,
+  AdminCreateOptionDefinition409,
+  AdminCreateOptionDefinition500,
+  AdminCreateOptionDefinitionMutation,
+  AdminCreateOptionDefinitionMutationRequest,
+  AdminCreateOptionDefinitionMutationResponse,
+} from "./types/AdminCreateOptionDefinition.ts";
+export type {
+  AdminCreateOptionValue201,
+  AdminCreateOptionValue400,
+  AdminCreateOptionValue401,
+  AdminCreateOptionValue403,
+  AdminCreateOptionValue404,
+  AdminCreateOptionValue409,
+  AdminCreateOptionValue500,
+  AdminCreateOptionValueMutation,
+  AdminCreateOptionValueMutationRequest,
+  AdminCreateOptionValueMutationResponse,
+  AdminCreateOptionValuePathParams,
+} from "./types/AdminCreateOptionValue.ts";
 export type {
   AdminCreateOrder201,
   AdminCreateOrder400,
@@ -1019,6 +1052,18 @@ export type {
   AdminGetMediaQueryResponse,
 } from "./types/AdminGetMedia.ts";
 export type {
+  AdminGetOptionDefinition200,
+  AdminGetOptionDefinition400,
+  AdminGetOptionDefinition401,
+  AdminGetOptionDefinition403,
+  AdminGetOptionDefinition404,
+  AdminGetOptionDefinition409,
+  AdminGetOptionDefinition500,
+  AdminGetOptionDefinitionPathParams,
+  AdminGetOptionDefinitionQuery,
+  AdminGetOptionDefinitionQueryResponse,
+} from "./types/AdminGetOptionDefinition.ts";
+export type {
   AdminGetOrder200,
   AdminGetOrder200DataStatusEnumKey,
   AdminGetOrder200FulfillmentsStatusEnumKey,
@@ -1291,6 +1336,20 @@ export type {
   AdminListMediaQueryParamsSortOrderEnumKey,
   AdminListMediaQueryResponse,
 } from "./types/AdminListMedia.ts";
+export type {
+  AdminListOptionDefinitionsCatalog200,
+  AdminListOptionDefinitionsCatalog400,
+  AdminListOptionDefinitionsCatalog401,
+  AdminListOptionDefinitionsCatalog403,
+  AdminListOptionDefinitionsCatalog404,
+  AdminListOptionDefinitionsCatalog409,
+  AdminListOptionDefinitionsCatalog500,
+  AdminListOptionDefinitionsCatalogQuery,
+  AdminListOptionDefinitionsCatalogQueryParams,
+  AdminListOptionDefinitionsCatalogQueryParamsSortByEnumKey,
+  AdminListOptionDefinitionsCatalogQueryParamsSortOrderEnumKey,
+  AdminListOptionDefinitionsCatalogQueryResponse,
+} from "./types/AdminListOptionDefinitionsCatalog.ts";
 export type {
   AdminListOrders200,
   AdminListOrders200DataStatusEnumKey,
@@ -1675,6 +1734,32 @@ export type {
   AdminUpdateMediaPathParams,
 } from "./types/AdminUpdateMedia.ts";
 export type {
+  AdminUpdateOptionDefinition200,
+  AdminUpdateOptionDefinition400,
+  AdminUpdateOptionDefinition401,
+  AdminUpdateOptionDefinition403,
+  AdminUpdateOptionDefinition404,
+  AdminUpdateOptionDefinition409,
+  AdminUpdateOptionDefinition500,
+  AdminUpdateOptionDefinitionMutation,
+  AdminUpdateOptionDefinitionMutationRequest,
+  AdminUpdateOptionDefinitionMutationResponse,
+  AdminUpdateOptionDefinitionPathParams,
+} from "./types/AdminUpdateOptionDefinition.ts";
+export type {
+  AdminUpdateOptionValue200,
+  AdminUpdateOptionValue400,
+  AdminUpdateOptionValue401,
+  AdminUpdateOptionValue403,
+  AdminUpdateOptionValue404,
+  AdminUpdateOptionValue409,
+  AdminUpdateOptionValue500,
+  AdminUpdateOptionValueMutation,
+  AdminUpdateOptionValueMutationRequest,
+  AdminUpdateOptionValueMutationResponse,
+  AdminUpdateOptionValuePathParams,
+} from "./types/AdminUpdateOptionValue.ts";
+export type {
   AdminUpdateOrder200,
   AdminUpdateOrder200DataStatusEnumKey,
   AdminUpdateOrder200FulfillmentsStatusEnumKey,
@@ -1997,6 +2082,8 @@ export { adminCreateInventoryAdjustment } from "./client/adminCreateInventoryAdj
 export { adminCreateInventoryLevel } from "./client/adminCreateInventoryLevel.ts";
 export { adminCreateInventoryTransfer } from "./client/adminCreateInventoryTransfer.ts";
 export { adminCreateLanguage } from "./client/adminCreateLanguage.ts";
+export { adminCreateOptionDefinition } from "./client/adminCreateOptionDefinition.ts";
+export { adminCreateOptionValue } from "./client/adminCreateOptionValue.ts";
 export { adminCreateOrder } from "./client/adminCreateOrder.ts";
 export { adminCreateOrderItem } from "./client/adminCreateOrderItem.ts";
 export { adminCreateOrderShippingLine } from "./client/adminCreateOrderShippingLine.ts";
@@ -2055,6 +2142,7 @@ export { adminGetCustomer } from "./client/adminGetCustomer.ts";
 export { adminGetFulfillment } from "./client/adminGetFulfillment.ts";
 export { adminGetLanguage } from "./client/adminGetLanguage.ts";
 export { adminGetMedia } from "./client/adminGetMedia.ts";
+export { adminGetOptionDefinition } from "./client/adminGetOptionDefinition.ts";
 export { adminGetOrder } from "./client/adminGetOrder.ts";
 export { adminGetPriceList } from "./client/adminGetPriceList.ts";
 export { adminGetProduct } from "./client/adminGetProduct.ts";
@@ -2075,6 +2163,7 @@ export { adminListInventoryLevels } from "./client/adminListInventoryLevels.ts";
 export { adminListInventoryTransactions } from "./client/adminListInventoryTransactions.ts";
 export { adminListLanguages } from "./client/adminListLanguages.ts";
 export { adminListMedia } from "./client/adminListMedia.ts";
+export { adminListOptionDefinitionsCatalog } from "./client/adminListOptionDefinitionsCatalog.ts";
 export { adminListOrders } from "./client/adminListOrders.ts";
 export { adminListPermissions } from "./client/adminListPermissions.ts";
 export { adminListPriceListPrices } from "./client/adminListPriceListPrices.ts";
@@ -2103,6 +2192,8 @@ export { adminUpdateFulfillment } from "./client/adminUpdateFulfillment.ts";
 export { adminUpdateFulfillmentItem } from "./client/adminUpdateFulfillmentItem.ts";
 export { adminUpdateLanguage } from "./client/adminUpdateLanguage.ts";
 export { adminUpdateMedia } from "./client/adminUpdateMedia.ts";
+export { adminUpdateOptionDefinition } from "./client/adminUpdateOptionDefinition.ts";
+export { adminUpdateOptionValue } from "./client/adminUpdateOptionValue.ts";
 export { adminUpdateOrder } from "./client/adminUpdateOrder.ts";
 export { adminUpdateOrderItem } from "./client/adminUpdateOrderItem.ts";
 export { adminUpdateOrderShippingLine } from "./client/adminUpdateOrderShippingLine.ts";
@@ -2156,6 +2247,12 @@ export { useAdminCreateInventoryTransfer } from "./hooks/useAdminCreateInventory
 export { adminCreateLanguageMutationKey } from "./hooks/useAdminCreateLanguage.ts";
 export { adminCreateLanguageMutationOptions } from "./hooks/useAdminCreateLanguage.ts";
 export { useAdminCreateLanguage } from "./hooks/useAdminCreateLanguage.ts";
+export { adminCreateOptionDefinitionMutationKey } from "./hooks/useAdminCreateOptionDefinition.ts";
+export { adminCreateOptionDefinitionMutationOptions } from "./hooks/useAdminCreateOptionDefinition.ts";
+export { useAdminCreateOptionDefinition } from "./hooks/useAdminCreateOptionDefinition.ts";
+export { adminCreateOptionValueMutationKey } from "./hooks/useAdminCreateOptionValue.ts";
+export { adminCreateOptionValueMutationOptions } from "./hooks/useAdminCreateOptionValue.ts";
+export { useAdminCreateOptionValue } from "./hooks/useAdminCreateOptionValue.ts";
 export { adminCreateOrderMutationKey } from "./hooks/useAdminCreateOrder.ts";
 export { adminCreateOrderMutationOptions } from "./hooks/useAdminCreateOrder.ts";
 export { useAdminCreateOrder } from "./hooks/useAdminCreateOrder.ts";
@@ -2348,6 +2445,12 @@ export { useAdminGetMedia } from "./hooks/useAdminGetMedia.ts";
 export { adminGetMediaSuspenseQueryKey } from "./hooks/useAdminGetMediaSuspense.ts";
 export { adminGetMediaSuspenseQueryOptions } from "./hooks/useAdminGetMediaSuspense.ts";
 export { useAdminGetMediaSuspense } from "./hooks/useAdminGetMediaSuspense.ts";
+export { adminGetOptionDefinitionQueryKey } from "./hooks/useAdminGetOptionDefinition.ts";
+export { adminGetOptionDefinitionQueryOptions } from "./hooks/useAdminGetOptionDefinition.ts";
+export { useAdminGetOptionDefinition } from "./hooks/useAdminGetOptionDefinition.ts";
+export { adminGetOptionDefinitionSuspenseQueryKey } from "./hooks/useAdminGetOptionDefinitionSuspense.ts";
+export { adminGetOptionDefinitionSuspenseQueryOptions } from "./hooks/useAdminGetOptionDefinitionSuspense.ts";
+export { useAdminGetOptionDefinitionSuspense } from "./hooks/useAdminGetOptionDefinitionSuspense.ts";
 export { adminGetOrderQueryKey } from "./hooks/useAdminGetOrder.ts";
 export { adminGetOrderQueryOptions } from "./hooks/useAdminGetOrder.ts";
 export { useAdminGetOrder } from "./hooks/useAdminGetOrder.ts";
@@ -2468,6 +2571,12 @@ export { useAdminListMedia } from "./hooks/useAdminListMedia.ts";
 export { adminListMediaSuspenseQueryKey } from "./hooks/useAdminListMediaSuspense.ts";
 export { adminListMediaSuspenseQueryOptions } from "./hooks/useAdminListMediaSuspense.ts";
 export { useAdminListMediaSuspense } from "./hooks/useAdminListMediaSuspense.ts";
+export { adminListOptionDefinitionsCatalogQueryKey } from "./hooks/useAdminListOptionDefinitionsCatalog.ts";
+export { adminListOptionDefinitionsCatalogQueryOptions } from "./hooks/useAdminListOptionDefinitionsCatalog.ts";
+export { useAdminListOptionDefinitionsCatalog } from "./hooks/useAdminListOptionDefinitionsCatalog.ts";
+export { adminListOptionDefinitionsCatalogSuspenseQueryKey } from "./hooks/useAdminListOptionDefinitionsCatalogSuspense.ts";
+export { adminListOptionDefinitionsCatalogSuspenseQueryOptions } from "./hooks/useAdminListOptionDefinitionsCatalogSuspense.ts";
+export { useAdminListOptionDefinitionsCatalogSuspense } from "./hooks/useAdminListOptionDefinitionsCatalogSuspense.ts";
 export { adminListOrdersQueryKey } from "./hooks/useAdminListOrders.ts";
 export { adminListOrdersQueryOptions } from "./hooks/useAdminListOrders.ts";
 export { useAdminListOrders } from "./hooks/useAdminListOrders.ts";
@@ -2612,6 +2721,12 @@ export { useAdminUpdateLanguage } from "./hooks/useAdminUpdateLanguage.ts";
 export { adminUpdateMediaMutationKey } from "./hooks/useAdminUpdateMedia.ts";
 export { adminUpdateMediaMutationOptions } from "./hooks/useAdminUpdateMedia.ts";
 export { useAdminUpdateMedia } from "./hooks/useAdminUpdateMedia.ts";
+export { adminUpdateOptionDefinitionMutationKey } from "./hooks/useAdminUpdateOptionDefinition.ts";
+export { adminUpdateOptionDefinitionMutationOptions } from "./hooks/useAdminUpdateOptionDefinition.ts";
+export { useAdminUpdateOptionDefinition } from "./hooks/useAdminUpdateOptionDefinition.ts";
+export { adminUpdateOptionValueMutationKey } from "./hooks/useAdminUpdateOptionValue.ts";
+export { adminUpdateOptionValueMutationOptions } from "./hooks/useAdminUpdateOptionValue.ts";
+export { useAdminUpdateOptionValue } from "./hooks/useAdminUpdateOptionValue.ts";
 export { adminUpdateOrderMutationKey } from "./hooks/useAdminUpdateOrder.ts";
 export { adminUpdateOrderMutationOptions } from "./hooks/useAdminUpdateOrder.ts";
 export { useAdminUpdateOrder } from "./hooks/useAdminUpdateOrder.ts";
@@ -2720,6 +2835,8 @@ export { adminListLanguagesQueryParamsSortByEnum } from "./types/AdminListLangua
 export { adminListLanguagesQueryParamsSortOrderEnum } from "./types/AdminListLanguages.ts";
 export { adminListMediaQueryParamsSortByEnum } from "./types/AdminListMedia.ts";
 export { adminListMediaQueryParamsSortOrderEnum } from "./types/AdminListMedia.ts";
+export { adminListOptionDefinitionsCatalogQueryParamsSortByEnum } from "./types/AdminListOptionDefinitionsCatalog.ts";
+export { adminListOptionDefinitionsCatalogQueryParamsSortOrderEnum } from "./types/AdminListOptionDefinitionsCatalog.ts";
 export { adminListOrders200DataStatusEnum } from "./types/AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortByEnum } from "./types/AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortOrderEnum } from "./types/AdminListOrders.ts";
@@ -2887,6 +3004,29 @@ export {
   adminCreateLanguageMutationRequestSchema,
   adminCreateLanguageMutationResponseSchema,
 } from "./zod/adminCreateLanguageSchema.ts";
+export {
+  adminCreateOptionDefinition201Schema,
+  adminCreateOptionDefinition400Schema,
+  adminCreateOptionDefinition401Schema,
+  adminCreateOptionDefinition403Schema,
+  adminCreateOptionDefinition404Schema,
+  adminCreateOptionDefinition409Schema,
+  adminCreateOptionDefinition500Schema,
+  adminCreateOptionDefinitionMutationRequestSchema,
+  adminCreateOptionDefinitionMutationResponseSchema,
+} from "./zod/adminCreateOptionDefinitionSchema.ts";
+export {
+  adminCreateOptionValue201Schema,
+  adminCreateOptionValue400Schema,
+  adminCreateOptionValue401Schema,
+  adminCreateOptionValue403Schema,
+  adminCreateOptionValue404Schema,
+  adminCreateOptionValue409Schema,
+  adminCreateOptionValue500Schema,
+  adminCreateOptionValueMutationRequestSchema,
+  adminCreateOptionValueMutationResponseSchema,
+  adminCreateOptionValuePathParamsSchema,
+} from "./zod/adminCreateOptionValueSchema.ts";
 export {
   adminCreateOrderItem201Schema,
   adminCreateOrderItem400Schema,
@@ -3537,6 +3677,17 @@ export {
   adminGetMediaQueryResponseSchema,
 } from "./zod/adminGetMediaSchema.ts";
 export {
+  adminGetOptionDefinition200Schema,
+  adminGetOptionDefinition400Schema,
+  adminGetOptionDefinition401Schema,
+  adminGetOptionDefinition403Schema,
+  adminGetOptionDefinition404Schema,
+  adminGetOptionDefinition409Schema,
+  adminGetOptionDefinition500Schema,
+  adminGetOptionDefinitionPathParamsSchema,
+  adminGetOptionDefinitionQueryResponseSchema,
+} from "./zod/adminGetOptionDefinitionSchema.ts";
+export {
   adminGetOrder200Schema,
   adminGetOrder400Schema,
   adminGetOrder401Schema,
@@ -3756,6 +3907,17 @@ export {
   adminListMediaQueryParamsSchema,
   adminListMediaQueryResponseSchema,
 } from "./zod/adminListMediaSchema.ts";
+export {
+  adminListOptionDefinitionsCatalog200Schema,
+  adminListOptionDefinitionsCatalog400Schema,
+  adminListOptionDefinitionsCatalog401Schema,
+  adminListOptionDefinitionsCatalog403Schema,
+  adminListOptionDefinitionsCatalog404Schema,
+  adminListOptionDefinitionsCatalog409Schema,
+  adminListOptionDefinitionsCatalog500Schema,
+  adminListOptionDefinitionsCatalogQueryParamsSchema,
+  adminListOptionDefinitionsCatalogQueryResponseSchema,
+} from "./zod/adminListOptionDefinitionsCatalogSchema.ts";
 export {
   adminListOrders200Schema,
   adminListOrders400Schema,
@@ -4071,6 +4233,30 @@ export {
   adminUpdateMediaMutationResponseSchema,
   adminUpdateMediaPathParamsSchema,
 } from "./zod/adminUpdateMediaSchema.ts";
+export {
+  adminUpdateOptionDefinition200Schema,
+  adminUpdateOptionDefinition400Schema,
+  adminUpdateOptionDefinition401Schema,
+  adminUpdateOptionDefinition403Schema,
+  adminUpdateOptionDefinition404Schema,
+  adminUpdateOptionDefinition409Schema,
+  adminUpdateOptionDefinition500Schema,
+  adminUpdateOptionDefinitionMutationRequestSchema,
+  adminUpdateOptionDefinitionMutationResponseSchema,
+  adminUpdateOptionDefinitionPathParamsSchema,
+} from "./zod/adminUpdateOptionDefinitionSchema.ts";
+export {
+  adminUpdateOptionValue200Schema,
+  adminUpdateOptionValue400Schema,
+  adminUpdateOptionValue401Schema,
+  adminUpdateOptionValue403Schema,
+  adminUpdateOptionValue404Schema,
+  adminUpdateOptionValue409Schema,
+  adminUpdateOptionValue500Schema,
+  adminUpdateOptionValueMutationRequestSchema,
+  adminUpdateOptionValueMutationResponseSchema,
+  adminUpdateOptionValuePathParamsSchema,
+} from "./zod/adminUpdateOptionValueSchema.ts";
 export {
   adminUpdateOrderItem200Schema,
   adminUpdateOrderItem400Schema,

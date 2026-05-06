@@ -56,6 +56,9 @@ import UserEditPage from "@/pages/users/UserEditPage";
 import RolesPage from "@/pages/roles/RolesPage";
 import RoleCreatePage from "@/pages/roles/RoleCreatePage";
 import RoleEditPage from "@/pages/roles/RoleEditPage";
+import OptionDefinitionsPage from "@/pages/options/OptionDefinitionsPage";
+import OptionDefinitionCreatePage from "@/pages/options/OptionDefinitionCreatePage";
+import OptionDefinitionEditPage from "@/pages/options/OptionDefinitionEditPage";
 
 export default function App() {
   return (
@@ -69,6 +72,9 @@ export default function App() {
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/categories/new" element={<CategoryCreatePage />} />
           <Route path="/categories/:id" element={<CategoryEditPage />} />
+          <Route path="/options" element={<OptionDefinitionsPage />} />
+          <Route path="/options/new" element={<OptionDefinitionCreatePage />} />
+          <Route path="/options/:id" element={<OptionDefinitionEditPage />} />
           <Route path="/media" element={<MediaLibraryPage />} />
           <Route path="/carts" element={<CartsPage />} />
           <Route path="/carts/:id" element={<CartDetailPage />} />

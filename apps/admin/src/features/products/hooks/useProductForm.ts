@@ -1,16 +1,21 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
 import type { ProductDetailResponse } from '@repo/types/admin';
-import { useLanguageOptions } from '@/features/languages/hooks';
 import { useCreateProduct, useUpdateProduct, useUpdateVariant } from '../hooks';
 import {
   productFormSchema,
   type ProductFormValues,
 } from '../schema';
 import { getUpdateVariantBody } from '../utils/variant-form';
+import {
+  buildProductTranslationsMap,
+  collectProductTranslations,
+  emptyProductTranslation,
+} from '../utils/translation-form';
+import { useProductLocales } from './useProductLocales';
 import { useVariantForm } from './useVariantForm';
 
 interface UseProductFormParams {
@@ -20,54 +25,17 @@ interface UseProductFormParams {
 
 type ProductFormInput = z.input<typeof productFormSchema>;
 
-const FALLBACK_LOCALE = 'en';
-
-function emptyTranslation(): { name: string; handle: string; description: string } {
-  return { name: '', handle: '', description: '' };
-}
-
-function buildTranslationsMap(
-  data: ProductDetailResponse | undefined,
-  fallbackLocale: string
-): Record<string, { name: string; handle: string; description: string }> {
-  const result: Record<string, { name: string; handle: string; description: string }> = {};
-  if (data) {
-    for (const t of data.translations) {
-      result[t.languageCode] = {
-        name: t.name ?? '',
-        handle: t.handle ?? '',
-        description: t.description ?? '',
-      };
-    }
-  }
-  if (!result[fallbackLocale]) {
-    result[fallbackLocale] = emptyTranslation();
-  }
-  return result;
-}
-
 export function useProductForm({ mode, initialData }: UseProductFormParams) {
   const navigate = useNavigate();
   const createMutation = useCreateProduct();
   const updateMutation = useUpdateProduct(initialData?.id ?? '');
   const updateVariantMutation = useUpdateVariant(initialData?.id ?? '');
-  const { data: languages } = useLanguageOptions();
 
   const isEditMode = mode === 'edit';
   const isCreateMode = mode === 'create';
 
-  const defaultLocale = useMemo(() => {
-    const fromApi = languages?.find((l) => l.isDefault)?.code ?? languages?.[0]?.code;
-    const fromData = initialData?.translations[0]?.languageCode;
-    return fromApi ?? fromData ?? FALLBACK_LOCALE;
-  }, [languages, initialData]);
-
-  const [selectedLocale, setSelectedLocale] = useState<string>(defaultLocale);
-
-  // Sync selected locale once languages or initialData arrive.
-  useEffect(() => {
-    setSelectedLocale(defaultLocale);
-  }, [defaultLocale]);
+  const { defaultLocale, languages, selectedLocale, setSelectedLocale } =
+    useProductLocales(initialData);
 
   const defaultVariant = useMemo(
     () =>
@@ -84,7 +52,7 @@ export function useProductForm({ mode, initialData }: UseProductFormParams) {
       type: (initialData?.type as ProductFormValues['type']) ?? 'simple',
       taxClassId: initialData?.taxClassId ?? '',
       categoryIds: initialData?.categories.map((c) => c.categoryId) ?? [],
-      translations: buildTranslationsMap(initialData, defaultLocale),
+      translations: buildProductTranslationsMap(initialData, defaultLocale),
     }),
     [initialData, defaultLocale]
   );
@@ -113,7 +81,7 @@ export function useProductForm({ mode, initialData }: UseProductFormParams) {
     if (!current || !current[selectedLocale]) {
       form.setValue(
         `translations.${selectedLocale}`,
-        emptyTranslation(),
+        emptyProductTranslation(),
         { shouldDirty: false }
       );
     }
@@ -130,110 +98,108 @@ export function useProductForm({ mode, initialData }: UseProductFormParams) {
     ? isProductDirty
     : isProductDirty || isDefaultVariantDirty;
 
-  function collectTranslations(values: ProductFormValues) {
-    return Object.entries(values.translations)
-      .map(([languageCode, fields]) => ({
-        languageCode,
-        name: fields.name.trim(),
-        handle: fields.handle.trim(),
-        description: fields.description ?? '',
-      }))
-      .filter((t) => t.name.length > 0 && t.handle.length > 0);
-  }
-
-  const onSubmit = form.handleSubmit(async (values) => {
-    if (!canSave) return;
-
-    const translations = collectTranslations(values);
+  function ensureActiveLocaleFilled(
+    values: ProductFormValues,
+    translations: ReturnType<typeof collectProductTranslations>
+  ): boolean {
     const activeFields = values.translations[selectedLocale];
-    const activeMissing =
-      !activeFields?.name.trim() || !activeFields?.handle.trim();
-    if (activeMissing) {
-      if (!activeFields?.name.trim()) {
-        form.setError(`translations.${selectedLocale}.name`, {
-          type: 'required',
-          message: 'Product name is required',
-        });
-      }
-      if (!activeFields?.handle.trim()) {
-        form.setError(`translations.${selectedLocale}.handle`, {
-          type: 'required',
-          message: 'Handle is required',
-        });
-      }
-      return;
+    if (!activeFields?.name.trim()) {
+      form.setError(`translations.${selectedLocale}.name`, {
+        type: 'required',
+        message: 'Product name is required',
+      });
     }
+    if (!activeFields?.handle.trim()) {
+      form.setError(`translations.${selectedLocale}.handle`, {
+        type: 'required',
+        message: 'Handle is required',
+      });
+    }
+    if (!activeFields?.name.trim() || !activeFields?.handle.trim()) return false;
 
     if (translations.length === 0) {
       form.setError(`translations.${selectedLocale}.name`, {
         type: 'required',
         message: 'Product name is required',
       });
-      return;
+      return false;
     }
 
-    if (isCreateMode) {
-      // The server auto-creates sale details for simple products. Options and
-      // generated combinations are managed after creation.
-      createMutation.mutate({
-        type: values.type,
-        baseSku: values.baseSku || undefined,
-        status: values.status,
-        taxClassId: values.taxClassId,
-        translations,
-        categoryIds: values.categoryIds,
-        options: [],
-        variants: [],
-      });
-    } else {
-      if (isDefaultVariantDirty) {
-        const isDefaultVariantValid = await defaultVariantForm.trigger();
-        if (!isDefaultVariantValid) return;
-      }
+    return true;
+  }
 
-      // Product type is immutable post-create and intentionally omitted.
-      if (isProductDirty) {
-        updateMutation.mutate(
-          {
-            baseSku: values.baseSku || undefined,
-            status: values.status,
-            taxClassId: values.taxClassId,
-            translations,
-            categoryIds: values.categoryIds,
-          },
-          {
-            onSuccess: () => {
-              form.reset(values);
-            },
-          }
-        );
-      }
+  function submitCreate(values: ProductFormValues, translations: ReturnType<typeof collectProductTranslations>) {
+    createMutation.mutate({
+      type: values.type,
+      baseSku: values.baseSku || undefined,
+      status: values.status,
+      taxClassId: values.taxClassId,
+      translations,
+      categoryIds: values.categoryIds,
+      options: [],
+      variants: [],
+    });
+  }
 
-      if (isDefaultVariantDirty && defaultVariant) {
-        const variantValues = defaultVariantForm.getValues();
-        updateVariantMutation.mutate(
-          {
-            variantId: defaultVariant.id,
-            body: getUpdateVariantBody(variantValues),
-          },
-          {
-            onSuccess: () => {
-              defaultVariantForm.reset(variantValues);
-            },
-          }
-        );
-      }
+  async function submitEdit(values: ProductFormValues, translations: ReturnType<typeof collectProductTranslations>) {
+    if (isDefaultVariantDirty) {
+      const isDefaultVariantValid = await defaultVariantForm.trigger();
+      if (!isDefaultVariantValid) return;
     }
+
+    if (isProductDirty) {
+      updateMutation.mutate(
+        {
+          baseSku: values.baseSku || undefined,
+          status: values.status,
+          taxClassId: values.taxClassId,
+          translations,
+          categoryIds: values.categoryIds,
+        },
+        {
+          onSuccess: () => {
+            form.reset(values);
+          },
+        }
+      );
+    }
+
+    if (isDefaultVariantDirty && defaultVariant) {
+      const variantValues = defaultVariantForm.getValues();
+      updateVariantMutation.mutate(
+        {
+          variantId: defaultVariant.id,
+          body: getUpdateVariantBody(variantValues),
+        },
+        {
+          onSuccess: () => {
+            defaultVariantForm.reset(variantValues);
+          },
+        }
+      );
+    }
+  }
+
+  const onSubmit = form.handleSubmit(async (values) => {
+    if (!canSave) return;
+
+    const translations = collectProductTranslations(values);
+    if (!ensureActiveLocaleFilled(values, translations)) return;
+
+    if (isCreateMode) return submitCreate(values, translations);
+    await submitEdit(values, translations);
   });
 
   const isPending =
     createMutation.isPending ||
     updateMutation.isPending ||
     updateVariantMutation.isPending;
-  const activeName = form.watch(`translations.${selectedLocale}.name` as const);
+  // Title always reflects the default-language name so the page header is a
+  // stable product identity, independent of which locale the editor is on.
+  const defaultName = form.watch(`translations.${defaultLocale}.name` as const);
   const title = isCreateMode
     ? 'New product'
-    : activeName || 'Untitled product';
+    : defaultName || 'Untitled product';
   const hasOptions = (initialData?.options.length ?? 0) > 0;
   const navigateToProducts = () => navigate('/products');
 
@@ -250,7 +216,7 @@ export function useProductForm({ mode, initialData }: UseProductFormParams) {
     isEditMode,
     isPending,
     isVariable,
-    languages: languages ?? [],
+    languages,
     navigateToProducts,
     onSubmit,
     removeDefaultVariantPrice,

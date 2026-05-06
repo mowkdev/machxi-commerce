@@ -25,6 +25,7 @@ import { fulfillmentsRoutes } from "./fulfillments/routes";
 import { returnsRoutes } from "./returns/routes";
 import { usersRoutes } from "./users/routes";
 import { rolesRoutes } from "./roles/routes";
+import { optionDefinitionsRoutes } from "./option-definitions/routes";
 import { storeAuthRoutes } from "./store-auth/routes";
 import { storeAddressesRoutes } from "./store-addresses/routes";
 import { storeCatalogRoutes } from "./store-catalog/routes";
@@ -86,6 +87,7 @@ export function createApp() {
   app.route("/api/returns", returnsRoutes);
   app.route("/api/users", usersRoutes);
   app.route("/api/roles", rolesRoutes);
+  app.route("/api/options", optionDefinitionsRoutes);
   app.route("/api/store/auth", storeAuthRoutes);
   app.route("/api/store/addresses", storeAddressesRoutes);
   app.route("/api/store", storeCatalogRoutes);

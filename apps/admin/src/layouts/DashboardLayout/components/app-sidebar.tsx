@@ -1,4 +1,5 @@
 import {
+  IconAdjustments,
   IconArrowBackUp,
   IconCategory,
   IconCurrencyDollar,
@@ -79,6 +80,7 @@ const data = {
       items: [
         { title: "Products", url: "/products", icon: IconPackage },
         { title: "Categories", url: "/categories", icon: IconCategory },
+        { title: "Options", url: "/options", icon: IconAdjustments },
       ],
     },
     {

@@ -111,6 +111,29 @@ export {
   adminCreateLanguageMutationResponseSchema,
 } from "./adminCreateLanguageSchema.ts";
 export {
+  adminCreateOptionDefinition201Schema,
+  adminCreateOptionDefinition400Schema,
+  adminCreateOptionDefinition401Schema,
+  adminCreateOptionDefinition403Schema,
+  adminCreateOptionDefinition404Schema,
+  adminCreateOptionDefinition409Schema,
+  adminCreateOptionDefinition500Schema,
+  adminCreateOptionDefinitionMutationRequestSchema,
+  adminCreateOptionDefinitionMutationResponseSchema,
+} from "./adminCreateOptionDefinitionSchema.ts";
+export {
+  adminCreateOptionValue201Schema,
+  adminCreateOptionValue400Schema,
+  adminCreateOptionValue401Schema,
+  adminCreateOptionValue403Schema,
+  adminCreateOptionValue404Schema,
+  adminCreateOptionValue409Schema,
+  adminCreateOptionValue500Schema,
+  adminCreateOptionValueMutationRequestSchema,
+  adminCreateOptionValueMutationResponseSchema,
+  adminCreateOptionValuePathParamsSchema,
+} from "./adminCreateOptionValueSchema.ts";
+export {
   adminCreateOrderItem201Schema,
   adminCreateOrderItem400Schema,
   adminCreateOrderItem401Schema,
@@ -760,6 +783,17 @@ export {
   adminGetMediaQueryResponseSchema,
 } from "./adminGetMediaSchema.ts";
 export {
+  adminGetOptionDefinition200Schema,
+  adminGetOptionDefinition400Schema,
+  adminGetOptionDefinition401Schema,
+  adminGetOptionDefinition403Schema,
+  adminGetOptionDefinition404Schema,
+  adminGetOptionDefinition409Schema,
+  adminGetOptionDefinition500Schema,
+  adminGetOptionDefinitionPathParamsSchema,
+  adminGetOptionDefinitionQueryResponseSchema,
+} from "./adminGetOptionDefinitionSchema.ts";
+export {
   adminGetOrder200Schema,
   adminGetOrder400Schema,
   adminGetOrder401Schema,
@@ -979,6 +1013,17 @@ export {
   adminListMediaQueryParamsSchema,
   adminListMediaQueryResponseSchema,
 } from "./adminListMediaSchema.ts";
+export {
+  adminListOptionDefinitionsCatalog200Schema,
+  adminListOptionDefinitionsCatalog400Schema,
+  adminListOptionDefinitionsCatalog401Schema,
+  adminListOptionDefinitionsCatalog403Schema,
+  adminListOptionDefinitionsCatalog404Schema,
+  adminListOptionDefinitionsCatalog409Schema,
+  adminListOptionDefinitionsCatalog500Schema,
+  adminListOptionDefinitionsCatalogQueryParamsSchema,
+  adminListOptionDefinitionsCatalogQueryResponseSchema,
+} from "./adminListOptionDefinitionsCatalogSchema.ts";
 export {
   adminListOrders200Schema,
   adminListOrders400Schema,
@@ -1294,6 +1339,30 @@ export {
   adminUpdateMediaMutationResponseSchema,
   adminUpdateMediaPathParamsSchema,
 } from "./adminUpdateMediaSchema.ts";
+export {
+  adminUpdateOptionDefinition200Schema,
+  adminUpdateOptionDefinition400Schema,
+  adminUpdateOptionDefinition401Schema,
+  adminUpdateOptionDefinition403Schema,
+  adminUpdateOptionDefinition404Schema,
+  adminUpdateOptionDefinition409Schema,
+  adminUpdateOptionDefinition500Schema,
+  adminUpdateOptionDefinitionMutationRequestSchema,
+  adminUpdateOptionDefinitionMutationResponseSchema,
+  adminUpdateOptionDefinitionPathParamsSchema,
+} from "./adminUpdateOptionDefinitionSchema.ts";
+export {
+  adminUpdateOptionValue200Schema,
+  adminUpdateOptionValue400Schema,
+  adminUpdateOptionValue401Schema,
+  adminUpdateOptionValue403Schema,
+  adminUpdateOptionValue404Schema,
+  adminUpdateOptionValue409Schema,
+  adminUpdateOptionValue500Schema,
+  adminUpdateOptionValueMutationRequestSchema,
+  adminUpdateOptionValueMutationResponseSchema,
+  adminUpdateOptionValuePathParamsSchema,
+} from "./adminUpdateOptionValueSchema.ts";
 export {
   adminUpdateOrderItem200Schema,
   adminUpdateOrderItem400Schema,
