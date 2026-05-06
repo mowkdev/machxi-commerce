@@ -1,9 +1,13 @@
 import { z } from 'zod';
 
+export const productTranslationFieldsSchema = z.object({
+  name: z.string(),
+  handle: z.string(),
+  description: z.string().optional().default(''),
+});
+export type ProductTranslationFields = z.infer<typeof productTranslationFieldsSchema>;
+
 export const productFormSchema = z.object({
-  name: z.string().min(1, 'Product name is required'),
-  handle: z.string().min(1, 'Handle is required'),
-  description: z.string().optional(),
   baseSku: z.string().optional(),
   status: z.enum(['draft', 'published', 'archived']),
   // `type` is chosen on create and locked on edit (changing simple↔variable
@@ -11,6 +15,10 @@ export const productFormSchema = z.object({
   type: z.enum(['simple', 'variable']),
   taxClassId: z.string().uuid('Select a tax class'),
   categoryIds: z.array(z.string().uuid()).default([]),
+  // Per-locale translation fields. Per-field validation runs at submit time
+  // because empty bucket entries (newly switched locale not yet edited) would
+  // otherwise fail before the user gets to type anything.
+  translations: z.record(z.string(), productTranslationFieldsSchema),
 });
 export type ProductFormValues = z.infer<typeof productFormSchema>;
 
