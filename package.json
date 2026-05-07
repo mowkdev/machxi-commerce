@@ -21,6 +21,7 @@
     "db:push": "pnpm --filter @repo/database db:push",
     "db:migrate": "turbo run db:migrate",
     "db:studio": "pnpm --filter @repo/database db:studio",
+    "env:setup": "node scripts/env-setup.mjs",
     "docker:dev": "docker compose up -d && docker compose logs -f db",
     "db:init": "node scripts/db-setup.mjs",
     "db:seed": "pnpm --filter @repo/database db:seed",

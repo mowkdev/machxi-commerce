@@ -33,20 +33,16 @@ pnpm install
 ### 2. Set up environment files
 
 ```bash
-# Root — database URL and admin seed credentials
-cp .env.example .env
-
-# API — Auth.js secret, CORS, S3/MinIO config
-cp apps/api/.env.example apps/api/.env
+pnpm env:setup
 ```
 
-Open `apps/api/.env` and replace `AUTH_SECRET` with a real secret (must be ≥ 32 chars):
+Copies every `.env.example` → `.env` (and `.env.local.example` → `.env.local`) for the root and all apps. Existing files are never overwritten, so it is safe to re-run.
+
+Then open `apps/api/.env` and replace `AUTH_SECRET` with a real secret (must be ≥ 32 chars):
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 ```
-
-The storefront and admin env files are already committed with local defaults and need no changes for local dev.
 
 ### 3. Start infrastructure
 
@@ -118,6 +114,12 @@ machxi-commerce/
 ---
 
 ## Available scripts
+
+### Setup
+
+```bash
+pnpm env:setup        # Copy .env.example files to .env / .env.local (safe, never overwrites)
+```
 
 ### Development
 
