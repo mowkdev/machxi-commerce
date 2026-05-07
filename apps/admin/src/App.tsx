@@ -13,6 +13,7 @@ import ProductEditPage from "@/pages/products/ProductEditPage";
 import CategoriesPage from "@/pages/categories/CategoriesPage";
 import CategoryCreatePage from "@/pages/categories/CategoryCreatePage";
 import CategoryEditPage from "@/pages/categories/CategoryEditPage";
+import CategoryRankingPage from "@/pages/categories/CategoryRankingPage";
 import MediaLibraryPage from "@/pages/media/MediaLibraryPage";
 import CartsPage from "@/pages/carts/CartsPage";
 import CartDetailPage from "@/pages/carts/CartDetailPage";
@@ -71,6 +72,7 @@ export default function App() {
           <Route path="/products/:id" element={<ProductEditPage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/categories/new" element={<CategoryCreatePage />} />
+          <Route path="/categories/ranking" element={<CategoryRankingPage />} />
           <Route path="/categories/:id" element={<CategoryEditPage />} />
           <Route path="/options" element={<OptionDefinitionsPage />} />
           <Route path="/options/new" element={<OptionDefinitionCreatePage />} />

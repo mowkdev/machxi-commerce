@@ -1436,6 +1436,18 @@ export type {
   AdminListUsersQueryResponse,
 } from "./AdminListUsers.ts";
 export type {
+  AdminReorderCategories200,
+  AdminReorderCategories400,
+  AdminReorderCategories401,
+  AdminReorderCategories403,
+  AdminReorderCategories404,
+  AdminReorderCategories409,
+  AdminReorderCategories500,
+  AdminReorderCategoriesMutation,
+  AdminReorderCategoriesMutationRequest,
+  AdminReorderCategoriesMutationResponse,
+} from "./AdminReorderCategories.ts";
+export type {
   AdminReplaceMedia200,
   AdminReplaceMedia400,
   AdminReplaceMedia401,

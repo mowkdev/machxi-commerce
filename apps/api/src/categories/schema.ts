@@ -5,6 +5,8 @@ export {
   type CreateCategoryBody,
   updateCategoryBody,
   type UpdateCategoryBody,
+  reorderCategoriesBody,
+  type ReorderCategoriesBody,
   type CategoryListItem,
   type CategoryDetail,
 } from '@repo/types/admin';

@@ -1,4 +1,4 @@
-import { IconPlus } from '@tabler/icons-react';
+import { IconHierarchy2, IconPlus } from '@tabler/icons-react';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Link } from 'react-router-dom';
 
@@ -95,12 +95,20 @@ export default function CategoriesPage() {
       initialSort={[{ id: 'createdAt', desc: true }]}
       getRowId={(row) => row.id}
       toolbarActions={
-        <Button size="sm" asChild>
-          <Link to="/categories/new">
-            <IconPlus />
-            <span className="hidden lg:inline">New category</span>
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" asChild>
+            <Link to="/categories/ranking">
+              <IconHierarchy2 />
+              <span className="hidden lg:inline">Rankings</span>
+            </Link>
+          </Button>
+          <Button size="sm" asChild>
+            <Link to="/categories/new">
+              <IconPlus />
+              <span className="hidden lg:inline">New category</span>
+            </Link>
+          </Button>
+        </div>
       }
     />
   );

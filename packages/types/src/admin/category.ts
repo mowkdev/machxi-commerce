@@ -47,6 +47,17 @@ export const categoryListItem = z.object({
 });
 export type CategoryListItem = z.infer<typeof categoryListItem>;
 
+export const reorderCategoriesBody = z.object({
+  items: z.array(
+    z.object({
+      id: z.string().uuid(),
+      parentId: z.string().uuid().nullable(),
+      rank: z.number().int().nonnegative(),
+    })
+  ).min(1),
+});
+export type ReorderCategoriesBody = z.infer<typeof reorderCategoriesBody>;
+
 export const categoryDetail = z.object({
   id: z.string().uuid(),
   parentId: z.string().uuid().nullable(),

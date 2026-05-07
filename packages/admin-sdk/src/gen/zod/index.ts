@@ -1244,6 +1244,17 @@ export {
   adminListUsersQueryResponseSchema,
 } from "./adminListUsersSchema.ts";
 export {
+  adminReorderCategories200Schema,
+  adminReorderCategories400Schema,
+  adminReorderCategories401Schema,
+  adminReorderCategories403Schema,
+  adminReorderCategories404Schema,
+  adminReorderCategories409Schema,
+  adminReorderCategories500Schema,
+  adminReorderCategoriesMutationRequestSchema,
+  adminReorderCategoriesMutationResponseSchema,
+} from "./adminReorderCategoriesSchema.ts";
+export {
   adminReplaceMedia200Schema,
   adminReplaceMedia400Schema,
   adminReplaceMedia401Schema,

@@ -110,6 +110,7 @@ export { adminListStockLocations } from "./adminListStockLocations.ts";
 export { adminListTaxClasses } from "./adminListTaxClasses.ts";
 export { adminListTaxRates } from "./adminListTaxRates.ts";
 export { adminListUsers } from "./adminListUsers.ts";
+export { adminReorderCategories } from "./adminReorderCategories.ts";
 export { adminReplaceMedia } from "./adminReplaceMedia.ts";
 export { adminUpdateCategory } from "./adminUpdateCategory.ts";
 export { adminUpdateCustomer } from "./adminUpdateCustomer.ts";

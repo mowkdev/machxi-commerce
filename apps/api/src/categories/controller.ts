@@ -8,6 +8,7 @@ import {
   categoryIdParam,
   createCategoryBody,
   updateCategoryBody,
+  reorderCategoriesBody,
 } from './schema';
 import {
   listCategories,
@@ -15,6 +16,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
+  reorderCategories,
 } from './service';
 
 const PG_UNIQUE_VIOLATION = '23505';
@@ -94,6 +96,16 @@ export async function updateCategoryController(c: Context<AppEnv>) {
     const updated = await updateCategory(params.data.id, body);
     if (!updated) throw notFound('Category not found');
     return ok(c, updated);
+  } catch (err) {
+    translatePgError(err);
+  }
+}
+
+export async function reorderCategoriesController(c: Context<AppEnv>) {
+  const body = await parseBody(c, reorderCategoriesBody);
+  try {
+    await reorderCategories(body.items);
+    return ok(c, { reordered: true });
   } catch (err) {
     translatePgError(err);
   }

@@ -158,6 +158,7 @@ export type { AdminListTaxRatesQueryKey } from "./hooks/useAdminListTaxRates.ts"
 export type { AdminListTaxRatesSuspenseQueryKey } from "./hooks/useAdminListTaxRatesSuspense.ts";
 export type { AdminListUsersQueryKey } from "./hooks/useAdminListUsers.ts";
 export type { AdminListUsersSuspenseQueryKey } from "./hooks/useAdminListUsersSuspense.ts";
+export type { AdminReorderCategoriesMutationKey } from "./hooks/useAdminReorderCategories.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export type { AdminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
@@ -1629,6 +1630,18 @@ export type {
   AdminListUsersQueryResponse,
 } from "./types/AdminListUsers.ts";
 export type {
+  AdminReorderCategories200,
+  AdminReorderCategories400,
+  AdminReorderCategories401,
+  AdminReorderCategories403,
+  AdminReorderCategories404,
+  AdminReorderCategories409,
+  AdminReorderCategories500,
+  AdminReorderCategoriesMutation,
+  AdminReorderCategoriesMutationRequest,
+  AdminReorderCategoriesMutationResponse,
+} from "./types/AdminReorderCategories.ts";
+export type {
   AdminReplaceMedia200,
   AdminReplaceMedia400,
   AdminReplaceMedia401,
@@ -2184,6 +2197,7 @@ export { adminListStockLocations } from "./client/adminListStockLocations.ts";
 export { adminListTaxClasses } from "./client/adminListTaxClasses.ts";
 export { adminListTaxRates } from "./client/adminListTaxRates.ts";
 export { adminListUsers } from "./client/adminListUsers.ts";
+export { adminReorderCategories } from "./client/adminReorderCategories.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
 export { adminUpdateCustomer } from "./client/adminUpdateCustomer.ts";
@@ -2697,6 +2711,9 @@ export { useAdminListUsers } from "./hooks/useAdminListUsers.ts";
 export { adminListUsersSuspenseQueryKey } from "./hooks/useAdminListUsersSuspense.ts";
 export { adminListUsersSuspenseQueryOptions } from "./hooks/useAdminListUsersSuspense.ts";
 export { useAdminListUsersSuspense } from "./hooks/useAdminListUsersSuspense.ts";
+export { adminReorderCategoriesMutationKey } from "./hooks/useAdminReorderCategories.ts";
+export { adminReorderCategoriesMutationOptions } from "./hooks/useAdminReorderCategories.ts";
+export { useAdminReorderCategories } from "./hooks/useAdminReorderCategories.ts";
 export { adminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export { adminReplaceMediaMutationOptions } from "./hooks/useAdminReplaceMedia.ts";
 export { useAdminReplaceMedia } from "./hooks/useAdminReplaceMedia.ts";
@@ -4137,6 +4154,17 @@ export {
   adminListUsersQueryParamsSchema,
   adminListUsersQueryResponseSchema,
 } from "./zod/adminListUsersSchema.ts";
+export {
+  adminReorderCategories200Schema,
+  adminReorderCategories400Schema,
+  adminReorderCategories401Schema,
+  adminReorderCategories403Schema,
+  adminReorderCategories404Schema,
+  adminReorderCategories409Schema,
+  adminReorderCategories500Schema,
+  adminReorderCategoriesMutationRequestSchema,
+  adminReorderCategoriesMutationResponseSchema,
+} from "./zod/adminReorderCategoriesSchema.ts";
 export {
   adminReplaceMedia200Schema,
   adminReplaceMedia400Schema,

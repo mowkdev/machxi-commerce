@@ -6,6 +6,7 @@ import {
   categoryListItem,
   createCategoryBody,
   updateCategoryBody,
+  reorderCategoriesBody,
 } from '@repo/types/admin';
 import type { AppEnv } from '../context';
 import { requireAdmin } from '../auth/middleware';
@@ -23,6 +24,7 @@ import {
   createCategoryController,
   updateCategoryController,
   deleteCategoryController,
+  reorderCategoriesController,
 } from './controller';
 import { categoryIdParam, listCategoriesQuery } from './schema';
 
@@ -56,6 +58,23 @@ categoriesRoutes.get(
     },
   }),
   listCategoriesController
+);
+
+const reorderAck = z.object({ reordered: z.literal(true) });
+
+categoriesRoutes.put(
+  '/reorder',
+  describeRoute({
+    operationId: 'adminReorderCategories',
+    summary: 'Bulk reorder categories',
+    tags: TAGS,
+    requestBody: jsonRequestBody(reorderCategoriesBody),
+    responses: {
+      200: jsonResponse('Categories reordered', successEnvelope(reorderAck)),
+      ...standardErrorResponses,
+    },
+  }),
+  reorderCategoriesController
 );
 
 categoriesRoutes.post(

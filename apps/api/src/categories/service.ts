@@ -236,6 +236,28 @@ export async function updateCategory(
   return getCategory(id);
 }
 
+export async function reorderCategories(
+  items: Array<{ id: string; parentId: string | null; rank: number }>
+): Promise<void> {
+  await db.transaction(async (tx) => {
+    // Two-pass update to avoid unique constraint violations on rank.
+    // Pass 1: set all ranks to negative temporaries and update parentId.
+    for (const [i, item] of items.entries()) {
+      await tx
+        .update(categories)
+        .set({ rank: -(i + 1), parentId: item.parentId })
+        .where(eq(categories.id, item.id));
+    }
+    // Pass 2: set final ranks.
+    for (const item of items) {
+      await tx
+        .update(categories)
+        .set({ rank: item.rank })
+        .where(eq(categories.id, item.id));
+    }
+  });
+}
+
 export async function deleteCategory(id: string): Promise<boolean> {
   const rows = await db
     .delete(categories)
