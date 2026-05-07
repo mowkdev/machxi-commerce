@@ -12,7 +12,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const sql = await readFile(resolve(process.cwd(), 'scripts/reset-catalog.sql'), 'utf8');
+  const sql = await readFile(resolve(process.cwd(), 'sql/reset-catalog.sql'), 'utf8');
   const client = new Client({ connectionString });
   await client.connect();
   try {
