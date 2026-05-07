@@ -528,7 +528,7 @@ async function seedProduct(
       .insert(products)
       .values({
         baseSku: spec.sku,
-        status: 'draft',
+        status: 'published',
         type: isVariable ? 'variable' : 'simple',
         taxClassId,
       })
@@ -580,7 +580,7 @@ async function seedProduct(
     await db.insert(productVariants).values({
       productId: product.id,
       sku: spec.sku,
-      status: 'draft',
+      status: 'published',
       priceSetId,
       inventoryItemId: inv.id,
     });
@@ -685,7 +685,7 @@ async function seedProduct(
       .values({
         productId: product.id,
         sku: variantSku,
-        status: 'draft',
+        status: 'published',
         priceSetId,
         inventoryItemId: inv.id,
       })
