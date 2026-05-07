@@ -16,7 +16,7 @@ import {
   productVariants,
   taxClasses,
   variantOptionValues,
-} from './schema';
+} from '../src/schema';
 
 let closeDatabase: () => Promise<void> = async () => {};
 
@@ -60,14 +60,14 @@ function cartesian<T>(sets: T[][]): T[][] {
   return first.flatMap((item) => cartesian(rest).map((combo) => [item, ...combo]));
 }
 
-async function ensureLanguage(db: Awaited<typeof import('./client')>['db']) {
+async function ensureLanguage(db: Awaited<typeof import('../src/client')>['db']) {
   await db
     .insert(languages)
     .values({ code: 'en', name: 'English', isDefault: true })
     .onConflictDoNothing();
 }
 
-async function ensureTaxClass(db: Awaited<typeof import('./client')>['db']) {
+async function ensureTaxClass(db: Awaited<typeof import('../src/client')>['db']) {
   const [existing] = await db.select({ id: taxClasses.id }).from(taxClasses).limit(1);
   if (existing) return existing.id;
 
@@ -79,7 +79,7 @@ async function ensureTaxClass(db: Awaited<typeof import('./client')>['db']) {
 }
 
 async function ensureOptionCatalog(
-  db: Awaited<typeof import('./client')>['db'],
+  db: Awaited<typeof import('../src/client')>['db'],
   option: SeedOption
 ) {
   const [createdOption] = await db
@@ -119,7 +119,7 @@ async function ensureOptionCatalog(
 }
 
 async function createPriceSetWithPrice(
-  db: Awaited<typeof import('./client')>['db'],
+  db: Awaited<typeof import('../src/client')>['db'],
   amount: number
 ) {
   const [priceSet] = await db.insert(priceSets).values({}).returning({ id: priceSets.id });
@@ -134,7 +134,7 @@ async function createPriceSetWithPrice(
 }
 
 async function createProductBase(
-  db: Awaited<typeof import('./client')>['db'],
+  db: Awaited<typeof import('../src/client')>['db'],
   input: { sku: string; name: string; type: 'simple' | 'variable'; taxClassId: string }
 ) {
   const [product] = await db
@@ -158,7 +158,7 @@ async function createProductBase(
 }
 
 async function createVariant(
-  db: Awaited<typeof import('./client')>['db'],
+  db: Awaited<typeof import('../src/client')>['db'],
   input: {
     productId: string;
     sku: string;
@@ -194,7 +194,7 @@ async function createVariant(
 }
 
 async function createSimpleProduct(
-  db: Awaited<typeof import('./client')>['db'],
+  db: Awaited<typeof import('../src/client')>['db'],
   input: { sku: string; name: string; amount: number; taxClassId: string }
 ) {
   const productId = await createProductBase(db, {
@@ -207,7 +207,7 @@ async function createSimpleProduct(
 }
 
 async function assignOption(
-  db: Awaited<typeof import('./client')>['db'],
+  db: Awaited<typeof import('../src/client')>['db'],
   input: {
     productId: string;
     rank: number;
@@ -241,7 +241,7 @@ async function assignOption(
 }
 
 async function createVariableProduct(
-  db: Awaited<typeof import('./client')>['db'],
+  db: Awaited<typeof import('../src/client')>['db'],
   input: {
     sku: string;
     name: string;
@@ -288,7 +288,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const { db, closeDatabase: closeDb } = await import('./client');
+  const { db, closeDatabase: closeDb } = await import('../src/client');
   closeDatabase = closeDb;
 
   await ensureLanguage(db);

@@ -8,22 +8,20 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import type { FlatTreeItem } from '../utils/category-tree';
-
-const INDENT_PX = 40;
+import { INDENT_PX, type FlatTreeItem } from '../utils/category-tree';
 
 interface SortableTreeRowProps {
   item: FlatTreeItem;
   onToggleCollapse: (id: string) => void;
   isOverlay?: boolean;
-  projected?: { depth: number; parentId: string | null } | null;
+  projectedDepth?: number | null;
 }
 
 export function SortableTreeRow({
   item,
   onToggleCollapse,
   isOverlay = false,
-  projected,
+  projectedDepth,
 }: SortableTreeRowProps) {
   const {
     attributes,
@@ -34,22 +32,24 @@ export function SortableTreeRow({
     isDragging,
   } = useSortable({ id: item.id });
 
-  const displayDepth = projected && isDragging ? projected.depth : item.depth;
+  const depth = isOverlay && projectedDepth != null ? projectedDepth : item.depth;
 
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    transition,
-    paddingLeft: `${displayDepth * INDENT_PX + 12}px`,
-    opacity: isDragging && !isOverlay ? 0.3 : 1,
-  };
+  const style = isOverlay
+    ? { paddingLeft: `${depth * INDENT_PX + 12}px` }
+    : {
+        transform: CSS.Translate.toString(transform),
+        transition,
+        paddingLeft: `${item.depth * INDENT_PX + 12}px`,
+        opacity: isDragging ? 0.3 : 1,
+      };
 
   return (
     <div
       ref={isOverlay ? undefined : setNodeRef}
-      style={isOverlay ? { paddingLeft: `${item.depth * INDENT_PX + 12}px` } : style}
+      style={style}
       className={`flex items-center gap-2 rounded-md border bg-background px-2 py-2 ${
         isOverlay ? 'shadow-lg ring-2 ring-primary/20' : ''
-      } ${isDragging && !isOverlay ? 'z-0' : 'z-10'}`}
+      }`}
     >
       <Button
         variant="ghost"

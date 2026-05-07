@@ -92,16 +92,22 @@ export function useCategoryRanking() {
 
   const handleDragEnd = useCallback(
     ({ active, over }: DragEndEvent) => {
+      const currentDragOffsetX = dragOffsetX;
       setActiveId(null);
       setOverId(null);
       setDragOffsetX(0);
 
-      if (!over || active.id === over.id) return;
+      if (!over) return;
 
       const activeNodeId = active.id as string;
       const overNodeId = over.id as string;
 
-      const proj = getProjectedDrop(flatItems, activeNodeId, overNodeId, dragOffsetX);
+      const proj = getProjectedDrop(flatItems, activeNodeId, overNodeId, currentDragOffsetX);
+
+      const activeItem = flatItems.find((i) => i.id === activeNodeId);
+      if (active.id === over.id && activeItem && proj.parentId === activeItem.parentId) {
+        return;
+      }
 
       const node = findInTree(tree, activeNodeId);
       if (!node) return;
@@ -132,7 +138,7 @@ export function useCategoryRanking() {
       }
 
       const treeWithoutActive = removeFromTree(tree, activeNodeId);
-      const movedNode: TreeItem = { ...node, parentId: proj.parentId };
+      const movedNode: TreeItem = { ...node, parentId: proj.parentId, children: node.children };
       const newTree = insertIntoTree(
         treeWithoutActive,
         movedNode,

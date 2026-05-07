@@ -8,7 +8,6 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { IconArrowLeft, IconLoader2 } from '@tabler/icons-react';
 
 import { Button } from '@/components/ui/button';
@@ -90,7 +89,6 @@ export default function CategoryRankingPage() {
                   key={item.id}
                   item={item}
                   onToggleCollapse={toggleCollapse}
-                  projected={activeId === item.id ? projected : null}
                 />
               ))}
             </SortableContext>
@@ -100,6 +98,7 @@ export default function CategoryRankingPage() {
                   item={activeItem}
                   onToggleCollapse={() => {}}
                   isOverlay
+                  projectedDepth={projected?.depth}
                 />
               ) : null}
             </DragOverlay>

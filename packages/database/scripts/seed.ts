@@ -7,9 +7,9 @@ import bcrypt from 'bcryptjs';
 import { and, eq } from 'drizzle-orm';
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { languages, permissions, rolePermissions, roles, userRoles, users } from './schema';
+import { languages, permissions, rolePermissions, roles, userRoles, users } from '../src/schema';
 
-/** Set after `./client` loads — `./client` reads DATABASE_URL at module init, so load .env first in main(). */
+/** Set after `../src/client` loads — client reads DATABASE_URL at module init, so load .env first in main(). */
 let closeDatabase: () => Promise<void> = async () => {};
 
 /** Same work factor as apps/api/src/auth/password.ts */
@@ -31,7 +31,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const { db, closeDatabase: closeDb } = await import('./client');
+  const { db, closeDatabase: closeDb } = await import('../src/client');
   closeDatabase = closeDb;
 
   const email = process.env.SEED_ADMIN_EMAIL ?? 'admin@example.com';

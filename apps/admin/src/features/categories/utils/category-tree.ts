@@ -97,7 +97,7 @@ function countDescendants(node: TreeItem): number {
   return count;
 }
 
-const INDENT_PX = 40;
+export const INDENT_PX = 40;
 
 export function getProjectedDrop(
   flatItems: FlatTreeItem[],
@@ -105,31 +105,60 @@ export function getProjectedDrop(
   overId: string,
   dragOffsetX: number
 ): { depth: number; parentId: string | null } {
-  const overIndex = flatItems.findIndex((i) => i.id === overId);
   const activeIndex = flatItems.findIndex((i) => i.id === activeId);
-  if (overIndex === -1 || activeIndex === -1) {
+  if (activeIndex === -1) {
     return { depth: 0, parentId: null };
   }
 
-  const overItem = flatItems[overIndex];
   const activeItem = flatItems[activeIndex];
+
+  const activeSubtreeIds = new Set<string>([activeId]);
+  for (const item of flatItems) {
+    if (item.ancestorIds.includes(activeId)) {
+      activeSubtreeIds.add(item.id);
+    }
+  }
+
+  // Find the reference item: the closest non-descendant item at or above the
+  // over position. When overId === activeId this naturally picks the item
+  // above the dragged element.
+  const overIndex = flatItems.findIndex((i) => i.id === overId);
+  let refIndex = -1;
+  const startScan = overIndex === -1 ? activeIndex : overIndex;
+  for (let i = startScan; i >= 0; i--) {
+    if (!activeSubtreeIds.has(flatItems[i].id)) {
+      refIndex = i;
+      break;
+    }
+  }
+
+  if (refIndex === -1) {
+    // Active item is at the very top -- can only be root
+    return { depth: 0, parentId: null };
+  }
+
+  const refItem = flatItems[refIndex];
+
   const depthChange = Math.round(dragOffsetX / INDENT_PX);
   const projectedDepth = Math.max(0, activeItem.depth + depthChange);
 
-  const maxDepth = overItem.depth + 1;
-  const nextItemAfterOver = flatItems[overIndex + 1];
-  const minDepth = nextItemAfterOver ? nextItemAfterOver.depth : 0;
+  const maxDepth = refItem.depth + 1;
+
+  // minDepth: determined by the first non-subtree item after the over position
+  let minDepth = 0;
+  for (let i = (overIndex === -1 ? activeIndex : overIndex) + 1; i < flatItems.length; i++) {
+    if (!activeSubtreeIds.has(flatItems[i].id)) {
+      minDepth = flatItems[i].depth;
+      break;
+    }
+  }
 
   const clampedDepth = Math.min(Math.max(projectedDepth, minDepth), maxDepth);
 
-  const parentId = findParentAtDepth(flatItems, overIndex, clampedDepth);
+  const parentId = findParentAtDepth(flatItems, refIndex, clampedDepth, activeSubtreeIds);
 
-  if (activeItem.ancestorIds.length > 0 || flatItems.some((i) => i.ancestorIds.includes(activeId))) {
-    const descendants = flatItems.filter((i) => i.ancestorIds.includes(activeId));
-    const descendantIds = new Set(descendants.map((i) => i.id));
-    if (parentId && (descendantIds.has(parentId) || parentId === activeId)) {
-      return { depth: activeItem.depth, parentId: activeItem.parentId };
-    }
+  if (parentId && activeSubtreeIds.has(parentId)) {
+    return { depth: activeItem.depth, parentId: activeItem.parentId };
   }
 
   return { depth: clampedDepth, parentId };
@@ -137,12 +166,14 @@ export function getProjectedDrop(
 
 function findParentAtDepth(
   flatItems: FlatTreeItem[],
-  overIndex: number,
-  depth: number
+  refIndex: number,
+  depth: number,
+  excludeIds: Set<string>
 ): string | null {
   if (depth === 0) return null;
 
-  for (let i = overIndex; i >= 0; i--) {
+  for (let i = refIndex; i >= 0; i--) {
+    if (excludeIds.has(flatItems[i].id)) continue;
     if (flatItems[i].depth === depth - 1) {
       return flatItems[i].id;
     }

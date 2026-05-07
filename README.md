@@ -1,138 +1,206 @@
-# E-Commerce Monorepo
+# Machxi Commerce
 
-Production-ready monorepo structure with Turborepo + pnpm for your e-commerce platform.
+E-commerce monorepo built with Turborepo + pnpm.
 
-## 📦 What's Included
+## Stack
 
-### Packages
-- **@repo/database** - Drizzle ORM schema + client (53 tables)
-- **@repo/types** - Shared TypeScript types & DTOs
-- **@repo/utils** - Shared utility functions
-- **@repo/ui** - Shared React components
-- **@repo/eslint-config** - Shared ESLint configurations
-- **@repo/tsconfig** - Shared TypeScript configurations
+| Layer | Technology |
+|---|---|
+| Monorepo | Turborepo + pnpm workspaces |
+| API | Fastify + Auth.js |
+| Admin | Vite + React |
+| Storefront | Next.js |
+| Database | PostgreSQL 16 via Drizzle ORM |
+| Object storage | MinIO (S3-compatible) |
+| Infrastructure | Docker Compose |
 
-### Apps (Ready to Add)
-- **apps/storefront** - Customer-facing Next.js app (not yet created)
-- **apps/admin** - Admin dashboard Next.js app (not yet created)
-- **apps/api** - Backend API (not yet created)
+## Prerequisites
 
-## 🚀 Quick Start
+- Node.js >= 20
+- pnpm >= 8 (`npm install -g pnpm`)
+- Docker Desktop
 
-### Prerequisites
-- Node.js >= 18
-- pnpm >= 8
+---
 
-### Installation
+## First-time setup
+
+### 1. Install dependencies
 
 ```bash
-# Install pnpm if you don't have it
-npm install -g pnpm
-
-# Install dependencies
 pnpm install
-
-# Build all packages
-pnpm build
 ```
 
-### Database Setup
-
-1. Set your database URL:
-```bash
-cp packages/database/.env.example packages/database/.env
-# Edit .env and add your DATABASE_URL
-```
-
-2. Generate migrations:
-```bash
-pnpm db:generate
-```
-
-3. Apply Drizzle migrations:
-```bash
-pnpm db:push
-```
-
-4. Run custom SQL (triggers, constraints):
-```bash
-psql $DATABASE_URL -f packages/database/migrations/custom.sql
-```
-
-5. Verify schema:
-```bash
-psql $DATABASE_URL -f packages/database/migrations/verify-schema.sql
-```
-
-## 📁 Structure
-
-```
-ecommerce-monorepo/
-├── apps/                    # Applications (to be added)
-│   ├── storefront/         # Next.js customer app
-│   ├── admin/              # Next.js admin app
-│   └── api/                # Backend API
-├── packages/               # Shared packages
-│   ├── database/          # Drizzle schema + client ✅
-│   ├── types/             # Shared TypeScript types ✅
-│   ├── ui/                # React components ✅
-│   ├── utils/             # Utility functions ✅
-│   ├── eslint-config/     # ESLint configs ✅
-│   └── tsconfig/          # TypeScript configs ✅
-├── turbo.json             # Turborepo configuration
-├── package.json           # Root package.json
-└── pnpm-workspace.yaml    # pnpm workspace config
-```
-
-## 🛠️ Available Scripts
-
-From root directory:
+### 2. Set up environment files
 
 ```bash
-# Development
-pnpm dev              # Start all apps in dev mode
+# Root — database URL and admin seed credentials
+cp .env.example .env
 
-# Building
+# API — Auth.js secret, CORS, S3/MinIO config
+cp apps/api/.env.example apps/api/.env
+```
+
+Open `apps/api/.env` and replace `AUTH_SECRET` with a real secret (must be ≥ 32 chars):
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
+The storefront and admin env files are already committed with local defaults and need no changes for local dev.
+
+### 3. Start infrastructure
+
+```bash
+pnpm docker:dev
+```
+
+Starts Postgres and MinIO via Docker Compose. Tails the db log so you can confirm it is healthy, then Ctrl+C — the containers keep running.
+
+### 4. Initialise the database
+
+```bash
+pnpm db:init
+```
+
+Runs the following in order, non-interactively:
+
+1. **Install Postgres extensions** — `citext`, `pgcrypto`, `btree_gist`
+2. **Push schema** — `drizzle-kit push --force` (creates all 53 tables)
+3. **Apply post-push SQL** — triggers, cross-module foreign keys, exclusion constraints
+4. **Seed admin user** — reads credentials from root `.env`
+
+Default admin credentials (set in `.env`):
+- Email: `admin@example.com`
+- Password: `changeme`
+
+`db:init` is idempotent — safe to re-run after a container reset.
+
+### 5. Start all apps
+
+```bash
+pnpm dev
+```
+
+| App | URL |
+|---|---|
+| API | http://localhost:8000 |
+| Admin | http://localhost:5175 |
+| Storefront | http://localhost:3000 |
+
+---
+
+## Project structure
+
+```
+machxi-commerce/
+├── apps/
+│   ├── api/              # Fastify API server
+│   ├── admin/            # Vite + React admin dashboard
+│   └── storefront/       # Next.js customer storefront
+├── packages/
+│   ├── database/         # Drizzle schema, client, validators
+│   │   ├── migrations/   # Drizzle-generated migration files
+│   │   ├── scripts/      # Executable seed/reset scripts (tsx)
+│   │   ├── sql/          # Hand-written SQL (pre/post-push, catalog reset)
+│   │   └── src/          # Exported library code (schema, client, validators)
+│   ├── types/            # Shared TypeScript types and DTOs
+│   ├── ui/               # Shared React components
+│   ├── utils/            # Shared utility functions
+│   ├── eslint-config/    # Shared ESLint configuration
+│   └── tsconfig/         # Shared TypeScript configuration
+├── scripts/
+│   └── db-setup.mjs      # Orchestrates db:init steps
+├── docker-compose.yml
+├── turbo.json
+└── .env.example
+```
+
+---
+
+## Available scripts
+
+### Development
+
+```bash
+pnpm dev              # Start all apps in watch mode
 pnpm build            # Build all packages and apps
-
-# Code Quality
-pnpm lint             # Lint all packages and apps
-pnpm format           # Format code with Prettier
-pnpm type-check       # TypeScript type checking
-
-# Testing
-pnpm test             # Run all tests
-
-# Database
-pnpm db:generate      # Generate Drizzle migrations
-pnpm db:push          # Push schema to database
-pnpm db:migrate       # Run migrations
-pnpm db:studio        # Open Drizzle Studio
-
-# Cleanup
-pnpm clean            # Remove all build artifacts
+pnpm clean            # Remove all build artifacts and node_modules
 ```
 
-## 📚 Using Shared Packages
+### Code quality
 
-### In your apps (once created):
+```bash
+pnpm lint             # ESLint across all packages
+pnpm type-check       # TypeScript type checking across all packages
+pnpm format           # Format with Prettier (writes files)
+pnpm format:check     # Format check (CI)
+pnpm test             # Run all tests
+```
+
+### Database
+
+```bash
+pnpm docker:dev           # Start Postgres + MinIO containers
+pnpm db:init              # Full first-time DB setup (schema + seed)
+pnpm db:seed              # Re-seed admin user only (schema must exist)
+pnpm db:seed-products     # Seed demo product catalog
+pnpm db:reset-catalog     # Wipe and re-seed catalog data only
+pnpm db:push              # Push schema changes interactively (dev)
+pnpm db:generate          # Generate Drizzle migration files
+pnpm db:migrate           # Apply pending migrations
+pnpm db:studio            # Open Drizzle Studio in browser
+```
+
+### SDK
+
+```bash
+pnpm openapi:emit         # Emit OpenAPI spec from the API
+pnpm sdk:generate         # Regenerate admin and storefront SDK clients
+```
+
+---
+
+## Day-to-day development
+
+**After a container restart** (containers were stopped):
+
+```bash
+pnpm docker:dev   # restart containers
+pnpm db:init      # re-apply schema and reseed (idempotent)
+pnpm dev
+```
+
+**After pulling schema changes** from another branch:
+
+```bash
+pnpm db:push      # review and apply diff interactively
+```
+
+**Reset demo products without touching auth/config data:**
+
+```bash
+pnpm db:reset-catalog
+pnpm db:seed-products
+```
+
+---
+
+## Package imports
 
 ```typescript
-// Schema + query helpers (safe in any bundle — no pg runtime)
+// Schema table references + query helpers (safe in any bundle — no pg runtime)
 import { products, eq } from '@repo/database';
 
 // DB client (server-only — pulls in pg)
 import { db } from '@repo/database/client';
 
-const allProducts = await db.select().from(products).where(eq(products.status, 'published'));
-
-// Zod validators + inferred types (raw row shape)
+// Zod validators + inferred row types
 import { productsInsert, type ProductsSelect } from '@repo/database/validators';
 
-// Transport-level contracts (envelope, sessions, re-exported row types)
+// Transport-level contracts (API envelope, session types, re-exported row types)
 import type { ApiResponse, AdminSession, Product } from '@repo/types';
 
-// Surface-specific DTOs — import from the matching subpath
+// Surface-specific request/response DTOs
 import { addToCartBody, checkoutBody } from '@repo/types/storefront';
 import { createProductBody, updateOrderStatusBody } from '@repo/types/admin';
 
@@ -143,38 +211,8 @@ import { formatFromMinorUnits, slugify } from '@repo/utils';
 import { Button } from '@repo/ui';
 ```
 
-### Adding dependencies to workspace packages:
+**Adding a dependency to a specific package:**
 
 ```bash
-# Add to specific package
 pnpm add <package> --filter @repo/database
-
-# Add to all packages
-pnpm add <package> -w
 ```
-
-## 🎯 Next Steps
-
-1. **Create Apps**: Add storefront, admin, and API applications
-2. **Environment Variables**: Set up .env files for each app
-3. **Configure Tailwind**: Add Tailwind CSS to Next.js apps
-4. **API Routes**: Build REST/GraphQL API endpoints
-5. **Authentication**: Implement auth system (JWT/sessions)
-
-## 📝 Notes
-
-- All packages use TypeScript strict mode
-- ESLint + Prettier configured for consistent code style
-- Turborepo caching enabled for fast builds
-- Database schema includes all 53 tables from v2.1 specification
-
-## 🔗 Resources
-
-- [Turborepo Docs](https://turbo.build/repo/docs)
-- [pnpm Workspace](https://pnpm.io/workspaces)
-- [Drizzle ORM Docs](https://orm.drizzle.team/docs/overview)
-- Database Schema: See `packages/database/README.md`
-
----
-
-**Ready for development!** 🚀
