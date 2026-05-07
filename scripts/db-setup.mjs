@@ -23,15 +23,26 @@ function run(cmd, args, opts = {}) {
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 
-console.log('>>> Pushing schema...');
-run('pnpm', ['--filter', '@repo/database', 'db:push']);
-
-console.log('\n>>> Applying custom SQL...');
-const sql = readFileSync(resolve(ROOT, 'packages/database/migrations/custom.sql'), 'utf8');
+console.log('>>> Installing extensions (citext, pgcrypto, btree_gist)...');
+const preSql = readFileSync(resolve(ROOT, 'packages/database/sql/pre-push.sql'), 'utf8');
 run('docker', ['exec', '-i', 'machxi-db', 'psql', '-U', 'postgres', '-d', 'machxi_commerce'], {
-  input: sql,
+  input: preSql,
   stdio: ['pipe', 'inherit', 'inherit'],
   shell: false,
 });
 
-console.log('\nDone.');
+console.log('\n>>> Pushing schema...');
+run('pnpm', ['--filter', '@repo/database', 'exec', 'drizzle-kit', 'push', '--force']);
+
+console.log('\n>>> Applying triggers, foreign keys, and constraints...');
+const postSql = readFileSync(resolve(ROOT, 'packages/database/sql/post-push.sql'), 'utf8');
+run('docker', ['exec', '-i', 'machxi-db', 'psql', '-U', 'postgres', '-d', 'machxi_commerce'], {
+  input: postSql,
+  stdio: ['pipe', 'inherit', 'inherit'],
+  shell: false,
+});
+
+console.log('\n>>> Seeding admin user...');
+run('pnpm', ['--filter', '@repo/database', 'db:seed']);
+
+console.log('\nDone. Run `pnpm dev` to start the apps.');

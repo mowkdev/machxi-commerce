@@ -22,6 +22,7 @@
     "db:migrate": "turbo run db:migrate",
     "db:studio": "pnpm --filter @repo/database db:studio",
     "docker:dev": "docker compose up -d && docker compose logs -f db",
+    "db:init": "node scripts/db-setup.mjs",
     "db:setup": "node scripts/db-setup.mjs",
     "db:seed": "pnpm --filter @repo/database db:seed",
     "db:reset-catalog": "pnpm --filter @repo/database db:reset-catalog",

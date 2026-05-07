@@ -1,26 +1,17 @@
 -- ============================================================================
--- migrations/custom.sql
--- Triggers, Foreign Keys, and Constraints that Drizzle cannot generate
+-- sql/post-push.sql
+-- Triggers, Foreign Keys, and Constraints that Drizzle cannot generate.
+-- Run AFTER drizzle-kit push/migrate via `pnpm db:init`.
 -- Schema v2.1
 -- ============================================================================
 --
--- Run this file AFTER running drizzle-kit push/migrate to add:
--- 1. Extensions and functions
+-- 1. Functions
 -- 2. updated_at triggers (36 tables)
 -- 3. Immutability triggers (6 tables)
 -- 4. Cross-module foreign keys
 -- 5. Tax rates exclusion constraint
--- 6. CITEXT columns
 --
 -- ============================================================================
-
--- ────────────────────────────────────────────────────────────────────────────
--- EXTENSIONS
--- ────────────────────────────────────────────────────────────────────────────
-
-CREATE EXTENSION IF NOT EXISTS citext;
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-CREATE EXTENSION IF NOT EXISTS btree_gist;
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- FUNCTIONS
@@ -42,13 +33,6 @@ BEGIN
   RAISE EXCEPTION 'This table is immutable. Updates and deletes are not allowed.';
 END;
 $$ LANGUAGE plpgsql;
-
--- ────────────────────────────────────────────────────────────────────────────
--- CITEXT COLUMNS
--- ────────────────────────────────────────────────────────────────────────────
--- CITEXT columns are now declared directly in the Drizzle schema via
--- customType (see src/schema/00-enums.ts). No manual ALTER TABLE needed.
--- The citext extension above must be installed BEFORE running drizzle-kit push.
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- UPDATED_AT TRIGGERS (36 tables) — Conventions §3
@@ -213,7 +197,7 @@ CREATE TRIGGER trg_order_shipping_line_taxes_immutable
 -- CROSS-MODULE FOREIGN KEYS
 -- ────────────────────────────────────────────────────────────────────────────
 -- These FKs reference tables defined in other schema files and can't be
--- declared inline in Drizzle without circular dependencies
+-- declared inline in Drizzle without circular dependencies.
 
 -- product_variants → price_sets, inventory_items
 ALTER TABLE product_variants
@@ -263,7 +247,7 @@ ALTER TABLE categories
 -- TAX RATES EXCLUSION CONSTRAINT (Drizzle doesn't support EXCLUDE)
 -- ────────────────────────────────────────────────────────────────────────────
 -- Prevents two rates for the same region from having overlapping effective
--- date ranges. This uses btree_gist extension for the equality operators.
+-- date ranges. Requires btree_gist extension (installed in pre-push.sql).
 
 ALTER TABLE tax_rates ADD CONSTRAINT excl_tax_rates_no_overlap
   EXCLUDE USING gist (
