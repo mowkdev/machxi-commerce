@@ -1,5 +1,6 @@
 export type { AdminBulkDeleteMediaMutationKey } from "./hooks/useAdminBulkDeleteMedia.ts";
 export type { AdminCreateCategoryMutationKey } from "./hooks/useAdminCreateCategory.ts";
+export type { AdminCreateCurrencyMutationKey } from "./hooks/useAdminCreateCurrency.ts";
 export type { AdminCreateCustomerMutationKey } from "./hooks/useAdminCreateCustomer.ts";
 export type { AdminCreateCustomerAddressMutationKey } from "./hooks/useAdminCreateCustomerAddress.ts";
 export type { AdminCreateFulfillmentMutationKey } from "./hooks/useAdminCreateFulfillment.ts";
@@ -68,6 +69,8 @@ export type { AdminGetCartQueryKey } from "./hooks/useAdminGetCart.ts";
 export type { AdminGetCartSuspenseQueryKey } from "./hooks/useAdminGetCartSuspense.ts";
 export type { AdminGetCategoryQueryKey } from "./hooks/useAdminGetCategory.ts";
 export type { AdminGetCategorySuspenseQueryKey } from "./hooks/useAdminGetCategorySuspense.ts";
+export type { AdminGetCurrencyQueryKey } from "./hooks/useAdminGetCurrency.ts";
+export type { AdminGetCurrencySuspenseQueryKey } from "./hooks/useAdminGetCurrencySuspense.ts";
 export type { AdminGetCustomerQueryKey } from "./hooks/useAdminGetCustomer.ts";
 export type { AdminGetCustomerSuspenseQueryKey } from "./hooks/useAdminGetCustomerSuspense.ts";
 export type { AdminGetFulfillmentQueryKey } from "./hooks/useAdminGetFulfillment.ts";
@@ -106,6 +109,8 @@ export type { AdminListCartsQueryKey } from "./hooks/useAdminListCarts.ts";
 export type { AdminListCartsSuspenseQueryKey } from "./hooks/useAdminListCartsSuspense.ts";
 export type { AdminListCategoriesQueryKey } from "./hooks/useAdminListCategories.ts";
 export type { AdminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
+export type { AdminListCurrenciesQueryKey } from "./hooks/useAdminListCurrencies.ts";
+export type { AdminListCurrenciesSuspenseQueryKey } from "./hooks/useAdminListCurrenciesSuspense.ts";
 export type { AdminListCustomersQueryKey } from "./hooks/useAdminListCustomers.ts";
 export type { AdminListCustomersSuspenseQueryKey } from "./hooks/useAdminListCustomersSuspense.ts";
 export type { AdminListFulfillmentsQueryKey } from "./hooks/useAdminListFulfillments.ts";
@@ -167,6 +172,7 @@ export type { AdminListUsersSuspenseQueryKey } from "./hooks/useAdminListUsersSu
 export type { AdminReorderCategoriesMutationKey } from "./hooks/useAdminReorderCategories.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
+export type { AdminUpdateCurrencyMutationKey } from "./hooks/useAdminUpdateCurrency.ts";
 export type { AdminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
 export type { AdminUpdateCustomerAddressMutationKey } from "./hooks/useAdminUpdateCustomerAddress.ts";
 export type { AdminUpdateFulfillmentMutationKey } from "./hooks/useAdminUpdateFulfillment.ts";
@@ -223,6 +229,18 @@ export type {
   AdminCreateCategoryMutationRequest,
   AdminCreateCategoryMutationResponse,
 } from "./types/AdminCreateCategory.ts";
+export type {
+  AdminCreateCurrency201,
+  AdminCreateCurrency400,
+  AdminCreateCurrency401,
+  AdminCreateCurrency403,
+  AdminCreateCurrency404,
+  AdminCreateCurrency409,
+  AdminCreateCurrency500,
+  AdminCreateCurrencyMutation,
+  AdminCreateCurrencyMutationRequest,
+  AdminCreateCurrencyMutationResponse,
+} from "./types/AdminCreateCurrency.ts";
 export type {
   AdminCreateCustomer201,
   AdminCreateCustomer400,
@@ -1035,6 +1053,18 @@ export type {
   AdminGetCategoryQueryResponse,
 } from "./types/AdminGetCategory.ts";
 export type {
+  AdminGetCurrency200,
+  AdminGetCurrency400,
+  AdminGetCurrency401,
+  AdminGetCurrency403,
+  AdminGetCurrency404,
+  AdminGetCurrency409,
+  AdminGetCurrency500,
+  AdminGetCurrencyPathParams,
+  AdminGetCurrencyQuery,
+  AdminGetCurrencyQueryResponse,
+} from "./types/AdminGetCurrency.ts";
+export type {
   AdminGetCustomer200,
   AdminGetCustomer400,
   AdminGetCustomer401,
@@ -1282,6 +1312,20 @@ export type {
   AdminListCategoriesQueryParamsSortOrderEnumKey,
   AdminListCategoriesQueryResponse,
 } from "./types/AdminListCategories.ts";
+export type {
+  AdminListCurrencies200,
+  AdminListCurrencies400,
+  AdminListCurrencies401,
+  AdminListCurrencies403,
+  AdminListCurrencies404,
+  AdminListCurrencies409,
+  AdminListCurrencies500,
+  AdminListCurrenciesQuery,
+  AdminListCurrenciesQueryParams,
+  AdminListCurrenciesQueryParamsSortByEnumKey,
+  AdminListCurrenciesQueryParamsSortOrderEnumKey,
+  AdminListCurrenciesQueryResponse,
+} from "./types/AdminListCurrencies.ts";
 export type {
   AdminListCustomers200,
   AdminListCustomers400,
@@ -1727,6 +1771,19 @@ export type {
   AdminUpdateCategoryPathParams,
 } from "./types/AdminUpdateCategory.ts";
 export type {
+  AdminUpdateCurrency200,
+  AdminUpdateCurrency400,
+  AdminUpdateCurrency401,
+  AdminUpdateCurrency403,
+  AdminUpdateCurrency404,
+  AdminUpdateCurrency409,
+  AdminUpdateCurrency500,
+  AdminUpdateCurrencyMutation,
+  AdminUpdateCurrencyMutationRequest,
+  AdminUpdateCurrencyMutationResponse,
+  AdminUpdateCurrencyPathParams,
+} from "./types/AdminUpdateCurrency.ts";
+export type {
   AdminUpdateCustomer200,
   AdminUpdateCustomer400,
   AdminUpdateCustomer401,
@@ -2160,6 +2217,7 @@ export type {
 } from "./types/AdminUploadMedia.ts";
 export { adminBulkDeleteMedia } from "./client/adminBulkDeleteMedia.ts";
 export { adminCreateCategory } from "./client/adminCreateCategory.ts";
+export { adminCreateCurrency } from "./client/adminCreateCurrency.ts";
 export { adminCreateCustomer } from "./client/adminCreateCustomer.ts";
 export { adminCreateCustomerAddress } from "./client/adminCreateCustomerAddress.ts";
 export { adminCreateFulfillment } from "./client/adminCreateFulfillment.ts";
@@ -2226,6 +2284,7 @@ export { adminExpireCart } from "./client/adminExpireCart.ts";
 export { adminGenerateVariants } from "./client/adminGenerateVariants.ts";
 export { adminGetCart } from "./client/adminGetCart.ts";
 export { adminGetCategory } from "./client/adminGetCategory.ts";
+export { adminGetCurrency } from "./client/adminGetCurrency.ts";
 export { adminGetCustomer } from "./client/adminGetCustomer.ts";
 export { adminGetFulfillment } from "./client/adminGetFulfillment.ts";
 export { adminGetLanguage } from "./client/adminGetLanguage.ts";
@@ -2245,6 +2304,7 @@ export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
 export { adminGetUser } from "./client/adminGetUser.ts";
 export { adminListCarts } from "./client/adminListCarts.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
+export { adminListCurrencies } from "./client/adminListCurrencies.ts";
 export { adminListCustomers } from "./client/adminListCustomers.ts";
 export { adminListFulfillments } from "./client/adminListFulfillments.ts";
 export { adminListInventoryItems } from "./client/adminListInventoryItems.ts";
@@ -2277,6 +2337,7 @@ export { adminListUsers } from "./client/adminListUsers.ts";
 export { adminReorderCategories } from "./client/adminReorderCategories.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
+export { adminUpdateCurrency } from "./client/adminUpdateCurrency.ts";
 export { adminUpdateCustomer } from "./client/adminUpdateCustomer.ts";
 export { adminUpdateCustomerAddress } from "./client/adminUpdateCustomerAddress.ts";
 export { adminUpdateFulfillment } from "./client/adminUpdateFulfillment.ts";
@@ -2315,6 +2376,9 @@ export { useAdminBulkDeleteMedia } from "./hooks/useAdminBulkDeleteMedia.ts";
 export { adminCreateCategoryMutationKey } from "./hooks/useAdminCreateCategory.ts";
 export { adminCreateCategoryMutationOptions } from "./hooks/useAdminCreateCategory.ts";
 export { useAdminCreateCategory } from "./hooks/useAdminCreateCategory.ts";
+export { adminCreateCurrencyMutationKey } from "./hooks/useAdminCreateCurrency.ts";
+export { adminCreateCurrencyMutationOptions } from "./hooks/useAdminCreateCurrency.ts";
+export { useAdminCreateCurrency } from "./hooks/useAdminCreateCurrency.ts";
 export { adminCreateCustomerMutationKey } from "./hooks/useAdminCreateCustomer.ts";
 export { adminCreateCustomerMutationOptions } from "./hooks/useAdminCreateCustomer.ts";
 export { useAdminCreateCustomer } from "./hooks/useAdminCreateCustomer.ts";
@@ -2519,6 +2583,12 @@ export { useAdminGetCategory } from "./hooks/useAdminGetCategory.ts";
 export { adminGetCategorySuspenseQueryKey } from "./hooks/useAdminGetCategorySuspense.ts";
 export { adminGetCategorySuspenseQueryOptions } from "./hooks/useAdminGetCategorySuspense.ts";
 export { useAdminGetCategorySuspense } from "./hooks/useAdminGetCategorySuspense.ts";
+export { adminGetCurrencyQueryKey } from "./hooks/useAdminGetCurrency.ts";
+export { adminGetCurrencyQueryOptions } from "./hooks/useAdminGetCurrency.ts";
+export { useAdminGetCurrency } from "./hooks/useAdminGetCurrency.ts";
+export { adminGetCurrencySuspenseQueryKey } from "./hooks/useAdminGetCurrencySuspense.ts";
+export { adminGetCurrencySuspenseQueryOptions } from "./hooks/useAdminGetCurrencySuspense.ts";
+export { useAdminGetCurrencySuspense } from "./hooks/useAdminGetCurrencySuspense.ts";
 export { adminGetCustomerQueryKey } from "./hooks/useAdminGetCustomer.ts";
 export { adminGetCustomerQueryOptions } from "./hooks/useAdminGetCustomer.ts";
 export { useAdminGetCustomer } from "./hooks/useAdminGetCustomer.ts";
@@ -2633,6 +2703,12 @@ export { useAdminListCategories } from "./hooks/useAdminListCategories.ts";
 export { adminListCategoriesSuspenseQueryKey } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { adminListCategoriesSuspenseQueryOptions } from "./hooks/useAdminListCategoriesSuspense.ts";
 export { useAdminListCategoriesSuspense } from "./hooks/useAdminListCategoriesSuspense.ts";
+export { adminListCurrenciesQueryKey } from "./hooks/useAdminListCurrencies.ts";
+export { adminListCurrenciesQueryOptions } from "./hooks/useAdminListCurrencies.ts";
+export { useAdminListCurrencies } from "./hooks/useAdminListCurrencies.ts";
+export { adminListCurrenciesSuspenseQueryKey } from "./hooks/useAdminListCurrenciesSuspense.ts";
+export { adminListCurrenciesSuspenseQueryOptions } from "./hooks/useAdminListCurrenciesSuspense.ts";
+export { useAdminListCurrenciesSuspense } from "./hooks/useAdminListCurrenciesSuspense.ts";
 export { adminListCustomersQueryKey } from "./hooks/useAdminListCustomers.ts";
 export { adminListCustomersQueryOptions } from "./hooks/useAdminListCustomers.ts";
 export { useAdminListCustomers } from "./hooks/useAdminListCustomers.ts";
@@ -2816,6 +2892,9 @@ export { useAdminReplaceMedia } from "./hooks/useAdminReplaceMedia.ts";
 export { adminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export { adminUpdateCategoryMutationOptions } from "./hooks/useAdminUpdateCategory.ts";
 export { useAdminUpdateCategory } from "./hooks/useAdminUpdateCategory.ts";
+export { adminUpdateCurrencyMutationKey } from "./hooks/useAdminUpdateCurrency.ts";
+export { adminUpdateCurrencyMutationOptions } from "./hooks/useAdminUpdateCurrency.ts";
+export { useAdminUpdateCurrency } from "./hooks/useAdminUpdateCurrency.ts";
 export { adminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
 export { adminUpdateCustomerMutationOptions } from "./hooks/useAdminUpdateCustomer.ts";
 export { useAdminUpdateCustomer } from "./hooks/useAdminUpdateCustomer.ts";
@@ -2937,6 +3016,8 @@ export { adminListCartsQueryParamsSortOrderEnum } from "./types/AdminListCarts.t
 export { adminListCartsQueryParamsStatusEnum } from "./types/AdminListCarts.ts";
 export { adminListCategoriesQueryParamsSortByEnum } from "./types/AdminListCategories.ts";
 export { adminListCategoriesQueryParamsSortOrderEnum } from "./types/AdminListCategories.ts";
+export { adminListCurrenciesQueryParamsSortByEnum } from "./types/AdminListCurrencies.ts";
+export { adminListCurrenciesQueryParamsSortOrderEnum } from "./types/AdminListCurrencies.ts";
 export { adminListCustomersQueryParamsSortByEnum } from "./types/AdminListCustomers.ts";
 export { adminListCustomersQueryParamsSortOrderEnum } from "./types/AdminListCustomers.ts";
 export { adminListFulfillments200DataStatusEnum } from "./types/AdminListFulfillments.ts";
@@ -3035,6 +3116,17 @@ export {
   adminCreateCategoryMutationRequestSchema,
   adminCreateCategoryMutationResponseSchema,
 } from "./zod/adminCreateCategorySchema.ts";
+export {
+  adminCreateCurrency201Schema,
+  adminCreateCurrency400Schema,
+  adminCreateCurrency401Schema,
+  adminCreateCurrency403Schema,
+  adminCreateCurrency404Schema,
+  adminCreateCurrency409Schema,
+  adminCreateCurrency500Schema,
+  adminCreateCurrencyMutationRequestSchema,
+  adminCreateCurrencyMutationResponseSchema,
+} from "./zod/adminCreateCurrencySchema.ts";
 export {
   adminCreateCustomerAddress201Schema,
   adminCreateCustomerAddress400Schema,
@@ -3776,6 +3868,17 @@ export {
   adminGetCategoryQueryResponseSchema,
 } from "./zod/adminGetCategorySchema.ts";
 export {
+  adminGetCurrency200Schema,
+  adminGetCurrency400Schema,
+  adminGetCurrency401Schema,
+  adminGetCurrency403Schema,
+  adminGetCurrency404Schema,
+  adminGetCurrency409Schema,
+  adminGetCurrency500Schema,
+  adminGetCurrencyPathParamsSchema,
+  adminGetCurrencyQueryResponseSchema,
+} from "./zod/adminGetCurrencySchema.ts";
+export {
   adminGetCustomer200Schema,
   adminGetCustomer400Schema,
   adminGetCustomer401Schema,
@@ -3984,6 +4087,17 @@ export {
   adminListCategoriesQueryParamsSchema,
   adminListCategoriesQueryResponseSchema,
 } from "./zod/adminListCategoriesSchema.ts";
+export {
+  adminListCurrencies200Schema,
+  adminListCurrencies400Schema,
+  adminListCurrencies401Schema,
+  adminListCurrencies403Schema,
+  adminListCurrencies404Schema,
+  adminListCurrencies409Schema,
+  adminListCurrencies500Schema,
+  adminListCurrenciesQueryParamsSchema,
+  adminListCurrenciesQueryResponseSchema,
+} from "./zod/adminListCurrenciesSchema.ts";
 export {
   adminListCustomers200Schema,
   adminListCustomers400Schema,
@@ -4337,6 +4451,18 @@ export {
   adminUpdateCategoryMutationResponseSchema,
   adminUpdateCategoryPathParamsSchema,
 } from "./zod/adminUpdateCategorySchema.ts";
+export {
+  adminUpdateCurrency200Schema,
+  adminUpdateCurrency400Schema,
+  adminUpdateCurrency401Schema,
+  adminUpdateCurrency403Schema,
+  adminUpdateCurrency404Schema,
+  adminUpdateCurrency409Schema,
+  adminUpdateCurrency500Schema,
+  adminUpdateCurrencyMutationRequestSchema,
+  adminUpdateCurrencyMutationResponseSchema,
+  adminUpdateCurrencyPathParamsSchema,
+} from "./zod/adminUpdateCurrencySchema.ts";
 export {
   adminUpdateCustomerAddress200Schema,
   adminUpdateCustomerAddress400Schema,

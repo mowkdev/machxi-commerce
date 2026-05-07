@@ -17,6 +17,7 @@ import {
   getStoredCartId,
   setStoredCartId,
 } from '@/lib/cart-storage';
+import { useCurrency } from '@/providers/currency-provider';
 
 type CartContextValue = {
   cart: StoreCart | null;
@@ -30,11 +31,15 @@ type CartContextValue = {
   updateItem: (itemId: string, quantity: number) => Promise<void>;
   removeItem: (itemId: string) => Promise<void>;
   clearCart: () => void;
+  /**
+   * Switch the cart's currency. Empties items + promotions atomically; the
+   * cart id is preserved. If no cart exists, the choice is just persisted
+   * locally so the next created cart picks it up.
+   */
+  switchCurrency: (currencyCode: string) => Promise<void>;
 };
 
 const CartContext = React.createContext<CartContextValue | null>(null);
-
-const DEFAULT_CURRENCY = process.env.NEXT_PUBLIC_DEFAULT_CURRENCY ?? 'USD';
 
 function isGoneOrNotFound(error: unknown): boolean {
   const status = error && typeof error === 'object' && 'status' in error
@@ -49,6 +54,7 @@ function isCartExpired(cart: StoreCart): boolean {
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
+  const { selectedCode, setSelectedCode } = useCurrency();
   const [cartId, setCartId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -103,11 +109,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const ensureCart = React.useCallback(async () => {
     if (cartId) return cartId;
     const response = await createCart.mutateAsync({
-      data: { currencyCode: DEFAULT_CURRENCY },
+      data: { currencyCode: selectedCode },
     });
     rememberCart(response.data.id);
     return response.data.id;
-  }, [cartId, createCart, rememberCart]);
+  }, [cartId, createCart, rememberCart, selectedCode]);
 
   const invalidateCart = React.useCallback(
     async (nextCartId: string) => {
@@ -180,6 +186,45 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCartId(null);
   }, []);
 
+  const switchCurrency = React.useCallback(
+    async (currencyCode: string) => {
+      const target = currencyCode.toUpperCase();
+      // Always persist the user's choice — drives the currency the next cart
+      // is created in if there's no cart right now.
+      setSelectedCode(target);
+
+      if (!cartId) return;
+
+      const baseUrl =
+        process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
+      const res = await fetch(
+        `${baseUrl}/api/store/carts/${cartId}/currency`,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ currencyCode: target }),
+        },
+      );
+
+      if (res.status === 404 || res.status === 410) {
+        // Cart vanished server-side; reset and let the next interaction
+        // create a fresh cart in the new currency.
+        clearStoredCartId();
+        setCartId(null);
+        return;
+      }
+
+      if (!res.ok) {
+        const detail = await res.text().catch(() => '');
+        throw new Error(`Failed to switch currency (${res.status}): ${detail}`);
+      }
+
+      await invalidateCart(cartId);
+    },
+    [cartId, invalidateCart, setSelectedCode],
+  );
+
   const value = React.useMemo<CartContextValue>(
     () => ({
       cart,
@@ -196,6 +241,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       updateItem,
       removeItem,
       clearCart,
+      switchCurrency,
     }),
     [
       addItem,
@@ -209,6 +255,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       itemCount,
       removeItem,
       removeLineItem.isPending,
+      switchCurrency,
       updateItem,
       updateLineItem.isPending,
     ]

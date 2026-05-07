@@ -18,6 +18,7 @@ import {
   removeCartLineItemController,
   removeCartPromotionController,
   setCartAddressesController,
+  switchCartCurrencyController,
   updateCartLineItemController,
 } from "./controller";
 import {
@@ -29,6 +30,7 @@ import {
   createCartBody,
   setCartAddressesBody,
   storeCart,
+  switchCartCurrencyBody,
   updateCartLineItemBody,
 } from "./schema";
 
@@ -127,6 +129,22 @@ storeCartsRoutes.post(
     },
   }),
   setCartAddressesController,
+);
+
+storeCartsRoutes.post(
+  "/:id/currency",
+  describeRoute({
+    operationId: "storeSwitchCartCurrency",
+    summary: "Switch the cart's currency (empties items and promotions)",
+    tags: TAGS,
+    parameters: paramsFromSchema(cartIdParam, "path"),
+    requestBody: jsonRequestBody(switchCartCurrencyBody),
+    responses: {
+      200: jsonResponse("Cart", successEnvelope(storeCart)),
+      ...standardErrorResponses,
+    },
+  }),
+  switchCartCurrencyController,
 );
 
 storeCartsRoutes.post(

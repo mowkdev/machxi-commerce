@@ -1,6 +1,5 @@
 'use client';
 
-import { formatFromMinorUnits } from '@repo/utils';
 import { ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 
@@ -9,10 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useFormatMoney } from '@/lib/format-money';
 import { useCart } from '@/providers/cart-provider';
 
 export function CartPageContent() {
   const { cart, isLoading } = useCart();
+  const formatMoney = useFormatMoney();
 
   if (isLoading) {
     return (
@@ -73,35 +74,27 @@ export function CartPageContent() {
         <CardContent className="space-y-4">
           <SummaryRow
             label="Subtotal"
-            value={formatFromMinorUnits(
-              cart.totals.subtotal,
-              cart.currencyCode
-            )}
+            value={formatMoney(cart.totals.subtotal, cart.currencyCode)}
           />
           <SummaryRow
             label="Discounts"
-            value={`-${formatFromMinorUnits(
+            value={`-${formatMoney(
               cart.totals.discountTotal,
               cart.currencyCode
             )}`}
           />
           <SummaryRow
             label="Shipping"
-            value={formatFromMinorUnits(
-              cart.totals.shippingTotal,
-              cart.currencyCode
-            )}
+            value={formatMoney(cart.totals.shippingTotal, cart.currencyCode)}
           />
           <SummaryRow
             label="Tax"
-            value={formatFromMinorUnits(cart.totals.taxTotal, cart.currencyCode)}
+            value={formatMoney(cart.totals.taxTotal, cart.currencyCode)}
           />
           <Separator />
           <div className="flex items-center justify-between text-lg font-semibold">
             <span>Total</span>
-            <span>
-              {formatFromMinorUnits(cart.totals.total, cart.currencyCode)}
-            </span>
+            <span>{formatMoney(cart.totals.total, cart.currencyCode)}</span>
           </div>
           <Button asChild className="w-full">
             <Link href="/checkout">Checkout</Link>

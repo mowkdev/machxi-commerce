@@ -24,7 +24,7 @@ import {
   priceListTypeEnum,
   inventoryTransactionReasonEnum,
 } from './00-enums';
-import { languages } from './01-catalog';
+import { currencies, languages } from './01-catalog';
 
 // ────────────────────────────────────────────────────────────────────────────
 // PRICE SETS
@@ -48,7 +48,9 @@ export const prices = pgTable(
     priceSetId: uuid('price_set_id')
       .notNull()
       .references(() => priceSets.id, { onDelete: 'cascade' }),
-    currencyCode: char('currency_code', { length: 3 }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
     amount: bigint('amount', { mode: 'number' }).notNull(),
     compareAtAmount: bigint('compare_at_amount', { mode: 'number' }),
     minQuantity: integer('min_quantity').notNull().default(1),
@@ -57,7 +59,6 @@ export const prices = pgTable(
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    currencyCodeCheck: check('prices_currency_code_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
     amountCheck: check('prices_amount_check', sql`${table.amount} >= 0`),
     compareAtCheck: check(
       'prices_compare_at_check',
@@ -260,14 +261,15 @@ export const priceListPrices = pgTable(
     priceSetId: uuid('price_set_id')
       .notNull()
       .references(() => priceSets.id, { onDelete: 'cascade' }),
-    currencyCode: char('currency_code', { length: 3 }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
     amount: bigint('amount', { mode: 'number' }).notNull(),
     minQuantity: integer('min_quantity').notNull().default(1),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    currencyCodeCheck: check('price_list_prices_currency_code_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
     amountCheck: check('price_list_prices_amount_check', sql`${table.amount} >= 0`),
     minQuantityCheck: check('price_list_prices_min_quantity_check', sql`${table.minQuantity} >= 1`),
     priceListIdx: index('idx_price_list_prices_price_list').on(table.priceListId),

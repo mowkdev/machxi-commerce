@@ -21,6 +21,7 @@ const sections: SettingsNavSection[] = [
     title: "Regions & taxes",
     items: [
       { title: "Languages", url: "/settings/regions/languages" },
+      { title: "Currencies", url: "/settings/regions/currencies" },
       { title: "Tax classes", url: "/settings/regions/tax-classes" },
     ],
   },

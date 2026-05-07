@@ -48,6 +48,9 @@ import ShippingOptionEditPage from "@/pages/shipping-options/ShippingOptionEditP
 import LanguagesPage from "@/pages/languages/LanguagesPage";
 import LanguageCreatePage from "@/pages/languages/LanguageCreatePage";
 import LanguageEditPage from "@/pages/languages/LanguageEditPage";
+import CurrenciesPage from "@/pages/currencies/CurrenciesPage";
+import CurrencyCreatePage from "@/pages/currencies/CurrencyCreatePage";
+import CurrencyEditPage from "@/pages/currencies/CurrencyEditPage";
 import TaxClassesPage from "@/pages/tax-classes/TaxClassesPage";
 import TaxClassCreatePage from "@/pages/tax-classes/TaxClassCreatePage";
 import TaxClassEditPage from "@/pages/tax-classes/TaxClassEditPage";
@@ -119,6 +122,15 @@ export default function App() {
             <Route
               path="regions/languages/:code"
               element={<LanguageEditPage />}
+            />
+            <Route path="regions/currencies" element={<CurrenciesPage />} />
+            <Route
+              path="regions/currencies/new"
+              element={<CurrencyCreatePage />}
+            />
+            <Route
+              path="regions/currencies/:code"
+              element={<CurrencyEditPage />}
             />
             <Route path="regions/tax-classes" element={<TaxClassesPage />} />
             <Route

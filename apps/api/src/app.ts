@@ -13,6 +13,7 @@ import { productsRoutes } from "./products/routes";
 import { categoriesRoutes } from "./categories/routes";
 import { languagesRoutes } from "./languages/routes";
 import { taxClassesRoutes } from "./tax-classes/routes";
+import { currenciesRoutes } from "./currencies/routes";
 import { priceListsRoutes } from "./price-lists/routes";
 import { promotionsRoutes } from "./promotions/routes";
 import { stockLocationsRoutes } from "./stock-locations/routes";
@@ -32,6 +33,7 @@ import { storeAddressesRoutes } from "./store-addresses/routes";
 import { storeCatalogRoutes } from "./store-catalog/routes";
 import { storeCartsRoutes } from "./store-carts/routes";
 import { storeCheckoutRoutes } from "./store-checkout/routes";
+import { storeCurrenciesRoutes } from "./store-currencies/routes";
 import { storeOrdersRoutes } from "./store-orders/routes";
 import { paymentWebhookRoutes } from "./payments/webhooks/routes";
 import { logger } from "./lib/logger";
@@ -76,6 +78,7 @@ export function createApp() {
   app.route("/api/categories", categoriesRoutes);
   app.route("/api/languages", languagesRoutes);
   app.route("/api/tax-classes", taxClassesRoutes);
+  app.route("/api/currencies", currenciesRoutes);
   app.route("/api/price-lists", priceListsRoutes);
   app.route("/api/promotions", promotionsRoutes);
   app.route("/api/stock-locations", stockLocationsRoutes);
@@ -96,6 +99,7 @@ export function createApp() {
   app.route("/api/store", storeCatalogRoutes);
   app.route("/api/store/carts", storeCartsRoutes);
   app.route("/api/store", storeCheckoutRoutes);
+  app.route("/api/store/currencies", storeCurrenciesRoutes);
   app.route("/api/store/orders", storeOrdersRoutes);
   app.route("/api/payments/webhooks", paymentWebhookRoutes);
 

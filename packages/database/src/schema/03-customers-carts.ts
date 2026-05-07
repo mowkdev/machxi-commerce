@@ -18,7 +18,7 @@ import {
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { priceSets } from './02-pricing-inventory';
-import { taxClasses } from './01-catalog';
+import { currencies, taxClasses } from './01-catalog';
 import { citext } from './00-enums';
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -103,13 +103,14 @@ export const carts = pgTable(
     customerId: uuid('customer_id').references(() => customers.id, { onDelete: 'set null' }),
     shippingAddressId: uuid('shipping_address_id').references(() => addresses.id, { onDelete: 'set null' }),
     billingAddressId: uuid('billing_address_id').references(() => addresses.id, { onDelete: 'set null' }),
-    currencyCode: char('currency_code', { length: 3 }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
     expiresAt: timestamp('expires_at', { withTimezone: true, mode: 'string' }).notNull(),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    currencyCodeCheck: check('carts_currency_code_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
     customerIdx: index('idx_carts_customer')
       .on(table.customerId)
       .where(sql`${table.customerId} IS NOT NULL`),

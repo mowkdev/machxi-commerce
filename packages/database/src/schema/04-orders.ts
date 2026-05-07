@@ -34,7 +34,7 @@ import {
 } from './00-enums';
 import { customers, addresses, carts } from './03-customers-carts';
 import { stockLocations } from './02-pricing-inventory';
-import { taxRates } from './01-catalog';
+import { currencies, taxRates } from './01-catalog';
 
 // ────────────────────────────────────────────────────────────────────────────
 // ORDERS
@@ -52,7 +52,9 @@ export const orders = pgTable(
     shippingAddressSnapshot: jsonb('shipping_address_snapshot'),
     billingAddressSnapshot: jsonb('billing_address_snapshot'),
     status: orderStatusEnum('status').notNull().default('pending'),
-    currencyCode: char('currency_code', { length: 3 }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
     subtotal: bigint('subtotal', { mode: 'number' }).notNull(),
     discountTotal: bigint('discount_total', { mode: 'number' }).notNull().default(0),
     shippingTotal: bigint('shipping_total', { mode: 'number' }).notNull().default(0),
@@ -62,7 +64,6 @@ export const orders = pgTable(
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    currencyCodeCheck: check('orders_currency_code_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
     subtotalCheck: check('orders_subtotal_check', sql`${table.subtotal} >= 0`),
     discountTotalCheck: check('orders_discount_total_check', sql`${table.discountTotal} >= 0`),
     shippingTotalCheck: check('orders_shipping_total_check', sql`${table.shippingTotal} >= 0`),
@@ -265,7 +266,9 @@ export const payments = pgTable(
       .notNull()
       .references(() => orders.id, { onDelete: 'cascade' }),
     amount: bigint('amount', { mode: 'number' }).notNull(),
-    currencyCode: char('currency_code', { length: 3 }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
     providerId: varchar('provider_id').notNull(),
     status: paymentStatusEnum('status').notNull().default('pending'),
     metadata: jsonb('metadata'),
@@ -274,7 +277,6 @@ export const payments = pgTable(
   },
   (table) => ({
     amountCheck: check('payments_amount_check', sql`${table.amount} >= 0`),
-    currencyCodeCheck: check('payments_currency_code_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
     orderIdx: index('idx_payments_order').on(table.orderId),
     statusIdx: index('idx_payments_status').on(table.status),
   })
@@ -295,13 +297,14 @@ export const paymentTransactions = pgTable(
     type: paymentTransactionTypeEnum('type').notNull(),
     status: paymentTransactionStatusEnum('status').notNull(),
     amount: bigint('amount', { mode: 'number' }).notNull(),
-    currencyCode: char('currency_code', { length: 3 }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
     remoteId: varchar('remote_id'),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
     amountCheck: check('payment_transactions_amount_check', sql`${table.amount} >= 0`),
-    currencyCodeCheck: check('payment_transactions_currency_code_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
     paymentIdx: index('idx_payment_transactions_payment').on(table.paymentId),
     statusIdx: index('idx_payment_transactions_status').on(table.status),
     typeIdx: index('idx_payment_transactions_type').on(table.type),

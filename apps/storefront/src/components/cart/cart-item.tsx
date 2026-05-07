@@ -1,11 +1,11 @@
 'use client';
 
 import type { StoreCart } from '@repo/types/storefront';
-import { formatFromMinorUnits } from '@repo/utils';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
+import { useFormatMoney } from '@/lib/format-money';
 import { useCart } from '@/providers/cart-provider';
 
 type CartLineItem = StoreCart['items'][number];
@@ -18,6 +18,7 @@ export function CartItem({
   currencyCode: string;
 }) {
   const { updateItem, removeItem, isMutating } = useCart();
+  const formatMoney = useFormatMoney();
 
   async function decrement() {
     if (item.quantity <= 1) {
@@ -56,7 +57,7 @@ export function CartItem({
             <p className="mt-1 text-sm text-muted-foreground">SKU {item.sku}</p>
           </div>
           <div className="text-right font-medium">
-            {formatFromMinorUnits(item.lineTotal, currencyCode)}
+            {formatMoney(item.lineTotal, currencyCode)}
           </div>
         </div>
 

@@ -11,6 +11,7 @@ import {
   cartPromotionParam,
   createCartBody,
   setCartAddressesBody,
+  switchCartCurrencyBody,
   updateCartLineItemBody,
 } from "./schema";
 import {
@@ -22,6 +23,7 @@ import {
   removeCartLineItem,
   removeCartPromotion,
   setCartAddresses,
+  switchCartCurrency,
   updateCartLineItem,
 } from "./service";
 
@@ -121,6 +123,15 @@ export async function setCartAddressesController(c: Context<AppEnv>) {
   const id = parseCartId(c);
   const body = await parseBody(c, setCartAddressesBody);
   const cart = await setCartAddresses(id, body, {
+    customerId: callerCustomerId(c),
+  });
+  return ok(c, cart);
+}
+
+export async function switchCartCurrencyController(c: Context<AppEnv>) {
+  const id = parseCartId(c);
+  const body = await parseBody(c, switchCartCurrencyBody);
+  const cart = await switchCartCurrency(id, body.currencyCode, {
     customerId: callerCustomerId(c),
   });
   return ok(c, cart);

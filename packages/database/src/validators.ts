@@ -20,6 +20,13 @@ export type LanguagesInsert = z.infer<typeof languagesInsert>;
 export type LanguagesSelect = z.infer<typeof languagesSelect>;
 export type LanguagesUpdate = z.infer<typeof languagesUpdate>;
 
+export const currenciesInsert = createInsertSchema(s.currencies);
+export const currenciesSelect = createSelectSchema(s.currencies);
+export const currenciesUpdate = createUpdateSchema(s.currencies);
+export type CurrenciesInsert = z.infer<typeof currenciesInsert>;
+export type CurrenciesSelect = z.infer<typeof currenciesSelect>;
+export type CurrenciesUpdate = z.infer<typeof currenciesUpdate>;
+
 export const taxClassesInsert = createInsertSchema(s.taxClasses);
 export const taxClassesSelect = createSelectSchema(s.taxClasses);
 export const taxClassesUpdate = createUpdateSchema(s.taxClasses);

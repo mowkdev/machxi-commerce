@@ -34,6 +34,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Reject currency_code change on a cart that still has items or promotions.
+-- The "switch currency" service path empties items + promos in the same TX
+-- before updating, so this trigger only fires for buggy callers.
+CREATE OR REPLACE FUNCTION reject_currency_change_with_items()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM cart_items WHERE cart_id = OLD.id)
+     OR EXISTS (SELECT 1 FROM cart_promotions WHERE cart_id = OLD.id) THEN
+    RAISE EXCEPTION 'Cart currency is immutable while items or promotions exist'
+      USING ERRCODE = '23514';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 -- ────────────────────────────────────────────────────────────────────────────
 -- UPDATED_AT TRIGGERS (36 tables) — Conventions §3
 -- ────────────────────────────────────────────────────────────────────────────
@@ -41,6 +56,9 @@ $$ LANGUAGE plpgsql;
 -- Catalog
 CREATE TRIGGER trg_languages_set_updated_at
   BEFORE UPDATE ON languages FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_currencies_set_updated_at
+  BEFORE UPDATE ON currencies FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 CREATE TRIGGER trg_tax_classes_set_updated_at
   BEFORE UPDATE ON tax_classes FOR EACH ROW EXECUTE FUNCTION set_updated_at();
@@ -195,6 +213,19 @@ CREATE TRIGGER trg_order_item_taxes_immutable
 CREATE TRIGGER trg_order_shipping_line_taxes_immutable
   BEFORE UPDATE OR DELETE ON order_shipping_line_taxes
   FOR EACH ROW EXECUTE FUNCTION reject_mutation();
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- CART CURRENCY IMMUTABILITY
+-- ────────────────────────────────────────────────────────────────────────────
+-- A cart's currency must not change once it carries items or promotions.
+-- The switchCartCurrency service deletes those rows in the same transaction
+-- before updating the cart, so this trigger silently passes in normal flow.
+
+CREATE TRIGGER trg_carts_currency_immutable_with_items
+  BEFORE UPDATE OF currency_code ON carts
+  FOR EACH ROW
+  WHEN (OLD.currency_code IS DISTINCT FROM NEW.currency_code)
+  EXECUTE FUNCTION reject_currency_change_with_items();
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- CROSS-MODULE FOREIGN KEYS

@@ -16,6 +16,7 @@ export * from './00-enums';
 
 export {
   languages,
+  currencies,
   taxClasses,
   taxRates,
   products,

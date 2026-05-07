@@ -13,6 +13,7 @@ import {
   char,
   decimal,
   integer,
+  smallint,
   bigint,
   text,
   jsonb,
@@ -41,6 +42,36 @@ export const languages = pgTable(
     singleDefaultIdx: uniqueIndex('uk_languages_single_default')
       .on(table.isDefault)
       .where(sql`${table.isDefault} = true`),
+  })
+);
+// Note: Requires updated_at trigger (see migrations/triggers.sql)
+
+// ────────────────────────────────────────────────────────────────────────────
+// CURRENCIES
+// ────────────────────────────────────────────────────────────────────────────
+
+export const currencies = pgTable(
+  'currencies',
+  {
+    code: char('code', { length: 3 }).primaryKey(),
+    name: varchar('name').notNull(),
+    symbol: varchar('symbol', { length: 8 }).notNull(),
+    decimalDigits: smallint('decimal_digits').notNull().default(2),
+    isActive: boolean('is_active').notNull().default(true),
+    isDefault: boolean('is_default').notNull().default(false),
+    displayOrder: integer('display_order').notNull().default(0),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (table) => ({
+    codeFmtCheck: check('currencies_code_check', sql`${table.code} ~ '^[A-Z]{3}$'`),
+    decimalsCheck: check('currencies_decimals_check', sql`${table.decimalDigits} BETWEEN 0 AND 4`),
+    singleDefaultIdx: uniqueIndex('uk_currencies_single_default')
+      .on(table.isDefault)
+      .where(sql`${table.isDefault} = true`),
+    activeIdx: index('idx_currencies_active')
+      .on(table.isActive)
+      .where(sql`${table.isActive} = true`),
   })
 );
 // Note: Requires updated_at trigger (see migrations/triggers.sql)

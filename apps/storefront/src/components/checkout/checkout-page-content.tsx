@@ -1,6 +1,5 @@
 'use client';
 
-import { formatFromMinorUnits } from '@repo/utils';
 import {
   SdkRequestError,
   storeGetCartQueryKey,
@@ -8,6 +7,7 @@ import {
   useStoreListPaymentMethods,
   useStoreSetCartAddresses,
 } from '@repo/storefront-sdk';
+import { useFormatMoney } from '@/lib/format-money';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
@@ -49,6 +49,7 @@ function isStripePayload(value: unknown): value is StripeClientPayload {
 export function CheckoutPageContent() {
   const router = useRouter();
   const qc = useQueryClient();
+  const formatMoney = useFormatMoney();
   const {
     cart,
     cartId,
@@ -428,7 +429,7 @@ export function CheckoutPageContent() {
                   {item.quantity}
                 </span>
                 <span className="shrink-0 text-foreground">
-                  {formatFromMinorUnits(item.linePayment, cart.currencyCode)}
+                  {formatMoney(item.linePayment, cart.currencyCode)}
                 </span>
               </li>
             ))}
@@ -436,35 +437,27 @@ export function CheckoutPageContent() {
           <Separator />
           <Row
             label="Subtotal"
-            value={formatFromMinorUnits(
-              cart.totals.subtotal,
-              cart.currencyCode
-            )}
+            value={formatMoney(cart.totals.subtotal, cart.currencyCode)}
           />
           <Row
             label="Discounts"
-            value={`-${formatFromMinorUnits(
+            value={`-${formatMoney(
               cart.totals.discountTotal,
               cart.currencyCode
             )}`}
           />
           <Row
             label="Shipping"
-            value={formatFromMinorUnits(
-              cart.totals.shippingTotal,
-              cart.currencyCode
-            )}
+            value={formatMoney(cart.totals.shippingTotal, cart.currencyCode)}
           />
           <Row
             label="Tax"
-            value={formatFromMinorUnits(cart.totals.taxTotal, cart.currencyCode)}
+            value={formatMoney(cart.totals.taxTotal, cart.currencyCode)}
           />
           <Separator />
           <div className="flex items-center justify-between text-base font-semibold">
             <span>Total</span>
-            <span>
-              {formatFromMinorUnits(cart.totals.total, cart.currencyCode)}
-            </span>
+            <span>{formatMoney(cart.totals.total, cart.currencyCode)}</span>
           </div>
         </CardContent>
       </Card>

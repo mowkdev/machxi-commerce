@@ -20,6 +20,10 @@ import {
   promotions,
 } from "@repo/database/schema";
 import { conflict, gone, notFound, validationFailed } from "../lib/errors";
+import {
+  assertCurrencyActive,
+  assertVariantPriceableInCurrency,
+} from "../lib/currency";
 import { loadCart } from "./query";
 import {
   InsufficientStockError,
@@ -47,10 +51,11 @@ export async function createCart(input: {
   currencyCode: string;
   customerId?: string | null;
 }): Promise<StoreCart> {
+  const currencyCode = await assertCurrencyActive(input.currencyCode);
   const [row] = await db
     .insert(carts)
     .values({
-      currencyCode: input.currencyCode.toUpperCase(),
+      currencyCode,
       customerId: input.customerId ?? null,
       expiresAt: cartExpiry(),
     })
@@ -113,16 +118,24 @@ export async function addCartLineItem(
         )
         .limit(1);
 
+      const targetQty = (existing?.quantity ?? 0) + input.quantity;
+      // Reject early when no price exists for this variant in the cart's
+      // currency at the resulting tier — keeps cart projection honest.
+      await assertVariantPriceableInCurrency(
+        input.variantId,
+        cart.currencyCode,
+        targetQty,
+      );
+
       if (existing) {
-        const newQty = existing.quantity + input.quantity;
         await tx
           .update(cartItems)
-          .set({ quantity: newQty })
+          .set({ quantity: targetQty })
           .where(eq(cartItems.id, existing.id));
         await reserveForCartItem(tx, {
           variantId: input.variantId,
           cartItemId: existing.id,
-          quantity: newQty,
+          quantity: targetQty,
           expiresAt: reservationExpiry(),
         });
       } else {
@@ -169,6 +182,13 @@ export async function updateCartLineItem(
         .where(and(eq(cartItems.id, itemId), eq(cartItems.cartId, cartId)))
         .limit(1);
       if (!existing) throw notFound("Line item not found");
+      // Quantity tier may shift (e.g. crosses a `min_quantity` threshold) —
+      // re-check that a price exists at the new tier in the cart's currency.
+      await assertVariantPriceableInCurrency(
+        existing.variantId,
+        cart.currencyCode,
+        input.quantity,
+      );
       await tx
         .update(cartItems)
         .set({ quantity: input.quantity })
@@ -316,6 +336,44 @@ export async function setCartAddresses(
   if (Object.keys(update).length > 0) {
     await db.update(carts).set(update).where(eq(carts.id, cartId));
   }
+  const refreshed = await loadCart(cartId);
+  if (!refreshed) throw notFound("Cart not found");
+  return refreshed;
+}
+
+/**
+ * Switch the cart's currency. Empties items and promotions atomically — the
+ * "switching empties the cart" UX rule. Same cart id is preserved.
+ *
+ * Reservations cascade-delete via the FK `reservations.cart_item_id` ON DELETE
+ * CASCADE, so we don't need to explicitly release them.
+ *
+ * The DB-level immutability trigger is a backstop: it only fires if items or
+ * promotions remain when the UPDATE runs, which means the service layer has a
+ * bug — never an expected user path.
+ */
+export async function switchCartCurrency(
+  cartId: string,
+  currencyCode: string,
+  caller: { customerId: string | null } = { customerId: null },
+): Promise<StoreCart> {
+  const cart = await ensureCartExists(cartId);
+  assertCanMutate(cart, caller);
+
+  const target = await assertCurrencyActive(currencyCode);
+
+  if (cart.currencyCode === target) {
+    const same = await loadCart(cartId);
+    if (!same) throw notFound("Cart not found");
+    return same;
+  }
+
+  await db.transaction(async (tx) => {
+    await tx.delete(cartPromotions).where(eq(cartPromotions.cartId, cartId));
+    await tx.delete(cartItems).where(eq(cartItems.cartId, cartId));
+    await tx.update(carts).set({ currencyCode: target }).where(eq(carts.id, cartId));
+  });
+
   const refreshed = await loadCart(cartId);
   if (!refreshed) throw notFound("Cart not found");
   return refreshed;

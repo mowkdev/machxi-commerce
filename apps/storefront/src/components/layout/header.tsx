@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import { CartDrawer } from '@/components/cart/cart-drawer';
+import { CurrencySwitcher } from '@/components/layout/currency-switcher';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -30,7 +31,10 @@ export function Header() {
           </nav>
         </div>
 
-        <CartDrawer />
+        <div className="flex items-center gap-2">
+          <CurrencySwitcher />
+          <CartDrawer />
+        </div>
       </div>
     </header>
   );

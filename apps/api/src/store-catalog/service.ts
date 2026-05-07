@@ -48,6 +48,7 @@ import type {
   StoreVariant,
 } from "./schema";
 import { resolveVariantPrices } from "../store-pricing/service";
+import { assertCurrencyActive } from "../lib/currency";
 
 const STORE_VISIBLE_STATUSES = ["published", "archived"] as const;
 type StoreStatus = (typeof STORE_VISIBLE_STATUSES)[number];
@@ -90,6 +91,7 @@ function toMedia(row: {
 export async function listStoreProducts(
   query: StoreListProductsQuery,
 ): Promise<{ data: StoreProductListItem[]; meta: PaginationMeta }> {
+  await assertCurrencyActive(query.currency);
   const language = await resolveLanguage(query.language);
   const offset = (query.page - 1) * query.pageSize;
   const searchPattern = query.search ? `%${query.search}%` : undefined;
@@ -318,6 +320,7 @@ export async function getStoreProductByHandle(
   currencyCode: string,
   languageOverride?: string,
 ): Promise<StoreProductDetail | null> {
+  await assertCurrencyActive(currencyCode);
   const language = await resolveLanguage(languageOverride);
 
   const [row] = await db

@@ -68,6 +68,11 @@ export const createCartBody = z.object({
 });
 export type CreateCartBody = z.infer<typeof createCartBody>;
 
+export const switchCartCurrencyBody = z.object({
+  currencyCode,
+});
+export type SwitchCartCurrencyBody = z.infer<typeof switchCartCurrencyBody>;
+
 export const addCartLineItemBody = z.object({
   variantId: z.string().uuid(),
   quantity: z.number().int().positive(),

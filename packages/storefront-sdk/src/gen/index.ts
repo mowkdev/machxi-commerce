@@ -20,6 +20,8 @@ export type { StoreListAddressesQueryKey } from "./hooks/useStoreListAddresses.t
 export type { StoreListAddressesSuspenseQueryKey } from "./hooks/useStoreListAddressesSuspense.ts";
 export type { StoreListCategoriesQueryKey } from "./hooks/useStoreListCategories.ts";
 export type { StoreListCategoriesSuspenseQueryKey } from "./hooks/useStoreListCategoriesSuspense.ts";
+export type { StoreListCurrenciesQueryKey } from "./hooks/useStoreListCurrencies.ts";
+export type { StoreListCurrenciesSuspenseQueryKey } from "./hooks/useStoreListCurrenciesSuspense.ts";
 export type { StoreListMyOrdersQueryKey } from "./hooks/useStoreListMyOrders.ts";
 export type { StoreListMyOrdersSuspenseQueryKey } from "./hooks/useStoreListMyOrdersSuspense.ts";
 export type { StoreListPaymentMethodsQueryKey } from "./hooks/useStoreListPaymentMethods.ts";
@@ -31,6 +33,7 @@ export type { StoreRegisterCustomerMutationKey } from "./hooks/useStoreRegisterC
 export type { StoreRemoveCartLineItemMutationKey } from "./hooks/useStoreRemoveCartLineItem.ts";
 export type { StoreRemoveCartPromotionMutationKey } from "./hooks/useStoreRemoveCartPromotion.ts";
 export type { StoreSetCartAddressesMutationKey } from "./hooks/useStoreSetCartAddresses.ts";
+export type { StoreSwitchCartCurrencyMutationKey } from "./hooks/useStoreSwitchCartCurrency.ts";
 export type { StoreUpdateAddressMutationKey } from "./hooks/useStoreUpdateAddress.ts";
 export type { StoreUpdateCartLineItemMutationKey } from "./hooks/useStoreUpdateCartLineItem.ts";
 export type { StoreUpdateCurrentCustomerMutationKey } from "./hooks/useStoreUpdateCurrentCustomer.ts";
@@ -226,6 +229,17 @@ export type {
   StoreListCategoriesQueryResponse,
 } from "./types/StoreListCategories.ts";
 export type {
+  StoreListCurrencies200,
+  StoreListCurrencies400,
+  StoreListCurrencies401,
+  StoreListCurrencies403,
+  StoreListCurrencies404,
+  StoreListCurrencies409,
+  StoreListCurrencies500,
+  StoreListCurrenciesQuery,
+  StoreListCurrenciesQueryResponse,
+} from "./types/StoreListCurrencies.ts";
+export type {
   StoreListMyOrders200,
   StoreListMyOrders400,
   StoreListMyOrders401,
@@ -327,6 +341,20 @@ export type {
   StoreSetCartAddressesPathParams,
 } from "./types/StoreSetCartAddresses.ts";
 export type {
+  StoreSwitchCartCurrency200,
+  StoreSwitchCartCurrency200PromotionsTypeEnumKey,
+  StoreSwitchCartCurrency400,
+  StoreSwitchCartCurrency401,
+  StoreSwitchCartCurrency403,
+  StoreSwitchCartCurrency404,
+  StoreSwitchCartCurrency409,
+  StoreSwitchCartCurrency500,
+  StoreSwitchCartCurrencyMutation,
+  StoreSwitchCartCurrencyMutationRequest,
+  StoreSwitchCartCurrencyMutationResponse,
+  StoreSwitchCartCurrencyPathParams,
+} from "./types/StoreSwitchCartCurrency.ts";
+export type {
   StoreUpdateAddress200,
   StoreUpdateAddress400,
   StoreUpdateAddress401,
@@ -380,6 +408,7 @@ export { storeGetMyOrder } from "./client/storeGetMyOrder.ts";
 export { storeGetProductByHandle } from "./client/storeGetProductByHandle.ts";
 export { storeListAddresses } from "./client/storeListAddresses.ts";
 export { storeListCategories } from "./client/storeListCategories.ts";
+export { storeListCurrencies } from "./client/storeListCurrencies.ts";
 export { storeListMyOrders } from "./client/storeListMyOrders.ts";
 export { storeListPaymentMethods } from "./client/storeListPaymentMethods.ts";
 export { storeListProducts } from "./client/storeListProducts.ts";
@@ -388,6 +417,7 @@ export { storeRegisterCustomer } from "./client/storeRegisterCustomer.ts";
 export { storeRemoveCartLineItem } from "./client/storeRemoveCartLineItem.ts";
 export { storeRemoveCartPromotion } from "./client/storeRemoveCartPromotion.ts";
 export { storeSetCartAddresses } from "./client/storeSetCartAddresses.ts";
+export { storeSwitchCartCurrency } from "./client/storeSwitchCartCurrency.ts";
 export { storeUpdateAddress } from "./client/storeUpdateAddress.ts";
 export { storeUpdateCartLineItem } from "./client/storeUpdateCartLineItem.ts";
 export { storeUpdateCurrentCustomer } from "./client/storeUpdateCurrentCustomer.ts";
@@ -457,6 +487,12 @@ export { useStoreListCategories } from "./hooks/useStoreListCategories.ts";
 export { storeListCategoriesSuspenseQueryKey } from "./hooks/useStoreListCategoriesSuspense.ts";
 export { storeListCategoriesSuspenseQueryOptions } from "./hooks/useStoreListCategoriesSuspense.ts";
 export { useStoreListCategoriesSuspense } from "./hooks/useStoreListCategoriesSuspense.ts";
+export { storeListCurrenciesQueryKey } from "./hooks/useStoreListCurrencies.ts";
+export { storeListCurrenciesQueryOptions } from "./hooks/useStoreListCurrencies.ts";
+export { useStoreListCurrencies } from "./hooks/useStoreListCurrencies.ts";
+export { storeListCurrenciesSuspenseQueryKey } from "./hooks/useStoreListCurrenciesSuspense.ts";
+export { storeListCurrenciesSuspenseQueryOptions } from "./hooks/useStoreListCurrenciesSuspense.ts";
+export { useStoreListCurrenciesSuspense } from "./hooks/useStoreListCurrenciesSuspense.ts";
 export { storeListMyOrdersQueryKey } from "./hooks/useStoreListMyOrders.ts";
 export { storeListMyOrdersQueryOptions } from "./hooks/useStoreListMyOrders.ts";
 export { useStoreListMyOrders } from "./hooks/useStoreListMyOrders.ts";
@@ -490,6 +526,9 @@ export { useStoreRemoveCartPromotion } from "./hooks/useStoreRemoveCartPromotion
 export { storeSetCartAddressesMutationKey } from "./hooks/useStoreSetCartAddresses.ts";
 export { storeSetCartAddressesMutationOptions } from "./hooks/useStoreSetCartAddresses.ts";
 export { useStoreSetCartAddresses } from "./hooks/useStoreSetCartAddresses.ts";
+export { storeSwitchCartCurrencyMutationKey } from "./hooks/useStoreSwitchCartCurrency.ts";
+export { storeSwitchCartCurrencyMutationOptions } from "./hooks/useStoreSwitchCartCurrency.ts";
+export { useStoreSwitchCartCurrency } from "./hooks/useStoreSwitchCartCurrency.ts";
 export { storeUpdateAddressMutationKey } from "./hooks/useStoreUpdateAddress.ts";
 export { storeUpdateAddressMutationOptions } from "./hooks/useStoreUpdateAddress.ts";
 export { useStoreUpdateAddress } from "./hooks/useStoreUpdateAddress.ts";
@@ -513,6 +552,7 @@ export { storeListProducts200DataStatusEnum } from "./types/StoreListProducts.ts
 export { storeRemoveCartLineItem200PromotionsTypeEnum } from "./types/StoreRemoveCartLineItem.ts";
 export { storeRemoveCartPromotion200PromotionsTypeEnum } from "./types/StoreRemoveCartPromotion.ts";
 export { storeSetCartAddresses200PromotionsTypeEnum } from "./types/StoreSetCartAddresses.ts";
+export { storeSwitchCartCurrency200PromotionsTypeEnum } from "./types/StoreSwitchCartCurrency.ts";
 export { storeUpdateCartLineItem200PromotionsTypeEnum } from "./types/StoreUpdateCartLineItem.ts";
 export {
   storeAddCartLineItem200Schema,
@@ -682,6 +722,16 @@ export {
   storeListCategoriesQueryResponseSchema,
 } from "./zod/storeListCategoriesSchema.ts";
 export {
+  storeListCurrencies200Schema,
+  storeListCurrencies400Schema,
+  storeListCurrencies401Schema,
+  storeListCurrencies403Schema,
+  storeListCurrencies404Schema,
+  storeListCurrencies409Schema,
+  storeListCurrencies500Schema,
+  storeListCurrenciesQueryResponseSchema,
+} from "./zod/storeListCurrenciesSchema.ts";
+export {
   storeListMyOrders200Schema,
   storeListMyOrders400Schema,
   storeListMyOrders401Schema,
@@ -769,6 +819,18 @@ export {
   storeSetCartAddressesMutationResponseSchema,
   storeSetCartAddressesPathParamsSchema,
 } from "./zod/storeSetCartAddressesSchema.ts";
+export {
+  storeSwitchCartCurrency200Schema,
+  storeSwitchCartCurrency400Schema,
+  storeSwitchCartCurrency401Schema,
+  storeSwitchCartCurrency403Schema,
+  storeSwitchCartCurrency404Schema,
+  storeSwitchCartCurrency409Schema,
+  storeSwitchCartCurrency500Schema,
+  storeSwitchCartCurrencyMutationRequestSchema,
+  storeSwitchCartCurrencyMutationResponseSchema,
+  storeSwitchCartCurrencyPathParamsSchema,
+} from "./zod/storeSwitchCartCurrencySchema.ts";
 export {
   storeUpdateAddress200Schema,
   storeUpdateAddress400Schema,

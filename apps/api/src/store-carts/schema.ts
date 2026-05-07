@@ -10,6 +10,7 @@ export {
   storeCartItem,
   storeCartPromotion,
   storeCartTotals,
+  switchCartCurrencyBody,
   updateCartLineItemBody,
   type AddCartLineItemBody,
   type ApplyPromotionBody,
@@ -22,5 +23,6 @@ export {
   type StoreCartItem,
   type StoreCartPromotion,
   type StoreCartTotals,
+  type SwitchCartCurrencyBody,
   type UpdateCartLineItemBody,
 } from "@repo/types/storefront";

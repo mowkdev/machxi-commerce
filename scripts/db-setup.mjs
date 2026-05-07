@@ -37,6 +37,9 @@ run('docker', ['exec', '-i', 'machxi-db', 'psql', '-U', 'postgres', '-d', 'machx
   shell: false,
 });
 
+console.log('\n>>> Seeding currencies...');
+run('pnpm', ['--filter', '@repo/database', 'db:seed-currencies']);
+
 console.log('\n>>> Seeding admin user...');
 run('pnpm', ['--filter', '@repo/database', 'db:seed']);
 

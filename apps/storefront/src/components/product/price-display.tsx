@@ -1,4 +1,6 @@
-import { formatFromMinorUnits } from '@repo/utils';
+'use client';
+
+import { useFormatMoney } from '@/lib/format-money';
 
 type PriceRange = {
   currencyCode: string;
@@ -19,15 +21,17 @@ export function PriceDisplay({
   priceRange?: PriceRange;
   price?: UnitPrice;
 }) {
+  const formatMoney = useFormatMoney();
+
   if (price) {
     return (
       <div className="flex items-center gap-2">
         <span className="font-medium">
-          {formatFromMinorUnits(price.amount, price.currencyCode)}
+          {formatMoney(price.amount, price.currencyCode)}
         </span>
         {price.compareAtAmount ? (
           <span className="text-sm text-muted-foreground line-through">
-            {formatFromMinorUnits(price.compareAtAmount, price.currencyCode)}
+            {formatMoney(price.compareAtAmount, price.currencyCode)}
           </span>
         ) : null}
       </div>
@@ -38,14 +42,8 @@ export function PriceDisplay({
     return <span className="text-sm text-muted-foreground">Price pending</span>;
   }
 
-  const min = formatFromMinorUnits(
-    priceRange.minAmount,
-    priceRange.currencyCode
-  );
-  const max = formatFromMinorUnits(
-    priceRange.maxAmount,
-    priceRange.currencyCode
-  );
+  const min = formatMoney(priceRange.minAmount, priceRange.currencyCode);
+  const max = formatMoney(priceRange.maxAmount, priceRange.currencyCode);
 
   return (
     <span className="font-medium">

@@ -41,6 +41,7 @@ import {
   taxRates,
 } from "@repo/database/schema";
 import { conflict, notFound, validationFailed } from "../lib/errors";
+import { assertCurrencyActive } from "../lib/currency";
 import { logger } from "../lib/logger";
 import { startPlaceOrderWorkflow } from "../lib/temporal-checkout";
 import {
@@ -240,6 +241,11 @@ export async function placeOrder(
     .limit(1);
   if (!cartRow) throw notFound("Cart not found");
   assertCanMutate(cartRow, args.caller);
+
+  // Defense in depth: cart was created against an active currency, but it may
+  // have since been deactivated. Reject placement loudly rather than ship an
+  // order in an unsupported currency.
+  await assertCurrencyActive(cartRow.currencyCode);
 
   const projected = await loadCart(args.cartId);
   if (!projected) throw notFound("Cart not found");

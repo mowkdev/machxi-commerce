@@ -20,7 +20,7 @@ import {
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { promotionTypeEnum, citext } from './00-enums';
-import { languages, products } from './01-catalog';
+import { currencies, languages, products } from './01-catalog';
 import { categories } from './05-taxonomy';
 import { customers } from './03-customers-carts';
 
@@ -87,13 +87,14 @@ export const promotionAmounts = pgTable(
     promotionId: uuid('promotion_id')
       .notNull()
       .references(() => promotions.id, { onDelete: 'cascade' }),
-    currencyCode: char('currency_code', { length: 3 }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
     amount: bigint('amount', { mode: 'number' }).notNull(),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },
   (table) => ({
-    currencyCodeCheck: check('promotion_amounts_currency_code_check', sql`${table.currencyCode} ~ '^[A-Z]{3}$'`),
     amountCheck: check('promotion_amounts_amount_check', sql`${table.amount} > 0`),
     promotionIdx: index('idx_promotion_amounts_promotion').on(table.promotionId),
     promoCurrencyUnique: uniqueIndex('uk_promotion_amounts_promo_currency').on(table.promotionId, table.currencyCode),

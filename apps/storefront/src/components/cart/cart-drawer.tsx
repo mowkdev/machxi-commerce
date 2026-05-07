@@ -1,11 +1,11 @@
 'use client';
 
-import { formatFromMinorUnits } from '@repo/utils';
 import { ShoppingBag } from 'lucide-react';
 import Link from 'next/link';
 
 import { CartItem } from '@/components/cart/cart-item';
 import { Button } from '@/components/ui/button';
+import { useFormatMoney } from '@/lib/format-money';
 import { Separator } from '@/components/ui/separator';
 import {
   Sheet,
@@ -87,22 +87,23 @@ export function CartDrawer() {
 }
 
 function CartTotals({ cart }: { cart: NonNullable<ReturnType<typeof useCart>['cart']> }) {
+  const formatMoney = useFormatMoney();
   return (
     <div className="space-y-2 text-sm">
       <div className="flex justify-between">
         <span className="text-muted-foreground">Subtotal</span>
-        <span>{formatFromMinorUnits(cart.totals.subtotal, cart.currencyCode)}</span>
+        <span>{formatMoney(cart.totals.subtotal, cart.currencyCode)}</span>
       </div>
       <div className="flex justify-between">
         <span className="text-muted-foreground">Discounts</span>
         <span>
-          -{formatFromMinorUnits(cart.totals.discountTotal, cart.currencyCode)}
+          -{formatMoney(cart.totals.discountTotal, cart.currencyCode)}
         </span>
       </div>
       <Separator />
       <div className="flex justify-between text-base font-semibold">
         <span>Total</span>
-        <span>{formatFromMinorUnits(cart.totals.total, cart.currencyCode)}</span>
+        <span>{formatMoney(cart.totals.total, cart.currencyCode)}</span>
       </div>
     </div>
   );

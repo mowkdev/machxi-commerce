@@ -2,6 +2,9 @@
  * Seeds the product catalog: categories, media, options, products, variants.
  * Idempotent — safe to re-run. Use `pnpm db:reset-catalog` to wipe first.
  *
+ * Ensures **EUR** exists in `currencies` before inserting prices (FK). Full
+ * multi-currency defaults remain `pnpm db:seed-currencies` / `db:init`.
+ *
  * Media strategy:
  *   - Each product gets one product-level image (unique Picsum photo per product).
  *   - Color variants each get a shared color swatch image (same image for "red"
@@ -16,6 +19,7 @@ import { and, eq } from 'drizzle-orm';
 import {
   categories,
   categoryTranslations,
+  currencies,
   inventoryItems,
   inventoryLevels,
   languages,
@@ -536,6 +540,31 @@ async function ensureStockLocations(db: Db): Promise<string[]> {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// CURRENCY (FK for catalog prices)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Catalog prices use `currency_code: 'EUR'`. Ensures that row exists so inserts
+ * into `prices` never violate the FK — even when `db:seed-catalog` runs without
+ * a prior `db:seed-currencies`. Idempotent (`ON CONFLICT DO NOTHING`). Does not
+ * assign store default; `seed-currencies.ts` sets `DEFAULT_CURRENCY`.
+ */
+async function ensureCatalogCurrencies(db: Db): Promise<void> {
+  await db
+    .insert(currencies)
+    .values({
+      code: 'EUR',
+      name: 'Euro',
+      symbol: '€',
+      decimalDigits: 2,
+      isActive: true,
+      isDefault: false,
+      displayOrder: 10,
+    })
+    .onConflictDoNothing({ target: currencies.code });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // PRICING / INVENTORY HELPERS
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -801,6 +830,7 @@ async function main(): Promise<void> {
   closeDatabase = closeDb;
 
   await ensureLanguage(db);
+  await ensureCatalogCurrencies(db);
   const taxClassId = await ensureTaxClass(db);
   const options = await ensureOptions(db);
   const categoryIds = await ensureCategories(db);
