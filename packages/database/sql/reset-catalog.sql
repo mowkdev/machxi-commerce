@@ -58,6 +58,12 @@ AND NOT EXISTS (
   SELECT 1 FROM inventory_transactions WHERE inventory_transactions.inventory_item_id = inventory_items.id
 );
 
+-- Orphaned stock locations (inventory_levels cascade-deleted with inventory_items above)
+DELETE FROM stock_locations
+WHERE NOT EXISTS (
+  SELECT 1 FROM inventory_levels WHERE inventory_levels.location_id = stock_locations.id
+);
+
 -- Orphaned media (no longer attached to any product or variant)
 DELETE FROM media
 WHERE NOT EXISTS (SELECT 1 FROM product_media WHERE product_media.media_id = media.id)

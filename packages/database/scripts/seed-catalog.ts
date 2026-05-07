@@ -17,6 +17,7 @@ import {
   categories,
   categoryTranslations,
   inventoryItems,
+  inventoryLevels,
   languages,
   media,
   optionDefinitions,
@@ -32,6 +33,7 @@ import {
   products,
   productTranslations,
   productVariants,
+  stockLocations,
   taxClasses,
   variantMedia,
   variantOptionValues,
@@ -480,6 +482,60 @@ async function ensureCategories(db: Db): Promise<Map<string, string>> {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// STOCK LOCATION HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+
+const LOCATION_SPECS = [
+  { name: 'Main Warehouse' },
+  { name: 'Retail Store' },
+];
+
+/**
+ * Deterministic stock quantity per SKU + location.
+ * Location 0 (Main Warehouse): mostly 20-120 units, ~15% low (1-8), ~5% zero.
+ * Location 1 (Retail Store):   mostly 5-25 units,  ~10% low (1-4), ~10% zero.
+ */
+function stockFor(sku: string, locationIndex: number): number {
+  let h = 0;
+  for (const c of sku) h = Math.imul(31, h) + c.charCodeAt(0) | 0;
+  const abs = Math.abs(h);
+
+  if (locationIndex === 0) {
+    const bucket = abs % 20;
+    if (bucket === 0)      return 0;                       // 5%  — out of stock
+    if (bucket <= 3)       return (abs >> 4) % 8 + 1;     // 15% — low (1–8)
+    return                        (abs >> 6) % 101 + 20;  // 80% — normal (20–120)
+  } else {
+    const bucket = abs % 10;
+    if (bucket === 0)      return 0;                       // 10% — zero
+    if (bucket === 1)      return (abs >> 3) % 4 + 1;     // 10% — low (1–4)
+    return                        (abs >> 5) % 21 + 5;    // 80% — normal (5–25)
+  }
+}
+
+async function ensureStockLocations(db: Db): Promise<string[]> {
+  const ids: string[] = [];
+  for (const spec of LOCATION_SPECS) {
+    const [existing] = await db
+      .select({ id: stockLocations.id })
+      .from(stockLocations)
+      .where(eq(stockLocations.name, spec.name))
+      .limit(1);
+
+    if (existing) {
+      ids.push(existing.id);
+    } else {
+      const [created] = await db
+        .insert(stockLocations)
+        .values({ name: spec.name })
+        .returning({ id: stockLocations.id });
+      ids.push(created.id);
+    }
+  }
+  return ids;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // PRICING / INVENTORY HELPERS
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -510,7 +566,8 @@ async function seedProduct(
   spec: ProductSpec,
   taxClassId: string,
   options: OptionCatalog,
-  categoryIds: Map<string, string>
+  categoryIds: Map<string, string>,
+  locationIds: string[]
 ): Promise<void> {
   const isVariable = !!(spec.colors?.length || spec.sizes?.length);
 
@@ -584,6 +641,11 @@ async function seedProduct(
       priceSetId,
       inventoryItemId: inv.id,
     });
+    for (let i = 0; i < locationIds.length; i++) {
+      await db.insert(inventoryLevels)
+        .values({ inventoryItemId: inv.id, locationId: locationIds[i], stockedQuantity: stockFor(spec.sku, i) })
+        .onConflictDoNothing();
+    }
     return;
   }
 
@@ -700,6 +762,13 @@ async function seedProduct(
         .onConflictDoNothing();
     }
 
+    // Inventory levels for each location
+    for (let i = 0; i < locationIds.length; i++) {
+      await db.insert(inventoryLevels)
+        .values({ inventoryItemId: inv.id, locationId: locationIds[i], stockedQuantity: stockFor(variantSku, i) })
+        .onConflictDoNothing();
+    }
+
     // Attach variant media for color variants (size-only variants use the product image)
     if (colorCode && COLOR_PICSUM[colorCode] !== undefined) {
       const colorMediaId = await upsertMedia(db, {
@@ -735,16 +804,18 @@ async function main(): Promise<void> {
   const taxClassId = await ensureTaxClass(db);
   const options = await ensureOptions(db);
   const categoryIds = await ensureCategories(db);
+  const locationIds = await ensureStockLocations(db);
+  console.log(`Stock locations: ${LOCATION_SPECS.map((l) => l.name).join(', ')}`);
 
   console.log(`Seeding ${PRODUCT_SPECS.length} products...`);
   for (const spec of PRODUCT_SPECS) {
-    await seedProduct(db, spec, taxClassId, options, categoryIds);
+    await seedProduct(db, spec, taxClassId, options, categoryIds, locationIds);
     console.log(`  ✓ ${spec.sku}  ${spec.name}`);
   }
 
   const simpleCount = PRODUCT_SPECS.filter((p) => !p.colors?.length && !p.sizes?.length).length;
   const variableCount = PRODUCT_SPECS.length - simpleCount;
-  console.log(`\nDone. ${simpleCount} simple, ${variableCount} variable products across ${categoryIds.size} categories.`);
+  console.log(`\nDone. ${simpleCount} simple, ${variableCount} variable products across ${categoryIds.size} categories, stocked at ${locationIds.length} locations.`);
 }
 
 main()
