@@ -12,6 +12,7 @@ import {
   inventoryLevels,
   inventoryTransactions,
   languages,
+  paymentProviders,
   priceSets,
   prices,
   productTranslations,
@@ -47,6 +48,19 @@ beforeAll(async () => {
       .insert(languages)
       .values({ code: "en", name: "English", isDefault: true });
   }
+
+  await db
+    .insert(paymentProviders)
+    .values({
+      code: "manual_invoice",
+      name: "Manual invoice",
+      description: null,
+      kind: "manual",
+      isEnabled: true,
+      displayOrder: 0,
+      config: {},
+    })
+    .onConflictDoNothing({ target: paymentProviders.code });
 });
 
 function token() {
@@ -218,6 +232,7 @@ describe("customer flow: register → browse → cart → checkout → orders", 
     const placed = await placeOrder({
       cartId: cart.id,
       caller: { customerId },
+      paymentProviderCode: "manual_invoice",
     });
     expect(placed.status).toBe("awaiting_payment");
     expect(placed.displayId).toMatch(/^ORD-/);
@@ -310,6 +325,7 @@ describe("customer flow: register → browse → cart → checkout → orders", 
     const placed = await placeOrder({
       cartId: cart.id,
       caller: { customerId: buyerId },
+      paymentProviderCode: "manual_invoice",
     });
 
     const fromStranger = await getMyOrder(strangerId, placed.orderId);
@@ -335,7 +351,11 @@ describe("customer flow: register → browse → cart → checkout → orders", 
       { customerId },
     );
     await expect(
-      placeOrder({ cartId: cart.id, caller: { customerId } }),
+      placeOrder({
+        cartId: cart.id,
+        caller: { customerId },
+        paymentProviderCode: "manual_invoice",
+      }),
     ).rejects.toThrow(/shipping address/i);
   });
 
@@ -350,7 +370,11 @@ describe("customer flow: register → browse → cart → checkout → orders", 
     const customerId = session.customer.id;
     const cart = await createCart({ currencyCode: "EUR", customerId });
     await expect(
-      placeOrder({ cartId: cart.id, caller: { customerId } }),
+      placeOrder({
+        cartId: cart.id,
+        caller: { customerId },
+        paymentProviderCode: "manual_invoice",
+      }),
     ).rejects.toThrow(/empty/i);
   });
 });

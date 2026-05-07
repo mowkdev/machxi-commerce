@@ -20,18 +20,20 @@
 //   9. Delete cart (cart_items + reservations cascade via FK).
 
 import { db } from "@repo/database/client";
-import { and, eq, inArray, sql } from "@repo/database";
+import { and, asc, eq, inArray, sql } from "@repo/database";
 import {
   addresses,
   cartPromotions,
   cartItems,
   carts,
+  customers,
   inventoryLevels,
   inventoryTransactions,
   orderItems,
   orderItemTaxes,
   orderLogs,
   orders,
+  paymentProviders,
   payments,
   productVariants,
   promotionUsage,
@@ -39,8 +41,16 @@ import {
   taxRates,
 } from "@repo/database/schema";
 import { conflict, notFound, validationFailed } from "../lib/errors";
+import { logger } from "../lib/logger";
+import { startPlaceOrderWorkflow } from "../lib/temporal-checkout";
+import {
+  assertProviderRuntimeReady,
+  getBuiltInPaymentProvider,
+} from "../payments/providers/registry";
+import { sanitizeProviderConfigForStorefront } from "../payments/storefront-config";
 import { loadCart } from "../store-carts/query";
 import { assertCanMutate } from "../store-carts/service";
+import type { StorefrontPaymentMethod } from "@repo/types/storefront";
 
 type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
@@ -55,12 +65,62 @@ function generateDisplayId(): string {
 interface PlaceOrderArgs {
   cartId: string;
   caller: { customerId: string | null };
+  paymentProviderCode: string;
 }
 
 export interface PlaceOrderResult {
   orderId: string;
   displayId: string;
   status: "awaiting_payment";
+  payment: {
+    providerCode: string;
+    kind: "automatic" | "manual";
+    clientPayload: unknown | null;
+  };
+  paymentSessionError?: string;
+}
+
+export async function listStorefrontPaymentMethods(): Promise<
+  StorefrontPaymentMethod[]
+> {
+  const rows = await db
+    .select()
+    .from(paymentProviders)
+    .where(eq(paymentProviders.isEnabled, true))
+    .orderBy(asc(paymentProviders.displayOrder), asc(paymentProviders.code));
+
+  return rows.map((r) => ({
+    code: r.code,
+    name: r.name,
+    description: r.description ?? null,
+    kind: r.kind,
+    displayOrder: r.displayOrder,
+    config: sanitizeProviderConfigForStorefront(
+      r.code,
+      mapConfigRecord(r.config),
+    ),
+  }));
+}
+
+async function loadEnabledPaymentProviderRow(codeNorm: string) {
+  const [row] = await db
+    .select()
+    .from(paymentProviders)
+    .where(
+      and(
+        eq(paymentProviders.code, codeNorm),
+        eq(paymentProviders.isEnabled, true),
+      ),
+    )
+    .limit(1);
+  return row ?? null;
+}
+
+function mapConfigRecord(config: unknown): Record<string, unknown> {
+  if (config && typeof config === "object" && !Array.isArray(config)) {
+    return config as Record<string, unknown>;
+  }
+  return {};
 }
 
 async function snapshotAddress(
@@ -158,6 +218,20 @@ async function decrementInventoryForLines(
 export async function placeOrder(
   args: PlaceOrderArgs,
 ): Promise<PlaceOrderResult> {
+  const codeNorm = args.paymentProviderCode.trim().toLowerCase();
+  const providerRow = await loadEnabledPaymentProviderRow(codeNorm);
+  if (!providerRow) {
+    throw validationFailed("Payment method is not available", {
+      code: args.paymentProviderCode,
+    });
+  }
+  const builtIn = getBuiltInPaymentProvider(providerRow.code);
+  if (!builtIn) {
+    throw validationFailed("Unsupported payment provider", {
+      code: providerRow.code,
+    });
+  }
+
   // Pre-flight (outside tx) — cheap auth check + cart existence.
   const [cartRow] = await db
     .select()
@@ -192,8 +266,18 @@ export async function placeOrder(
     );
   }
 
+  let customerEmail: string | null = null;
+  if (cartRow.customerId) {
+    const [cust] = await db
+      .select({ email: customers.email })
+      .from(customers)
+      .where(eq(customers.id, cartRow.customerId))
+      .limit(1);
+    customerEmail = cust?.email ?? null;
+  }
+
   const totals = projected.totals;
-  const orderId = await db.transaction(async (tx) => {
+  const orderResult = await db.transaction(async (tx) => {
     const displayId = generateDisplayId();
     const shippingSnapshot = await snapshotAddress(
       tx,
@@ -283,13 +367,18 @@ export async function placeOrder(
     }
 
     // Pending payment row covering the full total.
-    await tx.insert(payments).values({
-      orderId: order.id,
-      amount: totals.total,
-      currencyCode: cartRow.currencyCode,
-      providerId: "stub",
-      status: "pending",
-    });
+    const [payRow] = await tx
+      .insert(payments)
+      .values({
+        orderId: order.id,
+        amount: totals.total,
+        currencyCode: cartRow.currencyCode,
+        providerId: providerRow.code,
+        status: "pending",
+        metadata: sql`'{}'::jsonb`,
+      })
+      .returning({ id: payments.id });
+    if (!payRow) throw conflict("Failed to create payment row");
 
     // Promotion usage records (idempotent via uk_promotion_usage_promo_order).
     for (const promo of projected.promotions) {
@@ -315,14 +404,98 @@ export async function placeOrder(
     await tx.delete(cartItems).where(eq(cartItems.cartId, cartRow.id));
     await tx.delete(carts).where(eq(carts.id, cartRow.id));
 
-    return { id: order.id, displayId };
+    return {
+      orderId: order.id,
+      displayId,
+      paymentId: payRow.id,
+      providerCode: providerRow.code,
+      kind: providerRow.kind,
+    };
   });
 
-  return {
-    orderId: orderId.id,
-    displayId: orderId.displayId,
-    status: "awaiting_payment",
-  };
+  const idempotencyKey = `order:${orderResult.orderId}:create-session`;
+  let result: PlaceOrderResult;
+  try {
+    assertProviderRuntimeReady(orderResult.providerCode, orderResult.kind);
+    const cfg = mapConfigRecord(providerRow.config);
+    const session = await builtIn.createSession({
+      paymentId: orderResult.paymentId,
+      orderId: orderResult.orderId,
+      amount: totals.total,
+      currencyCode: cartRow.currencyCode,
+      idempotencyKey,
+      config: cfg,
+      customer: {
+        customerId: cartRow.customerId,
+        email: customerEmail,
+      },
+    });
+
+    const metadata: Record<string, unknown> = {
+      ...((session.remoteId ? { paymentIntentId: session.remoteId } : {}) as Record<
+        string,
+        unknown
+      >),
+    };
+    if (
+      typeof session.clientPayload === "object" &&
+      session.clientPayload !== null &&
+      "clientSecret" in session.clientPayload &&
+      typeof (session.clientPayload as { clientSecret?: unknown }).clientSecret ===
+        "string"
+    ) {
+      metadata.clientSecret = (
+        session.clientPayload as { clientSecret: string }
+      ).clientSecret;
+    }
+
+    await db
+      .update(payments)
+      .set({ metadata })
+      .where(eq(payments.id, orderResult.paymentId));
+
+    result = {
+      orderId: orderResult.orderId,
+      displayId: orderResult.displayId,
+      status: "awaiting_payment",
+      payment: {
+        providerCode: orderResult.providerCode,
+        kind: orderResult.kind,
+        clientPayload: session.clientPayload,
+      },
+    };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Payment session failed";
+    await db.insert(orderLogs).values({
+      orderId: orderResult.orderId,
+      eventType: "payment_session_failed",
+      metadata: { paymentId: orderResult.paymentId, error: message },
+    });
+    result = {
+      orderId: orderResult.orderId,
+      displayId: orderResult.displayId,
+      status: "awaiting_payment",
+      payment: {
+        providerCode: orderResult.providerCode,
+        kind: orderResult.kind,
+        clientPayload: null,
+      },
+      paymentSessionError: message,
+    };
+  }
+
+  try {
+    await startPlaceOrderWorkflow({
+      orderId: orderResult.orderId,
+      paymentId: orderResult.paymentId,
+      providerCode: orderResult.providerCode,
+      providerKind: orderResult.kind,
+    });
+  } catch (e) {
+    logger.warn({ err: e, orderId: orderResult.orderId }, "temporal workflow start failed");
+  }
+
+  return result;
 }
 
 void taxRates;

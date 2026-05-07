@@ -126,6 +126,9 @@ CREATE TRIGGER trg_shipping_zones_set_updated_at
 CREATE TRIGGER trg_orders_set_updated_at
   BEFORE UPDATE ON orders FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
+CREATE TRIGGER trg_payment_providers_set_updated_at
+  BEFORE UPDATE ON payment_providers FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
 CREATE TRIGGER trg_payments_set_updated_at
   BEFORE UPDATE ON payments FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 

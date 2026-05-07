@@ -11,6 +11,7 @@ import type {
   StoreCompleteCart404,
   StoreCompleteCart409,
   StoreCompleteCart500,
+  StoreCompleteCartMutationRequest,
   StoreCompleteCartMutationResponse,
   StoreCompleteCartPathParams,
 } from "../types/StoreCompleteCart.ts";
@@ -29,6 +30,12 @@ export const storeCompleteCart201Schema = z.object({
     orderId: z.uuid(),
     displayId: z.string(),
     status: z.string(),
+    payment: z.object({
+      providerCode: z.string(),
+      kind: z.enum(["automatic", "manual"]),
+      clientPayload: z.union([z.any(), z.null()]),
+    }),
+    paymentSessionError: z.optional(z.string()),
   }),
 }) as unknown as z.ZodType<StoreCompleteCart201>;
 
@@ -103,6 +110,9 @@ export const storeCompleteCart500Schema = z.object({
     details: z.optional(z.object({}).catchall(z.any())),
   }),
 }) as unknown as z.ZodType<StoreCompleteCart500>;
+
+export const storeCompleteCartMutationRequestSchema =
+  z.any() as unknown as z.ZodType<StoreCompleteCartMutationRequest>;
 
 export const storeCompleteCartMutationResponseSchema = z.lazy(
   () => storeCompleteCart201Schema,

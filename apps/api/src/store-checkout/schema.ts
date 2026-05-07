@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { cartIdParam } from "@repo/types/storefront";
+import {
+  cartIdParam,
+  completeCartBody,
+  placeOrderResult,
+  storefrontPaymentMethod,
+} from "@repo/types/storefront";
 
-export { cartIdParam };
+export { cartIdParam, completeCartBody, placeOrderResult, storefrontPaymentMethod };
 
-export const placeOrderResult = z.object({
-  orderId: z.string().uuid(),
-  displayId: z.string(),
-  status: z.string(),
-});
-export type PlaceOrderResult = z.infer<typeof placeOrderResult>;
+export const storefrontPaymentMethodsEnvelope = z.array(storefrontPaymentMethod);

@@ -14,6 +14,7 @@ export { storeGetProductByHandle } from "./storeGetProductByHandle.ts";
 export { storeListAddresses } from "./storeListAddresses.ts";
 export { storeListCategories } from "./storeListCategories.ts";
 export { storeListMyOrders } from "./storeListMyOrders.ts";
+export { storeListPaymentMethods } from "./storeListPaymentMethods.ts";
 export { storeListProducts } from "./storeListProducts.ts";
 export { storeLoginCustomer } from "./storeLoginCustomer.ts";
 export { storeRegisterCustomer } from "./storeRegisterCustomer.ts";

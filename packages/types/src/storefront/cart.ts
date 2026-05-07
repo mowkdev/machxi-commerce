@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { createCustomerAddressBody } from '../admin/customer';
+
 // Storefront cart DTOs. Cart totals are *always* computed server-side and
 // projected on every read — clients never set them.
 
@@ -77,10 +79,26 @@ export const updateCartLineItemBody = z.object({
 });
 export type UpdateCartLineItemBody = z.infer<typeof updateCartLineItemBody>;
 
-export const setCartAddressesBody = z.object({
-  shippingAddressId: z.string().uuid().nullable().optional(),
-  billingAddressId: z.string().uuid().nullable().optional(),
-});
+export const setCartAddressesBody = z
+  .object({
+    shippingAddressId: z.string().uuid().nullable().optional(),
+    billingAddressId: z.string().uuid().nullable().optional(),
+    /** For guest carts: create a detached address row (`customer_id` null) */
+    guestShippingAddress: createCustomerAddressBody.optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (
+      data.guestShippingAddress &&
+      data.shippingAddressId !== undefined
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        message:
+          'Use either guestShippingAddress or shippingAddressId, not both',
+        path: ['guestShippingAddress'],
+      });
+    }
+  });
 export type SetCartAddressesBody = z.infer<typeof setCartAddressesBody>;
 
 export const applyPromotionBody = z.object({

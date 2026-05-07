@@ -32,6 +32,12 @@ const sections: SettingsNavSection[] = [
     ],
   },
   {
+    title: "Payments",
+    items: [
+      { title: "Payment providers", url: "/settings/payments/providers" },
+    ],
+  },
+  {
     title: "Locations",
     items: [{ title: "Stock locations", url: "/settings/locations" }],
   },

@@ -92,6 +92,11 @@ export const paymentTransactionStatusEnum = pgEnum('payment_transaction_status',
   'failed',
 ]);
 
+export const paymentProviderKindEnum = pgEnum('payment_provider_kind', [
+  'automatic',
+  'manual',
+]);
+
 export const fulfillmentStatusEnum = pgEnum('fulfillment_status', [
   'pending',
   'partially_fulfilled',

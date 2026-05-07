@@ -60,6 +60,9 @@ import RoleEditPage from "@/pages/roles/RoleEditPage";
 import OptionDefinitionsPage from "@/pages/options/OptionDefinitionsPage";
 import OptionDefinitionCreatePage from "@/pages/options/OptionDefinitionCreatePage";
 import OptionDefinitionEditPage from "@/pages/options/OptionDefinitionEditPage";
+import PaymentProvidersPage from "@/pages/payment-providers/PaymentProvidersPage";
+import PaymentProviderCreatePage from "@/pages/payment-providers/PaymentProviderCreatePage";
+import PaymentProviderEditPage from "@/pages/payment-providers/PaymentProviderEditPage";
 
 export default function App() {
   return (
@@ -143,6 +146,18 @@ export default function App() {
             <Route
               path="shipping/options/:id"
               element={<ShippingOptionEditPage />}
+            />
+            <Route
+              path="payments/providers"
+              element={<PaymentProvidersPage />}
+            />
+            <Route
+              path="payments/providers/new"
+              element={<PaymentProviderCreatePage />}
+            />
+            <Route
+              path="payments/providers/:id"
+              element={<PaymentProviderEditPage />}
             />
             <Route path="locations" element={<StockLocationsPage />} />
             <Route path="locations/new" element={<StockLocationCreatePage />} />

@@ -38,6 +38,9 @@ const schema = z.object({
     .transform((v) => v === 'true'),
   S3_PUBLIC_URL: z.string().url(),
   MEDIA_MAX_BYTES: z.coerce.number().int().positive().default(26214400),
+  STRIPE_SECRET_KEY: z.string().trim().optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().trim().optional(),
+  TEMPORAL_ADDRESS: z.string().trim().optional(),
 });
 
 const parsed = schema.safeParse(process.env);

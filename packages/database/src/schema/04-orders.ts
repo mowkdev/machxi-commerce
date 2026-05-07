@@ -22,7 +22,9 @@ import {
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import {
+  citext,
   orderStatusEnum,
+  paymentProviderKindEnum,
   paymentStatusEnum,
   paymentTransactionTypeEnum,
   paymentTransactionStatusEnum,
@@ -227,6 +229,31 @@ export const orderShippingLineTaxes = pgTable(
 // Note: Requires immutability trigger (see migrations/triggers.sql)
 
 // ────────────────────────────────────────────────────────────────────────────
+// PAYMENT PROVIDERS (admin-configured; payments.provider_id matches code)
+// ────────────────────────────────────────────────────────────────────────────
+
+export const paymentProviders = pgTable(
+  'payment_providers',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    code: citext('code').notNull().unique(),
+    name: varchar('name').notNull(),
+    description: text('description'),
+    kind: paymentProviderKindEnum('kind').notNull(),
+    isEnabled: boolean('is_enabled').notNull().default(false),
+    displayOrder: integer('display_order').notNull().default(0),
+    config: jsonb('config').notNull().default(sql`'{}'::jsonb`),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (table) => ({
+    codeIdx: index('idx_payment_providers_code').on(table.code),
+    enabledIdx: index('idx_payment_providers_enabled').on(table.isEnabled),
+  })
+);
+// Note: Requires updated_at trigger (see post-push.sql)
+
+// ────────────────────────────────────────────────────────────────────────────
 // PAYMENTS
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -241,6 +268,7 @@ export const payments = pgTable(
     currencyCode: char('currency_code', { length: 3 }).notNull(),
     providerId: varchar('provider_id').notNull(),
     status: paymentStatusEnum('status').notNull().default('pending'),
+    metadata: jsonb('metadata'),
     createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   },

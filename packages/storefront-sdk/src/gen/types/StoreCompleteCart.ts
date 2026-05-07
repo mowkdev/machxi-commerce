@@ -10,6 +10,14 @@ export type StoreCompleteCartPathParams = {
   id: string;
 };
 
+export const storeCompleteCart201PaymentKindEnum = {
+  automatic: "automatic",
+  manual: "manual",
+} as const;
+
+export type StoreCompleteCart201PaymentKindEnumKey =
+  (typeof storeCompleteCart201PaymentKindEnum)[keyof typeof storeCompleteCart201PaymentKindEnum];
+
 /**
  * @description Order placed
  */
@@ -34,6 +42,24 @@ export type StoreCompleteCart201 = {
      * @type string
      */
     status: string;
+    /**
+     * @type object
+     */
+    payment: {
+      /**
+       * @type string
+       */
+      providerCode: string;
+      /**
+       * @type string
+       */
+      kind: StoreCompleteCart201PaymentKindEnumKey;
+      clientPayload: any | null;
+    };
+    /**
+     * @type string | undefined
+     */
+    paymentSessionError?: string;
   };
 };
 
@@ -211,10 +237,13 @@ export type StoreCompleteCart500 = {
   };
 };
 
+export type StoreCompleteCartMutationRequest = any;
+
 export type StoreCompleteCartMutationResponse = StoreCompleteCart201;
 
 export type StoreCompleteCartMutation = {
   Response: StoreCompleteCart201;
+  Request: StoreCompleteCartMutationRequest;
   PathParams: StoreCompleteCartPathParams;
   Errors:
     | StoreCompleteCart400

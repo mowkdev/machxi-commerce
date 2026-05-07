@@ -18,6 +18,7 @@ import { promotionsRoutes } from "./promotions/routes";
 import { stockLocationsRoutes } from "./stock-locations/routes";
 import { inventoryRoutes } from "./inventory/routes";
 import { shippingRoutes } from "./shipping/routes";
+import { paymentProvidersRoutes } from "./payment-providers/routes";
 import { customersRoutes } from "./customers/routes";
 import { adminCartsRoutes } from "./admin-carts/routes";
 import { ordersRoutes } from "./orders/routes";
@@ -32,6 +33,7 @@ import { storeCatalogRoutes } from "./store-catalog/routes";
 import { storeCartsRoutes } from "./store-carts/routes";
 import { storeCheckoutRoutes } from "./store-checkout/routes";
 import { storeOrdersRoutes } from "./store-orders/routes";
+import { paymentWebhookRoutes } from "./payments/webhooks/routes";
 import { logger } from "./lib/logger";
 import { requestLogger } from "./lib/requestLogger";
 import { err, errFromException } from "./lib/response";
@@ -80,6 +82,7 @@ export function createApp() {
   app.route("/api/inventory", inventoryRoutes);
   app.route("/api/media", mediaRoutes);
   app.route("/api/shipping", shippingRoutes);
+  app.route("/api/payment-providers", paymentProvidersRoutes);
   app.route("/api/customers", customersRoutes);
   app.route("/api/carts", adminCartsRoutes);
   app.route("/api/orders", ordersRoutes);
@@ -94,6 +97,7 @@ export function createApp() {
   app.route("/api/store/carts", storeCartsRoutes);
   app.route("/api/store", storeCheckoutRoutes);
   app.route("/api/store/orders", storeOrdersRoutes);
+  app.route("/api/payments/webhooks", paymentWebhookRoutes);
 
   if (env.OPENAPI_DOCS_ENABLED) {
     // Mounted last so it can introspect every registered route.

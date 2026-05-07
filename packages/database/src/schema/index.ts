@@ -76,6 +76,7 @@ export {
   orderItems,
   orderItemTaxes,
   orderShippingLineTaxes,
+  paymentProviders,
   payments,
   paymentTransactions,
   fulfillments,

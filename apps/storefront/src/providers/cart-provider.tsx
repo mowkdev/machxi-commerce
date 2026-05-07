@@ -24,6 +24,8 @@ type CartContextValue = {
   itemCount: number;
   isLoading: boolean;
   isMutating: boolean;
+  /** Creates a cart when none is stored; returns the cart id. */
+  ensureCart: () => Promise<string>;
   addItem: (variantId: string, quantity?: number) => Promise<void>;
   updateItem: (itemId: string, quantity: number) => Promise<void>;
   removeItem: (itemId: string) => Promise<void>;
@@ -189,6 +191,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         addLineItem.isPending ||
         updateLineItem.isPending ||
         removeLineItem.isPending,
+      ensureCart,
       addItem,
       updateItem,
       removeItem,
@@ -202,6 +205,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       cartQuery.isLoading,
       clearCart,
       createCart.isPending,
+      ensureCart,
       itemCount,
       removeItem,
       removeLineItem.isPending,

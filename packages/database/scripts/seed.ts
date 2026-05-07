@@ -7,7 +7,15 @@ import bcrypt from 'bcryptjs';
 import { and, eq } from 'drizzle-orm';
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { languages, permissions, rolePermissions, roles, userRoles, users } from '../src/schema';
+import {
+  languages,
+  paymentProviders,
+  permissions,
+  rolePermissions,
+  roles,
+  userRoles,
+  users,
+} from '../src/schema';
 
 /** Set after `../src/client` loads — client reads DATABASE_URL at module init, so load .env first in main(). */
 let closeDatabase: () => Promise<void> = async () => {};
@@ -50,6 +58,34 @@ async function main(): Promise<void> {
     .insert(languages)
     .values({ code: 'en', name: 'English', isDefault: true })
     .onConflictDoNothing();
+
+  // Payment providers (Stripe disabled until keys set; invoice on by default)
+  await db
+    .insert(paymentProviders)
+    .values({
+      code: 'manual_invoice',
+      name: 'Pay by invoice',
+      description:
+        'We will issue an invoice. Your order awaits payment before fulfillment.',
+      kind: 'manual',
+      isEnabled: true,
+      displayOrder: 10,
+      config: {},
+    })
+    .onConflictDoNothing({ target: paymentProviders.code });
+
+  await db
+    .insert(paymentProviders)
+    .values({
+      code: 'stripe',
+      name: 'Card (Stripe)',
+      description: 'Pay securely by card.',
+      kind: 'automatic',
+      isEnabled: false,
+      displayOrder: 20,
+      config: {},
+    })
+    .onConflictDoNothing({ target: paymentProviders.code });
 
   const [adminRole] = await db
     .insert(roles)

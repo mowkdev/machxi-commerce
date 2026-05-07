@@ -52,6 +52,7 @@ export {
   storeCompleteCart404Schema,
   storeCompleteCart409Schema,
   storeCompleteCart500Schema,
+  storeCompleteCartMutationRequestSchema,
   storeCompleteCartMutationResponseSchema,
   storeCompleteCartPathParamsSchema,
 } from "./storeCompleteCartSchema.ts";
@@ -175,6 +176,16 @@ export {
   storeListMyOrdersQueryParamsSchema,
   storeListMyOrdersQueryResponseSchema,
 } from "./storeListMyOrdersSchema.ts";
+export {
+  storeListPaymentMethods200Schema,
+  storeListPaymentMethods400Schema,
+  storeListPaymentMethods401Schema,
+  storeListPaymentMethods403Schema,
+  storeListPaymentMethods404Schema,
+  storeListPaymentMethods409Schema,
+  storeListPaymentMethods500Schema,
+  storeListPaymentMethodsQueryResponseSchema,
+} from "./storeListPaymentMethodsSchema.ts";
 export {
   storeListProducts200Schema,
   storeListProducts400Schema,

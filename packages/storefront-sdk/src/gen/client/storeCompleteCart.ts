@@ -6,6 +6,7 @@
 import fetch from "../../runtime";
 import type { Client, RequestConfig, ResponseErrorConfig } from "../../runtime";
 import type {
+  StoreCompleteCartMutationRequest,
   StoreCompleteCartMutationResponse,
   StoreCompleteCartPathParams,
   StoreCompleteCart400,
@@ -15,7 +16,10 @@ import type {
   StoreCompleteCart409,
   StoreCompleteCart500,
 } from "../types/StoreCompleteCart.ts";
-import { storeCompleteCartMutationResponseSchema } from "../zod/storeCompleteCartSchema.ts";
+import {
+  storeCompleteCartMutationResponseSchema,
+  storeCompleteCartMutationRequestSchema,
+} from "../zod/storeCompleteCartSchema.ts";
 
 function getStoreCompleteCartUrl(id: StoreCompleteCartPathParams["id"]) {
   const res = {
@@ -31,9 +35,14 @@ function getStoreCompleteCartUrl(id: StoreCompleteCartPathParams["id"]) {
  */
 export async function storeCompleteCart(
   id: StoreCompleteCartPathParams["id"],
-  config: Partial<RequestConfig> & { client?: Client } = {},
+  data: StoreCompleteCartMutationRequest,
+  config: Partial<RequestConfig<StoreCompleteCartMutationRequest>> & {
+    client?: Client;
+  } = {},
 ) {
   const { client: request = fetch, ...requestConfig } = config;
+
+  const requestData = storeCompleteCartMutationRequestSchema.parse(data);
 
   const res = await request<
     StoreCompleteCartMutationResponse,
@@ -45,10 +54,11 @@ export async function storeCompleteCart(
       | StoreCompleteCart409
       | StoreCompleteCart500
     >,
-    unknown
+    StoreCompleteCartMutationRequest
   >({
     method: "POST",
     url: getStoreCompleteCartUrl(id).url.toString(),
+    data: requestData,
     ...requestConfig,
   });
   return storeCompleteCartMutationResponseSchema.parse(res.data);

@@ -103,12 +103,12 @@ export function CartPageContent() {
               {formatFromMinorUnits(cart.totals.total, cart.currencyCode)}
             </span>
           </div>
-          <Button className="w-full" disabled>
-            Checkout coming soon
+          <Button asChild className="w-full">
+            <Link href="/checkout">Checkout</Link>
           </Button>
           <p className="text-xs text-muted-foreground">
-            Cart completion is available in the SDK and can be connected once
-            checkout requirements are finalized.
+            You&apos;ll enter shipping details and choose a payment method on the
+            checkout page.
           </p>
         </CardContent>
       </Card>

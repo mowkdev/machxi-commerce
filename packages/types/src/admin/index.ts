@@ -13,3 +13,4 @@ export * from "./shipping";
 export * from "./cart";
 export * from "./customer";
 export * from "./option-definition";
+export * from "./payment-provider";

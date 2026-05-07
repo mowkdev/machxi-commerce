@@ -10,6 +10,7 @@ import type {
   QueryClient,
 } from "@tanstack/react-query";
 import type {
+  StoreCompleteCartMutationRequest,
   StoreCompleteCartMutationResponse,
   StoreCompleteCartPathParams,
   StoreCompleteCart400,
@@ -30,7 +31,9 @@ export type StoreCompleteCartMutationKey = ReturnType<
 >;
 
 export function storeCompleteCartMutationOptions<TContext = unknown>(
-  config: Partial<RequestConfig> & { client?: Client } = {},
+  config: Partial<RequestConfig<StoreCompleteCartMutationRequest>> & {
+    client?: Client;
+  } = {},
 ) {
   const mutationKey = storeCompleteCartMutationKey();
   return mutationOptions<
@@ -43,12 +46,15 @@ export function storeCompleteCartMutationOptions<TContext = unknown>(
       | StoreCompleteCart409
       | StoreCompleteCart500
     >,
-    { id: StoreCompleteCartPathParams["id"] },
+    {
+      id: StoreCompleteCartPathParams["id"];
+      data: StoreCompleteCartMutationRequest;
+    },
     TContext
   >({
     mutationKey,
-    mutationFn: async ({ id }) => {
-      return storeCompleteCart(id, config);
+    mutationFn: async ({ id, data }) => {
+      return storeCompleteCart(id, data, config);
     },
   });
 }
@@ -69,10 +75,15 @@ export function useStoreCompleteCart<TContext>(
         | StoreCompleteCart409
         | StoreCompleteCart500
       >,
-      { id: StoreCompleteCartPathParams["id"] },
+      {
+        id: StoreCompleteCartPathParams["id"];
+        data: StoreCompleteCartMutationRequest;
+      },
       TContext
     > & { client?: QueryClient };
-    client?: Partial<RequestConfig> & { client?: Client };
+    client?: Partial<RequestConfig<StoreCompleteCartMutationRequest>> & {
+      client?: Client;
+    };
   } = {},
 ) {
   const { mutation = {}, client: config = {} } = options ?? {};
@@ -92,7 +103,10 @@ export function useStoreCompleteCart<TContext>(
       | StoreCompleteCart409
       | StoreCompleteCart500
     >,
-    { id: StoreCompleteCartPathParams["id"] },
+    {
+      id: StoreCompleteCartPathParams["id"];
+      data: StoreCompleteCartMutationRequest;
+    },
     TContext
   >;
 
@@ -106,7 +120,10 @@ export function useStoreCompleteCart<TContext>(
       | StoreCompleteCart409
       | StoreCompleteCart500
     >,
-    { id: StoreCompleteCartPathParams["id"] },
+    {
+      id: StoreCompleteCartPathParams["id"];
+      data: StoreCompleteCartMutationRequest;
+    },
     TContext
   >(
     {
@@ -125,7 +142,10 @@ export function useStoreCompleteCart<TContext>(
       | StoreCompleteCart409
       | StoreCompleteCart500
     >,
-    { id: StoreCompleteCartPathParams["id"] },
+    {
+      id: StoreCompleteCartPathParams["id"];
+      data: StoreCompleteCartMutationRequest;
+    },
     TContext
   >;
 }

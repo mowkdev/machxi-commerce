@@ -267,6 +267,45 @@ describe("store-carts service", () => {
     expect(after.totals.total).toBe(1190);
   });
 
+  it("guest cart can attach shipping via guestShippingAddress (detached row)", async () => {
+    const fix = await createVariantFixture({
+      amount: 1000,
+      taxInclusive: false,
+      taxRate: 19,
+      taxCountryCode: "DE",
+    });
+    const cart = await createCart({ currencyCode: "EUR" });
+    await addCartLineItem(cart.id, {
+      variantId: fix.variantId,
+      quantity: 1,
+    });
+    const after = await setCartAddresses(
+      cart.id,
+      {
+        guestShippingAddress: {
+          firstName: "Guest",
+          lastName: "User",
+          company: null,
+          phone: null,
+          isDefaultShipping: false,
+          isDefaultBilling: false,
+          addressLine1: "1 Babbage Ln",
+          addressLine2: null,
+          city: "Berlin",
+          provinceCode: null,
+          postalCode: "10115",
+          countryCode: "DE",
+        },
+      },
+      { customerId: null },
+    );
+    expect(after.shippingAddressId).toBeTruthy();
+    expect(after.billingAddressId).toBe(after.shippingAddressId);
+    expect(after.totals.subtotal).toBe(1000);
+    expect(after.totals.taxTotal).toBe(190);
+    expect(after.totals.total).toBe(1190);
+  });
+
   it("computes tax-inclusive prices without inflating total", async () => {
     const customerId = await newCustomer("tax-inc");
     const address = await createMyAddress(customerId, {

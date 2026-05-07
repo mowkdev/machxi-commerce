@@ -26,6 +26,8 @@ import {
   releaseForCartItem,
   reserveForCartItem,
 } from "./inventory";
+import type { SetCartAddressesBody } from "@repo/types/storefront";
+
 import type { StoreCart } from "./schema";
 
 const CART_TTL_DAYS = 7;
@@ -213,38 +215,103 @@ export async function removeCartLineItem(
 
 export async function setCartAddresses(
   cartId: string,
-  input: {
-    shippingAddressId?: string | null;
-    billingAddressId?: string | null;
-  },
+  input: SetCartAddressesBody,
   caller: { customerId: string | null } = { customerId: null },
 ): Promise<StoreCart> {
   const cart = await ensureCartExists(cartId);
   assertCanMutate(cart, caller);
 
-  // Validate ownership of the supplied address ids: an authenticated customer
-  // can only attach their own address rows; a guest cart cannot reference any
-  // saved customer address.
-  for (const addressId of [input.shippingAddressId, input.billingAddressId]) {
-    if (!addressId) continue;
+  const createdIds = new Set<string>();
+
+  /** `undefined` = leave unchanged */
+  let shippingToSet: string | null | undefined;
+  /** `undefined` = leave unchanged */
+  let billingToSet: string | null | undefined;
+
+  if (input.guestShippingAddress) {
+    if (cart.customerId !== null) {
+      throw validationFailed(
+        "guestShippingAddress is only supported for guest carts",
+      );
+    }
+
+    const a = input.guestShippingAddress;
+    const [row] = await db
+      .insert(addresses)
+      .values({
+        customerId: null,
+        firstName: a.firstName,
+        lastName: a.lastName,
+        company: a.company ?? null,
+        phone: a.phone ?? null,
+        isDefaultShipping: false,
+        isDefaultBilling: false,
+        addressLine1: a.addressLine1,
+        addressLine2: a.addressLine2 ?? null,
+        city: a.city,
+        provinceCode: a.provinceCode ?? null,
+        postalCode: a.postalCode,
+        countryCode: a.countryCode,
+      })
+      .returning({ id: addresses.id });
+
+    if (!row) throw conflict("Failed to insert guest shipping address");
+
+    createdIds.add(row.id);
+    shippingToSet = row.id;
+    billingToSet =
+      input.billingAddressId !== undefined ? input.billingAddressId : row.id;
+  } else {
+    if (input.shippingAddressId !== undefined) {
+      shippingToSet = input.shippingAddressId;
+    }
+    if (input.billingAddressId !== undefined) {
+      billingToSet = input.billingAddressId;
+    }
+  }
+
+  const nonNullAttachIds = [
+    ...new Set(
+      [shippingToSet, billingToSet].filter(
+        (id): id is string => typeof id === "string",
+      ),
+    ),
+  ];
+
+  if (cart.customerId === null) {
+    const past = new Set(
+      [cart.shippingAddressId, cart.billingAddressId].filter(
+        (id): id is string => !!id,
+      ),
+    );
+
+    for (const addressId of nonNullAttachIds) {
+      if (!past.has(addressId) && !createdIds.has(addressId)) {
+        throw validationFailed(
+          "Guest carts cannot reference saved addresses from other sessions",
+        );
+      }
+    }
+  }
+
+  for (const addressId of nonNullAttachIds) {
     const [addr] = await db
       .select({ customerId: addresses.customerId })
       .from(addresses)
       .where(eq(addresses.id, addressId))
       .limit(1);
     if (!addr) throw notFound("Address not found");
-    if (addr.customerId !== cart.customerId) {
-      // includes the guest-cart-can't-use-saved-address case (cart.customerId null)
-      throw notFound("Address not found");
-    }
+
+    // Guest addresses have null customer id; carts with a customer cannot use them.
+    if (addr.customerId !== cart.customerId) throw notFound("Address not found");
   }
 
   const update: Partial<typeof carts.$inferInsert> = {};
-  if (input.shippingAddressId !== undefined) {
-    update.shippingAddressId = input.shippingAddressId;
+  if (shippingToSet !== undefined) {
+    update.shippingAddressId = shippingToSet;
   }
-  if (input.billingAddressId !== undefined) {
-    update.billingAddressId = input.billingAddressId;
+  if (billingToSet !== undefined) {
+    update.billingAddressId = billingToSet;
   }
   if (Object.keys(update).length > 0) {
     await db.update(carts).set(update).where(eq(carts.id, cartId));

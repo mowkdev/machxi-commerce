@@ -272,6 +272,13 @@ export const orderShippingLineTaxesSelect = createSelectSchema(s.orderShippingLi
 export type OrderShippingLineTaxesInsert = z.infer<typeof orderShippingLineTaxesInsert>;
 export type OrderShippingLineTaxesSelect = z.infer<typeof orderShippingLineTaxesSelect>;
 
+export const paymentProvidersInsert = createInsertSchema(s.paymentProviders);
+export const paymentProvidersSelect = createSelectSchema(s.paymentProviders);
+export const paymentProvidersUpdate = createUpdateSchema(s.paymentProviders);
+export type PaymentProvidersInsert = z.infer<typeof paymentProvidersInsert>;
+export type PaymentProvidersSelect = z.infer<typeof paymentProvidersSelect>;
+export type PaymentProvidersUpdate = z.infer<typeof paymentProvidersUpdate>;
+
 export const paymentsInsert = createInsertSchema(s.payments);
 export const paymentsSelect = createSelectSchema(s.payments);
 export const paymentsUpdate = createUpdateSchema(s.payments);
