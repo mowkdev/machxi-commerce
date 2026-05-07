@@ -16,6 +16,7 @@ const PAIRS = [
   { from: '.env.example',                        to: '.env' },
   { from: 'apps/api/.env.example',               to: 'apps/api/.env' },
   { from: 'apps/admin/.env.example',             to: 'apps/admin/.env' },
+  { from: 'apps/worker/.env.example',            to: 'apps/worker/.env' },
   { from: 'apps/storefront/.env.local.example',  to: 'apps/storefront/.env.local' },
 ];
 

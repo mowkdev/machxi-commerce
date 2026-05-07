@@ -790,7 +790,7 @@ async function seedProduct(
 // ─────────────────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
-  config({ path: resolve(process.cwd(), '../../.env') });
+  config({ path: resolve(__dirname, '../../../.env') });
 
   if (!process.env.DATABASE_URL) {
     console.error('ERROR: DATABASE_URL is not set. Check your .env file.');

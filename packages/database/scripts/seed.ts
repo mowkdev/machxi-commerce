@@ -32,7 +32,7 @@ const WILDCARD_ACTION = '*';
 const WILDCARD_DESCRIPTION = 'Full access to all resources';
 
 async function main(): Promise<void> {
-  config({ path: resolve(process.cwd(), '../../.env') });
+  config({ path: resolve(__dirname, '../../../.env') });
 
   if (!process.env.DATABASE_URL) {
     console.error('ERROR: DATABASE_URL is not set. Check your .env file.');

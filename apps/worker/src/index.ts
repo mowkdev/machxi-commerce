@@ -1,6 +1,10 @@
+// `./env` MUST be imported first: it loads .env via dotenv side effects before
+// any module touches `process.env` (notably @repo/database/client, which
+// validates DATABASE_URL at import time).
+import "./env.js";
+
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import "dotenv/config";
 import { NativeConnection, Worker } from "@temporalio/worker";
 import * as activities from "./activities/checkout.js";
 

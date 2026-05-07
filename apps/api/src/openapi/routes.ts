@@ -19,7 +19,7 @@ export function mountOpenAPI(parent: Hono<AppEnv>): void {
           description:
             "Admin + storefront HTTP API. The SDK in packages/admin-sdk is generated from this document.",
         },
-        servers: [{ url: "http://localhost:3001", description: "local dev" }],
+        servers: [{ url: "http://localhost:8000", description: "local dev" }],
         tags: [
           { name: "products", description: "Admin product catalog" },
           { name: "categories", description: "Admin categories" },

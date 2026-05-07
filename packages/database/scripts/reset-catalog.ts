@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { Client } from 'pg';
 
 async function main(): Promise<void> {
-  config({ path: resolve(process.cwd(), '../../.env') });
+  config({ path: resolve(__dirname, '../../../.env') });
 
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
@@ -12,7 +12,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const sql = await readFile(resolve(process.cwd(), 'sql/reset-catalog.sql'), 'utf8');
+  const sql = await readFile(resolve(__dirname, '../sql/reset-catalog.sql'), 'utf8');
   const client = new Client({ connectionString });
   await client.connect();
   try {
