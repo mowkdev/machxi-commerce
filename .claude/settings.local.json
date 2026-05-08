@@ -112,7 +112,9 @@
       "Bash(findstr \":3001 \")",
       "Bash(pnpm --filter @app/storefront dev)",
       "Bash(mkdir -p \"apps/storefront/src/app/\\(checkout\\)/order/confirmation/[orderId]\")",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\SergejsMoskanovs\\\\dev\\\\lab\\\\machxi-commerce\\\\apps\\\\storefront\\\\src\\\\app\\\\\\(checkout\\)\" -Recurse -Force)",
+      "Bash(Select-Object FullName)"
     ]
   }
 }

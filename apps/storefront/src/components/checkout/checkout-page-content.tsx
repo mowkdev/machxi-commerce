@@ -119,8 +119,6 @@ export function CheckoutPageContent() {
   const [selectedPaymentCode, setSelectedPaymentCode] = React.useState<
     string | null
   >(null);
-  const [billingMatchesShipping, setBillingMatchesShipping] =
-    React.useState(true);
   const [formError, setFormError] = React.useState<string | null>(null);
   const [payContext, setPayContext] = React.useState<{
     orderId: string;
@@ -133,14 +131,18 @@ export function CheckoutPageContent() {
     setFields((prev) => ({ ...prev, [key]: value }));
   }
 
-  // ── Init: default saved address for authenticated users ────────────────────
+  // ── Init: default saved address for authenticated users (runs once) ───────
+  const addressInitialized = React.useRef(false);
   React.useEffect(() => {
-    if (!isAuthenticated || savedAddresses.length === 0 || selectedAddressId)
+    if (addressInitialized.current || !isAuthenticated || savedAddresses.length === 0)
       return;
     const def =
       savedAddresses.find((a) => a.isDefaultShipping) ?? savedAddresses[0];
-    if (def) setSelectedAddressId(def.id);
-  }, [isAuthenticated, savedAddresses, selectedAddressId]);
+    if (def) {
+      setSelectedAddressId(def.id);
+      addressInitialized.current = true;
+    }
+  }, [isAuthenticated, savedAddresses]);
 
   // ── Payment methods ────────────────────────────────────────────────────────
   const methodsQuery = useStoreListPaymentMethods();
@@ -312,6 +314,8 @@ export function CheckoutPageContent() {
   function handleSignOut() {
     removeCustomerToken();
     qc.resetQueries({ queryKey: storeGetCurrentCustomerQueryKey() });
+    setSelectedAddressId(null);
+    setFields(blankAddress);
   }
 
   // ── Loading ────────────────────────────────────────────────────────────────
@@ -359,7 +363,7 @@ export function CheckoutPageContent() {
   return (
     <div className="mx-auto max-w-[1200px] px-4 py-8 lg:grid lg:grid-cols-[1fr_380px] lg:gap-12">
       {/* Left column: form sections */}
-      <div className="space-y-6">
+      <div className={`space-y-6 ${payContext ? 'pointer-events-none opacity-50' : ''}`}>
         <ContactSection
           email={email}
           setEmail={setEmail}
@@ -396,8 +400,6 @@ export function CheckoutPageContent() {
           methodsLoading={methodsQuery.isLoading}
           selectedCode={selectedPaymentCode}
           setSelectedCode={setSelectedPaymentCode}
-          billingMatchesShipping={billingMatchesShipping}
-          setBillingMatchesShipping={setBillingMatchesShipping}
           payContext={payContext}
         />
 

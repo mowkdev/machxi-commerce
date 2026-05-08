@@ -24,8 +24,6 @@ type PaymentSectionProps = {
   methodsLoading: boolean;
   selectedCode: string | null;
   setSelectedCode: (code: string) => void;
-  billingMatchesShipping: boolean;
-  setBillingMatchesShipping: (val: boolean) => void;
   payContext: PayContext | null;
 };
 
@@ -34,8 +32,6 @@ export function PaymentSection({
   methodsLoading,
   selectedCode,
   setSelectedCode,
-  billingMatchesShipping,
-  setBillingMatchesShipping,
   payContext,
 }: PaymentSectionProps) {
   const returnUrl = payContext
@@ -92,15 +88,6 @@ export function PaymentSection({
         </div>
       )}
 
-      <label className="mt-4 flex items-center gap-2 text-sm">
-        <input
-          type="checkbox"
-          className="rounded"
-          checked={billingMatchesShipping}
-          onChange={(e) => setBillingMatchesShipping(e.target.checked)}
-        />
-        Use shipping address as billing address
-      </label>
     </section>
   );
 }
