@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 
 import { FeaturedProducts } from '@/components/product/featured-products';
@@ -7,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { fetchProducts } from '@/lib/api';
 
 export default async function HomePage() {
-  const response = await fetchProducts({ page: 1, pageSize: 8 });
+  const currency = (await cookies()).get('currency')?.value;
+  const response = await fetchProducts({ page: 1, pageSize: 8, currency });
   const products = response.success ? response.data : [];
 
   return (

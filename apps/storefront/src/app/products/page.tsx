@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 import { ProductFilters } from '@/components/product/product-filters';
 import { ProductGrid } from '@/components/product/product-grid';
 import { ProductPagination } from '@/components/product/product-pagination';
@@ -12,13 +14,14 @@ function first(value: string | string[] | undefined) {
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-  const params = await searchParams;
+  const [params, cookieStore] = await Promise.all([searchParams, cookies()]);
+  const currency = cookieStore.get('currency')?.value;
   const page = Math.max(1, Number(first(params.page) ?? '1') || 1);
   const categoryHandle = first(params.category);
   const search = first(params.search);
 
   const [productsResponse, categoriesResponse] = await Promise.all([
-    fetchProducts({ page, pageSize: 12, categoryHandle, search }),
+    fetchProducts({ page, pageSize: 12, categoryHandle, search, currency }),
     fetchCategories(),
   ]);
 

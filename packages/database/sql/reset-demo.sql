@@ -1,4 +1,7 @@
--- Destructive local catalog reset.
+-- Destructive demo-catalog reset.
+-- Wipes products, categories, options, and demo-only media. Preserves auth,
+-- currencies, languages, tax classes, stock locations, and shared pricing
+-- surfaces (shipping, price lists).
 -- Run only against disposable development/test databases.
 
 BEGIN;

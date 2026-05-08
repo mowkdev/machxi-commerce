@@ -1,3 +1,12 @@
+/**
+ * Wipes the demo catalog (products, categories, options, demo media,
+ * orphan price/inventory rows). Auth, currencies, languages, tax classes,
+ * stock locations and shared pricing surfaces (shipping, price lists) are
+ * preserved.
+ *
+ * Run only against disposable development/test databases.
+ */
+
 import { config } from 'dotenv';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -12,7 +21,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const sql = await readFile(resolve(__dirname, '../sql/reset-catalog.sql'), 'utf8');
+  const sql = await readFile(resolve(__dirname, '../sql/reset-demo.sql'), 'utf8');
   const client = new Client({ connectionString });
   await client.connect();
   try {
@@ -21,7 +30,7 @@ async function main(): Promise<void> {
     await client.end();
   }
 
-  console.log('Catalog reset completed.');
+  console.log('Demo catalog reset completed.');
 }
 
 main().catch((err: unknown) => {

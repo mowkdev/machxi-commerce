@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,7 @@ import { useCurrency } from '@/providers/currency-provider';
 export function CurrencySwitcher() {
   const { available, selectedCode, isLoading, setSelectedCode } = useCurrency();
   const { cart, switchCurrency } = useCart();
+  const router = useRouter();
   const [pendingCode, setPendingCode] = React.useState<string | null>(null);
   const [isSwitching, setIsSwitching] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -51,13 +53,16 @@ export function CurrencySwitcher() {
         } else {
           setSelectedCode(next);
         }
+        // Refresh the current RSC page so server-fetched product prices
+        // re-render in the newly selected currency.
+        router.refresh();
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to switch currency');
       } finally {
         setIsSwitching(false);
       }
     },
-    [cart, itemCount, selectedCode, setSelectedCode, switchCurrency],
+    [cart, itemCount, router, selectedCode, setSelectedCode, switchCurrency],
   );
 
   const confirmSwitch = React.useCallback(async () => {
@@ -67,12 +72,13 @@ export function CurrencySwitcher() {
     try {
       await switchCurrency(pendingCode);
       setPendingCode(null);
+      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to switch currency');
     } finally {
       setIsSwitching(false);
     }
-  }, [pendingCode, switchCurrency]);
+  }, [pendingCode, router, switchCurrency]);
 
   if (available.length <= 1) return null;
 

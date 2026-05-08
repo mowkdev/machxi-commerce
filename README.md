@@ -97,7 +97,7 @@ machxi-commerce/
 │   ├── database/         # Drizzle schema, client, validators
 │   │   ├── migrations/   # Drizzle-generated migration files
 │   │   ├── scripts/      # Executable seed/reset scripts (tsx)
-│   │   ├── sql/          # Hand-written SQL (pre/post-push, catalog reset)
+│   │   ├── sql/          # Hand-written SQL (pre/post-push, demo reset)
 │   │   └── src/          # Exported library code (schema, client, validators)
 │   ├── types/            # Shared TypeScript types and DTOs
 │   ├── ui/               # Shared React components
@@ -145,8 +145,8 @@ pnpm test             # Run all tests
 pnpm docker:dev           # Start Postgres + MinIO containers
 pnpm db:init              # Full first-time DB setup (schema + seed)
 pnpm db:seed              # Re-seed admin user only (schema must exist)
-pnpm db:seed-catalog      # Seed demo catalog (20 products, categories, media)
-pnpm db:reset-catalog     # Wipe catalog data (products, categories, media)
+pnpm db:seed-demo         # Seed demo dataset (20 products, categories, media, EUR/USD, en/lv)
+pnpm db:reset-demo        # Wipe demo catalog data (products, categories, media)
 pnpm db:push              # Push schema changes interactively (dev)
 pnpm db:generate          # Generate Drizzle migration files
 pnpm db:migrate           # Apply pending migrations
@@ -181,8 +181,8 @@ pnpm db:push      # review and apply diff interactively
 **Reset demo catalog without touching auth/config data:**
 
 ```bash
-pnpm db:reset-catalog
-pnpm db:seed-catalog
+pnpm db:reset-demo
+pnpm db:seed-demo
 ```
 
 ---

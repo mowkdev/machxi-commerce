@@ -6,9 +6,10 @@ import {
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 
-const CURRENCY = process.env.NEXT_PUBLIC_DEFAULT_CURRENCY ?? 'USD';
+const DEFAULT_CURRENCY = process.env.NEXT_PUBLIC_DEFAULT_CURRENCY ?? 'EUR';
 
 export async function fetchProducts(params: {
+  currency?: string;
   page?: number;
   pageSize?: number;
   categoryHandle?: string;
@@ -16,7 +17,7 @@ export async function fetchProducts(params: {
 }) {
   return storeListProducts(
     {
-      currency: CURRENCY,
+      currency: params.currency ?? DEFAULT_CURRENCY,
       page: params.page ?? 1,
       pageSize: params.pageSize ?? 12,
       categoryHandle: params.categoryHandle,
@@ -26,8 +27,12 @@ export async function fetchProducts(params: {
   );
 }
 
-export async function fetchProductByHandle(handle: string) {
-  return storeGetProductByHandle(handle, { currency: CURRENCY }, { baseURL });
+export async function fetchProductByHandle(handle: string, currency?: string) {
+  return storeGetProductByHandle(
+    handle,
+    { currency: currency ?? DEFAULT_CURRENCY },
+    { baseURL }
+  );
 }
 
 export async function fetchCategories() {

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -25,8 +26,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { handle } = await params;
-  const response = await fetchProductByHandle(handle);
+  const [{ handle }, cookieStore] = await Promise.all([params, cookies()]);
+  const currency = cookieStore.get('currency')?.value;
+  const response = await fetchProductByHandle(handle, currency);
 
   if (!response.success) {
     notFound();

@@ -94,7 +94,13 @@
       "Bash(pnpm vitest *)",
       "Bash(pnpm --filter @repo/admin-sdk build)",
       "Bash(npx tsc *)",
-      "Bash(npx vitest *)"
+      "Bash(npx vitest *)",
+      "Bash(sleep 1 && cat /c/Users/SERGEJ~1/AppData/Local/Temp/claude/C--Users-SergejsMoskanovs-dev-lab-machxi-commerce/d9167d84-15db-4c07-9213-3dab521d96e1/tasks/buqt5cie6.output 2>/dev/null)",
+      "Bash(git -C /c/Users/SergejsMoskanovs/dev/lab/machxi-commerce status --short)",
+      "Bash(cd /c/Users/SergejsMoskanovs/dev/lab/machxi-commerce/apps/storefront && find src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" -o -name \"*.js\" -o -name \"*.jsx\" \\\\\\) 2>/dev/null | sort)",
+      "Bash(xargs grep -l \"switchCurrency\\\\|currencyCode\")",
+      "Bash(pnpm --filter @app/storefront type-check)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp"
     ]
   }
 }

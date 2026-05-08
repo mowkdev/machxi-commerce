@@ -92,6 +92,9 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const setSelectedCode = React.useCallback((code: string) => {
     setStoredCurrencyCode(code);
     setStoredCode(code);
+    // Write to a cookie so Next.js Server Components can read the active
+    // currency on the next RSC render (triggered by router.refresh()).
+    document.cookie = `currency=${code.toUpperCase()}; path=/; max-age=31536000; SameSite=Lax`;
   }, []);
 
   const resolve = React.useCallback(
