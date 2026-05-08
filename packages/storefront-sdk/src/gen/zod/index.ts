@@ -133,6 +133,17 @@ export {
   storeGetMyOrderQueryResponseSchema,
 } from "./storeGetMyOrderSchema.ts";
 export {
+  storeGetOrderConfirmation200Schema,
+  storeGetOrderConfirmation400Schema,
+  storeGetOrderConfirmation401Schema,
+  storeGetOrderConfirmation403Schema,
+  storeGetOrderConfirmation404Schema,
+  storeGetOrderConfirmation409Schema,
+  storeGetOrderConfirmation500Schema,
+  storeGetOrderConfirmationPathParamsSchema,
+  storeGetOrderConfirmationQueryResponseSchema,
+} from "./storeGetOrderConfirmationSchema.ts";
+export {
   storeGetProductByHandle200Schema,
   storeGetProductByHandle400Schema,
   storeGetProductByHandle401Schema,
@@ -230,6 +241,17 @@ export {
   storeRegisterCustomerMutationResponseSchema,
 } from "./storeRegisterCustomerSchema.ts";
 export {
+  storeRegisterFromOrder201Schema,
+  storeRegisterFromOrder400Schema,
+  storeRegisterFromOrder401Schema,
+  storeRegisterFromOrder403Schema,
+  storeRegisterFromOrder404Schema,
+  storeRegisterFromOrder409Schema,
+  storeRegisterFromOrder500Schema,
+  storeRegisterFromOrderMutationRequestSchema,
+  storeRegisterFromOrderMutationResponseSchema,
+} from "./storeRegisterFromOrderSchema.ts";
+export {
   storeRemoveCartLineItem200Schema,
   storeRemoveCartLineItem400Schema,
   storeRemoveCartLineItem401Schema,
@@ -263,6 +285,18 @@ export {
   storeSetCartAddressesMutationResponseSchema,
   storeSetCartAddressesPathParamsSchema,
 } from "./storeSetCartAddressesSchema.ts";
+export {
+  storeSetCartEmail200Schema,
+  storeSetCartEmail400Schema,
+  storeSetCartEmail401Schema,
+  storeSetCartEmail403Schema,
+  storeSetCartEmail404Schema,
+  storeSetCartEmail409Schema,
+  storeSetCartEmail500Schema,
+  storeSetCartEmailMutationRequestSchema,
+  storeSetCartEmailMutationResponseSchema,
+  storeSetCartEmailPathParamsSchema,
+} from "./storeSetCartEmailSchema.ts";
 export {
   storeSwitchCartCurrency200Schema,
   storeSwitchCartCurrency400Schema,

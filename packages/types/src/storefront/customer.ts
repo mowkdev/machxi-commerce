@@ -58,6 +58,14 @@ export const changePasswordBody = z.object({
 });
 export type ChangePasswordBody = z.infer<typeof changePasswordBody>;
 
+// Post-purchase: guest creates an account using just a password — all other
+// fields are pre-populated from the order.
+export const registerFromOrderBody = z.object({
+  orderId: z.string().uuid(),
+  password: z.string().min(12).max(128),
+});
+export type RegisterFromOrderBody = z.infer<typeof registerFromOrderBody>;
+
 // Address request/response schemas are reused from @repo/types/admin via the
 // store-addresses module — the field shape is identical, only the auth scope
 // differs (storefront scopes to the authenticated customer).

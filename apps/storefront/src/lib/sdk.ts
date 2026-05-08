@@ -9,6 +9,18 @@ export function getStoredCustomerToken() {
   return window.localStorage.getItem(CUSTOMER_TOKEN_KEY);
 }
 
+export function saveCustomerToken(token: string) {
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem(CUSTOMER_TOKEN_KEY, token);
+  }
+}
+
+export function removeCustomerToken() {
+  if (typeof window !== 'undefined') {
+    window.localStorage.removeItem(CUSTOMER_TOKEN_KEY);
+  }
+}
+
 configureClient({
   baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000',
   tokenGetter: getStoredCustomerToken,

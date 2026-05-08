@@ -4,11 +4,13 @@ export {
   customerSessionResponse,
   loginBody,
   registerCustomerBody,
+  registerFromOrderBody,
   updateProfileBody,
   type ChangePasswordBody,
   type CustomerProfile,
   type CustomerSessionResponse,
   type LoginBody,
   type RegisterCustomerBody,
+  type RegisterFromOrderBody,
   type UpdateProfileBody,
 } from "@repo/types/storefront";

@@ -289,6 +289,7 @@ export async function loadCart(cartId: string): Promise<StoreCart | null> {
   return {
     id: cart.id,
     customerId: cart.customerId,
+    guestEmail: cart.guestEmail ?? null,
     currencyCode: cart.currencyCode,
     shippingAddressId: cart.shippingAddressId,
     billingAddressId: cart.billingAddressId,

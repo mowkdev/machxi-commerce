@@ -3,26 +3,26 @@
  * Do not edit manually.
  */
 
-export type StoreGetCartPathParams = {
+export type StoreSetCartEmailPathParams = {
   /**
    * @type string, uuid
    */
   id: string;
 };
 
-export const storeGetCart200PromotionsTypeEnum = {
+export const storeSetCartEmail200PromotionsTypeEnum = {
   percentage: "percentage",
   fixed_amount: "fixed_amount",
   free_shipping: "free_shipping",
 } as const;
 
-export type StoreGetCart200PromotionsTypeEnumKey =
-  (typeof storeGetCart200PromotionsTypeEnum)[keyof typeof storeGetCart200PromotionsTypeEnum];
+export type StoreSetCartEmail200PromotionsTypeEnumKey =
+  (typeof storeSetCartEmail200PromotionsTypeEnum)[keyof typeof storeSetCartEmail200PromotionsTypeEnum];
 
 /**
  * @description Cart
  */
-export type StoreGetCart200 = {
+export type StoreSetCartEmail200 = {
   /**
    * @type boolean
    */
@@ -134,7 +134,7 @@ export type StoreGetCart200 = {
       /**
        * @type string
        */
-      type: StoreGetCart200PromotionsTypeEnumKey;
+      type: StoreSetCartEmail200PromotionsTypeEnumKey;
       percentageValue: string | null;
       /**
        * @minLength 0
@@ -192,187 +192,64 @@ export type StoreGetCart200 = {
 /**
  * @description Validation failed
  */
-export type StoreGetCart400 = {
-  /**
-   * @type boolean
-   */
+export type StoreSetCartEmail400 = {
   success: false;
-  /**
-   * @type object
-   */
-  error: {
-    /**
-     * @type string
-     */
-    code: string;
-    /**
-     * @type string
-     */
-    message: string;
-    /**
-     * @type object | undefined
-     */
-    details?: {
-      [key: string]: any;
-    };
-  };
+  error: { code: string; message: string; details?: { [key: string]: any } };
 };
 
 /**
  * @description Unauthenticated
  */
-export type StoreGetCart401 = {
-  /**
-   * @type boolean
-   */
+export type StoreSetCartEmail401 = {
   success: false;
-  /**
-   * @type object
-   */
-  error: {
-    /**
-     * @type string
-     */
-    code: string;
-    /**
-     * @type string
-     */
-    message: string;
-    /**
-     * @type object | undefined
-     */
-    details?: {
-      [key: string]: any;
-    };
-  };
+  error: { code: string; message: string; details?: { [key: string]: any } };
 };
 
 /**
  * @description Forbidden
  */
-export type StoreGetCart403 = {
-  /**
-   * @type boolean
-   */
+export type StoreSetCartEmail403 = {
   success: false;
-  /**
-   * @type object
-   */
-  error: {
-    /**
-     * @type string
-     */
-    code: string;
-    /**
-     * @type string
-     */
-    message: string;
-    /**
-     * @type object | undefined
-     */
-    details?: {
-      [key: string]: any;
-    };
-  };
+  error: { code: string; message: string; details?: { [key: string]: any } };
 };
 
 /**
  * @description Not found
  */
-export type StoreGetCart404 = {
-  /**
-   * @type boolean
-   */
+export type StoreSetCartEmail404 = {
   success: false;
-  /**
-   * @type object
-   */
-  error: {
-    /**
-     * @type string
-     */
-    code: string;
-    /**
-     * @type string
-     */
-    message: string;
-    /**
-     * @type object | undefined
-     */
-    details?: {
-      [key: string]: any;
-    };
-  };
+  error: { code: string; message: string; details?: { [key: string]: any } };
 };
 
 /**
  * @description Conflict
  */
-export type StoreGetCart409 = {
-  /**
-   * @type boolean
-   */
+export type StoreSetCartEmail409 = {
   success: false;
-  /**
-   * @type object
-   */
-  error: {
-    /**
-     * @type string
-     */
-    code: string;
-    /**
-     * @type string
-     */
-    message: string;
-    /**
-     * @type object | undefined
-     */
-    details?: {
-      [key: string]: any;
-    };
-  };
+  error: { code: string; message: string; details?: { [key: string]: any } };
 };
 
 /**
  * @description Internal server error
  */
-export type StoreGetCart500 = {
-  /**
-   * @type boolean
-   */
+export type StoreSetCartEmail500 = {
   success: false;
-  /**
-   * @type object
-   */
-  error: {
-    /**
-     * @type string
-     */
-    code: string;
-    /**
-     * @type string
-     */
-    message: string;
-    /**
-     * @type object | undefined
-     */
-    details?: {
-      [key: string]: any;
-    };
-  };
+  error: { code: string; message: string; details?: { [key: string]: any } };
 };
 
-export type StoreGetCartQueryResponse = StoreGetCart200;
+export type StoreSetCartEmailMutationRequest = any;
 
-export type StoreGetCartQuery = {
-  Response: StoreGetCart200;
-  PathParams: StoreGetCartPathParams;
+export type StoreSetCartEmailMutationResponse = StoreSetCartEmail200;
+
+export type StoreSetCartEmailMutation = {
+  Response: StoreSetCartEmail200;
+  Request: StoreSetCartEmailMutationRequest;
+  PathParams: StoreSetCartEmailPathParams;
   Errors:
-    | StoreGetCart400
-    | StoreGetCart401
-    | StoreGetCart403
-    | StoreGetCart404
-    | StoreGetCart409
-    | StoreGetCart500;
+    | StoreSetCartEmail400
+    | StoreSetCartEmail401
+    | StoreSetCartEmail403
+    | StoreSetCartEmail404
+    | StoreSetCartEmail409
+    | StoreSetCartEmail500;
 };

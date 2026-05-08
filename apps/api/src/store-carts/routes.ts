@@ -18,6 +18,7 @@ import {
   removeCartLineItemController,
   removeCartPromotionController,
   setCartAddressesController,
+  setCartEmailController,
   switchCartCurrencyController,
   updateCartLineItemController,
 } from "./controller";
@@ -29,6 +30,7 @@ import {
   cartPromotionParam,
   createCartBody,
   setCartAddressesBody,
+  setCartEmailBody,
   storeCart,
   switchCartCurrencyBody,
   updateCartLineItemBody,
@@ -113,6 +115,22 @@ storeCartsRoutes.delete(
     },
   }),
   removeCartLineItemController,
+);
+
+storeCartsRoutes.patch(
+  "/:id/email",
+  describeRoute({
+    operationId: "storeSetCartEmail",
+    summary: "Set a guest email on the cart for abandoned-cart recovery",
+    tags: TAGS,
+    parameters: paramsFromSchema(cartIdParam, "path"),
+    requestBody: jsonRequestBody(setCartEmailBody),
+    responses: {
+      200: jsonResponse("Cart", successEnvelope(storeCart)),
+      ...standardErrorResponses,
+    },
+  }),
+  setCartEmailController,
 );
 
 storeCartsRoutes.post(

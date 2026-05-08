@@ -7,6 +7,7 @@ import {
   changePasswordBody,
   loginBody,
   registerCustomerBody,
+  registerFromOrderBody,
   updateProfileBody,
 } from "./schema";
 import {
@@ -14,6 +15,7 @@ import {
   changeCustomerPassword,
   getCustomerProfile,
   registerCustomer,
+  registerFromOrder,
   updateCustomerProfile,
 } from "./service";
 
@@ -39,6 +41,16 @@ export async function registerCustomerController(c: Context<AppEnv>) {
   const body = await parseBody(c, registerCustomerBody);
   try {
     const session = await registerCustomer(body);
+    return ok(c, session, undefined, 201);
+  } catch (err) {
+    translatePgError(err);
+  }
+}
+
+export async function registerFromOrderController(c: Context<AppEnv>) {
+  const body = await parseBody(c, registerFromOrderBody);
+  try {
+    const session = await registerFromOrder(body);
     return ok(c, session, undefined, 201);
   } catch (err) {
     translatePgError(err);

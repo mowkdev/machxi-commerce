@@ -40,6 +40,8 @@ export type StoreOrderListItem = z.infer<typeof storeOrderListItem>;
 export const storeOrderDetail = z.object({
   id: z.string().uuid(),
   displayId: z.string(),
+  customerId: z.string().uuid().nullable(),
+  guestEmail: z.string().nullable(),
   status: z.string(),
   currencyCode: z.string(),
   subtotal: z.number().int().nonnegative(),

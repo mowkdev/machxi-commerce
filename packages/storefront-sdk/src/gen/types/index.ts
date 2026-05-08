@@ -151,6 +151,18 @@ export type {
   StoreGetMyOrderQueryResponse,
 } from "./StoreGetMyOrder.ts";
 export type {
+  StoreGetOrderConfirmation200,
+  StoreGetOrderConfirmation400,
+  StoreGetOrderConfirmation401,
+  StoreGetOrderConfirmation403,
+  StoreGetOrderConfirmation404,
+  StoreGetOrderConfirmation409,
+  StoreGetOrderConfirmation500,
+  StoreGetOrderConfirmationPathParams,
+  StoreGetOrderConfirmationQuery,
+  StoreGetOrderConfirmationQueryResponse,
+} from "./StoreGetOrderConfirmation.ts";
+export type {
   StoreGetProductByHandle200,
   StoreGetProductByHandle200DataStatusEnumKey,
   StoreGetProductByHandle200DataTypeEnumKey,
@@ -262,6 +274,18 @@ export type {
   StoreRegisterCustomerMutationResponse,
 } from "./StoreRegisterCustomer.ts";
 export type {
+  StoreRegisterFromOrder201,
+  StoreRegisterFromOrder400,
+  StoreRegisterFromOrder401,
+  StoreRegisterFromOrder403,
+  StoreRegisterFromOrder404,
+  StoreRegisterFromOrder409,
+  StoreRegisterFromOrder500,
+  StoreRegisterFromOrderMutation,
+  StoreRegisterFromOrderMutationRequest,
+  StoreRegisterFromOrderMutationResponse,
+} from "./StoreRegisterFromOrder.ts";
+export type {
   StoreRemoveCartLineItem200,
   StoreRemoveCartLineItem200PromotionsTypeEnumKey,
   StoreRemoveCartLineItem400,
@@ -301,6 +325,20 @@ export type {
   StoreSetCartAddressesMutationResponse,
   StoreSetCartAddressesPathParams,
 } from "./StoreSetCartAddresses.ts";
+export type {
+  StoreSetCartEmail200,
+  StoreSetCartEmail200PromotionsTypeEnumKey,
+  StoreSetCartEmail400,
+  StoreSetCartEmail401,
+  StoreSetCartEmail403,
+  StoreSetCartEmail404,
+  StoreSetCartEmail409,
+  StoreSetCartEmail500,
+  StoreSetCartEmailMutation,
+  StoreSetCartEmailMutationRequest,
+  StoreSetCartEmailMutationResponse,
+  StoreSetCartEmailPathParams,
+} from "./StoreSetCartEmail.ts";
 export type {
   StoreSwitchCartCurrency200,
   StoreSwitchCartCurrency200PromotionsTypeEnumKey,
@@ -368,5 +406,6 @@ export { storeListProducts200DataStatusEnum } from "./StoreListProducts.ts";
 export { storeRemoveCartLineItem200PromotionsTypeEnum } from "./StoreRemoveCartLineItem.ts";
 export { storeRemoveCartPromotion200PromotionsTypeEnum } from "./StoreRemoveCartPromotion.ts";
 export { storeSetCartAddresses200PromotionsTypeEnum } from "./StoreSetCartAddresses.ts";
+export { storeSetCartEmail200PromotionsTypeEnum } from "./StoreSetCartEmail.ts";
 export { storeSwitchCartCurrency200PromotionsTypeEnum } from "./StoreSwitchCartCurrency.ts";
 export { storeUpdateCartLineItem200PromotionsTypeEnum } from "./StoreUpdateCartLineItem.ts";

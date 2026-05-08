@@ -9,7 +9,11 @@ import {
   standardErrorResponses,
   successEnvelope,
 } from "../openapi/envelope";
-import { getOrderController, listOrdersController } from "./controller";
+import {
+  getOrderConfirmationController,
+  getOrderController,
+  listOrdersController,
+} from "./controller";
 import {
   storeListOrdersQuery,
   storeOrderDetail,
@@ -19,11 +23,29 @@ import {
 
 export const storeOrdersRoutes = new Hono<AppEnv>();
 
-storeOrdersRoutes.use("*", requireCustomer);
-
 const TAGS = ["store-orders"];
 
+// Public: post-checkout confirmation page — access gated by unguessable UUID
 storeOrdersRoutes.get(
+  "/:id/confirmation",
+  describeRoute({
+    operationId: "storeGetOrderConfirmation",
+    summary: "Get order details for the post-checkout confirmation page (no auth required)",
+    tags: TAGS,
+    parameters: paramsFromSchema(storeOrderIdParam, "path"),
+    responses: {
+      200: jsonResponse("Order detail", successEnvelope(storeOrderDetail)),
+      ...standardErrorResponses,
+    },
+  }),
+  getOrderConfirmationController,
+);
+
+// Protected: customer's own orders
+const myOrdersRouter = new Hono<AppEnv>();
+myOrdersRouter.use("*", requireCustomer);
+
+myOrdersRouter.get(
   "/",
   describeRoute({
     operationId: "storeListMyOrders",
@@ -38,7 +60,7 @@ storeOrdersRoutes.get(
   listOrdersController,
 );
 
-storeOrdersRoutes.get(
+myOrdersRouter.get(
   "/:id",
   describeRoute({
     operationId: "storeGetMyOrder",
@@ -52,3 +74,5 @@ storeOrdersRoutes.get(
   }),
   getOrderController,
 );
+
+storeOrdersRoutes.route("/", myOrdersRouter);

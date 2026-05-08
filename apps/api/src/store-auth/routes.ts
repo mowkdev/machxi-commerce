@@ -7,6 +7,7 @@ import {
   customerSessionResponse,
   loginBody,
   registerCustomerBody,
+  registerFromOrderBody,
   updateProfileBody,
 } from "@repo/types/storefront";
 import type { AppEnv } from "../context";
@@ -22,6 +23,7 @@ import {
   loginCustomerController,
   meController,
   registerCustomerController,
+  registerFromOrderController,
   updateProfileController,
 } from "./controller";
 
@@ -45,6 +47,24 @@ storeAuthRoutes.post(
     },
   }),
   registerCustomerController,
+);
+
+storeAuthRoutes.post(
+  "/register-from-order",
+  describeRoute({
+    operationId: "storeRegisterFromOrder",
+    summary: "Create an account after guest checkout using just a password",
+    tags: TAGS,
+    requestBody: jsonRequestBody(registerFromOrderBody),
+    responses: {
+      201: jsonResponse(
+        "Customer session",
+        successEnvelope(customerSessionResponse),
+      ),
+      ...standardErrorResponses,
+    },
+  }),
+  registerFromOrderController,
 );
 
 storeAuthRoutes.post(

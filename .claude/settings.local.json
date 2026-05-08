@@ -100,7 +100,9 @@
       "Bash(cd /c/Users/SergejsMoskanovs/dev/lab/machxi-commerce/apps/storefront && find src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" -o -name \"*.js\" -o -name \"*.jsx\" \\\\\\) 2>/dev/null | sort)",
       "Bash(xargs grep -l \"switchCurrency\\\\|currencyCode\")",
       "Bash(pnpm --filter @app/storefront type-check)",
-      "mcp__Claude_in_Chrome__tabs_context_mcp"
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\SergejsMoskanovs\\\\dev\\\\lab\\\\machxi-commerce\\\\apps\\\\storefront\\\\src\\\\app\\\\auth\\\\login\")",
+      "Bash(Out-Null)"
     ]
   }
 }

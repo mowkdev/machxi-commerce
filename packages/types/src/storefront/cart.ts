@@ -48,9 +48,15 @@ export const storeCartPromotion = z.object({
 });
 export type StoreCartPromotion = z.infer<typeof storeCartPromotion>;
 
+export const setCartEmailBody = z.object({
+  email: z.string().trim().email(),
+});
+export type SetCartEmailBody = z.infer<typeof setCartEmailBody>;
+
 export const storeCart = z.object({
   id: z.string().uuid(),
   customerId: z.string().uuid().nullable(),
+  guestEmail: z.string().nullable(),
   currencyCode: z.string(),
   shippingAddressId: z.string().uuid().nullable(),
   billingAddressId: z.string().uuid().nullable(),

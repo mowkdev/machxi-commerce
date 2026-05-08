@@ -103,6 +103,7 @@ export const carts = pgTable(
     customerId: uuid('customer_id').references(() => customers.id, { onDelete: 'set null' }),
     shippingAddressId: uuid('shipping_address_id').references(() => addresses.id, { onDelete: 'set null' }),
     billingAddressId: uuid('billing_address_id').references(() => addresses.id, { onDelete: 'set null' }),
+    guestEmail: citext('guest_email'),
     currencyCode: char('currency_code', { length: 3 })
       .notNull()
       .references(() => currencies.code, { onDelete: 'restrict' }),

@@ -51,6 +51,7 @@ export const orders = pgTable(
     billingAddressId: uuid('billing_address_id').references(() => addresses.id, { onDelete: 'set null' }),
     shippingAddressSnapshot: jsonb('shipping_address_snapshot'),
     billingAddressSnapshot: jsonb('billing_address_snapshot'),
+    guestEmail: citext('guest_email'),
     status: orderStatusEnum('status').notNull().default('pending'),
     currencyCode: char('currency_code', { length: 3 })
       .notNull()

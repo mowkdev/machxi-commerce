@@ -30,7 +30,7 @@ import {
   releaseForCartItem,
   reserveForCartItem,
 } from "./inventory";
-import type { SetCartAddressesBody } from "@repo/types/storefront";
+import type { SetCartAddressesBody, SetCartEmailBody } from "@repo/types/storefront";
 
 import type { StoreCart } from "./schema";
 
@@ -481,6 +481,31 @@ export async function removeCartPromotion(
         eq(cartPromotions.promotionId, promotionId),
       ),
     );
+  const refreshed = await loadCart(cartId);
+  if (!refreshed) throw notFound("Cart not found");
+  return refreshed;
+}
+
+/**
+ * Set or update the guest email on a cart (guest carts only — registered carts
+ * already have the customer's email in the customers table).
+ */
+export async function setCartEmail(
+  cartId: string,
+  input: SetCartEmailBody,
+  caller: { customerId: string | null } = { customerId: null },
+): Promise<StoreCart> {
+  const cart = await ensureCartExists(cartId);
+  assertCanMutate(cart, caller);
+  if (cart.customerId !== null) {
+    throw validationFailed(
+      "Cart is already associated with a registered customer",
+    );
+  }
+  await db
+    .update(carts)
+    .set({ guestEmail: input.email.trim().toLowerCase() })
+    .where(eq(carts.id, cartId));
   const refreshed = await loadCart(cartId);
   if (!refreshed) throw notFound("Cart not found");
   return refreshed;

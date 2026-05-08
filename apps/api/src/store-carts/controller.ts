@@ -11,6 +11,7 @@ import {
   cartPromotionParam,
   createCartBody,
   setCartAddressesBody,
+  setCartEmailBody,
   switchCartCurrencyBody,
   updateCartLineItemBody,
 } from "./schema";
@@ -23,6 +24,7 @@ import {
   removeCartLineItem,
   removeCartPromotion,
   setCartAddresses,
+  setCartEmail,
   switchCartCurrency,
   updateCartLineItem,
 } from "./service";
@@ -149,6 +151,15 @@ export async function applyCartPromotionController(c: Context<AppEnv>) {
 export async function removeCartPromotionController(c: Context<AppEnv>) {
   const { id, promotionId } = parseCartPromotionId(c);
   const cart = await removeCartPromotion(id, promotionId, {
+    customerId: callerCustomerId(c),
+  });
+  return ok(c, cart);
+}
+
+export async function setCartEmailController(c: Context<AppEnv>) {
+  const id = parseCartId(c);
+  const body = await parseBody(c, setCartEmailBody);
+  const cart = await setCartEmail(id, body, {
     customerId: callerCustomerId(c),
   });
   return ok(c, cart);

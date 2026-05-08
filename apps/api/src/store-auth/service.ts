@@ -1,14 +1,16 @@
 import bcrypt from "bcryptjs";
 import { db } from "@repo/database/client";
 import { eq } from "@repo/database";
-import { customers } from "@repo/database/schema";
+import { addresses, customers, orders } from "@repo/database/schema";
 import { signCustomerToken } from "../auth/customer-jwt";
+import { conflict, notFound, validationFailed } from "../lib/errors";
 import type {
   ChangePasswordBody,
   CustomerProfile,
   CustomerSessionResponse,
   LoginBody,
   RegisterCustomerBody,
+  RegisterFromOrderBody,
   UpdateProfileBody,
 } from "./schema";
 
@@ -112,6 +114,73 @@ export async function updateCustomerProfile(
 export type ChangePasswordOutcome =
   | { ok: true }
   | { ok: false; reason: "not_found" | "wrong_password" };
+
+/**
+ * Post-purchase account creation. The guest already provided their email,
+ * name, and address during checkout — all they supply here is a password.
+ * Creates the customer account, saves the shipping address, links the order.
+ */
+export async function registerFromOrder(
+  body: RegisterFromOrderBody,
+): Promise<CustomerSessionResponse> {
+  const [orderRow] = await db
+    .select()
+    .from(orders)
+    .where(eq(orders.id, body.orderId))
+    .limit(1);
+
+  if (!orderRow) throw notFound("Order not found");
+  if (orderRow.customerId !== null) {
+    throw conflict("This order is already linked to an account");
+  }
+  if (!orderRow.guestEmail) {
+    throw validationFailed("Order has no guest email — cannot create account");
+  }
+
+  const snapshot = orderRow.shippingAddressSnapshot as Record<string, unknown> | null;
+  const firstName = (snapshot?.firstName as string | undefined)?.trim() ?? "";
+  const lastName = (snapshot?.lastName as string | undefined)?.trim() ?? "";
+  if (!firstName || !lastName) {
+    throw validationFailed("Order address snapshot is missing name fields");
+  }
+
+  const email = orderRow.guestEmail.trim().toLowerCase();
+  const passwordHash = await bcrypt.hash(body.password, PASSWORD_HASH_ROUNDS);
+
+  return db.transaction(async (tx) => {
+    const [customer] = await tx
+      .insert(customers)
+      .values({ email, passwordHash, firstName, lastName })
+      .returning();
+
+    // Save the shipping address to the new account
+    if (snapshot) {
+      await tx.insert(addresses).values({
+        customerId: customer.id,
+        firstName,
+        lastName,
+        company: (snapshot.company as string | null) ?? null,
+        phone: (snapshot.phone as string | null) ?? null,
+        isDefaultShipping: true,
+        isDefaultBilling: true,
+        addressLine1: (snapshot.addressLine1 as string) ?? "",
+        addressLine2: (snapshot.addressLine2 as string | null) ?? null,
+        city: (snapshot.city as string) ?? "",
+        provinceCode: (snapshot.provinceCode as string | null) ?? null,
+        postalCode: (snapshot.postalCode as string) ?? "",
+        countryCode: (snapshot.countryCode as string) ?? "",
+      });
+    }
+
+    // Link the order to the new account
+    await tx
+      .update(orders)
+      .set({ customerId: customer.id })
+      .where(eq(orders.id, body.orderId));
+
+    return buildSession(toProfile(customer));
+  });
+}
 
 export async function changeCustomerPassword(
   customerId: string,

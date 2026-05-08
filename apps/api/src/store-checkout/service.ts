@@ -298,6 +298,7 @@ export async function placeOrder(
       .values({
         displayId,
         customerId: cartRow.customerId,
+        guestEmail: cartRow.customerId === null ? (cartRow.guestEmail ?? null) : null,
         originatingCartId: cartRow.id,
         shippingAddressId: cartRow.shippingAddressId,
         billingAddressId: cartRow.billingAddressId,

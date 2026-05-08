@@ -58,20 +58,29 @@ export async function listMyOrders(
   };
 }
 
-export async function getMyOrder(
-  customerId: string,
+/**
+ * Fetch order for the post-checkout confirmation page. Access is gated only
+ * by knowledge of the UUID (unguessable). Returns the same shape as
+ * `getMyOrder` but without a customer auth check.
+ */
+export async function getOrderConfirmation(
   orderId: string,
 ): Promise<StoreOrderDetail | null> {
   const [order] = await db
     .select()
     .from(orders)
-    .where(and(eq(orders.id, orderId), eq(orders.customerId, customerId)))
+    .where(eq(orders.id, orderId))
     .limit(1);
   if (!order) return null;
+  return buildOrderDetail(order);
+}
 
+async function buildOrderDetail(
+  order: typeof orders.$inferSelect,
+): Promise<StoreOrderDetail> {
   const [itemRows, paymentRows] = await Promise.all([
-    db.select().from(orderItems).where(eq(orderItems.orderId, orderId)),
-    db.select().from(payments).where(eq(payments.orderId, orderId)),
+    db.select().from(orderItems).where(eq(orderItems.orderId, order.id)),
+    db.select().from(payments).where(eq(payments.orderId, order.id)),
   ]);
 
   const items: StoreOrderItem[] = itemRows.map((row) => ({
@@ -98,6 +107,8 @@ export async function getMyOrder(
   return {
     id: order.id,
     displayId: order.displayId,
+    customerId: order.customerId,
+    guestEmail: order.guestEmail ?? null,
     status: order.status,
     currencyCode: order.currencyCode,
     subtotal: order.subtotal,
@@ -116,4 +127,17 @@ export async function getMyOrder(
     createdAt: order.createdAt,
     updatedAt: order.updatedAt,
   };
+}
+
+export async function getMyOrder(
+  customerId: string,
+  orderId: string,
+): Promise<StoreOrderDetail | null> {
+  const [order] = await db
+    .select()
+    .from(orders)
+    .where(and(eq(orders.id, orderId), eq(orders.customerId, customerId)))
+    .limit(1);
+  if (!order) return null;
+  return buildOrderDetail(order);
 }

@@ -4,26 +4,27 @@
  */
 
 import type {
-  StoreGetCart200,
-  StoreGetCart400,
-  StoreGetCart401,
-  StoreGetCart403,
-  StoreGetCart404,
-  StoreGetCart409,
-  StoreGetCart500,
-  StoreGetCartPathParams,
-  StoreGetCartQueryResponse,
-} from "../types/StoreGetCart.ts";
+  StoreSetCartEmail200,
+  StoreSetCartEmail400,
+  StoreSetCartEmail401,
+  StoreSetCartEmail403,
+  StoreSetCartEmail404,
+  StoreSetCartEmail409,
+  StoreSetCartEmail500,
+  StoreSetCartEmailMutationRequest,
+  StoreSetCartEmailMutationResponse,
+  StoreSetCartEmailPathParams,
+} from "../types/StoreSetCartEmail.ts";
 import { z } from "zod/v4";
 
-export const storeGetCartPathParamsSchema = z.object({
+export const storeSetCartEmailPathParamsSchema = z.object({
   id: z.uuid(),
-}) as unknown as z.ZodType<StoreGetCartPathParams>;
+}) as unknown as z.ZodType<StoreSetCartEmailPathParams>;
 
 /**
  * @description Cart
  */
-export const storeGetCart200Schema = z.object({
+export const storeSetCartEmail200Schema = z.object({
   success: z.literal(true),
   data: z.object({
     id: z.uuid(),
@@ -71,80 +72,65 @@ export const storeGetCart200Schema = z.object({
     createdAt: z.string(),
     updatedAt: z.string(),
   }),
-}) as unknown as z.ZodType<StoreGetCart200>;
+}) as unknown as z.ZodType<StoreSetCartEmail200>;
 
-/**
- * @description Validation failed
- */
-export const storeGetCart400Schema = z.object({
+export const storeSetCartEmail400Schema = z.object({
   success: z.literal(false),
   error: z.object({
     code: z.string(),
     message: z.string(),
     details: z.optional(z.object({}).catchall(z.any())),
   }),
-}) as unknown as z.ZodType<StoreGetCart400>;
+}) as unknown as z.ZodType<StoreSetCartEmail400>;
 
-/**
- * @description Unauthenticated
- */
-export const storeGetCart401Schema = z.object({
+export const storeSetCartEmail401Schema = z.object({
   success: z.literal(false),
   error: z.object({
     code: z.string(),
     message: z.string(),
     details: z.optional(z.object({}).catchall(z.any())),
   }),
-}) as unknown as z.ZodType<StoreGetCart401>;
+}) as unknown as z.ZodType<StoreSetCartEmail401>;
 
-/**
- * @description Forbidden
- */
-export const storeGetCart403Schema = z.object({
+export const storeSetCartEmail403Schema = z.object({
   success: z.literal(false),
   error: z.object({
     code: z.string(),
     message: z.string(),
     details: z.optional(z.object({}).catchall(z.any())),
   }),
-}) as unknown as z.ZodType<StoreGetCart403>;
+}) as unknown as z.ZodType<StoreSetCartEmail403>;
 
-/**
- * @description Not found
- */
-export const storeGetCart404Schema = z.object({
+export const storeSetCartEmail404Schema = z.object({
   success: z.literal(false),
   error: z.object({
     code: z.string(),
     message: z.string(),
     details: z.optional(z.object({}).catchall(z.any())),
   }),
-}) as unknown as z.ZodType<StoreGetCart404>;
+}) as unknown as z.ZodType<StoreSetCartEmail404>;
 
-/**
- * @description Conflict
- */
-export const storeGetCart409Schema = z.object({
+export const storeSetCartEmail409Schema = z.object({
   success: z.literal(false),
   error: z.object({
     code: z.string(),
     message: z.string(),
     details: z.optional(z.object({}).catchall(z.any())),
   }),
-}) as unknown as z.ZodType<StoreGetCart409>;
+}) as unknown as z.ZodType<StoreSetCartEmail409>;
 
-/**
- * @description Internal server error
- */
-export const storeGetCart500Schema = z.object({
+export const storeSetCartEmail500Schema = z.object({
   success: z.literal(false),
   error: z.object({
     code: z.string(),
     message: z.string(),
     details: z.optional(z.object({}).catchall(z.any())),
   }),
-}) as unknown as z.ZodType<StoreGetCart500>;
+}) as unknown as z.ZodType<StoreSetCartEmail500>;
 
-export const storeGetCartQueryResponseSchema = z.lazy(
-  () => storeGetCart200Schema,
-) as unknown as z.ZodType<StoreGetCartQueryResponse>;
+export const storeSetCartEmailMutationRequestSchema =
+  z.any() as unknown as z.ZodType<StoreSetCartEmailMutationRequest>;
+
+export const storeSetCartEmailMutationResponseSchema = z.lazy(
+  () => storeSetCartEmail200Schema,
+) as unknown as z.ZodType<StoreSetCartEmailMutationResponse>;

@@ -1,6 +1,5 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
@@ -91,7 +90,6 @@ export function CurrencySwitcher() {
       >
         <SelectTrigger className="h-9 w-[110px] gap-1 border-none bg-transparent px-2 text-sm font-medium hover:bg-accent">
           <SelectValue />
-          <ChevronDown className="h-4 w-4 opacity-50" />
         </SelectTrigger>
         <SelectContent align="end">
           {available.map((c) => (
