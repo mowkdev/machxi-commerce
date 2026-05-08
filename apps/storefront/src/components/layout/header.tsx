@@ -45,7 +45,7 @@ function AuthNav() {
   return (
     <div className="flex items-center gap-1 text-sm">
       <Button asChild variant="ghost" size="sm">
-        <Link href="/account/orders">{customer.firstName}</Link>
+        <Link href="/account">{customer.firstName}</Link>
       </Button>
       <Button variant="ghost" size="sm" onClick={handleLogout}>
         Sign out

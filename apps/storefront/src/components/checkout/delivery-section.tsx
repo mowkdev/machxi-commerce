@@ -57,7 +57,7 @@ type DeliverySectionProps = {
   onSelectSavedAddress: (id: string | null) => void;
 };
 
-const COUNTRIES = [
+export const COUNTRIES = [
   { code: 'US', label: 'United States' },
   { code: 'CA', label: 'Canada' },
   { code: 'GB', label: 'United Kingdom' },
