@@ -196,11 +196,9 @@ storeCartsRoutes.delete(
   removeCartPromotionController,
 );
 
-// Authenticated-only endpoint: a logged-in customer claims a guest cart.
-const customerCartRouter = new Hono<AppEnv>();
-customerCartRouter.use("*", requireCustomer);
-customerCartRouter.post(
+storeCartsRoutes.post(
   "/:id/customer",
+  requireCustomer,
   describeRoute({
     operationId: "storeAttachCustomerToCart",
     summary: "Attach the authenticated customer to a guest cart",
@@ -213,4 +211,3 @@ customerCartRouter.post(
   }),
   attachCustomerToCartController,
 );
-storeCartsRoutes.route("/", customerCartRouter);

@@ -102,7 +102,17 @@
       "Bash(pnpm --filter @app/storefront type-check)",
       "mcp__Claude_in_Chrome__tabs_context_mcp",
       "Bash(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\SergejsMoskanovs\\\\dev\\\\lab\\\\machxi-commerce\\\\apps\\\\storefront\\\\src\\\\app\\\\auth\\\\login\")",
-      "Bash(Out-Null)"
+      "Bash(Out-Null)",
+      "Bash(cp \"apps/storefront/src/app/products/[handle]/page.tsx\" \"apps/storefront/src/app/\\(store\\)/products/[handle]/page.tsx\")",
+      "Bash(cp \"apps/storefront/src/app/products/[handle]/not-found.tsx\" \"apps/storefront/src/app/\\(store\\)/products/[handle]/not-found.tsx\")",
+      "Bash(cp \"apps/storefront/src/app/order/confirmation/[orderId]/page.tsx\" \"apps/storefront/src/app/\\(store\\)/order/confirmation/[orderId]/page.tsx\")",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":3000 \")",
+      "Bash(findstr LISTENING)",
+      "Bash(findstr \":3001 \")",
+      "Bash(pnpm --filter @app/storefront dev)",
+      "Bash(mkdir -p \"apps/storefront/src/app/\\(checkout\\)/order/confirmation/[orderId]\")",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
