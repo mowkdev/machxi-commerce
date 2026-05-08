@@ -164,16 +164,18 @@ export function CheckoutPageContent() {
   const isReady =
     !cartLoading && !!cartId && !customerQuery.isLoading && !isAttaching;
 
-  const addressComplete = isAuthenticated
-    ? Boolean(selectedAddressId)
-    : Boolean(
-        fields.firstName &&
-          fields.lastName &&
-          fields.addressLine1 &&
-          fields.city &&
-          fields.postalCode &&
-          fields.countryCode,
-      );
+  const formFieldsComplete = Boolean(
+    fields.firstName &&
+      fields.lastName &&
+      fields.addressLine1 &&
+      fields.city &&
+      fields.postalCode &&
+      fields.countryCode,
+  );
+
+  const addressComplete = selectedAddressId
+    ? true
+    : formFieldsComplete;
 
   const isSubmitting =
     setCartEmail.isPending ||

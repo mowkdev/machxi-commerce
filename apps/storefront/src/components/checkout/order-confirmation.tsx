@@ -22,8 +22,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
 import { saveCustomerToken } from '@/lib/sdk';
+import { OrderConfirmationSkeleton } from '@/components/checkout/order-confirmation-skeleton';
 
 export function OrderConfirmation({ orderId }: { orderId: string }) {
   const formatMoney = useFormatMoney();
@@ -32,12 +32,7 @@ export function OrderConfirmation({ orderId }: { orderId: string }) {
   });
 
   if (isLoading) {
-    return (
-      <div className="mx-auto max-w-2xl space-y-4 px-4 py-16">
-        <Skeleton className="h-8 w-48" />
-        <Skeleton className="h-64 w-full rounded-xl" />
-      </div>
-    );
+    return <OrderConfirmationSkeleton />;
   }
 
   if (isError || !data?.success) {
