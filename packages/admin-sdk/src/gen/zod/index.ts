@@ -180,6 +180,17 @@ export {
   adminCreateOrderShippingLinePathParamsSchema,
 } from "./adminCreateOrderShippingLineSchema.ts";
 export {
+  adminCreatePage201Schema,
+  adminCreatePage400Schema,
+  adminCreatePage401Schema,
+  adminCreatePage403Schema,
+  adminCreatePage404Schema,
+  adminCreatePage409Schema,
+  adminCreatePage500Schema,
+  adminCreatePageMutationRequestSchema,
+  adminCreatePageMutationResponseSchema,
+} from "./adminCreatePageSchema.ts";
+export {
   adminCreatePaymentProvider201Schema,
   adminCreatePaymentProvider400Schema,
   adminCreatePaymentProvider401Schema,
@@ -517,6 +528,17 @@ export {
   adminDeleteOrderShippingLineMutationResponseSchema,
   adminDeleteOrderShippingLinePathParamsSchema,
 } from "./adminDeleteOrderShippingLineSchema.ts";
+export {
+  adminDeletePage200Schema,
+  adminDeletePage400Schema,
+  adminDeletePage401Schema,
+  adminDeletePage403Schema,
+  adminDeletePage404Schema,
+  adminDeletePage409Schema,
+  adminDeletePage500Schema,
+  adminDeletePageMutationResponseSchema,
+  adminDeletePagePathParamsSchema,
+} from "./adminDeletePageSchema.ts";
 export {
   adminDeletePaymentProvider200Schema,
   adminDeletePaymentProvider400Schema,
@@ -882,6 +904,17 @@ export {
   adminGetOrderQueryResponseSchema,
 } from "./adminGetOrderSchema.ts";
 export {
+  adminGetPage200Schema,
+  adminGetPage400Schema,
+  adminGetPage401Schema,
+  adminGetPage403Schema,
+  adminGetPage404Schema,
+  adminGetPage409Schema,
+  adminGetPage500Schema,
+  adminGetPagePathParamsSchema,
+  adminGetPageQueryResponseSchema,
+} from "./adminGetPageSchema.ts";
+export {
   adminGetPaymentProvider200Schema,
   adminGetPaymentProvider400Schema,
   adminGetPaymentProvider401Schema,
@@ -1012,6 +1045,16 @@ export {
   adminGetUserPathParamsSchema,
   adminGetUserQueryResponseSchema,
 } from "./adminGetUserSchema.ts";
+export {
+  adminListBlockTypes200Schema,
+  adminListBlockTypes400Schema,
+  adminListBlockTypes401Schema,
+  adminListBlockTypes403Schema,
+  adminListBlockTypes404Schema,
+  adminListBlockTypes409Schema,
+  adminListBlockTypes500Schema,
+  adminListBlockTypesQueryResponseSchema,
+} from "./adminListBlockTypesSchema.ts";
 export {
   adminListBuiltInPaymentProviders200Schema,
   adminListBuiltInPaymentProviders400Schema,
@@ -1154,6 +1197,17 @@ export {
   adminListOrdersQueryParamsSchema,
   adminListOrdersQueryResponseSchema,
 } from "./adminListOrdersSchema.ts";
+export {
+  adminListPages200Schema,
+  adminListPages400Schema,
+  adminListPages401Schema,
+  adminListPages403Schema,
+  adminListPages404Schema,
+  adminListPages409Schema,
+  adminListPages500Schema,
+  adminListPagesQueryParamsSchema,
+  adminListPagesQueryResponseSchema,
+} from "./adminListPagesSchema.ts";
 export {
   adminListPaymentProviders200Schema,
   adminListPaymentProviders400Schema,
@@ -1397,6 +1451,18 @@ export {
   adminReplaceMediaPathParamsSchema,
 } from "./adminReplaceMediaSchema.ts";
 export {
+  adminReplacePageBlocks200Schema,
+  adminReplacePageBlocks400Schema,
+  adminReplacePageBlocks401Schema,
+  adminReplacePageBlocks403Schema,
+  adminReplacePageBlocks404Schema,
+  adminReplacePageBlocks409Schema,
+  adminReplacePageBlocks500Schema,
+  adminReplacePageBlocksMutationRequestSchema,
+  adminReplacePageBlocksMutationResponseSchema,
+  adminReplacePageBlocksPathParamsSchema,
+} from "./adminReplacePageBlocksSchema.ts";
+export {
   adminUpdateCategory200Schema,
   adminUpdateCategory400Schema,
   adminUpdateCategory401Schema,
@@ -1552,6 +1618,18 @@ export {
   adminUpdateOrderShippingLineMutationResponseSchema,
   adminUpdateOrderShippingLinePathParamsSchema,
 } from "./adminUpdateOrderShippingLineSchema.ts";
+export {
+  adminUpdatePage200Schema,
+  adminUpdatePage400Schema,
+  adminUpdatePage401Schema,
+  adminUpdatePage403Schema,
+  adminUpdatePage404Schema,
+  adminUpdatePage409Schema,
+  adminUpdatePage500Schema,
+  adminUpdatePageMutationRequestSchema,
+  adminUpdatePageMutationResponseSchema,
+  adminUpdatePagePathParamsSchema,
+} from "./adminUpdatePageSchema.ts";
 export {
   adminUpdatePaymentProvider200Schema,
   adminUpdatePaymentProvider400Schema,

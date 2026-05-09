@@ -173,6 +173,19 @@ CREATE TRIGGER trg_promotion_amounts_set_updated_at
 CREATE TRIGGER trg_promotion_translations_set_updated_at
   BEFORE UPDATE ON promotion_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
+-- CMS
+CREATE TRIGGER trg_pages_set_updated_at
+  BEFORE UPDATE ON pages FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_page_translations_set_updated_at
+  BEFORE UPDATE ON page_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_blocks_set_updated_at
+  BEFORE UPDATE ON blocks FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trg_block_translations_set_updated_at
+  BEFORE UPDATE ON block_translations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
 -- Auth & RBAC
 CREATE TRIGGER trg_users_set_updated_at
   BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION set_updated_at();
@@ -276,6 +289,23 @@ ALTER TABLE promotion_usage
 ALTER TABLE categories
   ADD CONSTRAINT fk_categories_parent
   FOREIGN KEY (parent_id) REFERENCES categories(id) ON DELETE RESTRICT;
+
+-- pages self-reference
+ALTER TABLE pages
+  ADD CONSTRAINT fk_pages_parent
+  FOREIGN KEY (parent_id) REFERENCES pages(id) ON DELETE RESTRICT;
+
+-- page_translations.parent_id mirrors pages.parent_id and is denormalized
+-- so the (parent_id, language_code, handle) uniqueness index can be enforced.
+-- Cascading on parent move is handled in the service layer.
+ALTER TABLE page_translations
+  ADD CONSTRAINT fk_page_translations_parent
+  FOREIGN KEY (parent_id) REFERENCES pages(id) ON DELETE CASCADE;
+
+-- blocks self-reference
+ALTER TABLE blocks
+  ADD CONSTRAINT fk_blocks_parent_block
+  FOREIGN KEY (parent_block_id) REFERENCES blocks(id) ON DELETE CASCADE;
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- TAX RATES EXCLUSION CONSTRAINT (Drizzle doesn't support EXCLUDE)

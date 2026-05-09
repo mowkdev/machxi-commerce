@@ -196,6 +196,18 @@ export type {
   AdminCreateOrderShippingLinePathParams,
 } from "./AdminCreateOrderShippingLine.ts";
 export type {
+  AdminCreatePage201,
+  AdminCreatePage400,
+  AdminCreatePage401,
+  AdminCreatePage403,
+  AdminCreatePage404,
+  AdminCreatePage409,
+  AdminCreatePage500,
+  AdminCreatePageMutation,
+  AdminCreatePageMutationRequest,
+  AdminCreatePageMutationResponse,
+} from "./AdminCreatePage.ts";
+export type {
   AdminCreatePayment201,
   AdminCreatePayment201DataStatusEnumKey,
   AdminCreatePayment400,
@@ -566,6 +578,18 @@ export type {
   AdminDeleteOrderShippingLineMutationResponse,
   AdminDeleteOrderShippingLinePathParams,
 } from "./AdminDeleteOrderShippingLine.ts";
+export type {
+  AdminDeletePage200,
+  AdminDeletePage400,
+  AdminDeletePage401,
+  AdminDeletePage403,
+  AdminDeletePage404,
+  AdminDeletePage409,
+  AdminDeletePage500,
+  AdminDeletePageMutation,
+  AdminDeletePageMutationResponse,
+  AdminDeletePagePathParams,
+} from "./AdminDeletePage.ts";
 export type {
   AdminDeletePayment200,
   AdminDeletePayment400,
@@ -974,6 +998,20 @@ export type {
   AdminGetOrderQueryResponse,
 } from "./AdminGetOrder.ts";
 export type {
+  AdminGetPage200,
+  AdminGetPage200DataStatusEnumKey,
+  AdminGetPage200RelationsRelatedTypeEnumKey,
+  AdminGetPage400,
+  AdminGetPage401,
+  AdminGetPage403,
+  AdminGetPage404,
+  AdminGetPage409,
+  AdminGetPage500,
+  AdminGetPagePathParams,
+  AdminGetPageQuery,
+  AdminGetPageQueryResponse,
+} from "./AdminGetPage.ts";
+export type {
   AdminGetPaymentProvider200,
   AdminGetPaymentProvider200DataKindEnumKey,
   AdminGetPaymentProvider400,
@@ -1124,6 +1162,19 @@ export type {
   AdminGetUserQuery,
   AdminGetUserQueryResponse,
 } from "./AdminGetUser.ts";
+export type {
+  AdminListBlockTypes200,
+  AdminListBlockTypes200DataCategoryEnumKey,
+  AdminListBlockTypes200RelationFieldsKindEnumKey,
+  AdminListBlockTypes400,
+  AdminListBlockTypes401,
+  AdminListBlockTypes403,
+  AdminListBlockTypes404,
+  AdminListBlockTypes409,
+  AdminListBlockTypes500,
+  AdminListBlockTypesQuery,
+  AdminListBlockTypesQueryResponse,
+} from "./AdminListBlockTypes.ts";
 export type {
   AdminListBuiltInPaymentProviders200,
   AdminListBuiltInPaymentProviders200DataKindEnumKey,
@@ -1309,6 +1360,22 @@ export type {
   AdminListOrdersQueryParamsStatusEnumKey,
   AdminListOrdersQueryResponse,
 } from "./AdminListOrders.ts";
+export type {
+  AdminListPages200,
+  AdminListPages200DataStatusEnumKey,
+  AdminListPages400,
+  AdminListPages401,
+  AdminListPages403,
+  AdminListPages404,
+  AdminListPages409,
+  AdminListPages500,
+  AdminListPagesQuery,
+  AdminListPagesQueryParams,
+  AdminListPagesQueryParamsSortByEnumKey,
+  AdminListPagesQueryParamsSortOrderEnumKey,
+  AdminListPagesQueryParamsStatusEnumKey,
+  AdminListPagesQueryResponse,
+} from "./AdminListPages.ts";
 export type {
   AdminListPaymentProviders200,
   AdminListPaymentProviders200DataKindEnumKey,
@@ -1612,6 +1679,21 @@ export type {
   AdminReplaceMediaPathParams,
 } from "./AdminReplaceMedia.ts";
 export type {
+  AdminReplacePageBlocks200,
+  AdminReplacePageBlocks200DataStatusEnumKey,
+  AdminReplacePageBlocks200RelationsRelatedTypeEnumKey,
+  AdminReplacePageBlocks400,
+  AdminReplacePageBlocks401,
+  AdminReplacePageBlocks403,
+  AdminReplacePageBlocks404,
+  AdminReplacePageBlocks409,
+  AdminReplacePageBlocks500,
+  AdminReplacePageBlocksMutation,
+  AdminReplacePageBlocksMutationRequest,
+  AdminReplacePageBlocksMutationResponse,
+  AdminReplacePageBlocksPathParams,
+} from "./AdminReplacePageBlocks.ts";
+export type {
   AdminUpdateCategory200,
   AdminUpdateCategory400,
   AdminUpdateCategory401,
@@ -1786,6 +1868,21 @@ export type {
   AdminUpdateOrderShippingLineMutationResponse,
   AdminUpdateOrderShippingLinePathParams,
 } from "./AdminUpdateOrderShippingLine.ts";
+export type {
+  AdminUpdatePage200,
+  AdminUpdatePage200DataStatusEnumKey,
+  AdminUpdatePage200RelationsRelatedTypeEnumKey,
+  AdminUpdatePage400,
+  AdminUpdatePage401,
+  AdminUpdatePage403,
+  AdminUpdatePage404,
+  AdminUpdatePage409,
+  AdminUpdatePage500,
+  AdminUpdatePageMutation,
+  AdminUpdatePageMutationRequest,
+  AdminUpdatePageMutationResponse,
+  AdminUpdatePagePathParams,
+} from "./AdminUpdatePage.ts";
 export type {
   AdminUpdatePayment200,
   AdminUpdatePayment200DataStatusEnumKey,
@@ -2094,6 +2191,8 @@ export { adminGetOrder200FulfillmentsStatusEnum } from "./AdminGetOrder.ts";
 export { adminGetOrder200ItemsReasonEnum } from "./AdminGetOrder.ts";
 export { adminGetOrder200PaymentsStatusEnum } from "./AdminGetOrder.ts";
 export { adminGetOrder200ReturnsStatusEnum } from "./AdminGetOrder.ts";
+export { adminGetPage200DataStatusEnum } from "./AdminGetPage.ts";
+export { adminGetPage200RelationsRelatedTypeEnum } from "./AdminGetPage.ts";
 export { adminGetPaymentProvider200DataKindEnum } from "./AdminGetPaymentProvider.ts";
 export { adminGetPriceList200DataStatusEnum } from "./AdminGetPriceList.ts";
 export { adminGetPriceList200DataTypeEnum } from "./AdminGetPriceList.ts";
@@ -2102,6 +2201,8 @@ export { adminGetPromotion200DataTypeEnum } from "./AdminGetPromotion.ts";
 export { adminGetPromotion200TargetsTargetTypeEnum } from "./AdminGetPromotion.ts";
 export { adminGetReturn200DataStatusEnum } from "./AdminGetReturn.ts";
 export { adminGetReturn200ItemsReasonEnum } from "./AdminGetReturn.ts";
+export { adminListBlockTypes200DataCategoryEnum } from "./AdminListBlockTypes.ts";
+export { adminListBlockTypes200RelationFieldsKindEnum } from "./AdminListBlockTypes.ts";
 export { adminListBuiltInPaymentProviders200DataKindEnum } from "./AdminListBuiltInPaymentProviders.ts";
 export { adminListCartsQueryParamsCustomerTypeEnum } from "./AdminListCarts.ts";
 export { adminListCartsQueryParamsSortByEnum } from "./AdminListCarts.ts";
@@ -2132,6 +2233,10 @@ export { adminListOrders200DataStatusEnum } from "./AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortByEnum } from "./AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortOrderEnum } from "./AdminListOrders.ts";
 export { adminListOrdersQueryParamsStatusEnum } from "./AdminListOrders.ts";
+export { adminListPages200DataStatusEnum } from "./AdminListPages.ts";
+export { adminListPagesQueryParamsSortByEnum } from "./AdminListPages.ts";
+export { adminListPagesQueryParamsSortOrderEnum } from "./AdminListPages.ts";
+export { adminListPagesQueryParamsStatusEnum } from "./AdminListPages.ts";
 export { adminListPaymentProviders200DataKindEnum } from "./AdminListPaymentProviders.ts";
 export { adminListPaymentProvidersQueryParamsSortByEnum } from "./AdminListPaymentProviders.ts";
 export { adminListPaymentProvidersQueryParamsSortOrderEnum } from "./AdminListPaymentProviders.ts";
@@ -2170,12 +2275,16 @@ export { adminListTaxClassesQueryParamsSortByEnum } from "./AdminListTaxClasses.
 export { adminListTaxClassesQueryParamsSortOrderEnum } from "./AdminListTaxClasses.ts";
 export { adminListUsersQueryParamsSortByEnum } from "./AdminListUsers.ts";
 export { adminListUsersQueryParamsSortOrderEnum } from "./AdminListUsers.ts";
+export { adminReplacePageBlocks200DataStatusEnum } from "./AdminReplacePageBlocks.ts";
+export { adminReplacePageBlocks200RelationsRelatedTypeEnum } from "./AdminReplacePageBlocks.ts";
 export { adminUpdateFulfillment200DataStatusEnum } from "./AdminUpdateFulfillment.ts";
 export { adminUpdateOrder200DataStatusEnum } from "./AdminUpdateOrder.ts";
 export { adminUpdateOrder200FulfillmentsStatusEnum } from "./AdminUpdateOrder.ts";
 export { adminUpdateOrder200ItemsReasonEnum } from "./AdminUpdateOrder.ts";
 export { adminUpdateOrder200PaymentsStatusEnum } from "./AdminUpdateOrder.ts";
 export { adminUpdateOrder200ReturnsStatusEnum } from "./AdminUpdateOrder.ts";
+export { adminUpdatePage200DataStatusEnum } from "./AdminUpdatePage.ts";
+export { adminUpdatePage200RelationsRelatedTypeEnum } from "./AdminUpdatePage.ts";
 export { adminUpdatePayment200DataStatusEnum } from "./AdminUpdatePayment.ts";
 export { adminUpdatePaymentProvider200DataKindEnum } from "./AdminUpdatePaymentProvider.ts";
 export { adminUpdatePriceList200DataStatusEnum } from "./AdminUpdatePriceList.ts";

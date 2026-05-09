@@ -5,6 +5,7 @@ import {
   IconCurrencyDollar,
   IconDashboard,
   IconDiscount,
+  IconFileDescription,
   IconHelp,
   IconInnerShadowTop,
   IconPackage,
@@ -19,9 +20,6 @@ import {
 } from "@tabler/icons-react"
 import type { ComponentProps } from "react"
 
-import { NavGroup } from "@/layouts/DashboardLayout/components/nav-group"
-import { NavSecondary } from "@/layouts/DashboardLayout/components/nav-secondary"
-import { NavUser } from "@/layouts/DashboardLayout/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -31,6 +29,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { NavGroup } from "@/layouts/DashboardLayout/components/nav-group"
+import { NavSecondary } from "@/layouts/DashboardLayout/components/nav-secondary"
+import { NavUser } from "@/layouts/DashboardLayout/components/nav-user"
 
 type NavItem = {
   title: string
@@ -124,6 +125,17 @@ const data = {
       items: [
         { title: "Fulfillments", url: "/fulfillments", icon: IconTruckDelivery },
         { title: "Returns", url: "/returns", icon: IconArrowBackUp },
+      ],
+    },
+    {
+      id: "cms",
+      groupLabel: "CMS",
+      collapseTitle: true,
+      // Collapsed by default — content management is a secondary surface for
+      // most operators and shouldn't dominate the sidebar.
+      defaultOpen: false,
+      items: [
+        { title: "Pages", url: "/cms/pages", icon: IconFileDescription },
       ],
     },
   ] satisfies NavGroupConfig[],

@@ -72,6 +72,13 @@ import {
   sessions,
   accounts,
 } from './07-auth';
+import {
+  pages,
+  pageTranslations,
+  blocks,
+  blockTranslations,
+  blockRelations,
+} from './09-cms';
 
 // ─── Catalog ────────────────────────────────────────────────────────────────
 
@@ -82,6 +89,8 @@ export const languagesRelations = relations(languages, ({ many }) => ({
   categoryTranslations: many(categoryTranslations),
   priceListTranslations: many(priceListTranslations),
   promotionTranslations: many(promotionTranslations),
+  pageTranslations: many(pageTranslations),
+  blockTranslations: many(blockTranslations),
 }));
 
 export const taxClassesRelations = relations(taxClasses, ({ many }) => ({
@@ -615,4 +624,49 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] }),
+}));
+
+// ─── CMS ────────────────────────────────────────────────────────────────────
+
+export const pagesRelations = relations(pages, ({ one, many }) => ({
+  parent: one(pages, {
+    fields: [pages.parentId],
+    references: [pages.id],
+    relationName: 'page_parent',
+  }),
+  children: many(pages, { relationName: 'page_parent' }),
+  translations: many(pageTranslations),
+  blocks: many(blocks),
+}));
+
+export const pageTranslationsRelations = relations(pageTranslations, ({ one }) => ({
+  page: one(pages, { fields: [pageTranslations.pageId], references: [pages.id] }),
+  language: one(languages, {
+    fields: [pageTranslations.languageCode],
+    references: [languages.code],
+  }),
+}));
+
+export const blocksRelations = relations(blocks, ({ one, many }) => ({
+  page: one(pages, { fields: [blocks.pageId], references: [pages.id] }),
+  parent: one(blocks, {
+    fields: [blocks.parentBlockId],
+    references: [blocks.id],
+    relationName: 'block_parent',
+  }),
+  children: many(blocks, { relationName: 'block_parent' }),
+  translations: many(blockTranslations),
+  relations: many(blockRelations),
+}));
+
+export const blockTranslationsRelations = relations(blockTranslations, ({ one }) => ({
+  block: one(blocks, { fields: [blockTranslations.blockId], references: [blocks.id] }),
+  language: one(languages, {
+    fields: [blockTranslations.languageCode],
+    references: [languages.code],
+  }),
+}));
+
+export const blockRelationsRelations = relations(blockRelations, ({ one }) => ({
+  block: one(blocks, { fields: [blockRelations.blockId], references: [blocks.id] }),
 }));

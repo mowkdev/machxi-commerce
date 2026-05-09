@@ -21,6 +21,11 @@
       "types": "./dist/admin/index.d.ts",
       "import": "./dist/admin/index.mjs",
       "require": "./dist/admin/index.js"
+    },
+    "./cms": {
+      "types": "./dist/cms/index.d.ts",
+      "import": "./dist/cms/index.mjs",
+      "require": "./dist/cms/index.js"
     }
   },
   "scripts": {

@@ -17,3 +17,7 @@ export * from "./option-definition";
 export * from "./payment-provider";
 export * from "./store-settings";
 export * from "./invoice";
+// CMS DTOs are surfaced via @repo/types/admin too so admin features can
+// import all of their schemas from a single barrel (matches product/category
+// convention).
+export * from "../cms";
