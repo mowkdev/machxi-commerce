@@ -104,3 +104,31 @@ export const storage = {
 };
 
 export type Storage = typeof storage;
+
+export const invoiceStorage = {
+  bucket: env.S3_INVOICES_BUCKET,
+
+  async put(key: string, body: Buffer, contentType = 'application/pdf'): Promise<{ key: string }> {
+    await client.send(
+      new PutObjectCommand({
+        Bucket: env.S3_INVOICES_BUCKET,
+        Key: key,
+        Body: body,
+        ContentType: contentType,
+      })
+    );
+    return { key };
+  },
+
+  async getSignedUrl(key: string, ttlSec = 300): Promise<string> {
+    return getSignedUrl(
+      client,
+      new GetObjectCommand({ Bucket: env.S3_INVOICES_BUCKET, Key: key }),
+      { expiresIn: ttlSec }
+    );
+  },
+
+  async delete(key: string): Promise<void> {
+    await client.send(new DeleteObjectCommand({ Bucket: env.S3_INVOICES_BUCKET, Key: key }));
+  },
+};

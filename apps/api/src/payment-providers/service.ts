@@ -9,7 +9,6 @@ import type {
   UpdatePaymentProviderBody,
 } from "@repo/types/admin";
 import { getBuiltInPaymentProvider } from "../payments/providers/registry";
-import { stripeSecretConfigured } from "../payments/providers/stripe";
 import type { ListPaymentProvidersQuery } from "./schema";
 
 const SORT_COLUMNS = {
@@ -33,9 +32,14 @@ function assertCanEnable(opts: {
   isEnabled: boolean;
 }): void {
   if (!opts.isEnabled) return;
-  if (opts.kind === "automatic" && opts.code === "stripe" && !stripeSecretConfigured()) {
+  const provider = getBuiltInPaymentProvider(opts.code);
+  if (!provider) return;
+  const missing = provider.meta.requiredEnvVars.filter(
+    (v) => !process.env[v]?.trim(),
+  );
+  if (missing.length > 0) {
     const err = new Error(
-      "Cannot enable Stripe: STRIPE_SECRET_KEY is not set on the API server.",
+      `Cannot enable ${provider.meta.displayName}: ${missing.join(", ")} not set on the API server.`,
     );
     (err as Error & { statusCode?: number }).statusCode = 422;
     throw err;

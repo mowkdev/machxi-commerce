@@ -114,7 +114,8 @@
       "Bash(mkdir -p \"apps/storefront/src/app/\\(checkout\\)/order/confirmation/[orderId]\")",
       "mcp__Claude_Preview__preview_start",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\SergejsMoskanovs\\\\dev\\\\lab\\\\machxi-commerce\\\\apps\\\\storefront\\\\src\\\\app\\\\\\(checkout\\)\" -Recurse -Force)",
-      "Bash(Select-Object FullName)"
+      "Bash(Select-Object FullName)",
+      "Bash(pnpm --filter @app/worker type-check)"
     ]
   }
 }

@@ -10,10 +10,12 @@ import {
   successEnvelope,
 } from "../openapi/envelope";
 import {
+  downloadMyOrderInvoiceController,
   getOrderConfirmationController,
   getOrderController,
   listOrdersController,
 } from "./controller";
+import { invoiceDownloadResult } from "@repo/types/admin";
 import {
   storeListOrdersQuery,
   storeOrderDetail,
@@ -58,6 +60,24 @@ myOrdersRouter.get(
     },
   }),
   listOrdersController,
+);
+
+myOrdersRouter.get(
+  "/:id/invoice/download",
+  describeRoute({
+    operationId: "storeDownloadMyOrderInvoice",
+    summary: "Get a signed download URL for the invoice PDF of a customer's order",
+    tags: TAGS,
+    parameters: paramsFromSchema(storeOrderIdParam, "path"),
+    responses: {
+      200: jsonResponse(
+        "Signed download URL",
+        successEnvelope(invoiceDownloadResult),
+      ),
+      ...standardErrorResponses,
+    },
+  }),
+  downloadMyOrderInvoiceController,
 );
 
 myOrdersRouter.get(

@@ -36,6 +36,8 @@ import { storeCheckoutRoutes } from "./store-checkout/routes";
 import { storeCurrenciesRoutes } from "./store-currencies/routes";
 import { storeOrdersRoutes } from "./store-orders/routes";
 import { paymentWebhookRoutes } from "./payments/webhooks/routes";
+import { storeSettingsRoutes } from "./store-settings/routes";
+import { invoicesRoutes } from "./invoices/routes";
 import { logger } from "./lib/logger";
 import { requestLogger } from "./lib/requestLogger";
 import { err, errFromException } from "./lib/response";
@@ -101,6 +103,8 @@ export function createApp() {
   app.route("/api/store", storeCheckoutRoutes);
   app.route("/api/store/currencies", storeCurrenciesRoutes);
   app.route("/api/store/orders", storeOrdersRoutes);
+  app.route("/api/store-settings", storeSettingsRoutes);
+  app.route("/api/invoices", invoicesRoutes);
   app.route("/api/payments/webhooks", paymentWebhookRoutes);
 
   if (env.OPENAPI_DOCS_ENABLED) {

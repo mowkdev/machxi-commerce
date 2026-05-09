@@ -20,6 +20,9 @@ export const storeGetOrderConfirmationPathParamsSchema = z.object({
   id: z.uuid(),
 }) as unknown as z.ZodType<StoreGetOrderConfirmationPathParams>;
 
+/**
+ * @description Order detail
+ */
 export const storeGetOrderConfirmation200Schema = z.object({
   success: z.literal(true),
   data: z.object({
@@ -34,7 +37,10 @@ export const storeGetOrderConfirmation200Schema = z.object({
     shippingTotal: z.int().min(0).max(9007199254740991),
     taxTotal: z.int().min(0).max(9007199254740991),
     totalAmount: z.int().min(0).max(9007199254740991),
-    shippingAddressSnapshot: z.union([z.object({}).catchall(z.any()), z.null()]),
+    shippingAddressSnapshot: z.union([
+      z.object({}).catchall(z.any()),
+      z.null(),
+    ]),
     billingAddressSnapshot: z.union([z.object({}).catchall(z.any()), z.null()]),
     items: z.array(
       z.object({
@@ -64,6 +70,9 @@ export const storeGetOrderConfirmation200Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreGetOrderConfirmation200>;
 
+/**
+ * @description Validation failed
+ */
 export const storeGetOrderConfirmation400Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -73,6 +82,9 @@ export const storeGetOrderConfirmation400Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreGetOrderConfirmation400>;
 
+/**
+ * @description Unauthenticated
+ */
 export const storeGetOrderConfirmation401Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -82,6 +94,9 @@ export const storeGetOrderConfirmation401Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreGetOrderConfirmation401>;
 
+/**
+ * @description Forbidden
+ */
 export const storeGetOrderConfirmation403Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -91,6 +106,9 @@ export const storeGetOrderConfirmation403Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreGetOrderConfirmation403>;
 
+/**
+ * @description Not found
+ */
 export const storeGetOrderConfirmation404Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -100,6 +118,9 @@ export const storeGetOrderConfirmation404Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreGetOrderConfirmation404>;
 
+/**
+ * @description Conflict
+ */
 export const storeGetOrderConfirmation409Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -109,6 +130,9 @@ export const storeGetOrderConfirmation409Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreGetOrderConfirmation409>;
 
+/**
+ * @description Internal server error
+ */
 export const storeGetOrderConfirmation500Schema = z.object({
   success: z.literal(false),
   error: z.object({

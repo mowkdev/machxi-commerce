@@ -49,9 +49,16 @@ export interface ParsedWebhook {
   transactions: WebhookParsedTransaction[];
 }
 
+export interface PaymentProviderMeta {
+  readonly displayName: string;
+  readonly publicConfigKeys: readonly string[];
+  readonly requiredEnvVars: readonly string[];
+}
+
 export interface PaymentProvider {
   readonly code: string;
   readonly kind: "automatic" | "manual";
+  readonly meta: PaymentProviderMeta;
   createSession(input: CreateSessionInput): Promise<CreateSessionResult>;
   /** Returns null if the event should be ignored (unrelated type). */
   verifyAndParseWebhook(input: VerifyWebhookInput): ParsedWebhook | null;

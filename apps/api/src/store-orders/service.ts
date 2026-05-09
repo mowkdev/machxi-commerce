@@ -6,6 +6,7 @@
 import { db } from "@repo/database/client";
 import { and, asc, desc, eq, sql } from "@repo/database";
 import {
+  invoices,
   orderItems,
   orders,
   payments,
@@ -140,4 +141,31 @@ export async function getMyOrder(
     .limit(1);
   if (!order) return null;
   return buildOrderDetail(order);
+}
+
+export async function getMyOrderInvoiceDownloadUrl(
+  customerId: string,
+  orderId: string,
+): Promise<{ downloadUrl: string } | null> {
+  const [order] = await db
+    .select({ id: orders.id })
+    .from(orders)
+    .where(and(eq(orders.id, orderId), eq(orders.customerId, customerId)))
+    .limit(1);
+  if (!order) return null;
+
+  const [invoice] = await db
+    .select()
+    .from(invoices)
+    .where(eq(invoices.orderId, orderId))
+    .limit(1);
+  if (!invoice || !invoice.pdfStorageKey || invoice.status !== "issued")
+    return null;
+
+  const { invoiceStorage } = await import("../lib/storage");
+  const downloadUrl = await invoiceStorage.getSignedUrl(
+    invoice.pdfStorageKey,
+    300,
+  );
+  return { downloadUrl };
 }

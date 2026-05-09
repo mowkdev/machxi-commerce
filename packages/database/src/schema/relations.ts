@@ -53,6 +53,7 @@ import {
   returns,
   returnItems,
   orderLogs,
+  invoices,
 } from './04-orders';
 import { categories, categoryTranslations, productCategories } from './05-taxonomy';
 import {
@@ -403,6 +404,7 @@ export const ordersRelations = relations(orders, ({ one, many }) => ({
   fulfillments: many(fulfillments),
   returns: many(returns),
   logs: many(orderLogs),
+  invoices: many(invoices),
   promotionUsage: many(promotionUsage),
 }));
 
@@ -489,6 +491,10 @@ export const returnItemsRelations = relations(returnItems, ({ one }) => ({
 
 export const orderLogsRelations = relations(orderLogs, ({ one }) => ({
   order: one(orders, { fields: [orderLogs.orderId], references: [orders.id] }),
+}));
+
+export const invoicesRelations = relations(invoices, ({ one }) => ({
+  order: one(orders, { fields: [invoices.orderId], references: [orders.id] }),
 }));
 
 // ─── Taxonomy ───────────────────────────────────────────────────────────────

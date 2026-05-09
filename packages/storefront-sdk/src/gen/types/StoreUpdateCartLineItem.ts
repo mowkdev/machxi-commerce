@@ -40,6 +40,7 @@ export type StoreUpdateCartLineItem200 = {
      */
     id: string;
     customerId: string | null;
+    guestEmail: string | null;
     /**
      * @type string
      */

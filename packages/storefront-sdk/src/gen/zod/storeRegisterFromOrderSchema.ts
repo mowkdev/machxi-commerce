@@ -16,6 +16,9 @@ import type {
 } from "../types/StoreRegisterFromOrder.ts";
 import { z } from "zod/v4";
 
+/**
+ * @description Customer session
+ */
 export const storeRegisterFromOrder201Schema = z.object({
   success: z.literal(true),
   data: z.object({
@@ -34,6 +37,9 @@ export const storeRegisterFromOrder201Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreRegisterFromOrder201>;
 
+/**
+ * @description Validation failed
+ */
 export const storeRegisterFromOrder400Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -43,6 +49,9 @@ export const storeRegisterFromOrder400Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreRegisterFromOrder400>;
 
+/**
+ * @description Unauthenticated
+ */
 export const storeRegisterFromOrder401Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -52,6 +61,9 @@ export const storeRegisterFromOrder401Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreRegisterFromOrder401>;
 
+/**
+ * @description Forbidden
+ */
 export const storeRegisterFromOrder403Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -61,6 +73,9 @@ export const storeRegisterFromOrder403Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreRegisterFromOrder403>;
 
+/**
+ * @description Not found
+ */
 export const storeRegisterFromOrder404Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -70,6 +85,9 @@ export const storeRegisterFromOrder404Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreRegisterFromOrder404>;
 
+/**
+ * @description Conflict
+ */
 export const storeRegisterFromOrder409Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -79,6 +97,9 @@ export const storeRegisterFromOrder409Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreRegisterFromOrder409>;
 
+/**
+ * @description Internal server error
+ */
 export const storeRegisterFromOrder500Schema = z.object({
   success: z.literal(false),
   error: z.object({

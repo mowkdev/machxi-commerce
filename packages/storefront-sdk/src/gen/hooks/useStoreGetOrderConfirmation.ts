@@ -26,9 +26,7 @@ import { storeGetOrderConfirmation } from "../client/storeGetOrderConfirmation.t
 export const storeGetOrderConfirmationQueryKey = (
   id: StoreGetOrderConfirmationPathParams["id"] | undefined,
 ) =>
-  [
-    { url: "/api/store/orders/:id/confirmation", params: { id: id } },
-  ] as const;
+  [{ url: "/api/store/orders/:id/confirmation", params: { id: id } }] as const;
 
 export type StoreGetOrderConfirmationQueryKey = ReturnType<
   typeof storeGetOrderConfirmationQueryKey

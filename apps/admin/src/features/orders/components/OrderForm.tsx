@@ -47,6 +47,7 @@ import {
   useUpdateOrderShippingLine,
   useUpdatePayment,
 } from "../hooks";
+import { InvoiceCard } from "./InvoiceCard";
 
 interface OrderFormProps {
   mode: "create" | "edit";
@@ -494,6 +495,7 @@ export function OrderForm({ mode, initialData }: OrderFormProps) {
                 ],
               }))}
             />
+            <InvoiceCard orderId={initialData.id} />
             <Card>
               <CardHeader>
                 <CardTitle>Danger zone</CardTitle>

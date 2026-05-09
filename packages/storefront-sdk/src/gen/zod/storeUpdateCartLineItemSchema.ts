@@ -30,6 +30,7 @@ export const storeUpdateCartLineItem200Schema = z.object({
   data: z.object({
     id: z.uuid(),
     customerId: z.union([z.uuid(), z.null()]),
+    guestEmail: z.union([z.string(), z.null()]),
     currencyCode: z.string(),
     shippingAddressId: z.union([z.uuid(), z.null()]),
     billingAddressId: z.union([z.uuid(), z.null()]),

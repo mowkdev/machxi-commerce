@@ -6,6 +6,8 @@ export type { StoreCompleteCartMutationKey } from "./hooks/useStoreCompleteCart.
 export type { StoreCreateAddressMutationKey } from "./hooks/useStoreCreateAddress.ts";
 export type { StoreCreateCartMutationKey } from "./hooks/useStoreCreateCart.ts";
 export type { StoreDeleteAddressMutationKey } from "./hooks/useStoreDeleteAddress.ts";
+export type { StoreDownloadMyOrderInvoiceQueryKey } from "./hooks/useStoreDownloadMyOrderInvoice.ts";
+export type { StoreDownloadMyOrderInvoiceSuspenseQueryKey } from "./hooks/useStoreDownloadMyOrderInvoiceSuspense.ts";
 export type { StoreGetAddressQueryKey } from "./hooks/useStoreGetAddress.ts";
 export type { StoreGetAddressSuspenseQueryKey } from "./hooks/useStoreGetAddressSuspense.ts";
 export type { StoreGetCartQueryKey } from "./hooks/useStoreGetCart.ts";
@@ -15,6 +17,7 @@ export type { StoreGetCurrentCustomerSuspenseQueryKey } from "./hooks/useStoreGe
 export type { StoreGetMyOrderQueryKey } from "./hooks/useStoreGetMyOrder.ts";
 export type { StoreGetMyOrderSuspenseQueryKey } from "./hooks/useStoreGetMyOrderSuspense.ts";
 export type { StoreGetOrderConfirmationQueryKey } from "./hooks/useStoreGetOrderConfirmation.ts";
+export type { StoreGetOrderConfirmationSuspenseQueryKey } from "./hooks/useStoreGetOrderConfirmationSuspense.ts";
 export type { StoreGetProductByHandleQueryKey } from "./hooks/useStoreGetProductByHandle.ts";
 export type { StoreGetProductByHandleSuspenseQueryKey } from "./hooks/useStoreGetProductByHandleSuspense.ts";
 export type { StoreListAddressesQueryKey } from "./hooks/useStoreListAddresses.ts";
@@ -144,6 +147,18 @@ export type {
   StoreDeleteAddressMutationResponse,
   StoreDeleteAddressPathParams,
 } from "./types/StoreDeleteAddress.ts";
+export type {
+  StoreDownloadMyOrderInvoice200,
+  StoreDownloadMyOrderInvoice400,
+  StoreDownloadMyOrderInvoice401,
+  StoreDownloadMyOrderInvoice403,
+  StoreDownloadMyOrderInvoice404,
+  StoreDownloadMyOrderInvoice409,
+  StoreDownloadMyOrderInvoice500,
+  StoreDownloadMyOrderInvoicePathParams,
+  StoreDownloadMyOrderInvoiceQuery,
+  StoreDownloadMyOrderInvoiceQueryResponse,
+} from "./types/StoreDownloadMyOrderInvoice.ts";
 export type {
   StoreGetAddress200,
   StoreGetAddress400,
@@ -442,6 +457,7 @@ export { storeCompleteCart } from "./client/storeCompleteCart.ts";
 export { storeCreateAddress } from "./client/storeCreateAddress.ts";
 export { storeCreateCart } from "./client/storeCreateCart.ts";
 export { storeDeleteAddress } from "./client/storeDeleteAddress.ts";
+export { storeDownloadMyOrderInvoice } from "./client/storeDownloadMyOrderInvoice.ts";
 export { storeGetAddress } from "./client/storeGetAddress.ts";
 export { storeGetCart } from "./client/storeGetCart.ts";
 export { storeGetCurrentCustomer } from "./client/storeGetCurrentCustomer.ts";
@@ -489,6 +505,12 @@ export { useStoreCreateCart } from "./hooks/useStoreCreateCart.ts";
 export { storeDeleteAddressMutationKey } from "./hooks/useStoreDeleteAddress.ts";
 export { storeDeleteAddressMutationOptions } from "./hooks/useStoreDeleteAddress.ts";
 export { useStoreDeleteAddress } from "./hooks/useStoreDeleteAddress.ts";
+export { storeDownloadMyOrderInvoiceQueryKey } from "./hooks/useStoreDownloadMyOrderInvoice.ts";
+export { storeDownloadMyOrderInvoiceQueryOptions } from "./hooks/useStoreDownloadMyOrderInvoice.ts";
+export { useStoreDownloadMyOrderInvoice } from "./hooks/useStoreDownloadMyOrderInvoice.ts";
+export { storeDownloadMyOrderInvoiceSuspenseQueryKey } from "./hooks/useStoreDownloadMyOrderInvoiceSuspense.ts";
+export { storeDownloadMyOrderInvoiceSuspenseQueryOptions } from "./hooks/useStoreDownloadMyOrderInvoiceSuspense.ts";
+export { useStoreDownloadMyOrderInvoiceSuspense } from "./hooks/useStoreDownloadMyOrderInvoiceSuspense.ts";
 export { storeGetAddressQueryKey } from "./hooks/useStoreGetAddress.ts";
 export { storeGetAddressQueryOptions } from "./hooks/useStoreGetAddress.ts";
 export { useStoreGetAddress } from "./hooks/useStoreGetAddress.ts";
@@ -516,6 +538,9 @@ export { useStoreGetMyOrderSuspense } from "./hooks/useStoreGetMyOrderSuspense.t
 export { storeGetOrderConfirmationQueryKey } from "./hooks/useStoreGetOrderConfirmation.ts";
 export { storeGetOrderConfirmationQueryOptions } from "./hooks/useStoreGetOrderConfirmation.ts";
 export { useStoreGetOrderConfirmation } from "./hooks/useStoreGetOrderConfirmation.ts";
+export { storeGetOrderConfirmationSuspenseQueryKey } from "./hooks/useStoreGetOrderConfirmationSuspense.ts";
+export { storeGetOrderConfirmationSuspenseQueryOptions } from "./hooks/useStoreGetOrderConfirmationSuspense.ts";
+export { useStoreGetOrderConfirmationSuspense } from "./hooks/useStoreGetOrderConfirmationSuspense.ts";
 export { storeGetProductByHandleQueryKey } from "./hooks/useStoreGetProductByHandle.ts";
 export { storeGetProductByHandleQueryOptions } from "./hooks/useStoreGetProductByHandle.ts";
 export { useStoreGetProductByHandle } from "./hooks/useStoreGetProductByHandle.ts";
@@ -699,6 +724,17 @@ export {
   storeDeleteAddressMutationResponseSchema,
   storeDeleteAddressPathParamsSchema,
 } from "./zod/storeDeleteAddressSchema.ts";
+export {
+  storeDownloadMyOrderInvoice200Schema,
+  storeDownloadMyOrderInvoice400Schema,
+  storeDownloadMyOrderInvoice401Schema,
+  storeDownloadMyOrderInvoice403Schema,
+  storeDownloadMyOrderInvoice404Schema,
+  storeDownloadMyOrderInvoice409Schema,
+  storeDownloadMyOrderInvoice500Schema,
+  storeDownloadMyOrderInvoicePathParamsSchema,
+  storeDownloadMyOrderInvoiceQueryResponseSchema,
+} from "./zod/storeDownloadMyOrderInvoiceSchema.ts";
 export {
   storeGetAddress200Schema,
   storeGetAddress400Schema,

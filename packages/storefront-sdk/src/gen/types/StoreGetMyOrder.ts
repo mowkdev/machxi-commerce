@@ -30,6 +30,8 @@ export type StoreGetMyOrder200 = {
      * @type string
      */
     displayId: string;
+    customerId: string | null;
+    guestEmail: string | null;
     /**
      * @type string
      */

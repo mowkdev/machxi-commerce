@@ -1,5 +1,5 @@
 import { manualInvoiceProvider } from "./manual-invoice";
-import { stripeProvider, stripeSecretConfigured } from "./stripe";
+import { stripeProvider } from "./stripe";
 import type { PaymentProvider } from "./types";
 
 const builtInByCode = {
@@ -19,18 +19,33 @@ export function getBuiltInPaymentProvider(
   return null;
 }
 
-/** Throws if PSP credentials are missing for automatic providers */
+/** Throws if required env vars declared in provider meta are missing. */
 export function assertProviderRuntimeReady(
   code: string,
-  kind: "automatic" | "manual",
+  _kind: "automatic" | "manual",
 ): void {
-  const normalized = code.trim().toLowerCase();
-  if (kind === "automatic" && normalized === "stripe" && !stripeSecretConfigured()) {
+  const provider = getBuiltInPaymentProvider(code);
+  if (!provider) return;
+  const missing = provider.meta.requiredEnvVars.filter(
+    (v) => !process.env[v]?.trim(),
+  );
+  if (missing.length > 0) {
     throw new Error(
-      "Stripe is not configured: set STRIPE_SECRET_KEY in the API environment.",
+      `${provider.meta.displayName} is not configured: set ${missing.join(", ")} in the API environment.`,
     );
   }
 }
 
-export { stripeSecretConfigured };
+export function listBuiltInProviderMeta(): Array<{
+  code: string;
+  displayName: string;
+  kind: "automatic" | "manual";
+}> {
+  return Object.values(builtInByCode).map((p) => ({
+    code: p.code,
+    displayName: p.meta.displayName,
+    kind: p.kind,
+  }));
+}
+
 export type { PaymentProvider };

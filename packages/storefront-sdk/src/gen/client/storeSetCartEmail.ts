@@ -22,15 +22,12 @@ import {
 } from "../zod/storeSetCartEmailSchema.ts";
 
 function getStoreSetCartEmailUrl(id: StoreSetCartEmailPathParams["id"]) {
-  const res = {
-    method: "PATCH",
-    url: `/api/store/carts/${id}/email` as const,
-  };
+  const res = { method: "PATCH", url: `/api/store/carts/${id}/email` as const };
   return res;
 }
 
 /**
- * @summary Set the guest email on a cart
+ * @summary Set a guest email on the cart for abandoned-cart recovery
  * {@link /api/store/carts/:id/email}
  */
 export async function storeSetCartEmail(

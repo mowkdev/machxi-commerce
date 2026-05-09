@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { useAdminListBuiltInPaymentProviders } from "@repo/admin-sdk";
 import type { PaymentProviderDetail } from "@repo/types/admin";
 import { usePaymentProviderForm } from "../hooks/usePaymentProviderForm";
 
@@ -67,14 +68,15 @@ function PaymentProviderCreateFormInner({
   const navigate = useNavigate();
   const { form, createMutation, onSubmit } = ctx;
   const code = form.watch("code");
+  const { data: builtInResponse } = useAdminListBuiltInPaymentProviders();
+  const builtInProviders = builtInResponse?.data ?? [];
 
   useEffect(() => {
-    if (code === "stripe") {
-      form.setValue("kind", "automatic");
-    } else if (code === "manual_invoice") {
-      form.setValue("kind", "manual");
+    const match = builtInProviders.find((p) => p.code === code);
+    if (match) {
+      form.setValue("kind", match.kind);
     }
-  }, [code, form]);
+  }, [code, form, builtInProviders]);
 
   const isPending = createMutation.isPending;
   const title = "New payment provider";
@@ -114,10 +116,11 @@ function PaymentProviderCreateFormInner({
                           <SelectValue placeholder="Select provider" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="manual_invoice">
-                            manual_invoice
-                          </SelectItem>
-                          <SelectItem value="stripe">stripe</SelectItem>
+                          {builtInProviders.map((p) => (
+                            <SelectItem key={p.code} value={p.code}>
+                              {p.code} ({p.displayName})
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     )}

@@ -28,6 +28,8 @@ export const storeGetMyOrder200Schema = z.object({
   data: z.object({
     id: z.uuid(),
     displayId: z.string(),
+    customerId: z.union([z.uuid(), z.null()]),
+    guestEmail: z.union([z.string(), z.null()]),
     status: z.string(),
     currencyCode: z.string(),
     subtotal: z.int().min(0).max(9007199254740991),

@@ -1,6 +1,7 @@
 import {
   condition,
   defineSignal,
+  log,
   proxyActivities,
   setHandler,
 } from "@temporalio/workflow";
@@ -15,6 +16,10 @@ type CheckoutActivities = {
     paymentId: string;
   }) => Promise<void>;
   ensureOrderProcessingIfCaptured: (input: {
+    orderId: string;
+    paymentId: string;
+  }) => Promise<void>;
+  generateInvoice: (input: {
     orderId: string;
     paymentId: string;
   }) => Promise<void>;
@@ -97,6 +102,19 @@ export async function placeOrderWorkflow(
     orderId: input.orderId,
     paymentId: input.paymentId,
   });
+
+  // Generate invoice PDF — failure does not block the order.
+  try {
+    await a.generateInvoice({
+      orderId: input.orderId,
+      paymentId: input.paymentId,
+    });
+  } catch (err) {
+    log.warn("Invoice generation failed after all retries", {
+      orderId: input.orderId,
+      error: String(err),
+    });
+  }
 
   return { outcome: "completed" };
 }

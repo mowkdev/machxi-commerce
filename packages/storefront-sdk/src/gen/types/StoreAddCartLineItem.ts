@@ -36,6 +36,7 @@ export type StoreAddCartLineItem200 = {
      */
     id: string;
     customerId: string | null;
+    guestEmail: string | null;
     /**
      * @type string
      */

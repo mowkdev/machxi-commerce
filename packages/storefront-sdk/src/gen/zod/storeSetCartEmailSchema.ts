@@ -74,6 +74,9 @@ export const storeSetCartEmail200Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreSetCartEmail200>;
 
+/**
+ * @description Validation failed
+ */
 export const storeSetCartEmail400Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -83,6 +86,9 @@ export const storeSetCartEmail400Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreSetCartEmail400>;
 
+/**
+ * @description Unauthenticated
+ */
 export const storeSetCartEmail401Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -92,6 +98,9 @@ export const storeSetCartEmail401Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreSetCartEmail401>;
 
+/**
+ * @description Forbidden
+ */
 export const storeSetCartEmail403Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -101,6 +110,9 @@ export const storeSetCartEmail403Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreSetCartEmail403>;
 
+/**
+ * @description Not found
+ */
 export const storeSetCartEmail404Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -110,6 +122,9 @@ export const storeSetCartEmail404Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreSetCartEmail404>;
 
+/**
+ * @description Conflict
+ */
 export const storeSetCartEmail409Schema = z.object({
   success: z.literal(false),
   error: z.object({
@@ -119,6 +134,9 @@ export const storeSetCartEmail409Schema = z.object({
   }),
 }) as unknown as z.ZodType<StoreSetCartEmail409>;
 
+/**
+ * @description Internal server error
+ */
 export const storeSetCartEmail500Schema = z.object({
   success: z.literal(false),
   error: z.object({

@@ -40,6 +40,7 @@ export type StoreRemoveCartPromotion200 = {
      */
     id: string;
     customerId: string | null;
+    guestEmail: string | null;
     /**
      * @type string
      */

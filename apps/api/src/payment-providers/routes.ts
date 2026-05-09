@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
 import { z } from "zod";
 import {
+  builtInPaymentProviderMeta,
   createPaymentProviderBody,
   paymentProviderDetail,
   paymentProviderListItem,
@@ -21,6 +22,7 @@ import {
   createPaymentProviderController,
   deletePaymentProviderController,
   getPaymentProviderController,
+  listBuiltInProvidersController,
   listPaymentProvidersController,
   updatePaymentProviderController,
 } from "./controller";
@@ -69,6 +71,23 @@ paymentProvidersRoutes.post(
     },
   }),
   createPaymentProviderController,
+);
+
+paymentProvidersRoutes.get(
+  "/built-in",
+  describeRoute({
+    operationId: "adminListBuiltInPaymentProviders",
+    summary: "List built-in payment provider codes with metadata",
+    tags: TAGS,
+    responses: {
+      200: jsonResponse(
+        "Built-in providers",
+        successEnvelope(z.array(builtInPaymentProviderMeta)),
+      ),
+      ...standardErrorResponses,
+    },
+  }),
+  listBuiltInProvidersController,
 );
 
 paymentProvidersRoutes.get(

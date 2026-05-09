@@ -37,6 +37,7 @@ const schema = z.object({
     .default('true')
     .transform((v) => v === 'true'),
   S3_PUBLIC_URL: z.string().url(),
+  S3_INVOICES_BUCKET: z.string().min(1).default('machxi-invoices'),
   MEDIA_MAX_BYTES: z.coerce.number().int().positive().default(26214400),
   STRIPE_SECRET_KEY: z.string().trim().optional(),
   STRIPE_WEBHOOK_SECRET: z.string().trim().optional(),

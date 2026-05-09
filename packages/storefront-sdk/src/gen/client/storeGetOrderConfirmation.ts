@@ -35,7 +35,7 @@ export async function storeGetOrderConfirmation(
   id: StoreGetOrderConfirmationPathParams["id"],
   config: Partial<RequestConfig> & { client?: Client } = {},
 ) {
-  const { client: request = fetch, signal, ...requestConfig } = config;
+  const { client: request = fetch, ...requestConfig } = config;
 
   const res = await request<
     StoreGetOrderConfirmationQueryResponse,
@@ -46,11 +46,11 @@ export async function storeGetOrderConfirmation(
       | StoreGetOrderConfirmation404
       | StoreGetOrderConfirmation409
       | StoreGetOrderConfirmation500
-    >
+    >,
+    unknown
   >({
     method: "GET",
     url: getStoreGetOrderConfirmationUrl(id).url.toString(),
-    signal,
     ...requestConfig,
   });
   return storeGetOrderConfirmationQueryResponseSchema.parse(res.data);

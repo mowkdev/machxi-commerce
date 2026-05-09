@@ -61,48 +61,174 @@ export type StoreRegisterFromOrder201 = {
  * @description Validation failed
  */
 export type StoreRegisterFromOrder400 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Unauthenticated
  */
 export type StoreRegisterFromOrder401 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Forbidden
  */
 export type StoreRegisterFromOrder403 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Not found
  */
 export type StoreRegisterFromOrder404 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Conflict
  */
 export type StoreRegisterFromOrder409 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Internal server error
  */
 export type StoreRegisterFromOrder500 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 export type StoreRegisterFromOrderMutationRequest = any;

@@ -36,6 +36,7 @@ export type StoreSwitchCartCurrency200 = {
      */
     id: string;
     customerId: string | null;
+    guestEmail: string | null;
     /**
      * @type string
      */

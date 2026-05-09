@@ -15,3 +15,5 @@ export * from "./cart";
 export * from "./customer";
 export * from "./option-definition";
 export * from "./payment-provider";
+export * from "./store-settings";
+export * from "./invoice";

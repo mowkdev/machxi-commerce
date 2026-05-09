@@ -30,6 +30,7 @@ describe("placeOrderWorkflow", () => {
         compensateAbandonedOrder: noop,
         markManualInvoicePaid: noop,
         ensureOrderProcessingIfCaptured: noop,
+        generateInvoice: noop,
       },
     });
     workerRun = worker.run();

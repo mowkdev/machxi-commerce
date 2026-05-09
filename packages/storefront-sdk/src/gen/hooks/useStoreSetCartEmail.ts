@@ -60,7 +60,7 @@ export function storeSetCartEmailMutationOptions<TContext = unknown>(
 }
 
 /**
- * @summary Set the guest email on a cart
+ * @summary Set a guest email on the cart for abandoned-cart recovery
  * {@link /api/store/carts/:id/email}
  */
 export function useStoreSetCartEmail<TContext>(

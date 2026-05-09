@@ -29,6 +29,7 @@ export type StoreCreateCart201 = {
      */
     id: string;
     customerId: string | null;
+    guestEmail: string | null;
     /**
      * @type string
      */

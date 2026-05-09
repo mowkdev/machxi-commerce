@@ -11,6 +11,7 @@ import {
   adminDeleteOrderItem,
   adminDeleteOrderShippingLine,
   adminDeletePayment,
+  adminDownloadInvoice,
   adminGetOrderQueryKey,
   adminListOrdersQueryKey,
   adminUpdateOrder,
@@ -18,6 +19,7 @@ import {
   adminUpdateOrderShippingLine,
   adminUpdatePayment,
   useAdminGetOrder,
+  useAdminGetInvoiceByOrder,
 } from "@repo/admin-sdk";
 import type {
   CreateOrderBody,
@@ -231,5 +233,26 @@ export function useDeletePayment(orderId: string) {
       toast.success("Payment deleted");
     },
     onError: (error) => toast.error(error.message || "Failed to delete payment"),
+  });
+}
+
+export function useOrderInvoice(orderId: string) {
+  return useAdminGetInvoiceByOrder(orderId, {
+    query: {
+      enabled: !!orderId,
+      retry: false,
+    },
+  });
+}
+
+export function useDownloadInvoice() {
+  return useMutation<void, SdkRequestError, string>({
+    mutationFn: async (invoiceId) => {
+      const res = await adminDownloadInvoice(invoiceId);
+      const url = (res.data as { downloadUrl: string }).downloadUrl;
+      window.open(url, "_blank");
+    },
+    onError: (error) =>
+      toast.error(error.message || "Failed to download invoice"),
   });
 }

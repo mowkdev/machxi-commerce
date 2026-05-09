@@ -103,6 +103,18 @@ export type {
   StoreDeleteAddressPathParams,
 } from "./StoreDeleteAddress.ts";
 export type {
+  StoreDownloadMyOrderInvoice200,
+  StoreDownloadMyOrderInvoice400,
+  StoreDownloadMyOrderInvoice401,
+  StoreDownloadMyOrderInvoice403,
+  StoreDownloadMyOrderInvoice404,
+  StoreDownloadMyOrderInvoice409,
+  StoreDownloadMyOrderInvoice500,
+  StoreDownloadMyOrderInvoicePathParams,
+  StoreDownloadMyOrderInvoiceQuery,
+  StoreDownloadMyOrderInvoiceQueryResponse,
+} from "./StoreDownloadMyOrderInvoice.ts";
+export type {
   StoreGetAddress200,
   StoreGetAddress400,
   StoreGetAddress401,

@@ -90,6 +90,17 @@ export {
   storeDeleteAddressPathParamsSchema,
 } from "./storeDeleteAddressSchema.ts";
 export {
+  storeDownloadMyOrderInvoice200Schema,
+  storeDownloadMyOrderInvoice400Schema,
+  storeDownloadMyOrderInvoice401Schema,
+  storeDownloadMyOrderInvoice403Schema,
+  storeDownloadMyOrderInvoice404Schema,
+  storeDownloadMyOrderInvoice409Schema,
+  storeDownloadMyOrderInvoice500Schema,
+  storeDownloadMyOrderInvoicePathParamsSchema,
+  storeDownloadMyOrderInvoiceQueryResponseSchema,
+} from "./storeDownloadMyOrderInvoiceSchema.ts";
+export {
   storeGetAddress200Schema,
   storeGetAddress400Schema,
   storeGetAddress401Schema,

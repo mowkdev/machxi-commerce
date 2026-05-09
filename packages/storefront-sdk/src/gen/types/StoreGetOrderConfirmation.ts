@@ -70,8 +70,12 @@ export type StoreGetOrderConfirmation200 = {
      * @type integer
      */
     totalAmount: number;
-    shippingAddressSnapshot: { [key: string]: any } | null;
-    billingAddressSnapshot: { [key: string]: any } | null;
+    shippingAddressSnapshot: {
+      [key: string]: any;
+    } | null;
+    billingAddressSnapshot: {
+      [key: string]: any;
+    } | null;
     /**
      * @type array
      */
@@ -157,51 +161,178 @@ export type StoreGetOrderConfirmation200 = {
  * @description Validation failed
  */
 export type StoreGetOrderConfirmation400 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Unauthenticated
  */
 export type StoreGetOrderConfirmation401 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Forbidden
  */
 export type StoreGetOrderConfirmation403 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Not found
  */
 export type StoreGetOrderConfirmation404 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Conflict
  */
 export type StoreGetOrderConfirmation409 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
 /**
  * @description Internal server error
  */
 export type StoreGetOrderConfirmation500 = {
+  /**
+   * @type boolean
+   */
   success: false;
-  error: { code: string; message: string; details?: { [key: string]: any } };
+  /**
+   * @type object
+   */
+  error: {
+    /**
+     * @type string
+     */
+    code: string;
+    /**
+     * @type string
+     */
+    message: string;
+    /**
+     * @type object | undefined
+     */
+    details?: {
+      [key: string]: any;
+    };
+  };
 };
 
-export type StoreGetOrderConfirmationQueryResponse = StoreGetOrderConfirmation200;
+export type StoreGetOrderConfirmationQueryResponse =
+  StoreGetOrderConfirmation200;
 
 export type StoreGetOrderConfirmationQuery = {
   Response: StoreGetOrderConfirmation200;

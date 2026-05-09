@@ -202,3 +202,13 @@ export async function ensureOrderProcessingIfCaptured(input: {
     });
   });
 }
+
+export async function generateInvoice(input: {
+  orderId: string;
+  paymentId: string;
+}): Promise<void> {
+  const { generateInvoice: gen } = await import(
+    "../services/invoice-generator.js"
+  );
+  await gen(input);
+}

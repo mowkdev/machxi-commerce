@@ -18,10 +18,8 @@ import type { PaymentProviderDetail } from "@repo/types/admin";
 export const paymentProvidersListQueryPrefix =
   adminListPaymentProvidersQueryKey();
 
-export const providerCodeEnum = z.enum(["manual_invoice", "stripe"]);
-
 const createFormSchema = z.object({
-  code: providerCodeEnum,
+  code: z.string().trim().min(1),
   name: z.string().trim().min(1),
   description: z.string().trim().optional(),
   kind: z.enum(["automatic", "manual"]),
@@ -69,7 +67,7 @@ function useCreatePaymentProviderForm() {
   const form = useForm({
     resolver: zodResolver(createFormSchema),
     defaultValues: {
-      code: "manual_invoice" as z.infer<typeof providerCodeEnum>,
+      code: "",
       name: "",
       description: "",
       kind: "manual" as const,

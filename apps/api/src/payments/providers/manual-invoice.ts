@@ -9,6 +9,11 @@ import type {
 export const manualInvoiceProvider: PaymentProvider = {
   code: "manual_invoice",
   kind: "manual",
+  meta: {
+    displayName: "Manual Invoice",
+    publicConfigKeys: ["termsUrl", "instructions"],
+    requiredEnvVars: [],
+  },
 
   async createSession(input: CreateSessionInput): Promise<CreateSessionResult> {
     const terms =

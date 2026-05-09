@@ -2,6 +2,7 @@ import type { Context } from "hono";
 import type { AppEnv } from "../context";
 import { notFound, validationFailed } from "../lib/errors";
 import { ok } from "../lib/response";
+import { listBuiltInProviderMeta } from "../payments/providers/registry";
 import {
   createPaymentProviderBody,
   listPaymentProvidersQuery,
@@ -15,6 +16,10 @@ import {
   listPaymentProviders,
   updatePaymentProvider,
 } from "./service";
+
+export async function listBuiltInProvidersController(c: Context<AppEnv>) {
+  return ok(c, listBuiltInProviderMeta());
+}
 
 export async function listPaymentProvidersController(c: Context<AppEnv>) {
   const parsed = listPaymentProvidersQuery.safeParse({

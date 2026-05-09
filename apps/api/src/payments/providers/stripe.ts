@@ -31,6 +31,11 @@ function stripeCurrency(pi: Stripe.PaymentIntent): string {
 export const stripeProvider: PaymentProvider = {
   code: "stripe",
   kind: "automatic",
+  meta: {
+    displayName: "Stripe",
+    publicConfigKeys: ["publishableKey"],
+    requiredEnvVars: ["STRIPE_SECRET_KEY"],
+  },
 
   async createSession(input: CreateSessionInput): Promise<CreateSessionResult> {
     const stripe = stripeClient();

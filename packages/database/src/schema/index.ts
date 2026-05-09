@@ -85,6 +85,7 @@ export {
   returns,
   returnItems,
   orderLogs,
+  invoices,
 } from './04-orders';
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -123,6 +124,12 @@ export {
   accounts,
   verificationTokens,
 } from './07-auth';
+
+// ────────────────────────────────────────────────────────────────────────────
+// STORE SETTINGS
+// ────────────────────────────────────────────────────────────────────────────
+
+export { storeSettings, invoiceNumberCounter } from './08-store-settings';
 
 // ────────────────────────────────────────────────────────────────────────────
 // RELATIONS (for db.query.* relational queries)

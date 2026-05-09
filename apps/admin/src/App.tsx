@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { PlaceholderPage } from "@/components/placeholder-page";
 import { ProtectedRoute } from "@/components/protected-route";
 import AuthLayout from "@/layouts/AuthLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
@@ -66,6 +65,7 @@ import OptionDefinitionEditPage from "@/pages/options/OptionDefinitionEditPage";
 import PaymentProvidersPage from "@/pages/payment-providers/PaymentProvidersPage";
 import PaymentProviderCreatePage from "@/pages/payment-providers/PaymentProviderCreatePage";
 import PaymentProviderEditPage from "@/pages/payment-providers/PaymentProviderEditPage";
+import StoreSettingsPage from "@/pages/settings/StoreSettingsPage";
 
 export default function App() {
   return (
@@ -112,7 +112,7 @@ export default function App() {
             />
             <Route
               path="store/general"
-              element={<PlaceholderPage title="General" />}
+              element={<StoreSettingsPage />}
             />
             <Route path="regions/languages" element={<LanguagesPage />} />
             <Route

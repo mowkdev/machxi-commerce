@@ -128,3 +128,13 @@ export const promotionTypeEnum = pgEnum('promotion_type', [
   'fixed_amount',
   'free_shipping',
 ]);
+
+// ────────────────────────────────────────────────────────────────────────────
+// INVOICES
+// ────────────────────────────────────────────────────────────────────────────
+
+export const invoiceStatusEnum = pgEnum('invoice_status', [
+  'draft',
+  'issued',
+  'voided',
+]);

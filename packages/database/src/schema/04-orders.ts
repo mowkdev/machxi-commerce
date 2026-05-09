@@ -23,6 +23,7 @@ import {
 import { sql } from 'drizzle-orm';
 import {
   citext,
+  invoiceStatusEnum,
   orderStatusEnum,
   paymentProviderKindEnum,
   paymentStatusEnum,
@@ -442,3 +443,36 @@ export const orderLogs = pgTable(
   })
 );
 // Note: Requires immutability trigger (see migrations/triggers.sql)
+
+// ────────────────────────────────────────────────────────────────────────────
+// INVOICES
+// ────────────────────────────────────────────────────────────────────────────
+
+export const invoices = pgTable(
+  'invoices',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orderId: uuid('order_id')
+      .notNull()
+      .references(() => orders.id, { onDelete: 'cascade' }),
+    invoiceNumber: varchar('invoice_number').notNull().unique(),
+    invoiceDate: timestamp('invoice_date', { withTimezone: true, mode: 'string' }).notNull(),
+    status: invoiceStatusEnum('status').notNull().default('draft'),
+    pdfStorageKey: varchar('pdf_storage_key'),
+    subtotal: bigint('subtotal', { mode: 'number' }).notNull(),
+    discountTotal: bigint('discount_total', { mode: 'number' }).notNull(),
+    shippingTotal: bigint('shipping_total', { mode: 'number' }).notNull(),
+    taxTotal: bigint('tax_total', { mode: 'number' }).notNull(),
+    totalAmount: bigint('total_amount', { mode: 'number' }).notNull(),
+    currencyCode: char('currency_code', { length: 3 })
+      .notNull()
+      .references(() => currencies.code, { onDelete: 'restrict' }),
+    metadata: jsonb('metadata'),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  },
+  (table) => ({
+    orderIdx: uniqueIndex('idx_invoices_order').on(table.orderId),
+    statusIdx: index('idx_invoices_status').on(table.status),
+    createdAtIdx: index('idx_invoices_created_at').on(sql`${table.createdAt} DESC`),
+  })
+);

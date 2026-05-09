@@ -47,7 +47,8 @@ services:
       mc alias set local http://minio:9000 minioadmin minioadmin &&
       mc mb -p local/machxi-media &&
       mc anonymous set download local/machxi-media &&
-      echo 'minio bucket ready'
+      mc mb -p local/machxi-invoices &&
+      echo 'minio buckets ready'
       "
 
   temporal:
@@ -65,7 +66,6 @@ services:
       POSTGRES_SEEDS: db
       DBNAME: temporal
       VISIBILITY_DBNAME: temporal_visibility
-      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
     ports:
       - "127.0.0.1:7233:7233"
 

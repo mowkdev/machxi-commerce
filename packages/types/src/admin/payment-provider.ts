@@ -40,6 +40,15 @@ export type UpdatePaymentProviderBody = z.infer<
   typeof updatePaymentProviderBody
 >;
 
+export const builtInPaymentProviderMeta = z.object({
+  code: z.string(),
+  displayName: z.string(),
+  kind: paymentProviderKindSchema,
+});
+export type BuiltInPaymentProviderMeta = z.infer<
+  typeof builtInPaymentProviderMeta
+>;
+
 export const paymentProviderListItem = z.object({
   id: z.string().uuid(),
   code: z.string(),
