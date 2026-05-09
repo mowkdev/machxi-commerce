@@ -20,6 +20,7 @@ import {
   orderShippingLines,
   paymentProviders,
   payments,
+  paymentProviders,
   returnItems,
   returns as orderReturns,
   stockLocations,
@@ -30,6 +31,13 @@ import {
   adminSignalMarkPaidManual,
 } from "../lib/temporal-checkout";
 import { conflict, validationFailed } from "../lib/errors";
+import { conflict, notFound, validationFailed } from "../lib/errors";
+import {
+  signalCancelPlaceOrder,
+  signalMarkPaidManual,
+  TemporalUnavailableError,
+} from "../lib/temporal-checkout";
+import { getBuiltInPaymentProvider } from "../payments/providers/registry";
 import type { PaginationMeta } from "@repo/types";
 import type {
   CreateOrderBody,
@@ -640,84 +648,125 @@ export async function deletePayment(
   return rows.length > 0;
 }
 
-export async function loadOrderForCheckoutAction(orderId: string): Promise<{
+/**
+ * Loads order + its single live payment + provider kind for workflow signal
+ * dispatch. Throws HTTP errors so the controller can pass them through.
+ */
+async function loadOrderForCheckoutAction(orderId: string): Promise<{
+  orderId: string;
   paymentId: string;
   providerCode: string;
   providerKind: "automatic" | "manual";
-} | null> {
+  status: string;
+}> {
   const [row] = await db
     .select({
+      orderId: orders.id,
+      orderStatus: orders.status,
       paymentId: payments.id,
+      paymentStatus: payments.status,
       providerCode: payments.providerId,
       providerKind: paymentProviders.kind,
     })
-    .from(payments)
-    .innerJoin(paymentProviders, eq(payments.providerId, paymentProviders.code))
-    .where(eq(payments.orderId, orderId))
+    .from(orders)
+    .leftJoin(payments, eq(payments.orderId, orders.id))
+    .leftJoin(paymentProviders, eq(paymentProviders.code, payments.providerId))
+    .where(eq(orders.id, orderId))
+    .orderBy(desc(payments.createdAt))
     .limit(1);
-  return row ?? null;
+
+  if (!row) throw notFound("Order not found");
+  if (!row.paymentId || !row.providerCode) {
+    throw conflict("Order has no payment to act on");
+  }
+  if (!row.providerKind) {
+    throw conflict(`Unknown payment provider: ${row.providerCode}`);
+  }
+  return {
+    orderId: row.orderId,
+    paymentId: row.paymentId,
+    providerCode: row.providerCode,
+    providerKind: row.providerKind,
+    status: row.orderStatus,
+  };
 }
 
+/**
+ * Admin action: confirm an offline (e.g. wire-transfer) invoice payment.
+ * Signals the Temporal workflow which writes the capture transaction and
+ * transitions the order to `processing`. Returns the order detail as it
+ * stands (status will flip async after the worker runs the activity).
+ */
 export async function markOrderPaid(
   orderId: string,
 ): Promise<OrderDetail | null> {
-  const [orderRow] = await db
-    .select({ status: orders.status })
-    .from(orders)
-    .where(eq(orders.id, orderId))
-    .limit(1);
-  if (!orderRow) return null;
-  if (orderRow.status !== "awaiting_payment") {
-    throw conflict("Order is not awaiting payment");
+  const ctx = await loadOrderForCheckoutAction(orderId);
+  if (ctx.status !== "awaiting_payment") {
+    throw conflict(
+      `Order cannot be marked paid from status "${ctx.status}"`,
+    );
   }
-
-  const checkoutData = await loadOrderForCheckoutAction(orderId);
-  if (!checkoutData) {
-    throw validationFailed("No payment record found for this order");
+  const provider = getBuiltInPaymentProvider(ctx.providerCode);
+  if (provider?.kind === "automatic") {
+    // Automatic providers settle via webhook; an admin confirming an
+    // automatic-provider payment manually almost always means a missed
+    // webhook, which should be reconciled rather than forced.
+    throw validationFailed(
+      "Mark-as-paid is only available for manual payment providers",
+      { providerCode: ctx.providerCode },
+    );
   }
-  if (checkoutData.providerKind !== "manual") {
-    throw validationFailed("Order does not use a manual payment provider");
+  try {
+    await signalMarkPaidManual({
+      orderId: ctx.orderId,
+      paymentId: ctx.paymentId,
+      providerCode: ctx.providerCode,
+      providerKind: ctx.providerKind,
+    });
+  } catch (err) {
+    if (err instanceof TemporalUnavailableError) {
+      throw conflict(
+        "Payment workflow is unavailable; cannot mark order paid right now",
+      );
+    }
+    throw err;
   }
-
-  // Throws TemporalUnavailableError when Temporal is configured but unreachable.
-  await adminSignalMarkPaidManual(orderId);
-
-  await db.transaction(async (tx) => {
-    await tx
-      .update(orders)
-      .set({ status: "processing" })
-      .where(eq(orders.id, orderId));
-    await tx
-      .update(payments)
-      .set({ status: "captured" })
-      .where(eq(payments.id, checkoutData.paymentId));
-  });
-
   return getOrder(orderId);
 }
 
+/**
+ * Admin action: cancel a still-awaiting-payment order. Signals the workflow,
+ * which restocks inventory, voids the payment, and sets order status to
+ * `canceled`. Refusal of post-payment cancellation is intentional: those
+ * require refund flows (out of scope here).
+ */
 export async function cancelAwaitingPaymentOrder(
   orderId: string,
+  reason: "admin_cancelled" | "customer_cancelled" = "admin_cancelled",
 ): Promise<OrderDetail | null> {
-  const [orderRow] = await db
-    .select({ status: orders.status })
-    .from(orders)
-    .where(eq(orders.id, orderId))
-    .limit(1);
-  if (!orderRow) return null;
-  if (orderRow.status !== "awaiting_payment") {
-    throw conflict("Order cannot be canceled after payment has been processed");
+  const ctx = await loadOrderForCheckoutAction(orderId);
+  if (ctx.status !== "awaiting_payment") {
+    throw conflict(
+      `Order cannot be cancelled from status "${ctx.status}"`,
+    );
   }
-
-  // Throws TemporalUnavailableError when Temporal is configured but unreachable.
-  await adminSignalCancelOrder(orderId);
-
-  await db
-    .update(orders)
-    .set({ status: "canceled" })
-    .where(eq(orders.id, orderId));
-
+  try {
+    await signalCancelPlaceOrder(
+      {
+        orderId: ctx.orderId,
+        paymentId: ctx.paymentId,
+        providerCode: ctx.providerCode,
+        providerKind: ctx.providerKind,
+      },
+      reason,
+    );
+  } catch (err) {
+    if (err instanceof TemporalUnavailableError) {
+      throw conflict(
+        "Payment workflow is unavailable; cannot cancel order right now",
+      );
+    }
+    throw err;
+  }
   return getOrder(orderId);
 }
-
-export { TemporalUnavailableError };

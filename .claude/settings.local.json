@@ -126,7 +126,10 @@
       "Bash(git restore *)",
       "Read(//c/Users/SergejsMoskanovs/dev/lab/machxi-commerce/**)",
       "Bash(git commit *)",
-      "Bash(xargs grep -l \"getTemporalClient\\\\|TemporalUnavailable\")"
+      "Bash(cd /c/Users/smosk/code/machxi-commerce && pwd && find . -name \"checkout.ts\" -type f | grep -v node_modules)",
+      "Bash(xargs grep -l \"placeOrder\\\\|store-checkout\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\smosk\\\\code\\\\machxi-commerce\" -Name)",
+      "Bash(pnpm --filter @app/worker test)"
     ]
   }
 }

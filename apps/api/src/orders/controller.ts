@@ -262,6 +262,20 @@ export async function updatePaymentController(c: Context<AppEnv>) {
   }
 }
 
+export async function markOrderPaidController(c: Context<AppEnv>) {
+  const id = parseOrderId(c);
+  const order = await markOrderPaid(id);
+  if (!order) throw notFound("Order not found");
+  return ok(c, order);
+}
+
+export async function cancelOrderController(c: Context<AppEnv>) {
+  const id = parseOrderId(c);
+  const order = await cancelAwaitingPaymentOrder(id);
+  if (!order) throw notFound("Order not found");
+  return ok(c, order);
+}
+
 export async function deletePaymentController(c: Context<AppEnv>) {
   const params = orderPaymentParam.safeParse({
     orderId: c.req.param("orderId"),
