@@ -130,6 +130,7 @@ export { adminListUsers } from "./adminListUsers.ts";
 export { adminReorderCategories } from "./adminReorderCategories.ts";
 export { adminReplaceMedia } from "./adminReplaceMedia.ts";
 export { adminReplacePageBlocks } from "./adminReplacePageBlocks.ts";
+export { adminRetryInvoiceGeneration } from "./adminRetryInvoiceGeneration.ts";
 export { adminUpdateCategory } from "./adminUpdateCategory.ts";
 export { adminUpdateCurrency } from "./adminUpdateCurrency.ts";
 export { adminUpdateCustomer } from "./adminUpdateCustomer.ts";
