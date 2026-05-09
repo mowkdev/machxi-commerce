@@ -190,6 +190,7 @@ export type { AdminListUsersSuspenseQueryKey } from "./hooks/useAdminListUsersSu
 export type { AdminReorderCategoriesMutationKey } from "./hooks/useAdminReorderCategories.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export type { AdminReplacePageBlocksMutationKey } from "./hooks/useAdminReplacePageBlocks.ts";
+export type { AdminRetryInvoiceGenerationMutationKey } from "./hooks/useAdminRetryInvoiceGeneration.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export type { AdminUpdateCurrencyMutationKey } from "./hooks/useAdminUpdateCurrency.ts";
 export type { AdminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
@@ -1922,6 +1923,20 @@ export type {
   AdminReplacePageBlocksPathParams,
 } from "./types/AdminReplacePageBlocks.ts";
 export type {
+  AdminRetryInvoiceGeneration200,
+  AdminRetryInvoiceGeneration200DataStatusEnumKey,
+  AdminRetryInvoiceGeneration202,
+  AdminRetryInvoiceGeneration400,
+  AdminRetryInvoiceGeneration401,
+  AdminRetryInvoiceGeneration403,
+  AdminRetryInvoiceGeneration404,
+  AdminRetryInvoiceGeneration409,
+  AdminRetryInvoiceGeneration500,
+  AdminRetryInvoiceGenerationMutation,
+  AdminRetryInvoiceGenerationMutationResponse,
+  AdminRetryInvoiceGenerationPathParams,
+} from "./types/AdminRetryInvoiceGeneration.ts";
+export type {
   AdminUpdateCategory200,
   AdminUpdateCategory400,
   AdminUpdateCategory401,
@@ -2538,6 +2553,7 @@ export { adminListUsers } from "./client/adminListUsers.ts";
 export { adminReorderCategories } from "./client/adminReorderCategories.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
 export { adminReplacePageBlocks } from "./client/adminReplacePageBlocks.ts";
+export { adminRetryInvoiceGeneration } from "./client/adminRetryInvoiceGeneration.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
 export { adminUpdateCurrency } from "./client/adminUpdateCurrency.ts";
 export { adminUpdateCustomer } from "./client/adminUpdateCustomer.ts";
@@ -3150,6 +3166,9 @@ export { useAdminReplaceMedia } from "./hooks/useAdminReplaceMedia.ts";
 export { adminReplacePageBlocksMutationKey } from "./hooks/useAdminReplacePageBlocks.ts";
 export { adminReplacePageBlocksMutationOptions } from "./hooks/useAdminReplacePageBlocks.ts";
 export { useAdminReplacePageBlocks } from "./hooks/useAdminReplacePageBlocks.ts";
+export { adminRetryInvoiceGenerationMutationKey } from "./hooks/useAdminRetryInvoiceGeneration.ts";
+export { adminRetryInvoiceGenerationMutationOptions } from "./hooks/useAdminRetryInvoiceGeneration.ts";
+export { useAdminRetryInvoiceGeneration } from "./hooks/useAdminRetryInvoiceGeneration.ts";
 export { adminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export { adminUpdateCategoryMutationOptions } from "./hooks/useAdminUpdateCategory.ts";
 export { useAdminUpdateCategory } from "./hooks/useAdminUpdateCategory.ts";
@@ -3357,6 +3376,7 @@ export { adminListUsersQueryParamsSortByEnum } from "./types/AdminListUsers.ts";
 export { adminListUsersQueryParamsSortOrderEnum } from "./types/AdminListUsers.ts";
 export { adminReplacePageBlocks200DataStatusEnum } from "./types/AdminReplacePageBlocks.ts";
 export { adminReplacePageBlocks200RelationsRelatedTypeEnum } from "./types/AdminReplacePageBlocks.ts";
+export { adminRetryInvoiceGeneration200DataStatusEnum } from "./types/AdminRetryInvoiceGeneration.ts";
 export { adminUpdateFulfillment200DataStatusEnum } from "./types/AdminUpdateFulfillment.ts";
 export { adminUpdateOrder200DataStatusEnum } from "./types/AdminUpdateOrder.ts";
 export { adminUpdateOrder200FulfillmentsStatusEnum } from "./types/AdminUpdateOrder.ts";
@@ -4840,6 +4860,18 @@ export {
   adminReplacePageBlocksMutationResponseSchema,
   adminReplacePageBlocksPathParamsSchema,
 } from "./zod/adminReplacePageBlocksSchema.ts";
+export {
+  adminRetryInvoiceGeneration200Schema,
+  adminRetryInvoiceGeneration202Schema,
+  adminRetryInvoiceGeneration400Schema,
+  adminRetryInvoiceGeneration401Schema,
+  adminRetryInvoiceGeneration403Schema,
+  adminRetryInvoiceGeneration404Schema,
+  adminRetryInvoiceGeneration409Schema,
+  adminRetryInvoiceGeneration500Schema,
+  adminRetryInvoiceGenerationMutationResponseSchema,
+  adminRetryInvoiceGenerationPathParamsSchema,
+} from "./zod/adminRetryInvoiceGenerationSchema.ts";
 export {
   adminUpdateCategory200Schema,
   adminUpdateCategory400Schema,

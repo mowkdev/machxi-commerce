@@ -190,6 +190,7 @@ export type { AdminListUsersSuspenseQueryKey } from "./useAdminListUsersSuspense
 export type { AdminReorderCategoriesMutationKey } from "./useAdminReorderCategories.ts";
 export type { AdminReplaceMediaMutationKey } from "./useAdminReplaceMedia.ts";
 export type { AdminReplacePageBlocksMutationKey } from "./useAdminReplacePageBlocks.ts";
+export type { AdminRetryInvoiceGenerationMutationKey } from "./useAdminRetryInvoiceGeneration.ts";
 export type { AdminUpdateCategoryMutationKey } from "./useAdminUpdateCategory.ts";
 export type { AdminUpdateCurrencyMutationKey } from "./useAdminUpdateCurrency.ts";
 export type { AdminUpdateCustomerMutationKey } from "./useAdminUpdateCustomer.ts";
@@ -802,6 +803,9 @@ export { useAdminReplaceMedia } from "./useAdminReplaceMedia.ts";
 export { adminReplacePageBlocksMutationKey } from "./useAdminReplacePageBlocks.ts";
 export { adminReplacePageBlocksMutationOptions } from "./useAdminReplacePageBlocks.ts";
 export { useAdminReplacePageBlocks } from "./useAdminReplacePageBlocks.ts";
+export { adminRetryInvoiceGenerationMutationKey } from "./useAdminRetryInvoiceGeneration.ts";
+export { adminRetryInvoiceGenerationMutationOptions } from "./useAdminRetryInvoiceGeneration.ts";
+export { useAdminRetryInvoiceGeneration } from "./useAdminRetryInvoiceGeneration.ts";
 export { adminUpdateCategoryMutationKey } from "./useAdminUpdateCategory.ts";
 export { adminUpdateCategoryMutationOptions } from "./useAdminUpdateCategory.ts";
 export { useAdminUpdateCategory } from "./useAdminUpdateCategory.ts";
