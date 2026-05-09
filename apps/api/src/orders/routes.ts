@@ -12,6 +12,7 @@ import {
   successEnvelope,
 } from "../openapi/envelope";
 import {
+  cancelOrderController,
   createOrderController,
   createOrderItemController,
   createOrderShippingLineController,
@@ -22,6 +23,7 @@ import {
   deletePaymentController,
   getOrderController,
   listOrdersController,
+  markOrderPaidController,
   updateOrderController,
   updateOrderItemController,
   updateOrderShippingLineController,
@@ -133,6 +135,46 @@ ordersRoutes.delete(
     },
   }),
   deleteOrderController,
+);
+
+ordersRoutes.post(
+  "/:id/mark-paid",
+  describeRoute({
+    operationId: "adminMarkOrderPaid",
+    summary: "Confirm offline payment for a manual-invoice order",
+    description:
+      "Signals the checkout workflow to record a manual capture and transition the order to processing. Only valid for orders in awaiting_payment status with a manual payment provider.",
+    tags: TAGS,
+    parameters: paramsFromSchema(orderIdParam, "path"),
+    responses: {
+      200: jsonResponse(
+        "Order accepted for payment confirmation",
+        successEnvelope(orderDetail),
+      ),
+      ...standardErrorResponses,
+    },
+  }),
+  markOrderPaidController,
+);
+
+ordersRoutes.post(
+  "/:id/cancel",
+  describeRoute({
+    operationId: "adminCancelOrder",
+    summary: "Cancel an order awaiting payment",
+    description:
+      "Signals the checkout workflow to restock inventory, void the payment, and mark the order canceled. Only valid for orders in awaiting_payment status.",
+    tags: TAGS,
+    parameters: paramsFromSchema(orderIdParam, "path"),
+    responses: {
+      200: jsonResponse(
+        "Order accepted for cancellation",
+        successEnvelope(orderDetail),
+      ),
+      ...standardErrorResponses,
+    },
+  }),
+  cancelOrderController,
 );
 
 ordersRoutes.post(

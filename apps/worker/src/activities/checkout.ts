@@ -12,10 +12,17 @@ import {
   productVariants,
 } from "@repo/database/schema";
 
+export type CancelReason =
+  | "checkout_timeout"
+  | "admin_cancelled"
+  | "customer_cancelled";
+
 export async function compensateAbandonedOrder(input: {
   orderId: string;
   paymentId: string;
+  reason?: CancelReason;
 }): Promise<void> {
+  const reason: CancelReason = input.reason ?? "checkout_timeout";
   await db.transaction(async (tx) => {
     const [ord] = await tx
       .select()
@@ -116,8 +123,51 @@ export async function compensateAbandonedOrder(input: {
     await tx.insert(orderLogs).values({
       orderId: input.orderId,
       eventType: "checkout_abandoned",
-      metadata: { paymentId: input.paymentId, reason: "checkout_timeout_or_cancel" },
+      metadata: { paymentId: input.paymentId, reason },
     });
+  });
+}
+
+/**
+ * Records that an invoice reminder is due. Idempotent on (orderId, reminderNumber)
+ * via a duplicate-log lookup so workflow retries don't double-send. Email
+ * dispatch is intentionally not wired here — the audit log is the seam where a
+ * future mailer hooks in.
+ */
+export async function sendInvoiceReminder(input: {
+  orderId: string;
+  paymentId: string;
+  reminderNumber: number;
+  reminderTotal: number;
+}): Promise<void> {
+  const existing = await db
+    .select({ id: orderLogs.id })
+    .from(orderLogs)
+    .where(
+      and(
+        eq(orderLogs.orderId, input.orderId),
+        eq(orderLogs.eventType, "invoice_reminder_sent"),
+        sql`${orderLogs.metadata}->>'reminderNumber' = ${String(input.reminderNumber)}`,
+      ),
+    )
+    .limit(1);
+  if (existing.length > 0) return;
+
+  const [ord] = await db
+    .select({ status: orders.status })
+    .from(orders)
+    .where(eq(orders.id, input.orderId))
+    .limit(1);
+  if (!ord || ord.status !== "awaiting_payment") return;
+
+  await db.insert(orderLogs).values({
+    orderId: input.orderId,
+    eventType: "invoice_reminder_sent",
+    metadata: {
+      paymentId: input.paymentId,
+      reminderNumber: input.reminderNumber,
+      reminderTotal: input.reminderTotal,
+    },
   });
 }
 
