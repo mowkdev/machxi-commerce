@@ -8,19 +8,19 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./storefront": {
+      "types": "./dist/storefront/index.d.ts",
       "import": "./dist/storefront/index.mjs",
-      "require": "./dist/storefront/index.js",
-      "types": "./dist/storefront/index.d.ts"
+      "require": "./dist/storefront/index.js"
     },
     "./admin": {
+      "types": "./dist/admin/index.d.ts",
       "import": "./dist/admin/index.mjs",
-      "require": "./dist/admin/index.js",
-      "types": "./dist/admin/index.d.ts"
+      "require": "./dist/admin/index.js"
     }
   },
   "scripts": {

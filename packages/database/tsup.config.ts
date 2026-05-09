@@ -8,7 +8,9 @@ export default defineConfig((options) => ({
     validators: 'src/validators.ts',
   },
   format: ['cjs', 'esm'],
-  dts: true,
+  // Skip DTS in watch — types resolve from `src/` per package.json `exports`,
+  // so dev never needs the dist `.d.ts`. Cuts startup by ~45s for this package.
+  dts: !options.watch,
   splitting: false,
   sourcemap: true,
   // Don't wipe `dist/` in watch mode — apps consume these files at runtime via

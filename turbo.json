@@ -1,9 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env.*local", "tsconfig.json", "pnpm-lock.yaml"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "package.json",
+        "tsconfig.json",
+        "tsup.config.ts",
+        "next.config.*",
+        "vite.config.ts"
+      ],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "dev": {
@@ -12,13 +20,28 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "inputs": [
+        "src/**",
+        ".eslintrc*",
+        "eslint.config.*",
+        "package.json"
+      ],
+      "outputs": []
     },
     "type-check": {
-      "dependsOn": ["^type-check"]
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "tsconfig.json", "package.json"],
+      "outputs": []
     },
     "test": {
       "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "test/**",
+        "tests/**",
+        "vitest.config.*",
+        "package.json"
+      ],
       "outputs": ["coverage/**"]
     },
     "clean": {
