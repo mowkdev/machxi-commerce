@@ -119,7 +119,12 @@
       "PowerShell($cartId = \"46b226ae-d9f4-4cd0-b6c9-1adc68363dcc\"; $body = @{ variantId = \"3259f68c-aba1-4ce3-8b95-a42c802d6c21\"; quantity = 2 } | ConvertTo-Json; Invoke-RestMethod -Uri \"http://localhost:8000/api/store/carts/$cartId/line-items\" -Method Post -Body $body -ContentType \"application/json\" | ConvertTo-Json -Depth 10)",
       "PowerShell(docker exec machxi-temporal tctl --address \"$\\(hostname -i\\):7233\" workflow list --query \"WorkflowId='order:cf72f1dc-303c-4a9e-b8cd-6ab7cc1e69b1'\" 2>&1)",
       "PowerShell(Get-WmiObject Win32_Process -Filter \"ProcessId=40464\")",
-      "Bash(docker run *)"
+      "Bash(docker run *)",
+      "Bash(pnpm openapi:emit)",
+      "Bash(pnpm generate *)",
+      "Bash(npx eslint *)",
+      "Bash(git restore *)",
+      "Read(//c/Users/SergejsMoskanovs/dev/lab/machxi-commerce/**)"
     ]
   }
 }
