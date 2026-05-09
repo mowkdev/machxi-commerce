@@ -5,6 +5,7 @@ import { TestWorkflowEnvironment } from "@temporalio/testing";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import {
+  cancelOrderSignal,
   markPaidManualSignal,
   paymentTransactionRecordedSignal,
   placeOrderWorkflow,
@@ -31,6 +32,7 @@ describe("placeOrderWorkflow", () => {
         markManualInvoicePaid: noop,
         ensureOrderProcessingIfCaptured: noop,
         generateInvoice: noop,
+        sendInvoiceReminder: noop,
       },
     });
     workerRun = worker.run();
@@ -83,6 +85,27 @@ describe("placeOrderWorkflow", () => {
 
     await expect(handle.result()).resolves.toMatchObject({
       outcome: "completed",
+    });
+  });
+
+  it("cancels and propagates the cancel reason", async () => {
+    const handle = await testEnv.workflowClient.start(placeOrderWorkflow, {
+      taskQueue: "commerce",
+      workflowId: `wf-test-cancel-${Date.now()}`,
+      args: [
+        {
+          orderId: "770e8400-e29b-41d4-a716-446655440000",
+          paymentId: "770e8400-e29b-41d4-a716-446655440001",
+          providerCode: "manual_invoice",
+          providerKind: "manual",
+        },
+      ],
+    });
+
+    await handle.signal(cancelOrderSignal, "admin_cancelled");
+
+    await expect(handle.result()).resolves.toMatchObject({
+      outcome: "cancelled",
     });
   });
 

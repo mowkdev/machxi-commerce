@@ -19,6 +19,7 @@ import {
   updatePaymentBody,
 } from "./schema";
 import {
+  cancelAwaitingPaymentOrder,
   createOrder,
   createOrderItem,
   createOrderShippingLine,
@@ -29,6 +30,7 @@ import {
   deletePayment,
   getOrder,
   listOrders,
+  markOrderPaid,
   updateOrder,
   updateOrderItem,
   updateOrderShippingLine,
@@ -257,6 +259,20 @@ export async function updatePaymentController(c: Context<AppEnv>) {
   } catch (err) {
     translatePgError(err);
   }
+}
+
+export async function markOrderPaidController(c: Context<AppEnv>) {
+  const id = parseOrderId(c);
+  const order = await markOrderPaid(id);
+  if (!order) throw notFound("Order not found");
+  return ok(c, order);
+}
+
+export async function cancelOrderController(c: Context<AppEnv>) {
+  const id = parseOrderId(c);
+  const order = await cancelAwaitingPaymentOrder(id);
+  if (!order) throw notFound("Order not found");
+  return ok(c, order);
 }
 
 export async function deletePaymentController(c: Context<AppEnv>) {

@@ -86,8 +86,16 @@ export async function processPaymentProviderWebhook(opts: {
     await signalPaymentTransactionRecorded({
       orderId: pay.orderId,
       paymentId: pay.id,
+      providerCode: providerRow.code,
+      providerKind: builtIn.kind,
     });
   } catch (e) {
-    logger.warn({ err: e }, "temporal signal skipped or failed");
+    // Webhook fired but signal didn't land. The workflow will eventually run
+    // ensureOrderProcessingIfCaptured after the next signal, so the order is
+    // not lost — but we want loud telemetry so SREs see it.
+    logger.error(
+      { err: e, orderId: pay.orderId, paymentId: pay.id },
+      "temporal signal failed after webhook capture",
+    );
   }
 }
