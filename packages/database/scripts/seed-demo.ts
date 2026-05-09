@@ -13,14 +13,16 @@
 
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
-import { CURRENCY_SPECS, LANGUAGE_SPECS, PRODUCT_SPECS, STOCK_LOCATION_SPECS } from './seed/data';
+import { CURRENCY_SPECS, LANGUAGE_SPECS, PRODUCT_SPECS, SHIPPING_OPTION_SPECS, STOCK_LOCATION_SPECS, STORE_SETTINGS_SPEC } from './seed/data';
 import {
   ensureTaxClass,
   seedCategories,
   seedCurrencies,
   seedLanguages,
   seedOptions,
+  seedShippingOptions,
   seedStockLocations,
+  seedStoreSettings,
 } from './seed/foundations';
 import { seedProduct } from './seed/products';
 
@@ -44,11 +46,15 @@ async function main(): Promise<void> {
   const options = await seedOptions(db);
   const categoryIds = await seedCategories(db);
   const locationIds = await seedStockLocations(db);
+  await seedStoreSettings(db);
+  await seedShippingOptions(db, taxClassId);
 
   console.log(`Languages:        ${LANGUAGE_SPECS.map((l) => l.code).join(', ')} (default: ${LANGUAGE_SPECS.find((l) => l.isDefault)?.code})`);
   console.log(`Currencies:       ${CURRENCY_SPECS.map((c) => c.code).join(', ')} (default: ${CURRENCY_SPECS.find((c) => c.isDefault)?.code})`);
   console.log(`Stock locations:  ${STOCK_LOCATION_SPECS.map((l) => l.name).join(', ')}`);
   console.log(`Categories:       ${categoryIds.size}`);
+  console.log(`Store settings:   ${STORE_SETTINGS_SPEC.companyName}`);
+  console.log(`Shipping options: ${SHIPPING_OPTION_SPECS.map((s) => s.name).join(', ')}`);
   console.log(`\nSeeding ${PRODUCT_SPECS.length} products...`);
 
   for (const spec of PRODUCT_SPECS) {

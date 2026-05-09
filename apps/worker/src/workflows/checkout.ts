@@ -51,6 +51,26 @@ export const markPaidManualSignal = defineSignal("markPaidManual");
 export async function placeOrderWorkflow(
   input: PlaceOrderWorkflowInput,
 ): Promise<{ outcome: string }> {
+  const isManualInvoice =
+    input.providerKind === "manual" &&
+    input.providerCode === "manual_invoice";
+
+  // For manual invoice orders, generate the invoice immediately so the
+  // customer receives bank/payment details before they pay.
+  if (isManualInvoice) {
+    try {
+      await a.generateInvoice({
+        orderId: input.orderId,
+        paymentId: input.paymentId,
+      });
+    } catch (err) {
+      log.warn("Invoice generation failed for manual order", {
+        orderId: input.orderId,
+        error: String(err),
+      });
+    }
+  }
+
   let webhookSignal = false;
   let cancelled = false;
   let manualPaid = false;
@@ -87,11 +107,7 @@ export async function placeOrderWorkflow(
     return { outcome: "timeout" };
   }
 
-  if (
-    manualPaid &&
-    input.providerKind === "manual" &&
-    input.providerCode === "manual_invoice"
-  ) {
+  if (isManualInvoice && manualPaid) {
     await a.markManualInvoicePaid({
       orderId: input.orderId,
       paymentId: input.paymentId,
@@ -103,17 +119,19 @@ export async function placeOrderWorkflow(
     paymentId: input.paymentId,
   });
 
-  // Generate invoice PDF — failure does not block the order.
-  try {
-    await a.generateInvoice({
-      orderId: input.orderId,
-      paymentId: input.paymentId,
-    });
-  } catch (err) {
-    log.warn("Invoice generation failed after all retries", {
-      orderId: input.orderId,
-      error: String(err),
-    });
+  // For automatic providers, generate invoice after payment capture.
+  if (!isManualInvoice) {
+    try {
+      await a.generateInvoice({
+        orderId: input.orderId,
+        paymentId: input.paymentId,
+      });
+    } catch (err) {
+      log.warn("Invoice generation failed after all retries", {
+        orderId: input.orderId,
+        error: String(err),
+      });
+    }
   }
 
   return { outcome: "completed" };

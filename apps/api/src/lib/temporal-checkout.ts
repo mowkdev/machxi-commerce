@@ -95,3 +95,32 @@ export async function signalMarkPaidManual(orderId: string): Promise<void> {
     logger.warn({ err: e, orderId }, "temporal markPaidManual signal failed");
   }
 }
+
+export async function startGenerateInvoiceWorkflow(input: {
+  orderId: string;
+  paymentId: string;
+}): Promise<boolean> {
+  const client = await getTemporalClient();
+  if (!client) return false;
+  const workflowId = `invoice-retry:${input.orderId}`;
+  try {
+    await client.workflow.start("generateInvoiceWorkflow", {
+      taskQueue: QUEUE,
+      workflowId,
+      workflowIdReusePolicy:
+        WorkflowIdReusePolicy.ALLOW_DUPLICATE_FAILED_ONLY,
+      args: [input],
+    });
+    return true;
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    if (
+      msg.includes("WorkflowExecutionAlreadyStarted") ||
+      msg.includes("already started")
+    ) {
+      return true;
+    }
+    logger.warn({ err: e, ...input }, "invoice retry workflow start failed");
+    return false;
+  }
+}

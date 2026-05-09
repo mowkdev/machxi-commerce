@@ -208,12 +208,18 @@ export async function generateInvoice(input: {
     string,
     unknown
   >;
+  const buyerName = [billing.firstName, billing.lastName]
+    .filter((part) => typeof part === "string" && part.length > 0)
+    .join(" ");
+  const street = [billing.addressLine1, billing.addressLine2]
+    .filter((part) => typeof part === "string" && part.length > 0)
+    .join(", ");
   const buyer: InvoiceBuyerInfo = {
-    name: String(billing.name ?? billing.firstName ?? ""),
-    street: billing.street ? String(billing.street) : null,
+    name: buyerName || (billing.company ? String(billing.company) : ""),
+    street: street.length > 0 ? street : null,
     city: billing.city ? String(billing.city) : null,
-    zip: billing.zip ? String(billing.zip) : null,
-    country: billing.country ? String(billing.country) : null,
+    zip: billing.postalCode ? String(billing.postalCode) : null,
+    country: billing.countryCode ? String(billing.countryCode) : null,
     email: order.guestEmail ?? null,
   };
 

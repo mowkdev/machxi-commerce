@@ -1,10 +1,44 @@
 -- Destructive demo-catalog reset.
--- Wipes products, categories, options, and demo-only media. Preserves auth,
--- currencies, languages, tax classes, stock locations, and shared pricing
--- surfaces (shipping, price lists).
+-- Wipes products, categories, options, orders, invoices, store settings,
+-- shipping options, and demo-only media. Preserves auth, currencies,
+-- languages, and tax classes.
 -- Run only against disposable development/test databases.
 
 BEGIN;
+
+-- Temporarily disable immutability triggers on ledger tables so we can DELETE
+ALTER TABLE payment_transactions DISABLE TRIGGER trg_payment_transactions_immutable;
+ALTER TABLE order_logs DISABLE TRIGGER trg_order_logs_immutable;
+ALTER TABLE order_item_taxes DISABLE TRIGGER trg_order_item_taxes_immutable;
+ALTER TABLE order_shipping_line_taxes DISABLE TRIGGER trg_order_shipping_line_taxes_immutable;
+ALTER TABLE inventory_transactions DISABLE TRIGGER trg_inventory_transactions_immutable;
+ALTER TABLE promotion_usage DISABLE TRIGGER trg_promotion_usage_immutable;
+
+-- Orders & invoices (must go before shipping options due to FK refs)
+DELETE FROM invoice_number_counter;
+DELETE FROM invoices;
+DELETE FROM order_logs;
+DELETE FROM order_item_taxes;
+DELETE FROM order_shipping_line_taxes;
+DELETE FROM order_shipping_lines;
+DELETE FROM order_items;
+DELETE FROM payment_transactions;
+DELETE FROM payments;
+DELETE FROM promotion_usage;
+DELETE FROM fulfillment_items;
+DELETE FROM fulfillments;
+DELETE FROM orders;
+
+-- Carts
+DELETE FROM cart_promotions;
+DELETE FROM cart_items;
+DELETE FROM carts;
+
+-- Store settings
+DELETE FROM store_settings;
+
+-- Shipping options (prices + price sets cleaned up below)
+DELETE FROM shipping_options;
 
 -- Junction tables first (FK order)
 DELETE FROM variant_option_values;
@@ -71,5 +105,13 @@ WHERE NOT EXISTS (
 DELETE FROM media
 WHERE NOT EXISTS (SELECT 1 FROM product_media WHERE product_media.media_id = media.id)
 AND   NOT EXISTS (SELECT 1 FROM variant_media WHERE variant_media.media_id = media.id);
+
+-- Re-enable immutability triggers
+ALTER TABLE payment_transactions ENABLE TRIGGER trg_payment_transactions_immutable;
+ALTER TABLE order_logs ENABLE TRIGGER trg_order_logs_immutable;
+ALTER TABLE order_item_taxes ENABLE TRIGGER trg_order_item_taxes_immutable;
+ALTER TABLE order_shipping_line_taxes ENABLE TRIGGER trg_order_shipping_line_taxes_immutable;
+ALTER TABLE inventory_transactions ENABLE TRIGGER trg_inventory_transactions_immutable;
+ALTER TABLE promotion_usage ENABLE TRIGGER trg_promotion_usage_immutable;
 
 COMMIT;

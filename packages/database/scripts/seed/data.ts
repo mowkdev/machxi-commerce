@@ -220,6 +220,57 @@ export const STOCK_LOCATION_SPECS: StockLocationSpec[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// STORE SETTINGS
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface StoreSettingsSpec {
+  companyName: string;
+  addressStreet: string;
+  addressCity: string;
+  addressZip: string;
+  addressCountry: string;
+  taxId: string;
+  vatNumber: string;
+  bankName: string;
+  iban: string;
+  bic: string;
+  accountHolder: string;
+  invoicePrefix: string;
+  invoiceFooterText: string;
+}
+
+export const STORE_SETTINGS_SPEC: StoreSettingsSpec = {
+  companyName: 'MachXi Demo Store',
+  addressStreet: 'Brivibas iela 1',
+  addressCity: 'Riga',
+  addressZip: 'LV-1010',
+  addressCountry: 'LV',
+  taxId: 'LV40003012345',
+  vatNumber: 'LV40003012345',
+  bankName: 'Swedbank AS',
+  iban: 'LV12HABA0551000000001',
+  bic: 'HABALV22',
+  accountHolder: 'MachXi Demo Store SIA',
+  invoicePrefix: 'INV',
+  invoiceFooterText: 'Thank you for your order! Payment is due within 14 days.',
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SHIPPING OPTIONS
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface ShippingOptionSpec {
+  name: string;
+  /** Price in EUR minor units. */
+  amount: number;
+}
+
+export const SHIPPING_OPTION_SPECS: ShippingOptionSpec[] = [
+  { name: 'Standard Shipping', amount: 499 },
+  { name: 'Express Shipping',  amount: 999 },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
 // PRODUCTS
 // ─────────────────────────────────────────────────────────────────────────────
 

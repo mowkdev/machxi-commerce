@@ -1,8 +1,9 @@
 import { eq } from "@repo/database";
 import { db } from "@repo/database/client";
-import { invoices } from "@repo/database/schema";
+import { invoices, orders, payments } from "@repo/database/schema";
 import type { InvoiceDetail } from "@repo/types/admin";
 import { invoiceStorage } from "../lib/storage";
+import { startGenerateInvoiceWorkflow } from "../lib/temporal-checkout";
 
 function toDetail(row: typeof invoices.$inferSelect): InvoiceDetail {
   return {
@@ -43,6 +44,35 @@ export async function getInvoiceByOrderId(
     .where(eq(invoices.orderId, orderId))
     .limit(1);
   return row ? toDetail(row) : null;
+}
+
+const INVOICE_ELIGIBLE_STATUSES = new Set([
+  "processing",
+  "completed",
+  "partially_refunded",
+]);
+
+export async function triggerInvoiceGenerationIfMissing(
+  orderId: string,
+): Promise<boolean> {
+  const [order] = await db
+    .select({ id: orders.id, status: orders.status })
+    .from(orders)
+    .where(eq(orders.id, orderId))
+    .limit(1);
+  if (!order || !INVOICE_ELIGIBLE_STATUSES.has(order.status)) return false;
+
+  const [payment] = await db
+    .select({ id: payments.id })
+    .from(payments)
+    .where(eq(payments.orderId, orderId))
+    .limit(1);
+  if (!payment) return false;
+
+  return startGenerateInvoiceWorkflow({
+    orderId,
+    paymentId: payment.id,
+  });
 }
 
 export async function getInvoiceDownloadUrl(

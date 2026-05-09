@@ -6,6 +6,7 @@ import {
   getInvoiceById,
   getInvoiceByOrderId,
   getInvoiceDownloadUrl,
+  triggerInvoiceGenerationIfMissing,
 } from "./service";
 import { z } from "zod";
 
@@ -30,8 +31,24 @@ export async function getInvoiceByOrderController(c: Context<AppEnv>) {
       issues: parsed.error.issues,
     });
   const invoice = await getInvoiceByOrderId(parsed.data.orderId);
-  if (!invoice) throw notFound("Invoice not found for this order");
+  if (!invoice) {
+    await triggerInvoiceGenerationIfMissing(parsed.data.orderId);
+    throw notFound("Invoice not found for this order");
+  }
   return ok(c, invoice);
+}
+
+export async function retryInvoiceByOrderController(c: Context<AppEnv>) {
+  const parsed = orderIdParam.safeParse({ orderId: c.req.param("orderId") });
+  if (!parsed.success)
+    throw validationFailed("Invalid order ID", {
+      issues: parsed.error.issues,
+    });
+  const existing = await getInvoiceByOrderId(parsed.data.orderId);
+  if (existing) return ok(c, existing);
+  const triggered = await triggerInvoiceGenerationIfMissing(parsed.data.orderId);
+  if (!triggered) throw notFound("Order not eligible for invoice generation");
+  return c.json({ ok: true, message: "Invoice generation triggered" }, 202);
 }
 
 export async function downloadInvoiceController(c: Context<AppEnv>) {

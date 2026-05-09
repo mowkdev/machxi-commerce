@@ -12,6 +12,7 @@ import {
   getInvoiceController,
   getInvoiceByOrderController,
   downloadInvoiceController,
+  retryInvoiceByOrderController,
 } from "./controller";
 
 export const invoicesRoutes = new Hono<AppEnv>();
@@ -32,6 +33,21 @@ invoicesRoutes.get(
     },
   }),
   getInvoiceByOrderController,
+);
+
+invoicesRoutes.post(
+  "/by-order/:orderId/retry",
+  describeRoute({
+    operationId: "adminRetryInvoiceGeneration",
+    summary: "Retry invoice generation for an order",
+    tags: TAGS,
+    responses: {
+      200: jsonResponse("Invoice already exists", successEnvelope(invoiceDetail)),
+      202: { description: "Invoice generation triggered" },
+      ...standardErrorResponses,
+    },
+  }),
+  retryInvoiceByOrderController,
 );
 
 invoicesRoutes.get(

@@ -6,6 +6,8 @@
  *   - option definitions + values (color, size) with translations for all demo locales
  *   - categories with translations for all demo locales
  *   - stock locations
+ *   - store settings (company details for invoicing)
+ *   - shipping options (required for checkout)
  *
  * All operations are idempotent and safe to re-run.
  */
@@ -20,7 +22,11 @@ import {
   optionDefinitionTranslations,
   optionValues,
   optionValueTranslations,
+  prices,
+  priceSets,
+  shippingOptions,
   stockLocations,
+  storeSettings,
   taxClasses,
 } from '../../src/schema';
 import {
@@ -28,10 +34,13 @@ import {
   COLOR_LABELS,
   COLOR_UNSPLASH,
   CURRENCY_SPECS,
+  EUR_TO_USD,
   LANGUAGE_SPECS,
   OPTION_NAMES,
+  SHIPPING_OPTION_SPECS,
   SIZE_LABELS,
   STOCK_LOCATION_SPECS,
+  STORE_SETTINGS_SPEC,
   type CategorySpec,
 } from './data';
 import type { Db, OptionCatalog } from './types';
@@ -279,4 +288,67 @@ export async function seedStockLocations(db: Db): Promise<string[]> {
     ids.push(created.id);
   }
   return ids;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STORE SETTINGS
+// ─────────────────────────────────────────────────────────────────────────────
+
+export async function seedStoreSettings(db: Db): Promise<void> {
+  const [existing] = await db.select({ id: storeSettings.id }).from(storeSettings).limit(1);
+  if (existing) return;
+
+  await db.insert(storeSettings).values({
+    companyName: STORE_SETTINGS_SPEC.companyName,
+    addressStreet: STORE_SETTINGS_SPEC.addressStreet,
+    addressCity: STORE_SETTINGS_SPEC.addressCity,
+    addressZip: STORE_SETTINGS_SPEC.addressZip,
+    addressCountry: STORE_SETTINGS_SPEC.addressCountry,
+    taxId: STORE_SETTINGS_SPEC.taxId,
+    vatNumber: STORE_SETTINGS_SPEC.vatNumber,
+    bankName: STORE_SETTINGS_SPEC.bankName,
+    iban: STORE_SETTINGS_SPEC.iban,
+    bic: STORE_SETTINGS_SPEC.bic,
+    accountHolder: STORE_SETTINGS_SPEC.accountHolder,
+    invoicePrefix: STORE_SETTINGS_SPEC.invoicePrefix,
+    invoiceFooterText: STORE_SETTINGS_SPEC.invoiceFooterText,
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SHIPPING OPTIONS
+// ─────────────────────────────────────────────────────────────────────────────
+
+export async function seedShippingOptions(db: Db, taxClassId: string): Promise<void> {
+  for (const spec of SHIPPING_OPTION_SPECS) {
+    const [existing] = await db
+      .select({ id: shippingOptions.id })
+      .from(shippingOptions)
+      .where(eq(shippingOptions.name, spec.name))
+      .limit(1);
+    if (existing) continue;
+
+    const [priceSet] = await db
+      .insert(priceSets)
+      .values({})
+      .returning({ id: priceSets.id });
+
+    await db.insert(shippingOptions).values({
+      name: spec.name,
+      priceSetId: priceSet.id,
+      taxClassId,
+    });
+
+    for (const curr of CURRENCY_SPECS) {
+      const amount = curr.code === 'EUR'
+        ? spec.amount
+        : Math.round(spec.amount * EUR_TO_USD);
+      await db.insert(prices).values({
+        priceSetId: priceSet.id,
+        currencyCode: curr.code,
+        amount,
+        taxInclusive: true,
+      });
+    }
+  }
 }
