@@ -12,6 +12,7 @@ import {
   successEnvelope,
 } from "../openapi/envelope";
 import {
+  cancelOrderController,
   createOrderController,
   createOrderItemController,
   createOrderShippingLineController,
@@ -22,6 +23,7 @@ import {
   deletePaymentController,
   getOrderController,
   listOrdersController,
+  markOrderPaidController,
   updateOrderController,
   updateOrderItemController,
   updateOrderShippingLineController,
@@ -280,4 +282,34 @@ ordersRoutes.delete(
     },
   }),
   deletePaymentController,
+);
+
+ordersRoutes.post(
+  "/:id/mark-paid",
+  describeRoute({
+    operationId: "adminMarkOrderPaid",
+    summary: "Confirm a manual-invoice payment",
+    tags: TAGS,
+    parameters: paramsFromSchema(orderIdParam, "path"),
+    responses: {
+      200: jsonResponse("Order detail after marking paid", successEnvelope(orderDetail)),
+      ...standardErrorResponses,
+    },
+  }),
+  markOrderPaidController,
+);
+
+ordersRoutes.post(
+  "/:id/cancel",
+  describeRoute({
+    operationId: "adminCancelOrder",
+    summary: "Cancel an awaiting-payment order",
+    tags: TAGS,
+    parameters: paramsFromSchema(orderIdParam, "path"),
+    responses: {
+      200: jsonResponse("Order detail after cancellation", successEnvelope(orderDetail)),
+      ...standardErrorResponses,
+    },
+  }),
+  cancelOrderController,
 );

@@ -5,6 +5,17 @@ import { FormContentLayout } from "@/components/form-content-layout";
 import { FormPageShell } from "@/components/form-page-shell";
 import { RecordTimestamps } from "@/components/record-timestamps";
 import { SidePanelForm } from "@/components/side-panel-form";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,6 +45,7 @@ import type {
   PaymentInput,
 } from "@repo/types/admin";
 import {
+  useCancelOrder,
   useCreateOrder,
   useCreateOrderItem,
   useCreateOrderShippingLine,
@@ -42,6 +54,7 @@ import {
   useDeleteOrderItem,
   useDeleteOrderShippingLine,
   useDeletePayment,
+  useMarkOrderPaid,
   useUpdateOrder,
   useUpdateOrderItem,
   useUpdateOrderShippingLine,
@@ -154,6 +167,8 @@ export function OrderForm({ mode, initialData }: OrderFormProps) {
   const createMutation = useCreateOrder();
   const updateMutation = useUpdateOrder(initialData?.id ?? "");
   const deleteMutation = useDeleteOrder();
+  const markPaidMutation = useMarkOrderPaid(initialData?.id ?? "");
+  const cancelMutation = useCancelOrder(initialData?.id ?? "");
   const createItemMutation = useCreateOrderItem(initialData?.id ?? "");
   const updateItemMutation = useUpdateOrderItem(initialData?.id ?? "");
   const deleteItemMutation = useDeleteOrderItem(initialData?.id ?? "");
@@ -496,6 +511,55 @@ export function OrderForm({ mode, initialData }: OrderFormProps) {
               }))}
             />
             <InvoiceCard orderId={initialData.id} />
+            {initialData.status === "awaiting_payment" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Order actions</CardTitle>
+                  <CardDescription>
+                    Actions available while this order is awaiting payment.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-3">
+                  {payments.length > 0 && (
+                    <Button
+                      type="button"
+                      disabled={markPaidMutation.isPending}
+                      onClick={() => markPaidMutation.mutate()}
+                    >
+                      {markPaidMutation.isPending ? "Confirming..." : "Confirm payment"}
+                    </Button>
+                  )}
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={cancelMutation.isPending}
+                      >
+                        {cancelMutation.isPending ? "Canceling..." : "Cancel order"}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Cancel this order?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This will mark the order as canceled. This action
+                          cannot be undone without manual intervention.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Go back</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => cancelMutation.mutate()}
+                        >
+                          Cancel order
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </CardContent>
+              </Card>
+            )}
             <Card>
               <CardHeader>
                 <CardTitle>Danger zone</CardTitle>

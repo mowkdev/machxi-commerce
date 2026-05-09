@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { api, ApiRequestError } from "@/lib/api";
 import {
   SdkRequestError,
   adminCreateOrder,
@@ -254,5 +255,35 @@ export function useDownloadInvoice() {
     },
     onError: (error) =>
       toast.error(error.message || "Failed to download invoice"),
+  });
+}
+
+export function useMarkOrderPaid(orderId: string) {
+  const invalidateOrder = useInvalidateOrder(orderId);
+  return useMutation<OrderDetail, ApiRequestError, void>({
+    mutationFn: async () => {
+      const res = await api.post<OrderDetail>(`/api/orders/${orderId}/mark-paid`);
+      return res.data;
+    },
+    onSuccess: () => {
+      invalidateOrder();
+      toast.success("Order marked as paid");
+    },
+    onError: (error) => toast.error(error.message || "Failed to mark order as paid"),
+  });
+}
+
+export function useCancelOrder(orderId: string) {
+  const invalidateOrder = useInvalidateOrder(orderId);
+  return useMutation<OrderDetail, ApiRequestError, void>({
+    mutationFn: async () => {
+      const res = await api.post<OrderDetail>(`/api/orders/${orderId}/cancel`);
+      return res.data;
+    },
+    onSuccess: () => {
+      invalidateOrder();
+      toast.success("Order canceled");
+    },
+    onError: (error) => toast.error(error.message || "Failed to cancel order"),
   });
 }

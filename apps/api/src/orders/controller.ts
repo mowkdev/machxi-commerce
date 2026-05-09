@@ -19,6 +19,7 @@ import {
   updatePaymentBody,
 } from "./schema";
 import {
+  cancelAwaitingPaymentOrder,
   createOrder,
   createOrderItem,
   createOrderShippingLine,
@@ -29,6 +30,8 @@ import {
   deletePayment,
   getOrder,
   listOrders,
+  markOrderPaid,
+  TemporalUnavailableError,
   updateOrder,
   updateOrderItem,
   updateOrderShippingLine,
@@ -272,4 +275,28 @@ export async function deletePaymentController(c: Context<AppEnv>) {
   const deleted = await deletePayment(params.data.orderId, params.data.paymentId);
   if (!deleted) throw notFound("Payment not found");
   return ok(c, { id: params.data.paymentId, deleted: true });
+}
+
+export async function markOrderPaidController(c: Context<AppEnv>) {
+  const id = parseOrderId(c);
+  try {
+    const order = await markOrderPaid(id);
+    if (!order) throw notFound("Order not found");
+    return ok(c, order);
+  } catch (err) {
+    if (err instanceof TemporalUnavailableError) throw conflict(err.message);
+    throw err;
+  }
+}
+
+export async function cancelOrderController(c: Context<AppEnv>) {
+  const id = parseOrderId(c);
+  try {
+    const order = await cancelAwaitingPaymentOrder(id);
+    if (!order) throw notFound("Order not found");
+    return ok(c, order);
+  } catch (err) {
+    if (err instanceof TemporalUnavailableError) throw conflict(err.message);
+    throw err;
+  }
 }

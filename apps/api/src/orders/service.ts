@@ -18,11 +18,18 @@ import {
   orderLogs,
   orders,
   orderShippingLines,
+  paymentProviders,
   payments,
   returnItems,
   returns as orderReturns,
   stockLocations,
 } from "@repo/database/schema";
+import {
+  TemporalUnavailableError,
+  adminSignalCancelOrder,
+  adminSignalMarkPaidManual,
+} from "../lib/temporal-checkout";
+import { conflict, validationFailed } from "../lib/errors";
 import type { PaginationMeta } from "@repo/types";
 import type {
   CreateOrderBody,
@@ -632,3 +639,85 @@ export async function deletePayment(
     .returning({ id: payments.id });
   return rows.length > 0;
 }
+
+export async function loadOrderForCheckoutAction(orderId: string): Promise<{
+  paymentId: string;
+  providerCode: string;
+  providerKind: "automatic" | "manual";
+} | null> {
+  const [row] = await db
+    .select({
+      paymentId: payments.id,
+      providerCode: payments.providerId,
+      providerKind: paymentProviders.kind,
+    })
+    .from(payments)
+    .innerJoin(paymentProviders, eq(payments.providerId, paymentProviders.code))
+    .where(eq(payments.orderId, orderId))
+    .limit(1);
+  return row ?? null;
+}
+
+export async function markOrderPaid(
+  orderId: string,
+): Promise<OrderDetail | null> {
+  const [orderRow] = await db
+    .select({ status: orders.status })
+    .from(orders)
+    .where(eq(orders.id, orderId))
+    .limit(1);
+  if (!orderRow) return null;
+  if (orderRow.status !== "awaiting_payment") {
+    throw conflict("Order is not awaiting payment");
+  }
+
+  const checkoutData = await loadOrderForCheckoutAction(orderId);
+  if (!checkoutData) {
+    throw validationFailed("No payment record found for this order");
+  }
+  if (checkoutData.providerKind !== "manual") {
+    throw validationFailed("Order does not use a manual payment provider");
+  }
+
+  // Throws TemporalUnavailableError when Temporal is configured but unreachable.
+  await adminSignalMarkPaidManual(orderId);
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(orders)
+      .set({ status: "processing" })
+      .where(eq(orders.id, orderId));
+    await tx
+      .update(payments)
+      .set({ status: "captured" })
+      .where(eq(payments.id, checkoutData.paymentId));
+  });
+
+  return getOrder(orderId);
+}
+
+export async function cancelAwaitingPaymentOrder(
+  orderId: string,
+): Promise<OrderDetail | null> {
+  const [orderRow] = await db
+    .select({ status: orders.status })
+    .from(orders)
+    .where(eq(orders.id, orderId))
+    .limit(1);
+  if (!orderRow) return null;
+  if (orderRow.status !== "awaiting_payment") {
+    throw conflict("Order cannot be canceled after payment has been processed");
+  }
+
+  // Throws TemporalUnavailableError when Temporal is configured but unreachable.
+  await adminSignalCancelOrder(orderId);
+
+  await db
+    .update(orders)
+    .set({ status: "canceled" })
+    .where(eq(orders.id, orderId));
+
+  return getOrder(orderId);
+}
+
+export { TemporalUnavailableError };

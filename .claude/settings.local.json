@@ -125,7 +125,8 @@
       "Bash(npx eslint *)",
       "Bash(git restore *)",
       "Read(//c/Users/SergejsMoskanovs/dev/lab/machxi-commerce/**)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(xargs grep -l \"getTemporalClient\\\\|TemporalUnavailable\")"
     ]
   }
 }

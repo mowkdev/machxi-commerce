@@ -6,6 +6,52 @@ import { WorkflowIdReusePolicy } from "@temporalio/common";
 import { env } from "../env";
 import { logger } from "./logger";
 
+export class TemporalUnavailableError extends Error {
+  constructor() {
+    super("Temporal service is unavailable — try again later");
+    this.name = "TemporalUnavailableError";
+  }
+}
+
+/** Returns the client if Temporal is configured and reachable, null if not configured.
+ *  Throws TemporalUnavailableError if TEMPORAL_ADDRESS is set but the connection failed. */
+async function getRequiredClient(): Promise<
+  import("@temporalio/client").Client | null
+> {
+  if (!env.TEMPORAL_ADDRESS?.trim()) return null;
+  const client = await getTemporalClient();
+  if (!client) throw new TemporalUnavailableError();
+  return client;
+}
+
+function isWorkflowNotFound(e: unknown): boolean {
+  const msg = e instanceof Error ? e.message : String(e);
+  return msg.includes("NOT_FOUND") || msg.includes("not found");
+}
+
+/** Admin variant — throws TemporalUnavailableError when Temporal is configured but down.
+ *  Silently no-ops when the workflow handle is gone (admin-created orders have no workflow). */
+export async function adminSignalMarkPaidManual(orderId: string): Promise<void> {
+  const client = await getRequiredClient();
+  if (!client) return;
+  try {
+    await client.workflow.getHandle(`order:${orderId}`).signal("markPaidManual", {});
+  } catch (e) {
+    if (!isWorkflowNotFound(e)) throw e;
+  }
+}
+
+/** Admin variant — throws TemporalUnavailableError when Temporal is configured but down. */
+export async function adminSignalCancelOrder(orderId: string): Promise<void> {
+  const client = await getRequiredClient();
+  if (!client) return;
+  try {
+    await client.workflow.getHandle(`order:${orderId}`).signal("cancelOrder", {});
+  } catch (e) {
+    if (!isWorkflowNotFound(e)) throw e;
+  }
+}
+
 const QUEUE = "commerce";
 
 let clientPromise: Promise<
