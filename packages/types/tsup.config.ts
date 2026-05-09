@@ -5,6 +5,7 @@ export default defineConfig((options) => ({
     index: 'src/index.ts',
     'storefront/index': 'src/storefront/index.ts',
     'admin/index': 'src/admin/index.ts',
+    'cms/index': 'src/cms/index.ts',
   },
   format: ['cjs', 'esm'],
   // Skip DTS in watch — `.d.ts` from one-shot `^build` stays put (clean:false in

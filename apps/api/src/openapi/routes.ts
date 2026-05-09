@@ -26,6 +26,7 @@ export function mountOpenAPI(parent: Hono<AppEnv>): void {
           { name: "media", description: "Admin media library" },
           { name: "languages", description: "Admin languages" },
           { name: "tax-classes", description: "Admin tax classes" },
+          { name: "cms", description: "Admin CMS — pages and blocks" },
         ],
       },
     }),

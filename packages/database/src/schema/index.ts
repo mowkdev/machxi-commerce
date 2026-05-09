@@ -132,6 +132,18 @@ export {
 export { storeSettings, invoiceNumberCounter } from './08-store-settings';
 
 // ────────────────────────────────────────────────────────────────────────────
+// CMS
+// ────────────────────────────────────────────────────────────────────────────
+
+export {
+  pages,
+  pageTranslations,
+  blocks,
+  blockTranslations,
+  blockRelations,
+} from './09-cms';
+
+// ────────────────────────────────────────────────────────────────────────────
 // RELATIONS (for db.query.* relational queries)
 // ────────────────────────────────────────────────────────────────────────────
 

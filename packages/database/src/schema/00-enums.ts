@@ -138,3 +138,21 @@ export const invoiceStatusEnum = pgEnum('invoice_status', [
   'issued',
   'voided',
 ]);
+
+// ────────────────────────────────────────────────────────────────────────────
+// CMS ENUMS
+// ────────────────────────────────────────────────────────────────────────────
+
+export const pageStatusEnum = pgEnum('page_status', [
+  'draft',
+  'published',
+  'archived',
+  'deleted',
+]);
+
+export const blockRelatedTypeEnum = pgEnum('block_related_type', [
+  'product',
+  'category',
+  'page',
+  'media',
+]);

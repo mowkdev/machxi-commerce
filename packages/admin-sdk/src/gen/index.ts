@@ -14,6 +14,7 @@ export type { AdminCreateOptionValueMutationKey } from "./hooks/useAdminCreateOp
 export type { AdminCreateOrderMutationKey } from "./hooks/useAdminCreateOrder.ts";
 export type { AdminCreateOrderItemMutationKey } from "./hooks/useAdminCreateOrderItem.ts";
 export type { AdminCreateOrderShippingLineMutationKey } from "./hooks/useAdminCreateOrderShippingLine.ts";
+export type { AdminCreatePageMutationKey } from "./hooks/useAdminCreatePage.ts";
 export type { AdminCreatePaymentMutationKey } from "./hooks/useAdminCreatePayment.ts";
 export type { AdminCreatePaymentProviderMutationKey } from "./hooks/useAdminCreatePaymentProvider.ts";
 export type { AdminCreatePriceListMutationKey } from "./hooks/useAdminCreatePriceList.ts";
@@ -44,6 +45,7 @@ export type { AdminDeleteMediaMutationKey } from "./hooks/useAdminDeleteMedia.ts
 export type { AdminDeleteOrderMutationKey } from "./hooks/useAdminDeleteOrder.ts";
 export type { AdminDeleteOrderItemMutationKey } from "./hooks/useAdminDeleteOrderItem.ts";
 export type { AdminDeleteOrderShippingLineMutationKey } from "./hooks/useAdminDeleteOrderShippingLine.ts";
+export type { AdminDeletePageMutationKey } from "./hooks/useAdminDeletePage.ts";
 export type { AdminDeletePaymentMutationKey } from "./hooks/useAdminDeletePayment.ts";
 export type { AdminDeletePaymentProviderMutationKey } from "./hooks/useAdminDeletePaymentProvider.ts";
 export type { AdminDeletePriceListMutationKey } from "./hooks/useAdminDeletePriceList.ts";
@@ -89,6 +91,8 @@ export type { AdminGetOptionDefinitionQueryKey } from "./hooks/useAdminGetOption
 export type { AdminGetOptionDefinitionSuspenseQueryKey } from "./hooks/useAdminGetOptionDefinitionSuspense.ts";
 export type { AdminGetOrderQueryKey } from "./hooks/useAdminGetOrder.ts";
 export type { AdminGetOrderSuspenseQueryKey } from "./hooks/useAdminGetOrderSuspense.ts";
+export type { AdminGetPageQueryKey } from "./hooks/useAdminGetPage.ts";
+export type { AdminGetPageSuspenseQueryKey } from "./hooks/useAdminGetPageSuspense.ts";
 export type { AdminGetPaymentProviderQueryKey } from "./hooks/useAdminGetPaymentProvider.ts";
 export type { AdminGetPaymentProviderSuspenseQueryKey } from "./hooks/useAdminGetPaymentProviderSuspense.ts";
 export type { AdminGetPriceListQueryKey } from "./hooks/useAdminGetPriceList.ts";
@@ -113,6 +117,8 @@ export type { AdminGetTaxClassQueryKey } from "./hooks/useAdminGetTaxClass.ts";
 export type { AdminGetTaxClassSuspenseQueryKey } from "./hooks/useAdminGetTaxClassSuspense.ts";
 export type { AdminGetUserQueryKey } from "./hooks/useAdminGetUser.ts";
 export type { AdminGetUserSuspenseQueryKey } from "./hooks/useAdminGetUserSuspense.ts";
+export type { AdminListBlockTypesQueryKey } from "./hooks/useAdminListBlockTypes.ts";
+export type { AdminListBlockTypesSuspenseQueryKey } from "./hooks/useAdminListBlockTypesSuspense.ts";
 export type { AdminListBuiltInPaymentProvidersQueryKey } from "./hooks/useAdminListBuiltInPaymentProviders.ts";
 export type { AdminListBuiltInPaymentProvidersSuspenseQueryKey } from "./hooks/useAdminListBuiltInPaymentProvidersSuspense.ts";
 export type { AdminListCartsQueryKey } from "./hooks/useAdminListCarts.ts";
@@ -139,6 +145,8 @@ export type { AdminListOptionDefinitionsCatalogQueryKey } from "./hooks/useAdmin
 export type { AdminListOptionDefinitionsCatalogSuspenseQueryKey } from "./hooks/useAdminListOptionDefinitionsCatalogSuspense.ts";
 export type { AdminListOrdersQueryKey } from "./hooks/useAdminListOrders.ts";
 export type { AdminListOrdersSuspenseQueryKey } from "./hooks/useAdminListOrdersSuspense.ts";
+export type { AdminListPagesQueryKey } from "./hooks/useAdminListPages.ts";
+export type { AdminListPagesSuspenseQueryKey } from "./hooks/useAdminListPagesSuspense.ts";
 export type { AdminListPaymentProvidersQueryKey } from "./hooks/useAdminListPaymentProviders.ts";
 export type { AdminListPaymentProvidersSuspenseQueryKey } from "./hooks/useAdminListPaymentProvidersSuspense.ts";
 export type { AdminListPermissionsQueryKey } from "./hooks/useAdminListPermissions.ts";
@@ -181,6 +189,7 @@ export type { AdminListUsersQueryKey } from "./hooks/useAdminListUsers.ts";
 export type { AdminListUsersSuspenseQueryKey } from "./hooks/useAdminListUsersSuspense.ts";
 export type { AdminReorderCategoriesMutationKey } from "./hooks/useAdminReorderCategories.ts";
 export type { AdminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
+export type { AdminReplacePageBlocksMutationKey } from "./hooks/useAdminReplacePageBlocks.ts";
 export type { AdminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export type { AdminUpdateCurrencyMutationKey } from "./hooks/useAdminUpdateCurrency.ts";
 export type { AdminUpdateCustomerMutationKey } from "./hooks/useAdminUpdateCustomer.ts";
@@ -194,6 +203,7 @@ export type { AdminUpdateOptionValueMutationKey } from "./hooks/useAdminUpdateOp
 export type { AdminUpdateOrderMutationKey } from "./hooks/useAdminUpdateOrder.ts";
 export type { AdminUpdateOrderItemMutationKey } from "./hooks/useAdminUpdateOrderItem.ts";
 export type { AdminUpdateOrderShippingLineMutationKey } from "./hooks/useAdminUpdateOrderShippingLine.ts";
+export type { AdminUpdatePageMutationKey } from "./hooks/useAdminUpdatePage.ts";
 export type { AdminUpdatePaymentMutationKey } from "./hooks/useAdminUpdatePayment.ts";
 export type { AdminUpdatePaymentProviderMutationKey } from "./hooks/useAdminUpdatePaymentProvider.ts";
 export type { AdminUpdatePriceListMutationKey } from "./hooks/useAdminUpdatePriceList.ts";
@@ -413,6 +423,18 @@ export type {
   AdminCreateOrderShippingLineMutationResponse,
   AdminCreateOrderShippingLinePathParams,
 } from "./types/AdminCreateOrderShippingLine.ts";
+export type {
+  AdminCreatePage201,
+  AdminCreatePage400,
+  AdminCreatePage401,
+  AdminCreatePage403,
+  AdminCreatePage404,
+  AdminCreatePage409,
+  AdminCreatePage500,
+  AdminCreatePageMutation,
+  AdminCreatePageMutationRequest,
+  AdminCreatePageMutationResponse,
+} from "./types/AdminCreatePage.ts";
 export type {
   AdminCreatePayment201,
   AdminCreatePayment201DataStatusEnumKey,
@@ -784,6 +806,18 @@ export type {
   AdminDeleteOrderShippingLineMutationResponse,
   AdminDeleteOrderShippingLinePathParams,
 } from "./types/AdminDeleteOrderShippingLine.ts";
+export type {
+  AdminDeletePage200,
+  AdminDeletePage400,
+  AdminDeletePage401,
+  AdminDeletePage403,
+  AdminDeletePage404,
+  AdminDeletePage409,
+  AdminDeletePage500,
+  AdminDeletePageMutation,
+  AdminDeletePageMutationResponse,
+  AdminDeletePagePathParams,
+} from "./types/AdminDeletePage.ts";
 export type {
   AdminDeletePayment200,
   AdminDeletePayment400,
@@ -1192,6 +1226,20 @@ export type {
   AdminGetOrderQueryResponse,
 } from "./types/AdminGetOrder.ts";
 export type {
+  AdminGetPage200,
+  AdminGetPage200DataStatusEnumKey,
+  AdminGetPage200RelationsRelatedTypeEnumKey,
+  AdminGetPage400,
+  AdminGetPage401,
+  AdminGetPage403,
+  AdminGetPage404,
+  AdminGetPage409,
+  AdminGetPage500,
+  AdminGetPagePathParams,
+  AdminGetPageQuery,
+  AdminGetPageQueryResponse,
+} from "./types/AdminGetPage.ts";
+export type {
   AdminGetPaymentProvider200,
   AdminGetPaymentProvider200DataKindEnumKey,
   AdminGetPaymentProvider400,
@@ -1342,6 +1390,19 @@ export type {
   AdminGetUserQuery,
   AdminGetUserQueryResponse,
 } from "./types/AdminGetUser.ts";
+export type {
+  AdminListBlockTypes200,
+  AdminListBlockTypes200DataCategoryEnumKey,
+  AdminListBlockTypes200RelationFieldsKindEnumKey,
+  AdminListBlockTypes400,
+  AdminListBlockTypes401,
+  AdminListBlockTypes403,
+  AdminListBlockTypes404,
+  AdminListBlockTypes409,
+  AdminListBlockTypes500,
+  AdminListBlockTypesQuery,
+  AdminListBlockTypesQueryResponse,
+} from "./types/AdminListBlockTypes.ts";
 export type {
   AdminListBuiltInPaymentProviders200,
   AdminListBuiltInPaymentProviders200DataKindEnumKey,
@@ -1527,6 +1588,22 @@ export type {
   AdminListOrdersQueryParamsStatusEnumKey,
   AdminListOrdersQueryResponse,
 } from "./types/AdminListOrders.ts";
+export type {
+  AdminListPages200,
+  AdminListPages200DataStatusEnumKey,
+  AdminListPages400,
+  AdminListPages401,
+  AdminListPages403,
+  AdminListPages404,
+  AdminListPages409,
+  AdminListPages500,
+  AdminListPagesQuery,
+  AdminListPagesQueryParams,
+  AdminListPagesQueryParamsSortByEnumKey,
+  AdminListPagesQueryParamsSortOrderEnumKey,
+  AdminListPagesQueryParamsStatusEnumKey,
+  AdminListPagesQueryResponse,
+} from "./types/AdminListPages.ts";
 export type {
   AdminListPaymentProviders200,
   AdminListPaymentProviders200DataKindEnumKey,
@@ -1830,6 +1907,21 @@ export type {
   AdminReplaceMediaPathParams,
 } from "./types/AdminReplaceMedia.ts";
 export type {
+  AdminReplacePageBlocks200,
+  AdminReplacePageBlocks200DataStatusEnumKey,
+  AdminReplacePageBlocks200RelationsRelatedTypeEnumKey,
+  AdminReplacePageBlocks400,
+  AdminReplacePageBlocks401,
+  AdminReplacePageBlocks403,
+  AdminReplacePageBlocks404,
+  AdminReplacePageBlocks409,
+  AdminReplacePageBlocks500,
+  AdminReplacePageBlocksMutation,
+  AdminReplacePageBlocksMutationRequest,
+  AdminReplacePageBlocksMutationResponse,
+  AdminReplacePageBlocksPathParams,
+} from "./types/AdminReplacePageBlocks.ts";
+export type {
   AdminUpdateCategory200,
   AdminUpdateCategory400,
   AdminUpdateCategory401,
@@ -2004,6 +2096,21 @@ export type {
   AdminUpdateOrderShippingLineMutationResponse,
   AdminUpdateOrderShippingLinePathParams,
 } from "./types/AdminUpdateOrderShippingLine.ts";
+export type {
+  AdminUpdatePage200,
+  AdminUpdatePage200DataStatusEnumKey,
+  AdminUpdatePage200RelationsRelatedTypeEnumKey,
+  AdminUpdatePage400,
+  AdminUpdatePage401,
+  AdminUpdatePage403,
+  AdminUpdatePage404,
+  AdminUpdatePage409,
+  AdminUpdatePage500,
+  AdminUpdatePageMutation,
+  AdminUpdatePageMutationRequest,
+  AdminUpdatePageMutationResponse,
+  AdminUpdatePagePathParams,
+} from "./types/AdminUpdatePage.ts";
 export type {
   AdminUpdatePayment200,
   AdminUpdatePayment200DataStatusEnumKey,
@@ -2315,6 +2422,7 @@ export { adminCreateOptionValue } from "./client/adminCreateOptionValue.ts";
 export { adminCreateOrder } from "./client/adminCreateOrder.ts";
 export { adminCreateOrderItem } from "./client/adminCreateOrderItem.ts";
 export { adminCreateOrderShippingLine } from "./client/adminCreateOrderShippingLine.ts";
+export { adminCreatePage } from "./client/adminCreatePage.ts";
 export { adminCreatePayment } from "./client/adminCreatePayment.ts";
 export { adminCreatePaymentProvider } from "./client/adminCreatePaymentProvider.ts";
 export { adminCreatePriceList } from "./client/adminCreatePriceList.ts";
@@ -2345,6 +2453,7 @@ export { adminDeleteMedia } from "./client/adminDeleteMedia.ts";
 export { adminDeleteOrder } from "./client/adminDeleteOrder.ts";
 export { adminDeleteOrderItem } from "./client/adminDeleteOrderItem.ts";
 export { adminDeleteOrderShippingLine } from "./client/adminDeleteOrderShippingLine.ts";
+export { adminDeletePage } from "./client/adminDeletePage.ts";
 export { adminDeletePayment } from "./client/adminDeletePayment.ts";
 export { adminDeletePaymentProvider } from "./client/adminDeletePaymentProvider.ts";
 export { adminDeletePriceList } from "./client/adminDeletePriceList.ts";
@@ -2378,6 +2487,7 @@ export { adminGetLanguage } from "./client/adminGetLanguage.ts";
 export { adminGetMedia } from "./client/adminGetMedia.ts";
 export { adminGetOptionDefinition } from "./client/adminGetOptionDefinition.ts";
 export { adminGetOrder } from "./client/adminGetOrder.ts";
+export { adminGetPage } from "./client/adminGetPage.ts";
 export { adminGetPaymentProvider } from "./client/adminGetPaymentProvider.ts";
 export { adminGetPriceList } from "./client/adminGetPriceList.ts";
 export { adminGetProduct } from "./client/adminGetProduct.ts";
@@ -2390,6 +2500,7 @@ export { adminGetStockLocation } from "./client/adminGetStockLocation.ts";
 export { adminGetStoreSettings } from "./client/adminGetStoreSettings.ts";
 export { adminGetTaxClass } from "./client/adminGetTaxClass.ts";
 export { adminGetUser } from "./client/adminGetUser.ts";
+export { adminListBlockTypes } from "./client/adminListBlockTypes.ts";
 export { adminListBuiltInPaymentProviders } from "./client/adminListBuiltInPaymentProviders.ts";
 export { adminListCarts } from "./client/adminListCarts.ts";
 export { adminListCategories } from "./client/adminListCategories.ts";
@@ -2403,6 +2514,7 @@ export { adminListLanguages } from "./client/adminListLanguages.ts";
 export { adminListMedia } from "./client/adminListMedia.ts";
 export { adminListOptionDefinitionsCatalog } from "./client/adminListOptionDefinitionsCatalog.ts";
 export { adminListOrders } from "./client/adminListOrders.ts";
+export { adminListPages } from "./client/adminListPages.ts";
 export { adminListPaymentProviders } from "./client/adminListPaymentProviders.ts";
 export { adminListPermissions } from "./client/adminListPermissions.ts";
 export { adminListPriceListPrices } from "./client/adminListPriceListPrices.ts";
@@ -2425,6 +2537,7 @@ export { adminListTaxRates } from "./client/adminListTaxRates.ts";
 export { adminListUsers } from "./client/adminListUsers.ts";
 export { adminReorderCategories } from "./client/adminReorderCategories.ts";
 export { adminReplaceMedia } from "./client/adminReplaceMedia.ts";
+export { adminReplacePageBlocks } from "./client/adminReplacePageBlocks.ts";
 export { adminUpdateCategory } from "./client/adminUpdateCategory.ts";
 export { adminUpdateCurrency } from "./client/adminUpdateCurrency.ts";
 export { adminUpdateCustomer } from "./client/adminUpdateCustomer.ts";
@@ -2438,6 +2551,7 @@ export { adminUpdateOptionValue } from "./client/adminUpdateOptionValue.ts";
 export { adminUpdateOrder } from "./client/adminUpdateOrder.ts";
 export { adminUpdateOrderItem } from "./client/adminUpdateOrderItem.ts";
 export { adminUpdateOrderShippingLine } from "./client/adminUpdateOrderShippingLine.ts";
+export { adminUpdatePage } from "./client/adminUpdatePage.ts";
 export { adminUpdatePayment } from "./client/adminUpdatePayment.ts";
 export { adminUpdatePaymentProvider } from "./client/adminUpdatePaymentProvider.ts";
 export { adminUpdatePriceList } from "./client/adminUpdatePriceList.ts";
@@ -2508,6 +2622,9 @@ export { useAdminCreateOrderItem } from "./hooks/useAdminCreateOrderItem.ts";
 export { adminCreateOrderShippingLineMutationKey } from "./hooks/useAdminCreateOrderShippingLine.ts";
 export { adminCreateOrderShippingLineMutationOptions } from "./hooks/useAdminCreateOrderShippingLine.ts";
 export { useAdminCreateOrderShippingLine } from "./hooks/useAdminCreateOrderShippingLine.ts";
+export { adminCreatePageMutationKey } from "./hooks/useAdminCreatePage.ts";
+export { adminCreatePageMutationOptions } from "./hooks/useAdminCreatePage.ts";
+export { useAdminCreatePage } from "./hooks/useAdminCreatePage.ts";
 export { adminCreatePaymentMutationKey } from "./hooks/useAdminCreatePayment.ts";
 export { adminCreatePaymentMutationOptions } from "./hooks/useAdminCreatePayment.ts";
 export { useAdminCreatePayment } from "./hooks/useAdminCreatePayment.ts";
@@ -2598,6 +2715,9 @@ export { useAdminDeleteOrderItem } from "./hooks/useAdminDeleteOrderItem.ts";
 export { adminDeleteOrderShippingLineMutationKey } from "./hooks/useAdminDeleteOrderShippingLine.ts";
 export { adminDeleteOrderShippingLineMutationOptions } from "./hooks/useAdminDeleteOrderShippingLine.ts";
 export { useAdminDeleteOrderShippingLine } from "./hooks/useAdminDeleteOrderShippingLine.ts";
+export { adminDeletePageMutationKey } from "./hooks/useAdminDeletePage.ts";
+export { adminDeletePageMutationOptions } from "./hooks/useAdminDeletePage.ts";
+export { useAdminDeletePage } from "./hooks/useAdminDeletePage.ts";
 export { adminDeletePaymentMutationKey } from "./hooks/useAdminDeletePayment.ts";
 export { adminDeletePaymentMutationOptions } from "./hooks/useAdminDeletePayment.ts";
 export { useAdminDeletePayment } from "./hooks/useAdminDeletePayment.ts";
@@ -2733,6 +2853,12 @@ export { useAdminGetOrder } from "./hooks/useAdminGetOrder.ts";
 export { adminGetOrderSuspenseQueryKey } from "./hooks/useAdminGetOrderSuspense.ts";
 export { adminGetOrderSuspenseQueryOptions } from "./hooks/useAdminGetOrderSuspense.ts";
 export { useAdminGetOrderSuspense } from "./hooks/useAdminGetOrderSuspense.ts";
+export { adminGetPageQueryKey } from "./hooks/useAdminGetPage.ts";
+export { adminGetPageQueryOptions } from "./hooks/useAdminGetPage.ts";
+export { useAdminGetPage } from "./hooks/useAdminGetPage.ts";
+export { adminGetPageSuspenseQueryKey } from "./hooks/useAdminGetPageSuspense.ts";
+export { adminGetPageSuspenseQueryOptions } from "./hooks/useAdminGetPageSuspense.ts";
+export { useAdminGetPageSuspense } from "./hooks/useAdminGetPageSuspense.ts";
 export { adminGetPaymentProviderQueryKey } from "./hooks/useAdminGetPaymentProvider.ts";
 export { adminGetPaymentProviderQueryOptions } from "./hooks/useAdminGetPaymentProvider.ts";
 export { useAdminGetPaymentProvider } from "./hooks/useAdminGetPaymentProvider.ts";
@@ -2805,6 +2931,12 @@ export { useAdminGetUser } from "./hooks/useAdminGetUser.ts";
 export { adminGetUserSuspenseQueryKey } from "./hooks/useAdminGetUserSuspense.ts";
 export { adminGetUserSuspenseQueryOptions } from "./hooks/useAdminGetUserSuspense.ts";
 export { useAdminGetUserSuspense } from "./hooks/useAdminGetUserSuspense.ts";
+export { adminListBlockTypesQueryKey } from "./hooks/useAdminListBlockTypes.ts";
+export { adminListBlockTypesQueryOptions } from "./hooks/useAdminListBlockTypes.ts";
+export { useAdminListBlockTypes } from "./hooks/useAdminListBlockTypes.ts";
+export { adminListBlockTypesSuspenseQueryKey } from "./hooks/useAdminListBlockTypesSuspense.ts";
+export { adminListBlockTypesSuspenseQueryOptions } from "./hooks/useAdminListBlockTypesSuspense.ts";
+export { useAdminListBlockTypesSuspense } from "./hooks/useAdminListBlockTypesSuspense.ts";
 export { adminListBuiltInPaymentProvidersQueryKey } from "./hooks/useAdminListBuiltInPaymentProviders.ts";
 export { adminListBuiltInPaymentProvidersQueryOptions } from "./hooks/useAdminListBuiltInPaymentProviders.ts";
 export { useAdminListBuiltInPaymentProviders } from "./hooks/useAdminListBuiltInPaymentProviders.ts";
@@ -2883,6 +3015,12 @@ export { useAdminListOrders } from "./hooks/useAdminListOrders.ts";
 export { adminListOrdersSuspenseQueryKey } from "./hooks/useAdminListOrdersSuspense.ts";
 export { adminListOrdersSuspenseQueryOptions } from "./hooks/useAdminListOrdersSuspense.ts";
 export { useAdminListOrdersSuspense } from "./hooks/useAdminListOrdersSuspense.ts";
+export { adminListPagesQueryKey } from "./hooks/useAdminListPages.ts";
+export { adminListPagesQueryOptions } from "./hooks/useAdminListPages.ts";
+export { useAdminListPages } from "./hooks/useAdminListPages.ts";
+export { adminListPagesSuspenseQueryKey } from "./hooks/useAdminListPagesSuspense.ts";
+export { adminListPagesSuspenseQueryOptions } from "./hooks/useAdminListPagesSuspense.ts";
+export { useAdminListPagesSuspense } from "./hooks/useAdminListPagesSuspense.ts";
 export { adminListPaymentProvidersQueryKey } from "./hooks/useAdminListPaymentProviders.ts";
 export { adminListPaymentProvidersQueryOptions } from "./hooks/useAdminListPaymentProviders.ts";
 export { useAdminListPaymentProviders } from "./hooks/useAdminListPaymentProviders.ts";
@@ -3009,6 +3147,9 @@ export { useAdminReorderCategories } from "./hooks/useAdminReorderCategories.ts"
 export { adminReplaceMediaMutationKey } from "./hooks/useAdminReplaceMedia.ts";
 export { adminReplaceMediaMutationOptions } from "./hooks/useAdminReplaceMedia.ts";
 export { useAdminReplaceMedia } from "./hooks/useAdminReplaceMedia.ts";
+export { adminReplacePageBlocksMutationKey } from "./hooks/useAdminReplacePageBlocks.ts";
+export { adminReplacePageBlocksMutationOptions } from "./hooks/useAdminReplacePageBlocks.ts";
+export { useAdminReplacePageBlocks } from "./hooks/useAdminReplacePageBlocks.ts";
 export { adminUpdateCategoryMutationKey } from "./hooks/useAdminUpdateCategory.ts";
 export { adminUpdateCategoryMutationOptions } from "./hooks/useAdminUpdateCategory.ts";
 export { useAdminUpdateCategory } from "./hooks/useAdminUpdateCategory.ts";
@@ -3048,6 +3189,9 @@ export { useAdminUpdateOrderItem } from "./hooks/useAdminUpdateOrderItem.ts";
 export { adminUpdateOrderShippingLineMutationKey } from "./hooks/useAdminUpdateOrderShippingLine.ts";
 export { adminUpdateOrderShippingLineMutationOptions } from "./hooks/useAdminUpdateOrderShippingLine.ts";
 export { useAdminUpdateOrderShippingLine } from "./hooks/useAdminUpdateOrderShippingLine.ts";
+export { adminUpdatePageMutationKey } from "./hooks/useAdminUpdatePage.ts";
+export { adminUpdatePageMutationOptions } from "./hooks/useAdminUpdatePage.ts";
+export { useAdminUpdatePage } from "./hooks/useAdminUpdatePage.ts";
 export { adminUpdatePaymentMutationKey } from "./hooks/useAdminUpdatePayment.ts";
 export { adminUpdatePaymentMutationOptions } from "./hooks/useAdminUpdatePayment.ts";
 export { useAdminUpdatePayment } from "./hooks/useAdminUpdatePayment.ts";
@@ -3127,6 +3271,8 @@ export { adminGetOrder200FulfillmentsStatusEnum } from "./types/AdminGetOrder.ts
 export { adminGetOrder200ItemsReasonEnum } from "./types/AdminGetOrder.ts";
 export { adminGetOrder200PaymentsStatusEnum } from "./types/AdminGetOrder.ts";
 export { adminGetOrder200ReturnsStatusEnum } from "./types/AdminGetOrder.ts";
+export { adminGetPage200DataStatusEnum } from "./types/AdminGetPage.ts";
+export { adminGetPage200RelationsRelatedTypeEnum } from "./types/AdminGetPage.ts";
 export { adminGetPaymentProvider200DataKindEnum } from "./types/AdminGetPaymentProvider.ts";
 export { adminGetPriceList200DataStatusEnum } from "./types/AdminGetPriceList.ts";
 export { adminGetPriceList200DataTypeEnum } from "./types/AdminGetPriceList.ts";
@@ -3135,6 +3281,8 @@ export { adminGetPromotion200DataTypeEnum } from "./types/AdminGetPromotion.ts";
 export { adminGetPromotion200TargetsTargetTypeEnum } from "./types/AdminGetPromotion.ts";
 export { adminGetReturn200DataStatusEnum } from "./types/AdminGetReturn.ts";
 export { adminGetReturn200ItemsReasonEnum } from "./types/AdminGetReturn.ts";
+export { adminListBlockTypes200DataCategoryEnum } from "./types/AdminListBlockTypes.ts";
+export { adminListBlockTypes200RelationFieldsKindEnum } from "./types/AdminListBlockTypes.ts";
 export { adminListBuiltInPaymentProviders200DataKindEnum } from "./types/AdminListBuiltInPaymentProviders.ts";
 export { adminListCartsQueryParamsCustomerTypeEnum } from "./types/AdminListCarts.ts";
 export { adminListCartsQueryParamsSortByEnum } from "./types/AdminListCarts.ts";
@@ -3165,6 +3313,10 @@ export { adminListOrders200DataStatusEnum } from "./types/AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortByEnum } from "./types/AdminListOrders.ts";
 export { adminListOrdersQueryParamsSortOrderEnum } from "./types/AdminListOrders.ts";
 export { adminListOrdersQueryParamsStatusEnum } from "./types/AdminListOrders.ts";
+export { adminListPages200DataStatusEnum } from "./types/AdminListPages.ts";
+export { adminListPagesQueryParamsSortByEnum } from "./types/AdminListPages.ts";
+export { adminListPagesQueryParamsSortOrderEnum } from "./types/AdminListPages.ts";
+export { adminListPagesQueryParamsStatusEnum } from "./types/AdminListPages.ts";
 export { adminListPaymentProviders200DataKindEnum } from "./types/AdminListPaymentProviders.ts";
 export { adminListPaymentProvidersQueryParamsSortByEnum } from "./types/AdminListPaymentProviders.ts";
 export { adminListPaymentProvidersQueryParamsSortOrderEnum } from "./types/AdminListPaymentProviders.ts";
@@ -3203,12 +3355,16 @@ export { adminListTaxClassesQueryParamsSortByEnum } from "./types/AdminListTaxCl
 export { adminListTaxClassesQueryParamsSortOrderEnum } from "./types/AdminListTaxClasses.ts";
 export { adminListUsersQueryParamsSortByEnum } from "./types/AdminListUsers.ts";
 export { adminListUsersQueryParamsSortOrderEnum } from "./types/AdminListUsers.ts";
+export { adminReplacePageBlocks200DataStatusEnum } from "./types/AdminReplacePageBlocks.ts";
+export { adminReplacePageBlocks200RelationsRelatedTypeEnum } from "./types/AdminReplacePageBlocks.ts";
 export { adminUpdateFulfillment200DataStatusEnum } from "./types/AdminUpdateFulfillment.ts";
 export { adminUpdateOrder200DataStatusEnum } from "./types/AdminUpdateOrder.ts";
 export { adminUpdateOrder200FulfillmentsStatusEnum } from "./types/AdminUpdateOrder.ts";
 export { adminUpdateOrder200ItemsReasonEnum } from "./types/AdminUpdateOrder.ts";
 export { adminUpdateOrder200PaymentsStatusEnum } from "./types/AdminUpdateOrder.ts";
 export { adminUpdateOrder200ReturnsStatusEnum } from "./types/AdminUpdateOrder.ts";
+export { adminUpdatePage200DataStatusEnum } from "./types/AdminUpdatePage.ts";
+export { adminUpdatePage200RelationsRelatedTypeEnum } from "./types/AdminUpdatePage.ts";
 export { adminUpdatePayment200DataStatusEnum } from "./types/AdminUpdatePayment.ts";
 export { adminUpdatePaymentProvider200DataKindEnum } from "./types/AdminUpdatePaymentProvider.ts";
 export { adminUpdatePriceList200DataStatusEnum } from "./types/AdminUpdatePriceList.ts";
@@ -3401,6 +3557,17 @@ export {
   adminCreateOrderShippingLineMutationResponseSchema,
   adminCreateOrderShippingLinePathParamsSchema,
 } from "./zod/adminCreateOrderShippingLineSchema.ts";
+export {
+  adminCreatePage201Schema,
+  adminCreatePage400Schema,
+  adminCreatePage401Schema,
+  adminCreatePage403Schema,
+  adminCreatePage404Schema,
+  adminCreatePage409Schema,
+  adminCreatePage500Schema,
+  adminCreatePageMutationRequestSchema,
+  adminCreatePageMutationResponseSchema,
+} from "./zod/adminCreatePageSchema.ts";
 export {
   adminCreatePaymentProvider201Schema,
   adminCreatePaymentProvider400Schema,
@@ -3739,6 +3906,17 @@ export {
   adminDeleteOrderShippingLineMutationResponseSchema,
   adminDeleteOrderShippingLinePathParamsSchema,
 } from "./zod/adminDeleteOrderShippingLineSchema.ts";
+export {
+  adminDeletePage200Schema,
+  adminDeletePage400Schema,
+  adminDeletePage401Schema,
+  adminDeletePage403Schema,
+  adminDeletePage404Schema,
+  adminDeletePage409Schema,
+  adminDeletePage500Schema,
+  adminDeletePageMutationResponseSchema,
+  adminDeletePagePathParamsSchema,
+} from "./zod/adminDeletePageSchema.ts";
 export {
   adminDeletePaymentProvider200Schema,
   adminDeletePaymentProvider400Schema,
@@ -4104,6 +4282,17 @@ export {
   adminGetOrderQueryResponseSchema,
 } from "./zod/adminGetOrderSchema.ts";
 export {
+  adminGetPage200Schema,
+  adminGetPage400Schema,
+  adminGetPage401Schema,
+  adminGetPage403Schema,
+  adminGetPage404Schema,
+  adminGetPage409Schema,
+  adminGetPage500Schema,
+  adminGetPagePathParamsSchema,
+  adminGetPageQueryResponseSchema,
+} from "./zod/adminGetPageSchema.ts";
+export {
   adminGetPaymentProvider200Schema,
   adminGetPaymentProvider400Schema,
   adminGetPaymentProvider401Schema,
@@ -4234,6 +4423,16 @@ export {
   adminGetUserPathParamsSchema,
   adminGetUserQueryResponseSchema,
 } from "./zod/adminGetUserSchema.ts";
+export {
+  adminListBlockTypes200Schema,
+  adminListBlockTypes400Schema,
+  adminListBlockTypes401Schema,
+  adminListBlockTypes403Schema,
+  adminListBlockTypes404Schema,
+  adminListBlockTypes409Schema,
+  adminListBlockTypes500Schema,
+  adminListBlockTypesQueryResponseSchema,
+} from "./zod/adminListBlockTypesSchema.ts";
 export {
   adminListBuiltInPaymentProviders200Schema,
   adminListBuiltInPaymentProviders400Schema,
@@ -4376,6 +4575,17 @@ export {
   adminListOrdersQueryParamsSchema,
   adminListOrdersQueryResponseSchema,
 } from "./zod/adminListOrdersSchema.ts";
+export {
+  adminListPages200Schema,
+  adminListPages400Schema,
+  adminListPages401Schema,
+  adminListPages403Schema,
+  adminListPages404Schema,
+  adminListPages409Schema,
+  adminListPages500Schema,
+  adminListPagesQueryParamsSchema,
+  adminListPagesQueryResponseSchema,
+} from "./zod/adminListPagesSchema.ts";
 export {
   adminListPaymentProviders200Schema,
   adminListPaymentProviders400Schema,
@@ -4619,6 +4829,18 @@ export {
   adminReplaceMediaPathParamsSchema,
 } from "./zod/adminReplaceMediaSchema.ts";
 export {
+  adminReplacePageBlocks200Schema,
+  adminReplacePageBlocks400Schema,
+  adminReplacePageBlocks401Schema,
+  adminReplacePageBlocks403Schema,
+  adminReplacePageBlocks404Schema,
+  adminReplacePageBlocks409Schema,
+  adminReplacePageBlocks500Schema,
+  adminReplacePageBlocksMutationRequestSchema,
+  adminReplacePageBlocksMutationResponseSchema,
+  adminReplacePageBlocksPathParamsSchema,
+} from "./zod/adminReplacePageBlocksSchema.ts";
+export {
   adminUpdateCategory200Schema,
   adminUpdateCategory400Schema,
   adminUpdateCategory401Schema,
@@ -4774,6 +4996,18 @@ export {
   adminUpdateOrderShippingLineMutationResponseSchema,
   adminUpdateOrderShippingLinePathParamsSchema,
 } from "./zod/adminUpdateOrderShippingLineSchema.ts";
+export {
+  adminUpdatePage200Schema,
+  adminUpdatePage400Schema,
+  adminUpdatePage401Schema,
+  adminUpdatePage403Schema,
+  adminUpdatePage404Schema,
+  adminUpdatePage409Schema,
+  adminUpdatePage500Schema,
+  adminUpdatePageMutationRequestSchema,
+  adminUpdatePageMutationResponseSchema,
+  adminUpdatePagePathParamsSchema,
+} from "./zod/adminUpdatePageSchema.ts";
 export {
   adminUpdatePaymentProvider200Schema,
   adminUpdatePaymentProvider400Schema,

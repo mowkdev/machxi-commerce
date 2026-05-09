@@ -1,44 +1,47 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+
 import { ProtectedRoute } from "@/components/protected-route";
 import AuthLayout from "@/layouts/AuthLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import SettingsLayout from "@/layouts/SettingsLayout";
 import LoginPage from "@/pages/auth/LoginPage";
 import SignupPage from "@/pages/auth/SignupPage";
-import DashboardPage from "@/pages/dashboard/DashboardPage";
-import ProductsPage from "@/pages/products/ProductsPage";
-import ProductCreatePage from "@/pages/products/ProductCreatePage";
-import ProductEditPage from "@/pages/products/ProductEditPage";
+import CartDetailPage from "@/pages/carts/CartDetailPage";
+import CartsPage from "@/pages/carts/CartsPage";
 import CategoriesPage from "@/pages/categories/CategoriesPage";
 import CategoryCreatePage from "@/pages/categories/CategoryCreatePage";
 import CategoryEditPage from "@/pages/categories/CategoryEditPage";
 import CategoryRankingPage from "@/pages/categories/CategoryRankingPage";
+import CmsPagesPage from "@/pages/cms-pages/CmsPagesPage";
+import CurrenciesPage from "@/pages/currencies/CurrenciesPage";
+import CustomerCreatePage from "@/pages/customers/CustomerCreatePage";
+import CustomersPage from "@/pages/customers/CustomersPage";
+import DashboardPage from "@/pages/dashboard/DashboardPage";
+import ProductsPage from "@/pages/products/ProductsPage";
+import ProductCreatePage from "@/pages/products/ProductCreatePage";
+import ProductEditPage from "@/pages/products/ProductEditPage";
 import MediaLibraryPage from "@/pages/media/MediaLibraryPage";
-import CartsPage from "@/pages/carts/CartsPage";
-import CartDetailPage from "@/pages/carts/CartDetailPage";
 import OrdersPage from "@/pages/orders/OrdersPage";
 import OrderCreatePage from "@/pages/orders/OrderCreatePage";
 import OrderEditPage from "@/pages/orders/OrderEditPage";
-import CustomersPage from "@/pages/customers/CustomersPage";
-import CustomerCreatePage from "@/pages/customers/CustomerCreatePage";
 import CustomerEditPage from "@/pages/customers/CustomerEditPage";
-import StockLocationsPage from "@/pages/stock-locations/StockLocationsPage";
-import StockLocationCreatePage from "@/pages/stock-locations/StockLocationCreatePage";
-import StockLocationEditPage from "@/pages/stock-locations/StockLocationEditPage";
-import InventoryPage from "@/pages/inventory/InventoryPage";
-import PromotionsPage from "@/pages/promotions/PromotionsPage";
 import PromotionCreatePage from "@/pages/promotions/PromotionCreatePage";
 import PromotionEditPage from "@/pages/promotions/PromotionEditPage";
+import PromotionsPage from "@/pages/promotions/PromotionsPage";
+import ReturnCreatePage from "@/pages/returns/ReturnCreatePage";
+import ReturnEditPage from "@/pages/returns/ReturnEditPage";
+import ReturnsPage from "@/pages/returns/ReturnsPage";
+import ShippingZonesPage from "@/pages/shipping-zones/ShippingZonesPage";
+import StockLocationCreatePage from "@/pages/stock-locations/StockLocationCreatePage";
+import StockLocationsPage from "@/pages/stock-locations/StockLocationsPage";
+import StockLocationEditPage from "@/pages/stock-locations/StockLocationEditPage";
+import InventoryPage from "@/pages/inventory/InventoryPage";
 import PriceListsPage from "@/pages/price-lists/PriceListsPage";
 import PriceListCreatePage from "@/pages/price-lists/PriceListCreatePage";
 import PriceListEditPage from "@/pages/price-lists/PriceListEditPage";
 import FulfillmentsPage from "@/pages/fulfillments/FulfillmentsPage";
 import FulfillmentCreatePage from "@/pages/fulfillments/FulfillmentCreatePage";
 import FulfillmentEditPage from "@/pages/fulfillments/FulfillmentEditPage";
-import ReturnsPage from "@/pages/returns/ReturnsPage";
-import ReturnCreatePage from "@/pages/returns/ReturnCreatePage";
-import ReturnEditPage from "@/pages/returns/ReturnEditPage";
-import ShippingZonesPage from "@/pages/shipping-zones/ShippingZonesPage";
 import ShippingZoneCreatePage from "@/pages/shipping-zones/ShippingZoneCreatePage";
 import ShippingZoneEditPage from "@/pages/shipping-zones/ShippingZoneEditPage";
 import ShippingOptionsPage from "@/pages/shipping-options/ShippingOptionsPage";
@@ -47,15 +50,14 @@ import ShippingOptionEditPage from "@/pages/shipping-options/ShippingOptionEditP
 import LanguagesPage from "@/pages/languages/LanguagesPage";
 import LanguageCreatePage from "@/pages/languages/LanguageCreatePage";
 import LanguageEditPage from "@/pages/languages/LanguageEditPage";
-import CurrenciesPage from "@/pages/currencies/CurrenciesPage";
 import CurrencyCreatePage from "@/pages/currencies/CurrencyCreatePage";
 import CurrencyEditPage from "@/pages/currencies/CurrencyEditPage";
-import TaxClassesPage from "@/pages/tax-classes/TaxClassesPage";
 import TaxClassCreatePage from "@/pages/tax-classes/TaxClassCreatePage";
 import TaxClassEditPage from "@/pages/tax-classes/TaxClassEditPage";
-import UsersPage from "@/pages/users/UsersPage";
+import TaxClassesPage from "@/pages/tax-classes/TaxClassesPage";
 import UserCreatePage from "@/pages/users/UserCreatePage";
 import UserEditPage from "@/pages/users/UserEditPage";
+import UsersPage from "@/pages/users/UsersPage";
 import RolesPage from "@/pages/roles/RolesPage";
 import RoleCreatePage from "@/pages/roles/RoleCreatePage";
 import RoleEditPage from "@/pages/roles/RoleEditPage";
@@ -66,6 +68,8 @@ import PaymentProvidersPage from "@/pages/payment-providers/PaymentProvidersPage
 import PaymentProviderCreatePage from "@/pages/payment-providers/PaymentProviderCreatePage";
 import PaymentProviderEditPage from "@/pages/payment-providers/PaymentProviderEditPage";
 import StoreSettingsPage from "@/pages/settings/StoreSettingsPage";
+import CmsPageCreatePage from "@/pages/cms-pages/CmsPageCreatePage";
+import CmsPageEditPage from "@/pages/cms-pages/CmsPageEditPage";
 
 export default function App() {
   return (
@@ -105,6 +109,9 @@ export default function App() {
           <Route path="/returns" element={<ReturnsPage />} />
           <Route path="/returns/new" element={<ReturnCreatePage />} />
           <Route path="/returns/:id" element={<ReturnEditPage />} />
+          <Route path="/cms/pages" element={<CmsPagesPage />} />
+          <Route path="/cms/pages/new" element={<CmsPageCreatePage />} />
+          <Route path="/cms/pages/:id" element={<CmsPageEditPage />} />
           <Route path="/settings" element={<SettingsLayout />}>
             <Route
               index
